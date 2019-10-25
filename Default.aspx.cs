@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ProjectFlow.Login;
+using ProjectFlow.Login.AuthCallbacks;
+using ProjectFlow.Login.LoginManagers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +16,22 @@ namespace ProjectFlow
         {
 
         }
+
+        protected void BasicLoginEvent(object sender, EventArgs e)
+        {
+
+            //Generate login credentials
+            var credential = new LoginCredential(usernameTxtBox.Text, passwordTxtBox.Text);
+
+            var loginService = GetBasicLoginService();
+
+            loginService.Authenticate(this, credential);
+
+            
+
+        }
+
+        private LoginService GetBasicLoginService() => new LoginService(new BasicLoginManager(), new RedirectAuthCallback("/MainContent.aspx"));
+
     }
 }
