@@ -1,6 +1,4 @@
 ﻿using ProjectFlow.Login;
-using ProjectFlow.Login.AuthCallbacks;
-using ProjectFlow.Login.LoginManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
