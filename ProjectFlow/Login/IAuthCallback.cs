@@ -20,10 +20,12 @@ namespace ProjectFlow.Login
     public class CallbackEvent
     {
         public bool IsAuthenticated { get; }
+        public AuthenticatedCredential User { get; }
 
-        internal protected CallbackEvent(bool isAuthenticated)
+        internal protected CallbackEvent(bool isAuthenticated, AuthenticatedCredential user)
         {
             IsAuthenticated = isAuthenticated;
+            User = user;
         }
 
     }

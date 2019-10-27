@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectFlow.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
@@ -12,16 +13,16 @@ namespace ProjectFlow.Login
     /// Perform and handle login authentication.
     /// Extends this class when you want a custom login authentication.
     /// Some ILoginManagers already defined:
-    /// <see cref="LoginManagers.BasicLoginManager"></see>
-    /// <see cref="LoginManagers.GoogleLoginManager"></see>
+    /// <see cref="BasicLoginManager"></see>
+    /// <see cref="GoogleLoginManager"></see>
     /// </summary>
     public interface ILoginManager {
         /// <summary>
         /// Handle login authentication from user
         /// </summary>
         /// <param name="credential"></param>
-        /// <returns></returns>
-        bool HandleAuth(LoginCredential credential);
+        /// <returns>A object containing all the authenticated credentials, if authentications is not successful returns null</returns>
+        AuthenticatedCredential HandleAuth(LoginCredential credential);
 
 
     }
@@ -37,6 +38,22 @@ namespace ProjectFlow.Login
             PasswordHashed = passwordHashed;
         }
         
+
+    }
+
+    /// <summary>
+    /// TODO this class will be replaced by a DAO class of User separated by the data access layer under N-tier architecture
+    /// </summary>
+    [Obsolete("This class is only temporary and will be replaced by a DAO class of User", false)]
+    public class AuthenticatedCredential {
+        public AuthenticatedCredential(string username, Role role)
+        {
+            Username = username;
+            Role = role;
+        }
+
+        public string Username { get; }
+        public Role Role { get; }
 
     }
 

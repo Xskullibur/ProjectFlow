@@ -13,24 +13,27 @@ namespace ProjectFlow.Login
     /// </summary>
     public class LoginService
     {
-        public LoginService(ILoginManager loginManager, IAuthCallback authCallback)
+        public LoginService(ILoginManager loginManager, params IAuthCallback[] authCallbacks)
         {
             this.loginManager = loginManager;
-            this.authCallback = authCallback;
+            this.authCallbacks.AddRange(authCallbacks);
         }
 
         private ILoginManager loginManager { get; }
-        private IAuthCallback authCallback { get; }
+        private List<IAuthCallback> authCallbacks = new List<IAuthCallback>();
 
         /// <summary>
         /// Authenticate user from the credential passed into this method
         /// </summary>
         /// <param name="page">Page where this this method called</param>
-        /// <param name="credential">Credential to authenticate the user</param>
-        public void Authenticate(Page page, LoginCredential credential)
+        /// <param name="credential">Credential to authenticate the user (can be nullable if using external authentications method)</param>
+        /// <returns>is the request authenticated</returns>  
+        public bool Authenticate(Page page, LoginCredential credential = null)
         {
-            var callbackEvent = new CallbackEvent(loginManager.HandleAuth(credential));
-            authCallback.AuthCallback(page, callbackEvent);
+            var user = loginManager.HandleAuth(credential);
+            var callbackEvent = new CallbackEvent(user != null, user);
+            authCallbacks.ForEach(x => x.AuthCallback(page, callbackEvent));
+            return callbackEvent.IsAuthenticated;
         }
 
     }

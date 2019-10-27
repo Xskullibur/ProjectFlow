@@ -7,10 +7,18 @@ namespace ProjectFlow.Login
 {
     public class BasicLoginManager : ILoginManager
     {
-        public bool HandleAuth(LoginCredential credential)
+        public AuthenticatedCredential HandleAuth(LoginCredential credential)
         {
             //TODO handle login from user and check if user exists
-            return credential.Username == "Hello" && credential.PasswordHashed == "Password";
+            if(credential.Username == "Hello" && credential.PasswordHashed == "Password")
+            {
+                return new AuthenticatedCredential(credential.Username, Services.Role.BasicUser);
+            }
+            else if(credential.Username == "Admin" && credential.PasswordHashed == "Password")
+            {
+                return new AuthenticatedCredential(credential.Username, Services.Role.PremiumUser);
+            }
+            return null;
         }
     }
 }

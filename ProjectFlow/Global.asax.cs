@@ -16,12 +16,12 @@ namespace ProjectFlow
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            //ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
-            //{
-            //    Path = "",
-            //    DebugPath = "",
-            //    CdnPath = ""
-            //}) ;
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/jquery-3.4.1.min.js",
+                DebugPath = "~/Scripts/jquery-3.4.1.js"
+            });
         }
 
         protected void Session_Start(object sender, EventArgs e)

@@ -11,7 +11,7 @@ namespace ProjectFlow.Login
         public static string ClientId = "";
         public static string ClientSecret = "";
 
-        public bool HandleAuth(LoginCredential credential)
+        public AuthenticatedCredential HandleAuth(LoginCredential credential)
         {
             throw new NotImplementedException();
         }

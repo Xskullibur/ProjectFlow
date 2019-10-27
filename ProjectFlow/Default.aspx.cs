@@ -15,21 +15,19 @@ namespace ProjectFlow
 
         }
 
-        protected void BasicLoginEvent(object sender, EventArgs e)
+        protected void BasicLoginEvent(object sender, AuthenticateEventArgs e)
         {
 
             //Generate login credentials
-            var credential = new LoginCredential(usernameTxtBox.Text, passwordTxtBox.Text);
+            var credential = new LoginCredential(LoginForm.UserName, LoginForm.Password);
 
             var loginService = GetBasicLoginService();
 
-            loginService.Authenticate(this, credential);
-
-            
+            e.Authenticated = loginService.Authenticate(this, credential);
 
         }
 
-        private LoginService GetBasicLoginService() => new LoginService(new BasicLoginManager(), new RedirectAuthCallback("/MainContent.aspx"));
+        private LoginService GetBasicLoginService() => new LoginService(new BasicLoginManager(), new SessionAuthCallback(), new RedirectAuthCallback("/Services/Tasks.aspx"));
 
     }
 }

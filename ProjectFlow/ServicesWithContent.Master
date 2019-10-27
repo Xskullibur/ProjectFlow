@@ -1,0 +1,41 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            height: 37px;
+        }
+        .auto-style2 {
+            width: 556px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+             <table style="width:100%;">
+                    <tr>
+                        <td class="auto-style2">
+
+                            <asp:ListView ID="ListView1" runat="server"
+                                            DataKeyNames="">
+
+                            </asp:ListView>
+                        </td>
+                        <td>
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </td>
+                    </tr>
+                    </table>
+
+        </div>
+    </form>
+</body>
+</html>
