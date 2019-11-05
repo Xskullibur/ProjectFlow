@@ -17,6 +17,7 @@ namespace ProjectFlow.Services
         {
             ServiceName = serviceName;
             Path = path;
+            
         }
 
 
@@ -25,7 +26,7 @@ namespace ProjectFlow.Services
         /// Register service page to be displayed under Default.aspx
         /// </summary>
         /// <param name="servicePage">ServicePage to be registered</param>
-       public void RegisterServicePage<T>(T servicePage) where T : ServicePage
+       public static void RegisterServicePage<T>(T servicePage) where T : ServicePage
         {
             //Get ServicePage page attributes
             var properties = typeof(T).GetCustomAttributes();

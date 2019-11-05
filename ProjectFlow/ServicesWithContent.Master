@@ -1,10 +1,14 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
 
+@import 
 <!DOCTYPE html>
 
 <html>
 <head runat="server">
     <title></title>
+    <asp:PlaceHolder runat="server">
+        <%: Styles.Render("~/Content/css") %>
+    </asp:PlaceHolder>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style type="text/css">

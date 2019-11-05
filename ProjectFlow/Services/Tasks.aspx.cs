@@ -15,11 +15,12 @@ namespace ProjectFlow.Services
     public partial class TasksService : ServicePage
     {
 
-        public TasksService() : base("Tasks", "Services/Tasks.aspx") { }
+        public TasksService() : base("Tasks", "Services/Tasks.aspx") {
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
