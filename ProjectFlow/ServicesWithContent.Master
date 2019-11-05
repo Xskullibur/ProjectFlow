@@ -1,6 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
-
-@import 
 <!DOCTYPE html>
 
 <html>
@@ -27,13 +25,13 @@
                     <tr>
                         <td class="auto-style2">
 
-                            <asp:ListView ID="ListView1" runat="server"
-                                            DataKeyNames="">
+                            Top Level Content
 
+                            <asp:ListView ID="ListView1" runat="server" DataKeyNames="">
                             </asp:ListView>
                         </td>
                         <td>
-                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            <asp:ContentPlaceHolder ID="MainContent" runat="server">
                             </asp:ContentPlaceHolder>
                         </td>
                     </tr>

@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="TaskNested.master.cs" Inherits="ProjectFlow.Tasks.TaskNested" %>
+
+<%--Main Master Page--%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<%--Nested Master Page--%>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+    <div class="container">
+        <%--Nested Master Content--%>
+        <div class="row">
+
+            <%--Views Dropdown List--%>
+            <div class="text-right col-md-3 col-sm-12">
+                <asp:DropDownList CssClass="form-control" runat="server">
+                    <asp:ListItem Text="Table" />
+                    <asp:ListItem Text="Calendar" />
+                    <asp:ListItem Text="Kanban" />
+                </asp:DropDownList>
+            </div>
+
+            <%--Add Task--%>
+            <div class="text-right col-md-1 col-sm-12">
+                <asp:Button Text="Add Task" CssClass="btn btn-danger" runat="server" />
+            </div>
+
+        </div>
+    </div>
+
+    <%--Main Content--%>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
+
+</asp:Content>
