@@ -1,0 +1,21 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="ProjectFlow.Main" %>
+<%--Empty Main Master page, for login page etc--%> 
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:PlaceHolder runat="server">
+        <%: Styles.Render("~/Content/css") %>
+    </asp:PlaceHolder>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+        <div class="container">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                 
+            </asp:ContentPlaceHolder>
+        </div>
+</body>
+</html>
