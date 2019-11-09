@@ -11,7 +11,16 @@ namespace ProjectFlow.Tasks
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                List<string> tempNames = new List<string>()
+                {
+                    "John", "Ben", "Tom", "Tuturu~"
+                };
 
+                allocationDLL.DataSource = tempNames;
+                allocationDLL.DataBind();
+            }
         }
     }
 }

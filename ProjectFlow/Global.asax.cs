@@ -21,6 +21,18 @@ namespace ProjectFlow
                 Path = "~/Scripts/jquery-3.4.1.min.js",
                 DebugPath = "~/Scripts/jquery-3.4.1.js"
             });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/bootstrap.min.js",
+                DebugPath = "~/Scripts/bootstrap.js"
+            });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("popper", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/umd/popper.min.js",
+                DebugPath = "~/Scripts/umd/popper.js"
+            });
         }
 
         protected void Session_Start(object sender, EventArgs e)
