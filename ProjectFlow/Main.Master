@@ -22,6 +22,8 @@
                     <asp:ScriptReference Name="bootstrap-select" />
                 </Scripts>
             </asp:ScriptManager>
+            
+        
 
             <%--ContentPlaceHolder1--%>
             <div class="container">
@@ -29,7 +31,7 @@
                  
                 </asp:ContentPlaceHolder>
             </div>
-        </form>
+          </form>
 
 </body>
 </html>
