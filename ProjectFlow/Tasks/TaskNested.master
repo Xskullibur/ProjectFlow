@@ -85,7 +85,7 @@
                             <%--Allocation--%>
                             <div class="form-group">
                                 <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationDLL" runat="server" />
-                                <asp:DropDownList CssClass="form-control" ID="allocationDLL" runat="server"/>
+                                <asp:DropDownList CssClass="form-control selectpicker" data-live-search="true" multiple data-actions-box="true" ID="allocationDLL" runat="server"/>
                             </div>
 
                         </div>

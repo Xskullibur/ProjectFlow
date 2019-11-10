@@ -33,6 +33,12 @@ namespace ProjectFlow
                 Path = "~/Scripts/umd/popper.min.js",
                 DebugPath = "~/Scripts/umd/popper.js"
             });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap-select", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/bootstrap-select.min.js",
+                DebugPath = "~/Scripts/bootstrap-select.js"
+            });
         }
 
         protected void Session_Start(object sender, EventArgs e)
