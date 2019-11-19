@@ -22,13 +22,10 @@
                     <asp:ScriptReference Name="bootstrap-select" />
                 </Scripts>
             </asp:ScriptManager>
-            
-        
 
             <%--ContentPlaceHolder1--%>
             <div class="container">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                 
                 </asp:ContentPlaceHolder>
             </div>
           </form>

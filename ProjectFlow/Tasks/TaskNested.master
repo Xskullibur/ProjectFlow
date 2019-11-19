@@ -10,14 +10,14 @@
 
     <div class="container">
         <%--Nested Master Content--%>
-        <div class="row text-right">
+        <div class="row text-right ">
 
             <%--Views Dropdown List--%>
-            <div class="text-right col-xl-4 col-sm-12">
+            <div class="col-12">
 
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="viewsDLL" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
+                    Switch Views
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#">GridView</a>
@@ -29,7 +29,7 @@
             </div>
 
             <%--Add Task--%>
-            <div class="text-right col-xl-2 col-sm-12">
+            <div class="col-12">
 
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskModal">
