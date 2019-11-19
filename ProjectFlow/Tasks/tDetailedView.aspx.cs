@@ -11,7 +11,12 @@ namespace ProjectFlow.Tasks
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            taskView.DataSource = new List<string>()
+            {
+                "hellsad",
+                "asdas","asdas","asdasd","asdasd"
+            };
+            taskView.DataBind();
         }
     }
 }
