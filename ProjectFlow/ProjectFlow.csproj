@@ -108,6 +108,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
+    <Content Include="MaterialGridView.ascx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Context.cs</LastGenOutput>
@@ -317,6 +318,13 @@
     </Compile>
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialGridView.ascx.cs">
+      <DependentUpon>MaterialGridView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MaterialGridView.ascx.designer.cs">
+      <DependentUpon>MaterialGridView.ascx</DependentUpon>
     </Compile>
     <Compile Include="ProjectFlowDB.Context.cs">
       <AutoGen>True</AutoGen>
