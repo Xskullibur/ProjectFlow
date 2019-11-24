@@ -25,6 +25,9 @@ namespace ProjectFlow
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CommentForIssueTB> CommentForIssueTBs { get; set; }
+        public virtual DbSet<IssueTB> IssueTBs { get; set; }
+        public virtual DbSet<PollingTB> PollingTBs { get; set; }
         public virtual DbSet<ProjectTB> ProjectTBs { get; set; }
         public virtual DbSet<ProjectTeamsTB> ProjectTeamsTBs { get; set; }
         public virtual DbSet<RoleTB> RoleTBs { get; set; }

@@ -17,6 +17,7 @@ namespace ProjectFlow
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TeamMemberTB()
         {
+            this.IssueTBs = new HashSet<IssueTB>();
             this.TaskAllocationTBs = new HashSet<TaskAllocationTB>();
         }
     
@@ -24,6 +25,8 @@ namespace ProjectFlow
         public int userID { get; set; }
         public int teamID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IssueTB> IssueTBs { get; set; }
         public virtual ProjectTeamsTB ProjectTeamsTB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskAllocationTB> TaskAllocationTBs { get; set; }

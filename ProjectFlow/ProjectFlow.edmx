@@ -5,6 +5,31 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CommentForIssueTB">
+          <Key>
+            <PropertyRef Name="commentID" />
+          </Key>
+          <Property Name="commentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comment" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="issueID" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IssueTB">
+          <Key>
+            <PropertyRef Name="issueID" />
+          </Key>
+          <Property Name="issueID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="createdBy" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PollingTB">
+          <Key>
+            <PropertyRef Name="pollingID" />
+          </Key>
+          <Property Name="pollingID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="issueID" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="ProjectTB">
           <Key>
             <PropertyRef Name="projectID" />
@@ -69,6 +94,54 @@
           <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="roleID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CommentForIssueTB_IssueTB">
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="1" />
+          <End Role="CommentForIssueTB" Type="Self.CommentForIssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IssueTB">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="CommentForIssueTB">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueTB_TasksTB">
+          <End Role="TasksTB" Type="Self.TasksTB" Multiplicity="1" />
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TasksTB">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="IssueTB">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueTB_TeamMemberTB">
+          <End Role="TeamMemberTB" Type="Self.TeamMemberTB" Multiplicity="1" />
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMemberTB">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="IssueTB">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PollingTB_IssueTB">
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="1" />
+          <End Role="PollingTB" Type="Self.PollingTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IssueTB">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="PollingTB">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectTB_UserTB">
           <End Role="UserTB" Type="Self.UserTB" Multiplicity="1" />
           <End Role="ProjectTB" Type="Self.ProjectTB" Multiplicity="*" />
@@ -166,6 +239,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ProjectFlowModelStoreContainer">
+          <EntitySet Name="CommentForIssueTB" EntityType="Self.CommentForIssueTB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueTB" EntityType="Self.IssueTB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PollingTB" EntityType="Self.PollingTB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTB" EntityType="Self.ProjectTB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTeamsTB" EntityType="Self.ProjectTeamsTB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleTB" EntityType="Self.RoleTB" Schema="dbo" store:Type="Tables" />
@@ -173,6 +249,22 @@
           <EntitySet Name="TasksTB" EntityType="Self.TasksTB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamMemberTB" EntityType="Self.TeamMemberTB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTB" EntityType="Self.UserTB" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CommentForIssueTB_IssueTB" Association="Self.FK_CommentForIssueTB_IssueTB">
+            <End Role="IssueTB" EntitySet="IssueTB" />
+            <End Role="CommentForIssueTB" EntitySet="CommentForIssueTB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueTB_TasksTB" Association="Self.FK_IssueTB_TasksTB">
+            <End Role="TasksTB" EntitySet="TasksTB" />
+            <End Role="IssueTB" EntitySet="IssueTB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueTB_TeamMemberTB" Association="Self.FK_IssueTB_TeamMemberTB">
+            <End Role="TeamMemberTB" EntitySet="TeamMemberTB" />
+            <End Role="IssueTB" EntitySet="IssueTB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PollingTB_IssueTB" Association="Self.FK_PollingTB_IssueTB">
+            <End Role="IssueTB" EntitySet="IssueTB" />
+            <End Role="PollingTB" EntitySet="PollingTB" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProjectTB_UserTB" Association="Self.FK_ProjectTB_UserTB">
             <End Role="UserTB" EntitySet="UserTB" />
             <End Role="ProjectTB" EntitySet="ProjectTB" />
@@ -211,6 +303,37 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CommentForIssueTB">
+          <Key>
+            <PropertyRef Name="commentID" />
+          </Key>
+          <Property Name="commentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issueID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="IssueTB" Relationship="Self.FK_CommentForIssueTB_IssueTB" FromRole="CommentForIssueTB" ToRole="IssueTB" />
+        </EntityType>
+        <EntityType Name="IssueTB">
+          <Key>
+            <PropertyRef Name="issueID" />
+          </Key>
+          <Property Name="issueID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdBy" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CommentForIssueTBs" Relationship="Self.FK_CommentForIssueTB_IssueTB" FromRole="IssueTB" ToRole="CommentForIssueTB" />
+          <NavigationProperty Name="TasksTB" Relationship="Self.FK_IssueTB_TasksTB" FromRole="IssueTB" ToRole="TasksTB" />
+          <NavigationProperty Name="TeamMemberTB" Relationship="Self.FK_IssueTB_TeamMemberTB" FromRole="IssueTB" ToRole="TeamMemberTB" />
+          <NavigationProperty Name="PollingTBs" Relationship="Self.FK_PollingTB_IssueTB" FromRole="IssueTB" ToRole="PollingTB" />
+        </EntityType>
+        <EntityType Name="PollingTB">
+          <Key>
+            <PropertyRef Name="pollingID" />
+          </Key>
+          <Property Name="pollingID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="issueID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="IssueTB" Relationship="Self.FK_PollingTB_IssueTB" FromRole="PollingTB" ToRole="IssueTB" />
+        </EntityType>
         <EntityType Name="ProjectTB">
           <Key>
             <PropertyRef Name="projectID" />
@@ -262,6 +385,7 @@
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="IssueTBs" Relationship="Self.FK_IssueTB_TasksTB" FromRole="TasksTB" ToRole="IssueTB" />
           <NavigationProperty Name="ProjectTeamsTB" Relationship="Self.FK_TasksTB_ProjectTeamsTB" FromRole="TasksTB" ToRole="ProjectTeamsTB" />
           <NavigationProperty Name="TaskAllocationTBs" Relationship="Self.FK_TaskAllocationTB_TasksTB" FromRole="TasksTB" ToRole="TaskAllocationTB" />
         </EntityType>
@@ -272,6 +396,7 @@
           <Property Name="memberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="IssueTBs" Relationship="Self.FK_IssueTB_TeamMemberTB" FromRole="TeamMemberTB" ToRole="IssueTB" />
           <NavigationProperty Name="ProjectTeamsTB" Relationship="Self.FK_TeamMemberTB_ProjectTeamsTB" FromRole="TeamMemberTB" ToRole="ProjectTeamsTB" />
           <NavigationProperty Name="TaskAllocationTBs" Relationship="Self.FK_TaskAllocationTB_TeamMemberTB" FromRole="TeamMemberTB" ToRole="TaskAllocationTB" />
           <NavigationProperty Name="UserTB" Relationship="Self.FK_TeamMemberTB_UserTB" FromRole="TeamMemberTB" ToRole="UserTB" />
@@ -291,6 +416,54 @@
           <NavigationProperty Name="RoleTB" Relationship="Self.FK_UserTB_RoleTB" FromRole="UserTB" ToRole="RoleTB" />
           <NavigationProperty Name="TeamMemberTBs" Relationship="Self.FK_TeamMemberTB_UserTB" FromRole="UserTB" ToRole="TeamMemberTB" />
         </EntityType>
+        <Association Name="FK_CommentForIssueTB_IssueTB">
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="1" />
+          <End Role="CommentForIssueTB" Type="Self.CommentForIssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IssueTB">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="CommentForIssueTB">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueTB_TasksTB">
+          <End Role="TasksTB" Type="Self.TasksTB" Multiplicity="1" />
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TasksTB">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="IssueTB">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueTB_TeamMemberTB">
+          <End Role="TeamMemberTB" Type="Self.TeamMemberTB" Multiplicity="1" />
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMemberTB">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="IssueTB">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PollingTB_IssueTB">
+          <End Role="IssueTB" Type="Self.IssueTB" Multiplicity="1" />
+          <End Role="PollingTB" Type="Self.PollingTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IssueTB">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="PollingTB">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectTB_UserTB">
           <End Role="UserTB" Type="Self.UserTB" Multiplicity="1" />
           <End Role="ProjectTB" Type="Self.ProjectTB" Multiplicity="*" />
@@ -388,6 +561,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ProjectFlowEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CommentForIssueTBs" EntityType="Self.CommentForIssueTB" />
+          <EntitySet Name="IssueTBs" EntityType="Self.IssueTB" />
+          <EntitySet Name="PollingTBs" EntityType="Self.PollingTB" />
           <EntitySet Name="ProjectTBs" EntityType="Self.ProjectTB" />
           <EntitySet Name="ProjectTeamsTBs" EntityType="Self.ProjectTeamsTB" />
           <EntitySet Name="RoleTBs" EntityType="Self.RoleTB" />
@@ -395,6 +571,22 @@
           <EntitySet Name="TasksTBs" EntityType="Self.TasksTB" />
           <EntitySet Name="TeamMemberTBs" EntityType="Self.TeamMemberTB" />
           <EntitySet Name="UserTBs" EntityType="Self.UserTB" />
+          <AssociationSet Name="FK_CommentForIssueTB_IssueTB" Association="Self.FK_CommentForIssueTB_IssueTB">
+            <End Role="IssueTB" EntitySet="IssueTBs" />
+            <End Role="CommentForIssueTB" EntitySet="CommentForIssueTBs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueTB_TasksTB" Association="Self.FK_IssueTB_TasksTB">
+            <End Role="TasksTB" EntitySet="TasksTBs" />
+            <End Role="IssueTB" EntitySet="IssueTBs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueTB_TeamMemberTB" Association="Self.FK_IssueTB_TeamMemberTB">
+            <End Role="TeamMemberTB" EntitySet="TeamMemberTBs" />
+            <End Role="IssueTB" EntitySet="IssueTBs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PollingTB_IssueTB" Association="Self.FK_PollingTB_IssueTB">
+            <End Role="IssueTB" EntitySet="IssueTBs" />
+            <End Role="PollingTB" EntitySet="PollingTBs" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProjectTB_UserTB" Association="Self.FK_ProjectTB_UserTB">
             <End Role="UserTB" EntitySet="UserTBs" />
             <End Role="ProjectTB" EntitySet="ProjectTBs" />
@@ -434,6 +626,34 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ProjectFlowModelStoreContainer" CdmEntityContainer="ProjectFlowEntities">
+          <EntitySetMapping Name="CommentForIssueTBs">
+            <EntityTypeMapping TypeName="ProjectFlowModel.CommentForIssueTB">
+              <MappingFragment StoreEntitySet="CommentForIssueTB">
+                <ScalarProperty Name="commentID" ColumnName="commentID" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IssueTBs">
+            <EntityTypeMapping TypeName="ProjectFlowModel.IssueTB">
+              <MappingFragment StoreEntitySet="IssueTB">
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollingTBs">
+            <EntityTypeMapping TypeName="ProjectFlowModel.PollingTB">
+              <MappingFragment StoreEntitySet="PollingTB">
+                <ScalarProperty Name="pollingID" ColumnName="pollingID" />
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ProjectTBs">
             <EntityTypeMapping TypeName="ProjectFlowModel.ProjectTB">
               <MappingFragment StoreEntitySet="ProjectTB">

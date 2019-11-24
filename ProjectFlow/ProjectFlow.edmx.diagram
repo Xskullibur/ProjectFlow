@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dae9de1d050f48c381625fe48856fe42" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectFlowModel.CommentForIssueTB" Width="1.5" PointX="14.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.IssueTB" Width="1.5" PointX="12" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.PollingTB" Width="1.5" PointX="14.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.ProjectTB" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.ProjectTeamsTB" Width="1.5" PointX="7.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.RoleTB" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.TaskAllocationTB" Width="1.5" PointX="15" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.TasksTB" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.TeamMemberTB" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.UserTB" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="ProjectFlowModel.FK_CommentForIssueTB_IssueTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_IssueTB_TasksTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_IssueTB_TeamMemberTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_PollingTB_IssueTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_ProjectTB_UserTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_ProjectTeamsTB_ProjectTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_TasksTB_ProjectTeamsTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_TeamMemberTB_ProjectTeamsTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_UserTB_RoleTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocationTB_TasksTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocationTB_TeamMemberTB" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_TeamMemberTB_UserTB" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
