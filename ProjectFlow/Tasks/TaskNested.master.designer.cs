@@ -22,6 +22,33 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
+        /// addTaskBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTaskBtn;
+        
+        /// <summary>
+        /// tUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel tUpdatePanel;
+        
+        /// <summary>
+        /// tTitleLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tTitleLbl;
+        
+        /// <summary>
         /// tNameTxt control.
         /// </summary>
         /// <remarks>
@@ -65,6 +92,15 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList allocationDLL;
+        
+        /// <summary>
+        /// tSaveBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button tSaveBtn;
         
         /// <summary>
         /// MainContent control.

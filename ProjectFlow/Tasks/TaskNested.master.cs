@@ -22,5 +22,48 @@ namespace ProjectFlow.Tasks
                 allocationDLL.DataBind();
             }
         }
+
+        // Show Add Task Modal
+        private void showAddTaskModal()
+        {
+            tTitleLbl.Text = "Add Task";
+            tSaveBtn.Text = "Add";
+            tSaveBtn.Click += new EventHandler(addTask_Click);
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
+            tUpdatePanel.Update();
+        }
+
+        // Show Edit Task Modal
+        private void showEditTaskModal()
+        {
+            tTitleLbl.Text = "Update Task";
+            tSaveBtn.Text = "Update";
+            tSaveBtn.Click += new EventHandler(updateTask_Click);
+
+            // Fill Update Data
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
+            tUpdatePanel.Update();
+        }
+
+        // Show Add Modal Event
+        protected void showTaskModal_Click(object sender, EventArgs e)
+        {
+            showAddTaskModal();
+        }
+
+        // Add Task Event
+        protected void addTask_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        // Update Task Event
+        protected void updateTask_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
