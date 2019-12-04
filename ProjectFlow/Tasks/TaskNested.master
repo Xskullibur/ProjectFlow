@@ -74,6 +74,12 @@
                                         <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" />
                                     </div>
 
+                                    <%--Team Checkpoint--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Team Checkpoint" runat="server" />
+                                        <asp:DropDownList CssClass="form-control" ID="teamCheckpointDLL" runat="server"></asp:DropDownList>
+                                    </div>
+
                                     <%--Start Date--%>
                                     <div class="form-group">
                                         <asp:Label CssClass="control-label" Text="Start Date:" AssociatedControlID="tStartTxt" runat="server" />
@@ -100,6 +106,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="" runat="server" />
+                                <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" Visible="false" />
                             </div>
                         </div>
 
