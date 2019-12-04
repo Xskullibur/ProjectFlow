@@ -4,7 +4,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row-fluid">
         <div class="col-12 col-md-5 mx-auto">
-            <form runat="server">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                   <asp:TextBox CssClass="form-control" ID="emailTextBox" runat="server" placeholder="Email"></asp:TextBox>
@@ -23,7 +22,6 @@
                   </div>
               </div>
               <asp:Button CssClass="btn btn-primary" ID="submitBtn" runat="server" Text="Submit" />
-            </form>
         </div>
     </div>
 
