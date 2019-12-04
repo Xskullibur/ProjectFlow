@@ -12,11 +12,14 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class PollingTB
+    public partial class CommentForIssue
     {
-        public string pollingID { get; set; }
+        public int commentID { get; set; }
+        public string comment { get; set; }
         public string issueID { get; set; }
+        public int memberID { get; set; }
     
-        public virtual IssueTB IssueTB { get; set; }
+        public virtual Issue Issue { get; set; }
+        public virtual TeamMember TeamMember { get; set; }
     }
 }

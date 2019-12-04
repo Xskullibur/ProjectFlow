@@ -12,27 +12,27 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class TeamMemberTB
+    public partial class Task
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TeamMemberTB()
+        public Task()
         {
-            this.CommentForIssueTBs = new HashSet<CommentForIssueTB>();
-            this.IssueTBs = new HashSet<IssueTB>();
-            this.TaskAllocationTBs = new HashSet<TaskAllocationTB>();
+            this.Issues = new HashSet<Issue>();
+            this.TaskAllocations = new HashSet<TaskAllocation>();
         }
     
-        public int memberID { get; set; }
-        public int userID { get; set; }
+        public int taskID { get; set; }
+        public string taskName { get; set; }
+        public string taskDescription { get; set; }
+        public System.DateTime startDate { get; set; }
+        public System.DateTime endDate { get; set; }
         public int teamID { get; set; }
+        public Nullable<int> milestoneID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentForIssueTB> CommentForIssueTBs { get; set; }
+        public virtual ICollection<Issue> Issues { get; set; }
+        public virtual ProjectMilestone ProjectMilestone { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IssueTB> IssueTBs { get; set; }
-        public virtual ProjectTeamsTB ProjectTeamsTB { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskAllocationTB> TaskAllocationTBs { get; set; }
-        public virtual UserTB UserTB { get; set; }
+        public virtual ICollection<TaskAllocation> TaskAllocations { get; set; }
     }
 }

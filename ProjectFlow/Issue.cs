@@ -12,26 +12,26 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class TasksTB
+    public partial class Issue
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TasksTB()
+        public Issue()
         {
-            this.IssueTBs = new HashSet<IssueTB>();
-            this.TaskAllocationTBs = new HashSet<TaskAllocationTB>();
+            this.CommentForIssues = new HashSet<CommentForIssue>();
+            this.Pollings = new HashSet<Polling>();
         }
     
+        public string issueID { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public int createdBy { get; set; }
         public int taskID { get; set; }
-        public string taskName { get; set; }
-        public string taskDescription { get; set; }
-        public System.DateTime startDate { get; set; }
-        public System.DateTime endDate { get; set; }
-        public int teamID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IssueTB> IssueTBs { get; set; }
-        public virtual ProjectTeamsTB ProjectTeamsTB { get; set; }
+        public virtual ICollection<CommentForIssue> CommentForIssues { get; set; }
+        public virtual Task Task { get; set; }
+        public virtual TeamMember TeamMember { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskAllocationTB> TaskAllocationTBs { get; set; }
+        public virtual ICollection<Polling> Pollings { get; set; }
     }
 }

@@ -12,13 +12,12 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class ProjectTeamsTB
+    public partial class ProjectTeam
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectTeamsTB()
+        public ProjectTeam()
         {
-            this.TasksTBs = new HashSet<TasksTB>();
-            this.TeamMemberTBs = new HashSet<TeamMemberTB>();
+            this.TeamMembers = new HashSet<TeamMember>();
         }
     
         public int teamID { get; set; }
@@ -26,10 +25,8 @@ namespace ProjectFlow
         public string teamDescription { get; set; }
         public int projectID { get; set; }
     
-        public virtual ProjectTB ProjectTB { get; set; }
+        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TasksTB> TasksTBs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamMemberTB> TeamMemberTBs { get; set; }
+        public virtual ICollection<TeamMember> TeamMembers { get; set; }
     }
 }

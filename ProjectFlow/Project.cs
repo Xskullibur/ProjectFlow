@@ -12,27 +12,24 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class UserTB
+    public partial class Project
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserTB()
+        public Project()
         {
-            this.ProjectTBs = new HashSet<ProjectTB>();
-            this.TeamMemberTBs = new HashSet<TeamMemberTB>();
+            this.ProjectMilestones = new HashSet<ProjectMilestone>();
+            this.ProjectTeams = new HashSet<ProjectTeam>();
         }
     
-        public int userID { get; set; }
-        public string username { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public int roleID { get; set; }
+        public int projectID { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public int tutorID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectTB> ProjectTBs { get; set; }
-        public virtual RoleTB RoleTB { get; set; }
+        public virtual ICollection<ProjectMilestone> ProjectMilestones { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamMemberTB> TeamMemberTBs { get; set; }
+        public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
     }
 }

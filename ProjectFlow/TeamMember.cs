@@ -12,26 +12,27 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class IssueTB
+    public partial class TeamMember
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IssueTB()
+        public TeamMember()
         {
-            this.CommentForIssueTBs = new HashSet<CommentForIssueTB>();
-            this.PollingTBs = new HashSet<PollingTB>();
+            this.CommentForIssues = new HashSet<CommentForIssue>();
+            this.Issues = new HashSet<Issue>();
+            this.TaskAllocations = new HashSet<TaskAllocation>();
         }
     
-        public string issueID { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public int createdBy { get; set; }
-        public int taskID { get; set; }
+        public int memberID { get; set; }
+        public int userID { get; set; }
+        public int teamID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentForIssueTB> CommentForIssueTBs { get; set; }
-        public virtual TasksTB TasksTB { get; set; }
-        public virtual TeamMemberTB TeamMemberTB { get; set; }
+        public virtual ICollection<CommentForIssue> CommentForIssues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PollingTB> PollingTBs { get; set; }
+        public virtual ICollection<Issue> Issues { get; set; }
+        public virtual ProjectTeam ProjectTeam { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskAllocation> TaskAllocations { get; set; }
+        public virtual User User { get; set; }
     }
 }
