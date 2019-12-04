@@ -17,7 +17,9 @@ namespace ProjectFlow
         public int commentID { get; set; }
         public string comment { get; set; }
         public string issueID { get; set; }
+        public int memberID { get; set; }
     
         public virtual IssueTB IssueTB { get; set; }
+        public virtual TeamMemberTB TeamMemberTB { get; set; }
     }
 }

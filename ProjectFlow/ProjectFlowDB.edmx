@@ -12,6 +12,7 @@
           <Property Name="commentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="comment" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="issueID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memberID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IssueTB">
           <Key>
@@ -69,7 +70,7 @@
           </Key>
           <Property Name="taskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="taskName" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="taskDescription" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="taskDescription" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="startDate" Type="datetime" Nullable="false" />
           <Property Name="endDate" Type="datetime" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
@@ -103,6 +104,18 @@
             </Principal>
             <Dependent Role="CommentForIssueTB">
               <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentForIssueTB_TeamMemberTB">
+          <End Role="TeamMemberTB" Type="Self.TeamMemberTB" Multiplicity="1" />
+          <End Role="CommentForIssueTB" Type="Self.CommentForIssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMemberTB">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="CommentForIssueTB">
+              <PropertyRef Name="memberID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -253,6 +266,10 @@
             <End Role="IssueTB" EntitySet="IssueTB" />
             <End Role="CommentForIssueTB" EntitySet="CommentForIssueTB" />
           </AssociationSet>
+          <AssociationSet Name="FK_CommentForIssueTB_TeamMemberTB" Association="Self.FK_CommentForIssueTB_TeamMemberTB">
+            <End Role="TeamMemberTB" EntitySet="TeamMemberTB" />
+            <End Role="CommentForIssueTB" EntitySet="CommentForIssueTB" />
+          </AssociationSet>
           <AssociationSet Name="FK_IssueTB_TasksTB" Association="Self.FK_IssueTB_TasksTB">
             <End Role="TasksTB" EntitySet="TasksTB" />
             <End Role="IssueTB" EntitySet="IssueTB" />
@@ -310,7 +327,9 @@
           <Property Name="commentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="issueID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memberID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="IssueTB" Relationship="Self.FK_CommentForIssueTB_IssueTB" FromRole="CommentForIssueTB" ToRole="IssueTB" />
+          <NavigationProperty Name="TeamMemberTB" Relationship="Self.FK_CommentForIssueTB_TeamMemberTB" FromRole="CommentForIssueTB" ToRole="TeamMemberTB" />
         </EntityType>
         <EntityType Name="IssueTB">
           <Key>
@@ -381,7 +400,7 @@
           </Key>
           <Property Name="taskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="taskName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="taskDescription" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="taskDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
@@ -396,6 +415,7 @@
           <Property Name="memberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CommentForIssueTBs" Relationship="Self.FK_CommentForIssueTB_TeamMemberTB" FromRole="TeamMemberTB" ToRole="CommentForIssueTB" />
           <NavigationProperty Name="IssueTBs" Relationship="Self.FK_IssueTB_TeamMemberTB" FromRole="TeamMemberTB" ToRole="IssueTB" />
           <NavigationProperty Name="ProjectTeamsTB" Relationship="Self.FK_TeamMemberTB_ProjectTeamsTB" FromRole="TeamMemberTB" ToRole="ProjectTeamsTB" />
           <NavigationProperty Name="TaskAllocationTBs" Relationship="Self.FK_TaskAllocationTB_TeamMemberTB" FromRole="TeamMemberTB" ToRole="TaskAllocationTB" />
@@ -425,6 +445,18 @@
             </Principal>
             <Dependent Role="CommentForIssueTB">
               <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentForIssueTB_TeamMemberTB">
+          <End Role="TeamMemberTB" Type="Self.TeamMemberTB" Multiplicity="1" />
+          <End Role="CommentForIssueTB" Type="Self.CommentForIssueTB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMemberTB">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="CommentForIssueTB">
+              <PropertyRef Name="memberID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -575,6 +607,10 @@
             <End Role="IssueTB" EntitySet="IssueTBs" />
             <End Role="CommentForIssueTB" EntitySet="CommentForIssueTBs" />
           </AssociationSet>
+          <AssociationSet Name="FK_CommentForIssueTB_TeamMemberTB" Association="Self.FK_CommentForIssueTB_TeamMemberTB">
+            <End Role="TeamMemberTB" EntitySet="TeamMemberTBs" />
+            <End Role="CommentForIssueTB" EntitySet="CommentForIssueTBs" />
+          </AssociationSet>
           <AssociationSet Name="FK_IssueTB_TasksTB" Association="Self.FK_IssueTB_TasksTB">
             <End Role="TasksTB" EntitySet="TasksTBs" />
             <End Role="IssueTB" EntitySet="IssueTBs" />
@@ -632,6 +668,7 @@
                 <ScalarProperty Name="commentID" ColumnName="commentID" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="issueID" ColumnName="issueID" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

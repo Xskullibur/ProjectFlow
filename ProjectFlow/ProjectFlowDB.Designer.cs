@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Documents\Education\Diploma(NYP)\Year 2.2\EADP\projectflow\ProjectFlow\ProjectFlow.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Documents\Year 2.2\EADP\projectflow\ProjectFlow\ProjectFlowDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
