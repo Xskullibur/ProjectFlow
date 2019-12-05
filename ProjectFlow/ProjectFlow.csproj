@@ -325,6 +325,9 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
+    <Compile Include="Milestone.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Polling.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -345,9 +348,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectMilestone.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ProjectTeam.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -426,7 +426,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
-    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

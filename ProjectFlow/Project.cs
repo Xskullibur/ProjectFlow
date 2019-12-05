@@ -17,17 +17,17 @@ namespace ProjectFlow
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
         {
-            this.ProjectMilestones = new HashSet<ProjectMilestone>();
+            this.Milestones = new HashSet<Milestone>();
             this.ProjectTeams = new HashSet<ProjectTeam>();
         }
     
-        public int projectID { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public string projectID { get; set; }
+        public string projectName { get; set; }
+        public string projectDescription { get; set; }
         public int tutorID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectMilestone> ProjectMilestones { get; set; }
+        public virtual ICollection<Milestone> Milestones { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }

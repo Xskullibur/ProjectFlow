@@ -15,7 +15,7 @@ namespace ProjectFlow
     public partial class TaskAllocation
     {
         public int ID { get; set; }
-        public int memberID { get; set; }
+        public int assignedTo { get; set; }
         public int taskID { get; set; }
     
         public virtual Task Task { get; set; }

@@ -12,22 +12,23 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class ProjectMilestone
+    public partial class Milestone
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectMilestone()
+        public Milestone()
         {
             this.Tasks = new HashSet<Task>();
         }
     
         public int milestoneID { get; set; }
-        public string milestone { get; set; }
-        public string description { get; set; }
+        public string milestoneName { get; set; }
         public System.DateTime startDate { get; set; }
         public System.DateTime endDate { get; set; }
-        public int projectID { get; set; }
+        public string projectID { get; set; }
+        public Nullable<int> teamID { get; set; }
     
         public virtual Project Project { get; set; }
+        public virtual ProjectTeam ProjectTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
     }

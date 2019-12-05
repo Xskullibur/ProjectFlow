@@ -21,7 +21,7 @@ namespace ProjectFlow
             this.Pollings = new HashSet<Polling>();
         }
     
-        public string issueID { get; set; }
+        public int issueID { get; set; }
         public string title { get; set; }
         public string description { get; set; }
         public int createdBy { get; set; }
