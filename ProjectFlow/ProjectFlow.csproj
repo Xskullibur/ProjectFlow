@@ -108,15 +108,15 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
-    <Content Include="ProjectFlowDB.Context.tt">
+    <Content Include="ProjectFlowModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
-      <LastGenOutput>ProjectFlowDB.Context.cs</LastGenOutput>
+      <DependentUpon>ProjectFlowModel.edmx</DependentUpon>
+      <LastGenOutput>ProjectFlowModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ProjectFlowDB.tt">
+    <Content Include="ProjectFlowModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
-      <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
+      <DependentUpon>ProjectFlowModel.edmx</DependentUpon>
+      <LastGenOutput>ProjectFlowModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -260,12 +260,12 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <EntityDeploy Include="ProjectFlowDB.edmx">
+    <EntityDeploy Include="ProjectFlowModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProjectFlowModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="ProjectFlowDB.edmx.diagram">
-      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
+    <Content Include="ProjectFlowModel.edmx.diagram">
+      <DependentUpon>ProjectFlowModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
@@ -289,7 +289,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="BusinessLogic\TaskLogic.cs" />
     <Compile Include="CommentForIssue.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -302,7 +302,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Issue.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -325,36 +325,36 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
+    <Compile Include="Milestone.cs">
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Polling.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Project.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProjectFlowDB.Context.cs">
+    <Compile Include="ProjectFlowModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlowDB.Context.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProjectFlowDB.cs">
+    <Compile Include="ProjectFlowModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProjectFlowDB.Designer.cs">
+    <Compile Include="ProjectFlowModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectMilestone.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ProjectTeam.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ServicesWithContent.Master.cs">
       <DependentUpon>ServicesWithContent.Master</DependentUpon>
@@ -375,11 +375,17 @@
       <DependentUpon>Tasks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Status.cs">
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student.cs">
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Task.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TaskAllocation.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskNested.master.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
@@ -396,10 +402,10 @@
       <DependentUpon>tDetailedView.aspx</DependentUpon>
     </Compile>
     <Compile Include="TeamMember.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    <Compile Include="Tutor.cs">
+      <DependentUpon>ProjectFlowModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

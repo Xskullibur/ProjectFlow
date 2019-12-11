@@ -14,8 +14,8 @@ namespace ProjectFlow
     
     public partial class Polling
     {
-        public string pollingID { get; set; }
-        public string issueID { get; set; }
+        public int pollingID { get; set; }
+        public int issueID { get; set; }
     
         public virtual Issue Issue { get; set; }
     }
