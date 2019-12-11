@@ -12,26 +12,29 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class TasksTB
+    public partial class TeamMember
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TasksTB()
+        public TeamMember()
         {
-            this.IssueTBs = new HashSet<IssueTB>();
-            this.TaskAllocationTBs = new HashSet<TaskAllocationTB>();
+            this.CommentForIssues = new HashSet<CommentForIssue>();
+            this.Issues = new HashSet<Issue>();
+            this.TaskAllocations = new HashSet<TaskAllocation>();
         }
     
-        public int taskID { get; set; }
-        public string taskName { get; set; }
-        public string taskDescription { get; set; }
-        public System.DateTime startDate { get; set; }
-        public System.DateTime endDate { get; set; }
+        public int memberID { get; set; }
+        public int studentID { get; set; }
         public int teamID { get; set; }
+        public int roleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IssueTB> IssueTBs { get; set; }
-        public virtual ProjectTeamsTB ProjectTeamsTB { get; set; }
+        public virtual ICollection<CommentForIssue> CommentForIssues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskAllocationTB> TaskAllocationTBs { get; set; }
+        public virtual ICollection<Issue> Issues { get; set; }
+        public virtual ProjectTeam ProjectTeam { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual Student Student { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskAllocation> TaskAllocations { get; set; }
     }
 }

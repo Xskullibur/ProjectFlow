@@ -25,15 +25,18 @@ namespace ProjectFlow
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CommentForIssueTB> CommentForIssueTBs { get; set; }
-        public virtual DbSet<IssueTB> IssueTBs { get; set; }
-        public virtual DbSet<PollingTB> PollingTBs { get; set; }
-        public virtual DbSet<ProjectTB> ProjectTBs { get; set; }
-        public virtual DbSet<ProjectTeamsTB> ProjectTeamsTBs { get; set; }
-        public virtual DbSet<RoleTB> RoleTBs { get; set; }
-        public virtual DbSet<TaskAllocationTB> TaskAllocationTBs { get; set; }
-        public virtual DbSet<TasksTB> TasksTBs { get; set; }
-        public virtual DbSet<TeamMemberTB> TeamMemberTBs { get; set; }
-        public virtual DbSet<UserTB> UserTBs { get; set; }
+        public virtual DbSet<CommentForIssue> CommentForIssues { get; set; }
+        public virtual DbSet<Issue> Issues { get; set; }
+        public virtual DbSet<Milestone> Milestones { get; set; }
+        public virtual DbSet<Polling> Pollings { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectTeam> ProjectTeams { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<TaskAllocation> TaskAllocations { get; set; }
+        public virtual DbSet<TeamMember> TeamMembers { get; set; }
+        public virtual DbSet<Tutor> Tutors { get; set; }
     }
 }

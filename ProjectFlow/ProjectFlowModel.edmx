@@ -1,0 +1,1026 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CommentForIssue">
+          <Key>
+            <PropertyRef Name="commentID" />
+          </Key>
+          <Property Name="commentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comment" Type="int" Nullable="false" />
+          <Property Name="createdBy" Type="int" Nullable="false" />
+          <Property Name="issueID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="issueID" />
+          </Key>
+          <Property Name="issueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="createdBy" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Milestone">
+          <Key>
+            <PropertyRef Name="milestoneID" />
+          </Key>
+          <Property Name="milestoneID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="milestoneName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Polling">
+          <Key>
+            <PropertyRef Name="pollingID" />
+          </Key>
+          <Property Name="pollingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="issueID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="projectID" />
+          </Key>
+          <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="projectName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="projectDescription" Type="varchar" MaxLength="255" />
+          <Property Name="tutorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectTeam">
+          <Key>
+            <PropertyRef Name="teamID" />
+          </Key>
+          <Property Name="teamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="teamName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="teamDescription" Type="varchar" MaxLength="255" />
+          <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="120" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentID" />
+          </Key>
+          <Property Name="studentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="taskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="taskName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="taskDescription" Type="varchar" MaxLength="255" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="milestoneID" Type="int" />
+          <Property Name="statusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaskAllocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="assignedTo" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamMember">
+          <Key>
+            <PropertyRef Name="memberID" />
+          </Key>
+          <Property Name="memberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="roleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tutor">
+          <Key>
+            <PropertyRef Name="tutorID" />
+          </Key>
+          <Property Name="tutorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CommentForIssue_Issue">
+          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
+          <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="CommentForIssue">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentForIssue_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="CommentForIssue">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Milestone_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Milestone">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Milestone_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Milestone">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polling_Issue">
+          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
+          <End Role="Polling" Type="Self.Polling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="Polling">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Tutor">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="tutorID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="tutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTeam_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="ProjectTeam">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Milestone">
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Milestone">
+              <PropertyRef Name="milestoneID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="milestoneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="statusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskAllocation_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="TaskAllocation" Type="Self.TaskAllocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="TaskAllocation">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskAllocation_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="TaskAllocation" Type="Self.TaskAllocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="TaskAllocation">
+              <PropertyRef Name="assignedTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMember_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="TeamMember">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMember_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="roleID" />
+            </Principal>
+            <Dependent Role="TeamMember">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMember_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="TeamMember">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectFlowModelStoreContainer">
+          <EntitySet Name="CommentForIssue" EntityType="Self.CommentForIssue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Milestone" EntityType="Self.Milestone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Polling" EntityType="Self.Polling" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectTeam" EntityType="Self.ProjectTeam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskAllocation" EntityType="Self.TaskAllocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamMember" EntityType="Self.TeamMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
+            <End Role="Issue" EntitySet="Issue" />
+            <End Role="CommentForIssue" EntitySet="CommentForIssue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentForIssue_TeamMember" Association="Self.FK_CommentForIssue_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMember" />
+            <End Role="CommentForIssue" EntitySet="CommentForIssue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Task" Association="Self.FK_Issue_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_TeamMember" Association="Self.FK_Issue_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMember" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Milestone_Project" Association="Self.FK_Milestone_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Milestone" EntitySet="Milestone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Milestone_ProjectTeam" Association="Self.FK_Milestone_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+            <End Role="Milestone" EntitySet="Milestone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Polling_Issue" Association="Self.FK_Polling_Issue">
+            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Polling" EntitySet="Polling" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Tutor" Association="Self.FK_Project_Tutor">
+            <End Role="Tutor" EntitySet="Tutor" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTeam_Project" Association="Self.FK_ProjectTeam_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Milestone" Association="Self.FK_Task_Milestone">
+            <End Role="Milestone" EntitySet="Milestone" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_ProjectTeam" Association="Self.FK_Task_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Status" Association="Self.FK_Task_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskAllocation_Task" Association="Self.FK_TaskAllocation_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="TaskAllocation" EntitySet="TaskAllocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskAllocation_TeamMember" Association="Self.FK_TaskAllocation_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMember" />
+            <End Role="TaskAllocation" EntitySet="TaskAllocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMember_ProjectTeam" Association="Self.FK_TeamMember_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+            <End Role="TeamMember" EntitySet="TeamMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMember_Role" Association="Self.FK_TeamMember_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="TeamMember" EntitySet="TeamMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMember_Student" Association="Self.FK_TeamMember_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="TeamMember" EntitySet="TeamMember" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CommentForIssue">
+          <Key>
+            <PropertyRef Name="commentID" />
+          </Key>
+          <Property Name="commentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comment" Type="Int32" Nullable="false" />
+          <Property Name="createdBy" Type="Int32" Nullable="false" />
+          <Property Name="issueID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Issue" Relationship="Self.FK_CommentForIssue_Issue" FromRole="CommentForIssue" ToRole="Issue" />
+          <NavigationProperty Name="TeamMember" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="CommentForIssue" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="issueID" />
+          </Key>
+          <Property Name="issueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdBy" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_Issue" FromRole="Issue" ToRole="CommentForIssue" />
+          <NavigationProperty Name="Task" Relationship="Self.FK_Issue_Task" FromRole="Issue" ToRole="Task" />
+          <NavigationProperty Name="TeamMember" Relationship="Self.FK_Issue_TeamMember" FromRole="Issue" ToRole="TeamMember" />
+          <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_Issue" FromRole="Issue" ToRole="Polling" />
+        </EntityType>
+        <EntityType Name="Milestone">
+          <Key>
+            <PropertyRef Name="milestoneID" />
+          </Key>
+          <Property Name="milestoneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="milestoneName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_Milestone_Project" FromRole="Milestone" ToRole="Project" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Milestone_ProjectTeam" FromRole="Milestone" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Milestone" FromRole="Milestone" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="Polling">
+          <Key>
+            <PropertyRef Name="pollingID" />
+          </Key>
+          <Property Name="pollingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="issueID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Issue" Relationship="Self.FK_Polling_Issue" FromRole="Polling" ToRole="Issue" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="projectID" />
+          </Key>
+          <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="projectName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="projectDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tutorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_Project" FromRole="Project" ToRole="Milestone" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK_Project_Tutor" FromRole="Project" ToRole="Tutor" />
+          <NavigationProperty Name="ProjectTeams" Relationship="Self.FK_ProjectTeam_Project" FromRole="Project" ToRole="ProjectTeam" />
+        </EntityType>
+        <EntityType Name="ProjectTeam">
+          <Key>
+            <PropertyRef Name="teamID" />
+          </Key>
+          <Property Name="teamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="teamName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="teamDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_ProjectTeam" FromRole="ProjectTeam" ToRole="Milestone" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTeam_Project" FromRole="ProjectTeam" ToRole="Project" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
+          <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Role" FromRole="Role" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status1" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Status" FromRole="Status" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentID" />
+          </Key>
+          <Property Name="studentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Student" FromRole="Student" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="taskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="taskName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="taskDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="milestoneID" Type="Int32" />
+          <Property Name="statusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_Task" FromRole="Task" ToRole="Issue" />
+          <NavigationProperty Name="Milestone" Relationship="Self.FK_Task_Milestone" FromRole="Task" ToRole="Milestone" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Task_ProjectTeam" FromRole="Task" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Task_Status" FromRole="Task" ToRole="Status" />
+          <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_Task" FromRole="Task" ToRole="TaskAllocation" />
+        </EntityType>
+        <EntityType Name="TaskAllocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="assignedTo" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Task" Relationship="Self.FK_TaskAllocation_Task" FromRole="TaskAllocation" ToRole="Task" />
+          <NavigationProperty Name="TeamMember" Relationship="Self.FK_TaskAllocation_TeamMember" FromRole="TaskAllocation" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="TeamMember">
+          <Key>
+            <PropertyRef Name="memberID" />
+          </Key>
+          <Property Name="memberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="roleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="TeamMember" ToRole="CommentForIssue" />
+          <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_TeamMember" FromRole="TeamMember" ToRole="Issue" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="TeamMember" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_TeamMember_Role" FromRole="TeamMember" ToRole="Role" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_TeamMember_Student" FromRole="TeamMember" ToRole="Student" />
+          <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_TeamMember" FromRole="TeamMember" ToRole="TaskAllocation" />
+        </EntityType>
+        <EntityType Name="Tutor">
+          <Key>
+            <PropertyRef Name="tutorID" />
+          </Key>
+          <Property Name="tutorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Tutor" FromRole="Tutor" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_CommentForIssue_Issue">
+          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
+          <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="CommentForIssue">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentForIssue_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="CommentForIssue">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polling_Issue">
+          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
+          <End Role="Polling" Type="Self.Polling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="Polling">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Milestone_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Milestone">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Milestone_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Milestone">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Milestone">
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Milestone">
+              <PropertyRef Name="milestoneID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="milestoneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Tutor">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="tutorID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="tutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTeam_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="ProjectTeam">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMember_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="TeamMember">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMember_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="roleID" />
+            </Principal>
+            <Dependent Role="TeamMember">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="statusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMember_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="TeamMember">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskAllocation_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="TaskAllocation" Type="Self.TaskAllocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="TaskAllocation">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskAllocation_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="TaskAllocation" Type="Self.TaskAllocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="TaskAllocation">
+              <PropertyRef Name="assignedTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectFlowEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CommentForIssues" EntityType="Self.CommentForIssue" />
+          <EntitySet Name="Issues" EntityType="Self.Issue" />
+          <EntitySet Name="Milestones" EntityType="Self.Milestone" />
+          <EntitySet Name="Pollings" EntityType="Self.Polling" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="ProjectTeams" EntityType="Self.ProjectTeam" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="TaskAllocations" EntityType="Self.TaskAllocation" />
+          <EntitySet Name="TeamMembers" EntityType="Self.TeamMember" />
+          <EntitySet Name="Tutors" EntityType="Self.Tutor" />
+          <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
+            <End Role="Issue" EntitySet="Issues" />
+            <End Role="CommentForIssue" EntitySet="CommentForIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentForIssue_TeamMember" Association="Self.FK_CommentForIssue_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+            <End Role="CommentForIssue" EntitySet="CommentForIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Task" Association="Self.FK_Issue_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Issue" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_TeamMember" Association="Self.FK_Issue_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+            <End Role="Issue" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Polling_Issue" Association="Self.FK_Polling_Issue">
+            <End Role="Issue" EntitySet="Issues" />
+            <End Role="Polling" EntitySet="Pollings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Milestone_Project" Association="Self.FK_Milestone_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Milestone" EntitySet="Milestones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Milestone_ProjectTeam" Association="Self.FK_Milestone_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="Milestone" EntitySet="Milestones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Milestone" Association="Self.FK_Task_Milestone">
+            <End Role="Milestone" EntitySet="Milestones" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Tutor" Association="Self.FK_Project_Tutor">
+            <End Role="Tutor" EntitySet="Tutors" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTeam_Project" Association="Self.FK_ProjectTeam_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_ProjectTeam" Association="Self.FK_Task_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMember_ProjectTeam" Association="Self.FK_TeamMember_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMember_Role" Association="Self.FK_TeamMember_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Status" Association="Self.FK_Task_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMember_Student" Association="Self.FK_TeamMember_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskAllocation_Task" Association="Self.FK_TaskAllocation_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="TaskAllocation" EntitySet="TaskAllocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskAllocation_TeamMember" Association="Self.FK_TaskAllocation_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+            <End Role="TaskAllocation" EntitySet="TaskAllocations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectFlowModelStoreContainer" CdmEntityContainer="ProjectFlowEntities">
+          <EntitySetMapping Name="CommentForIssues">
+            <EntityTypeMapping TypeName="ProjectFlowModel.CommentForIssue">
+              <MappingFragment StoreEntitySet="CommentForIssue">
+                <ScalarProperty Name="commentID" ColumnName="commentID" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Issues">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Issue">
+              <MappingFragment StoreEntitySet="Issue">
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Milestones">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Milestone">
+              <MappingFragment StoreEntitySet="Milestone">
+                <ScalarProperty Name="milestoneID" ColumnName="milestoneID" />
+                <ScalarProperty Name="milestoneName" ColumnName="milestoneName" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pollings">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Polling">
+              <MappingFragment StoreEntitySet="Polling">
+                <ScalarProperty Name="pollingID" ColumnName="pollingID" />
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="projectName" ColumnName="projectName" />
+                <ScalarProperty Name="projectDescription" ColumnName="projectDescription" />
+                <ScalarProperty Name="tutorID" ColumnName="tutorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTeams">
+            <EntityTypeMapping TypeName="ProjectFlowModel.ProjectTeam">
+              <MappingFragment StoreEntitySet="ProjectTeam">
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="teamName" ColumnName="teamName" />
+                <ScalarProperty Name="teamDescription" ColumnName="teamDescription" />
+                <ScalarProperty Name="projectID" ColumnName="projectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="role1" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="status1" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="taskName" ColumnName="taskName" />
+                <ScalarProperty Name="taskDescription" ColumnName="taskDescription" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="milestoneID" ColumnName="milestoneID" />
+                <ScalarProperty Name="statusID" ColumnName="statusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskAllocations">
+            <EntityTypeMapping TypeName="ProjectFlowModel.TaskAllocation">
+              <MappingFragment StoreEntitySet="TaskAllocation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="assignedTo" ColumnName="assignedTo" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamMembers">
+            <EntityTypeMapping TypeName="ProjectFlowModel.TeamMember">
+              <MappingFragment StoreEntitySet="TeamMember">
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tutors">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Tutor">
+              <MappingFragment StoreEntitySet="Tutor">
+                <ScalarProperty Name="tutorID" ColumnName="tutorID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
