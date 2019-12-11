@@ -12,14 +12,13 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class CommentForIssueTB
+    public partial class TaskAllocation
     {
-        public int commentID { get; set; }
-        public string comment { get; set; }
-        public string issueID { get; set; }
-        public int memberID { get; set; }
+        public int ID { get; set; }
+        public int assignedTo { get; set; }
+        public int taskID { get; set; }
     
-        public virtual IssueTB IssueTB { get; set; }
-        public virtual TeamMemberTB TeamMemberTB { get; set; }
+        public virtual Task Task { get; set; }
+        public virtual TeamMember TeamMember { get; set; }
     }
 }

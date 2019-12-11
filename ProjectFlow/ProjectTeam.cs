@@ -12,27 +12,27 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class TeamMemberTB
+    public partial class ProjectTeam
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TeamMemberTB()
+        public ProjectTeam()
         {
-            this.CommentForIssueTBs = new HashSet<CommentForIssueTB>();
-            this.IssueTBs = new HashSet<IssueTB>();
-            this.TaskAllocationTBs = new HashSet<TaskAllocationTB>();
+            this.Milestones = new HashSet<Milestone>();
+            this.Tasks = new HashSet<Task>();
+            this.TeamMembers = new HashSet<TeamMember>();
         }
     
-        public int memberID { get; set; }
-        public int userID { get; set; }
         public int teamID { get; set; }
+        public string teamName { get; set; }
+        public string teamDescription { get; set; }
+        public string projectID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentForIssueTB> CommentForIssueTBs { get; set; }
+        public virtual ICollection<Milestone> Milestones { get; set; }
+        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IssueTB> IssueTBs { get; set; }
-        public virtual ProjectTeamsTB ProjectTeamsTB { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskAllocationTB> TaskAllocationTBs { get; set; }
-        public virtual UserTB UserTB { get; set; }
+        public virtual ICollection<TeamMember> TeamMembers { get; set; }
     }
 }

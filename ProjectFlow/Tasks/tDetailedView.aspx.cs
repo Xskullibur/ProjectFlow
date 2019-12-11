@@ -12,14 +12,11 @@ namespace ProjectFlow.Tasks
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            TaskDataAccess taskDataAccess = new TaskDataAccess();
-            taskView.DataSource = taskDataAccess.getTaskByMemberId(1);
-
-            //taskView.DataSource = new List<string>()
-            //{
-            //    "hellsad",
-            //    "asdas","asdas","asdasd","asdasd"
-            //};
+            taskView.DataSource = new List<string>()
+            {
+                "hellsad",
+                "asdas","asdas","asdasd","asdasd"
+            };
             taskView.DataBind();
         }
     }
