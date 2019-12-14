@@ -15,15 +15,11 @@ namespace ProjectFlow
     
     public partial class ProjectFlowEntities : DbContext
     {
-
-        const string PASSWORD = "Password123";
-
         public ProjectFlowEntities()
             : base("name=ProjectFlowEntities")
         {
-            Database.Connection.ConnectionString = $"metadata=res://*/ProjectFlowModel.csdl|res://*/ProjectFlowModel.ssdl|res://*/ProjectFlowModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=192.168.99.100;initial catalog=ProjectFlow;user id=sa;password={PASSWORD}MultipleActiveResultSets=True;App=EntityFramework&quot;";
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,12 +13,11 @@ namespace ProjectFlow.Tasks
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            taskView.DataSource = new List<string>()
-            {
-                "hellsad",
-                "asdas","asdas","asdasd","asdasd"
-            };
-            taskView.DataBind();
+            TaskBLL taskBLL = new TaskBLL();
+            
+            taskGrid.DataSource = taskBLL.GetTasksByTeamId(2);
+            taskGrid.DataBind();
+
         }
     }
 }

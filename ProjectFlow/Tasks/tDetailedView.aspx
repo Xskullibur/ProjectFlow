@@ -14,7 +14,7 @@
                 Detailed View
 
                 <div class="mdc-data-table">  
-                    <asp:GridView ID="taskView" runat="server" >
+                    <asp:GridView ID="taskGrid" runat="server" >
                     </asp:GridView>
                 </div>
             </div>
