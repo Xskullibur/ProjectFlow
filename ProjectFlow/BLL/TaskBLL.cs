@@ -6,13 +6,13 @@ using System.Web;
 
 namespace ProjectFlow.BLL
 {
-    public class TaskBLL  : Task
+    public class TaskBLL
     {
 
         public List<object> GetTasksByTeamId(int id)
         {
             TaskDAO taskDAO = new TaskDAO();
-            var tasks = taskDAO.getTasksByTeamId(id).ToList();
+            var tasks = taskDAO.getTasksByTeamID(id).ToList();
 
             return tasks;
         }

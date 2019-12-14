@@ -67,13 +67,13 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tDescTxt;
         
         /// <summary>
-        /// teamCheckpointDLL control.
+        /// teamCheckpointDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList teamCheckpointDLL;
+        protected global::System.Web.UI.WebControls.DropDownList teamCheckpointDDL;
         
         /// <summary>
         /// tStartTxt control.
@@ -94,13 +94,13 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tEndTxt;
         
         /// <summary>
-        /// allocationDLL control.
+        /// allocationDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList allocationDLL;
+        protected global::System.Web.UI.WebControls.DropDownList allocationDDL;
         
         /// <summary>
         /// tSaveBtn control.

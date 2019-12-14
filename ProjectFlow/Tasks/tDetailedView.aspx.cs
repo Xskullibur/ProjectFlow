@@ -11,12 +11,14 @@ namespace ProjectFlow.Tasks
 {
     public partial class tDetailedView : System.Web.UI.Page
     {
+
+        private const int TEST_TEAM_ID = 2;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
             TaskBLL taskBLL = new TaskBLL();
             
-            taskGrid.DataSource = taskBLL.GetTasksByTeamId(2);
+            taskGrid.DataSource = taskBLL.GetTasksByTeamId(TEST_TEAM_ID);
             taskGrid.DataBind();
 
             if (taskGrid.Rows.Count > 0)

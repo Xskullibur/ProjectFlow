@@ -6,15 +6,10 @@ using System.Web;
 namespace ProjectFlow.DAO
 {
 
-    public class GridViewTask
-    {
-
-    }
-
     public class TaskDAO
     {
 
-        public IEnumerable<object> getTasksByTeamId(int teamID)
+        public IEnumerable<object> getTasksByTeamID(int teamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
