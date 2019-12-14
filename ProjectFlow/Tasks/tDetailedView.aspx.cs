@@ -1,6 +1,7 @@
 ﻿using ProjectFlow.BLL;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,6 +19,13 @@ namespace ProjectFlow.Tasks
             taskGrid.DataSource = taskBLL.GetTasksByTeamId(2);
             taskGrid.DataBind();
 
+            if (taskGrid.Rows.Count > 0)
+            {
+                taskGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
+                taskGrid.UseAccessibleHeader = true;
+            }
+
         }
+
     }
 }

@@ -7,16 +7,17 @@
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container">
+    <div class="container py-2">
 
         <div class="row">
             <div class="col">
-                Detailed View
 
-                <div class="mdc-data-table">  
-                    <asp:GridView ID="taskGrid" runat="server" >
+                <div>
+                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-striped table-bordered" > 
+                        <HeaderStyle CssClass="thead-dark" />
                     </asp:GridView>
                 </div>
+
             </div>
         </div>
 
