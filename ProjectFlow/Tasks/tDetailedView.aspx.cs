@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,12 +14,18 @@ namespace ProjectFlow.Tasks
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            taskView.DataSource = new List<string>()
+            TaskBLL taskBLL = new TaskBLL();
+            
+            taskGrid.DataSource = taskBLL.GetTasksByTeamId(2);
+            taskGrid.DataBind();
+
+            if (taskGrid.Rows.Count > 0)
             {
-                "hellsad",
-                "asdas","asdas","asdasd","asdasd"
-            };
-            taskView.DataBind();
+                taskGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
+                taskGrid.UseAccessibleHeader = true;
+            }
+
         }
+
     }
 }
