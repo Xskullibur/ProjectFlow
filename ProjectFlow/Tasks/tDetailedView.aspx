@@ -13,8 +13,8 @@
             <div class="col">
 
                 <div>
-                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-striped table-bordered" > 
-                        <HeaderStyle CssClass="thead-dark" />
+                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" > 
+                        <HeaderStyle CssClass="thead-light" />
                     </asp:GridView>
                 </div>
 
