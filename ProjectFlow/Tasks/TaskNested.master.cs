@@ -19,11 +19,11 @@ namespace ProjectFlow.Tasks
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
                 var memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
 
-                allocationDDL.DataSource = memberList;
-                allocationDDL.DataTextField = "Value";
-                allocationDDL.DataValueField = "Key";
+                allocationList.DataSource = memberList;
+                allocationList.DataTextField = "Value";
+                allocationList.DataValueField = "Key";
 
-                allocationDDL.DataBind();
+                allocationList.DataBind();
             }
         }
 
@@ -61,7 +61,7 @@ namespace ProjectFlow.Tasks
         // Add Task Event
         protected void addTask_Click(object sender, EventArgs e)
         {
-            var allocations = allocationDDL.SelectedValue;
+            var allocations = allocationList.GetSelectedIndices();
         }
 
         // Update Task Event

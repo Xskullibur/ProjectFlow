@@ -74,10 +74,10 @@
                                         <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" />
                                     </div>
 
-                                    <%--Team Checkpoint--%>
+                                    <%--Milestone--%>
                                     <div class="form-group">
-                                        <asp:Label CssClass="control-label" Text="Team Checkpoint" runat="server" />
-                                        <asp:DropDownList CssClass="form-control" ID="teamCheckpointDDL" runat="server"></asp:DropDownList>
+                                        <asp:Label CssClass="control-label" Text="Milestone" runat="server" />
+                                        <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server"></asp:DropDownList>
                                     </div>
 
                                     <%--Start Date--%>
@@ -94,8 +94,8 @@
 
                                     <%--Allocation--%>
                                     <div class="form-group">
-                                        <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationDDL" runat="server" />
-                                        <asp:DropDownList CssClass="selectpicker form-control" data-live-search="true" multiple data-actions-box="true" ID="allocationDDL" runat="server"/>
+                                        <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationList" runat="server" />
+                                        <asp:ListBox ID="allocationList" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
                                     </div>
 
                                 </div>
@@ -105,7 +105,7 @@
                             <%--Footer--%>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="" runat="server" />
+                                <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="" runat="server" OnClick="addTask_Click" />
                                 <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" Visible="false" />
                             </div>
                         </div>
