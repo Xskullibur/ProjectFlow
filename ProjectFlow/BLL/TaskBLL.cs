@@ -8,6 +8,11 @@ namespace ProjectFlow.BLL
 {
     public class TaskBLL
     {
+        public bool Add(Task task)
+        {
+            TaskDAO taskDAO = new TaskDAO();
+            return taskDAO.Add(task);
+        }
 
         public List<object> GetTasksByTeamId(int id)
         {
@@ -16,6 +21,5 @@ namespace ProjectFlow.BLL
 
             return tasks;
         }
-
     }
 }

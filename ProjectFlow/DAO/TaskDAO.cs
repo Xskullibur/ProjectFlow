@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,43 @@ namespace ProjectFlow.DAO
 
     public class TaskDAO
     {
+
+        /**
+         * Insert Task
+         **/
+        public bool Add(Task task)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                // Check if object exist
+                if (task != null)
+                {
+                    try
+                    {
+                        // Add to DB Context and Save Changes
+                        dbContext.Tasks.Add(task);
+                        dbContext.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+
+        /**
+         * Get Task By Team ID
+         * (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
+         **/
 
         public IEnumerable<object> getTasksByTeamID(int teamID)
         {

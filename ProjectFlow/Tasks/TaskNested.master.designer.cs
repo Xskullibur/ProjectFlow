@@ -112,6 +112,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.ListBox allocationList;
         
         /// <summary>
+        /// statusDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList statusDDL;
+        
+        /// <summary>
         /// tSaveBtn control.
         /// </summary>
         /// <remarks>

@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,18 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+                // Status
+                StatusBLL statusBLL = new StatusBLL();
+                Dictionary<int, string> statusDict = statusBLL.Get();
+
+                statusDDL.DataSource = statusDict;
+                statusDDL.DataTextField = "Value";
+                statusDDL.DataValueField = "Key";
+
+
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
-                var memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
+                Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
 
                 allocationList.DataSource = memberList;
                 allocationList.DataTextField = "Value";
@@ -34,32 +44,9 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataValueField = "ID";
                 milestoneDDL.DataBind();
 
+                milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
+
             }
-        }
-
-        // Show Add Modal
-        private void showAddTaskModal()
-        {
-            tTitleLbl.Text = "Add Task";
-            tSaveBtn.Text = "Save";
-            tSaveAnotherBtn.Visible = true;
-            tSaveBtn.Click += new EventHandler(addTask_Click);
-
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
-            tUpdatePanel.Update();
-        }
-
-        // Show Edit Modal
-        private void showEditTaskModal()
-        {
-            tTitleLbl.Text = "Update Task";
-            tSaveBtn.Text = "Update";
-            tSaveBtn.Click += new EventHandler(updateTask_Click);
-
-            // Fill Update Data
-
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
-            tUpdatePanel.Update();
         }
 
         // Add Task OnClick Event
@@ -68,11 +55,64 @@ namespace ProjectFlow.Tasks
             showAddTaskModal();
         }
 
+        // Show Add Modal
+        private void showAddTaskModal()
+        {
+            tTitleLbl.Text = "Add Task";
+            tSaveBtn.Text = "Save";
+            tSaveAnotherBtn.Visible = true;
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
+            tUpdatePanel.Update();
+        }
+
         // Add Task Event
         protected void addTask_Click(object sender, EventArgs e)
         {
-            var allocations = allocationList.GetSelectedIndices();
+
+            Helper.ShowAlert(this, "Successfully Added Task", Helper.AlertType.Success);
+
+            //int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
+
+            //// Create Task Object
+            //Task newTask = new Task();
+            //newTask.taskName = tNameTxt.Text;
+            //newTask.taskDescription = tDescTxt.Text;
+            //newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
+            //newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
+            //newTask.teamID = TEST_TEAM_ID;
+            //newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
+
+            //if (selected_milestone != -1)
+            //{
+            //    newTask.milestoneID = selected_milestone;
+            //}
+
+            //TaskBLL taskBLL = new TaskBLL();
+
+            //if (taskBLL.Add(newTask))
+            //{
+            //    Helper.ShowAlert(this, "Successfully Added Task", Helper.AlertType.Success);
+            //}
+            //else
+            //{
+            //    Helper.ShowAlert(this, "Failed to Add Task", Helper.AlertType.Error);
+            //}
+
         }
+
+        //// Show Edit Modal
+        //private void showEditTaskModal()
+        //{
+        //    tTitleLbl.Text = "Update Task";
+        //    tSaveBtn.Text = "Update";
+        //    tSaveBtn.Click += new EventHandler(updateTask_Click);
+
+        //    // Fill Update Data
+
+        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
+        //    tUpdatePanel.Update();
+        //}
 
         // Update Task Event
         protected void updateTask_Click(object sender, EventArgs e)
