@@ -76,8 +76,9 @@
 
                                     <%--Milestone--%>
                                     <div class="form-group">
-                                        <asp:Label CssClass="control-label" Text="Milestone" runat="server" />
+                                        <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
                                         <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server"></asp:DropDownList>
+                                        <asp:HyperLink ID="addMilestoneHyperlink" CssClass="form-text text-muted" runat="server">Add new Milestone</asp:HyperLink>
                                     </div>
 
                                     <%--Start Date--%>

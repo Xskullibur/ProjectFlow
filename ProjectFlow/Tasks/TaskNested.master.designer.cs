@@ -76,6 +76,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.DropDownList milestoneDDL;
         
         /// <summary>
+        /// addMilestoneHyperlink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink addMilestoneHyperlink;
+        
+        /// <summary>
         /// tStartTxt control.
         /// </summary>
         /// <remarks>

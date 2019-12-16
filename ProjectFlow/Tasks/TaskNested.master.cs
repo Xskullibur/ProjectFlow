@@ -16,14 +16,24 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+                // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
                 var memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
 
                 allocationList.DataSource = memberList;
                 allocationList.DataTextField = "Value";
                 allocationList.DataValueField = "Key";
-
                 allocationList.DataBind();
+
+                // Milestone
+                MilestoneBLL milestoneBLL = new MilestoneBLL();
+                var teamMilestones = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
+
+                milestoneDDL.DataSource = teamMilestones;
+                milestoneDDL.DataTextField = "Milestone";
+                milestoneDDL.DataValueField = "ID";
+                milestoneDDL.DataBind();
+
             }
         }
 
