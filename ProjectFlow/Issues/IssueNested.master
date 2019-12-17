@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-md-8">
                 <div >
-                    <div class="rounded-top p-1 bg-info text-white"">
+                    <div class="rounded-top p-1 bg-info text-white">
                         <asp:Label ID="lbMember" runat="server">Issue Raised by: </asp:Label>
                     </div>
-                    <div>
-                        <asp:TextBox class="col-md-12" ID="TextBox1" runat="server"></asp:TextBox>
+                    <div class="rounded-bottom p-1 bg-light">
+                        <asp:Label ID="lbIssue" runat="server" Text=""></asp:Label>
                     </div>   
                 </div>
             </div>

@@ -80,5 +80,13 @@ namespace ProjectFlow.Tasks
                 }
             }
         }
+
+        protected void taskGrid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = taskGrid.SelectedRow;
+            Session["SSTest"] = row.Cells[2].Text;
+            Session["SSDesc"] = row.Cells[4].Text;
+            Response.Redirect("../Issues/tConflictRes1.aspx");        
+        }
     }
 }

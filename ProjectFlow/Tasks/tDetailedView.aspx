@@ -13,11 +13,12 @@
             <div class="col">
 
                 <div>
-                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowDataBound="taskGrid_RowDataBound" > 
+                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowDataBound="taskGrid_RowDataBound" OnSelectedIndexChanged="taskGrid_SelectedIndexChanged" > 
                         <Columns>
                             <asp:CommandField ShowEditButton="True" />
 
                             <%--ID--%>
+                            <asp:CommandField ShowSelectButton="True" />
                             <asp:BoundField DataField="ID" HeaderText="ID" />
 
                             <%--Task--%>
