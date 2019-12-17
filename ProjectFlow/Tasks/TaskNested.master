@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="TaskNested.master.cs" Inherits="ProjectFlow.Tasks.TaskNested" %>
+﻿<%@ Master Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="TaskNested.master.cs" Inherits="ProjectFlow.Tasks.TaskNested" %>
 
 <%--Main Master Page--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -9,14 +9,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="container">
-        <%--Nested Master Content--%>
-        <div class="row text-right ">
+        <%--Add Task--%>
+        <div class="row justify-content-between">
 
-            <%--Views Dropdown List--%>
-            <div class="col-12">
+            <%--Modal Update Panel--%>
+            <div class="col-xl-3 col-12 align-self-end">
 
                 <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="viewsDLL" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-light border border-dark dropdown-toggle" type="button" id="viewsDLL" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Switch Views
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -28,8 +28,8 @@
 
             </div>
 
-            <%--Add Task--%>
-            <div class="col-12">
+            <%--Modal Content--%>
+            <div class="col-xl-3 col-12 text-right">
 
                 <!-- Button trigger modal -->
                 <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
@@ -42,7 +42,7 @@
         <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
 
-                <%--Modal Update Panel--%>
+                <%--Header--%>
                 <asp:UpdatePanel ID="tUpdatePanel" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
                     <ContentTemplate>
 
@@ -74,10 +74,13 @@
                                         <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" />
                                     </div>
 
-                                    <%--Team Checkpoint--%>
+                                    <%--Milestone--%>
                                     <div class="form-group">
-                                        <asp:Label CssClass="control-label" Text="Team Checkpoint" runat="server" />
-                                        <asp:DropDownList CssClass="form-control" ID="teamCheckpointDLL" runat="server"></asp:DropDownList>
+                                        <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
+                                        <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server">
+                                            <asp:ListItem Value="-1">Nothing Selected</asp:ListItem>
+                                        </asp:DropDownList>
+                                        <asp:HyperLink ID="addMilestoneHyperlink" CssClass="form-text text-muted" runat="server">Add new Milestone</asp:HyperLink>
                                     </div>
 
                                     <%--Start Date--%>
@@ -94,8 +97,14 @@
 
                                     <%--Allocation--%>
                                     <div class="form-group">
-                                        <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationDLL" runat="server" />
-                                        <asp:DropDownList CssClass="selectpicker form-control" data-live-search="true" multiple data-actions-box="true" ID="allocationDLL" runat="server"/>
+                                        <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationList" runat="server" />
+                                        <asp:ListBox ID="allocationList" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                    </div>
+
+                                    <%--Status--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="statusDDL" runat="server" />
+                                        <asp:DropDownList ID="statusDDL" CssClass="form-control" runat="server"></asp:DropDownList>
                                     </div>
 
                                 </div>
@@ -105,7 +114,7 @@
                             <%--Footer--%>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="" runat="server" />
+                                <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="" runat="server" OnClick="addTask_Click" />
                                 <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" Visible="false" />
                             </div>
                         </div>

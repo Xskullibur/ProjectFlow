@@ -67,13 +67,22 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tDescTxt;
         
         /// <summary>
-        /// teamCheckpointDLL control.
+        /// milestoneDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList teamCheckpointDLL;
+        protected global::System.Web.UI.WebControls.DropDownList milestoneDDL;
+        
+        /// <summary>
+        /// addMilestoneHyperlink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink addMilestoneHyperlink;
         
         /// <summary>
         /// tStartTxt control.
@@ -94,13 +103,22 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tEndTxt;
         
         /// <summary>
-        /// allocationDLL control.
+        /// allocationList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList allocationDLL;
+        protected global::System.Web.UI.WebControls.ListBox allocationList;
+        
+        /// <summary>
+        /// statusDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList statusDDL;
         
         /// <summary>
         /// tSaveBtn control.

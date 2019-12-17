@@ -39,6 +39,13 @@ namespace ProjectFlow
                 Path = "~/Scripts/bootstrap-select.min.js",
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("ShowAlert", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/helpers/ShowAlert.js",
+                DebugPath = "~/Scripts/helpers/ShowAlert.js"
+            });
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
