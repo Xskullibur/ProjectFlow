@@ -25,6 +25,8 @@ namespace ProjectFlow.Tasks
                 statusDDL.DataTextField = "Value";
                 statusDDL.DataValueField = "Key";
 
+                statusDDL.DataBind();
+
 
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
@@ -33,6 +35,7 @@ namespace ProjectFlow.Tasks
                 allocationList.DataSource = memberList;
                 allocationList.DataTextField = "Value";
                 allocationList.DataValueField = "Key";
+
                 allocationList.DataBind();
 
                 // Milestone
@@ -42,6 +45,7 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataSource = teamMilestones;
                 milestoneDDL.DataTextField = "Milestone";
                 milestoneDDL.DataValueField = "ID";
+
                 milestoneDDL.DataBind();
 
                 milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
@@ -62,42 +66,74 @@ namespace ProjectFlow.Tasks
             tSaveBtn.Text = "Save";
             tSaveAnotherBtn.Visible = true;
 
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
+            showModal();
             tUpdatePanel.Update();
+        }
+
+        private void showModal()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
+        }
+
+        private void hideModal()
+        {
+            // Clear Fields
+            tNameTxt.Text = string.Empty;
+            tDescTxt.Text = string.Empty;
+            tStartTxt.Text = string.Empty;
+            tEndTxt.Text = string.Empty;
+            allocationList.ClearSelection();
+            statusDDL.ClearSelection();
+            milestoneDDL.ClearSelection();
+
+            // Hide Modal
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('hide')", true);
         }
 
         // Add Task Event
         protected void addTask_Click(object sender, EventArgs e)
         {
+            int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
 
-            Helper.ShowAlert(this, "Successfully Added Task", Helper.AlertType.Success);
+            // Create Task Object
+            Task newTask = new Task();
+            newTask.taskName = tNameTxt.Text;
+            newTask.taskDescription = tDescTxt.Text;
+            newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
+            newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
+            newTask.teamID = TEST_TEAM_ID;
+            newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
 
-            //int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
+            if (selected_milestone != -1)
+            {
+                newTask.milestoneID = selected_milestone;
+            }
 
-            //// Create Task Object
-            //Task newTask = new Task();
-            //newTask.taskName = tNameTxt.Text;
-            //newTask.taskDescription = tDescTxt.Text;
-            //newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
-            //newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
-            //newTask.teamID = TEST_TEAM_ID;
-            //newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
+            // Create all Task Allocations
+            List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
 
-            //if (selected_milestone != -1)
-            //{
-            //    newTask.milestoneID = selected_milestone;
-            //}
+            foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where( x => x.Selected))
+            {
+                TaskAllocation newAllocation = new TaskAllocation();
+                newAllocation.taskID = newTask.taskID;
+                newAllocation.assignedTo = Convert.ToInt32(item.Value);
 
-            //TaskBLL taskBLL = new TaskBLL();
+                taskAllocations.Add(newAllocation);
+            }
 
-            //if (taskBLL.Add(newTask))
-            //{
-            //    Helper.ShowAlert(this, "Successfully Added Task", Helper.AlertType.Success);
-            //}
-            //else
-            //{
-            //    Helper.ShowAlert(this, "Failed to Add Task", Helper.AlertType.Error);
-            //}
+            // Submit Query
+            TaskBLL taskBLL = new TaskBLL();
+            bool result = taskBLL.Add(newTask, taskAllocations);
+
+            // Show Result
+            if (result)
+            {
+                hideModal();
+            }
+            else
+            {
+
+            }
 
         }
 

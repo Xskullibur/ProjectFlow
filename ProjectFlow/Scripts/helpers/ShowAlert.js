@@ -43,8 +43,10 @@ function ShowAlert(message, messageType) {
     }
 
     $('#alert_container').append(`
-        <div id="alert_div" class="alert fade in ${alertClass}">
+        <div id="alert" class="alert fade in ${alertClass}">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <span>${message}</span>
-        </div>`)
+        </div>`);
+
+    $('#alert').show("fast");
 }

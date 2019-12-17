@@ -9,7 +9,7 @@
 
     <div class="container py-2">
 
-        <div class="row">
+        <div class="row pb-2">
             <div class="col">
 
                 <div>
@@ -18,6 +18,12 @@
                     </asp:GridView>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-right">
+                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
             </div>
         </div>
 

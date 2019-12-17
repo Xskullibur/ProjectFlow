@@ -23,7 +23,7 @@ namespace ProjectFlow.Helpers
 
         public static void ShowAlert(object sender, string message, AlertType type)
         {
-            ScriptManager.RegisterStartupScript((Page)sender, sender.GetType(), System.Guid.NewGuid().ToString(), $"ShowAlert({message}, {type});", true);
+            ScriptManager.RegisterStartupScript((Control)sender, sender.GetType(), System.Guid.NewGuid().ToString(), $"ShowAlert({message}, {type});", true);
         }
     }
 }

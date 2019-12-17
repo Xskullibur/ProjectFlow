@@ -9,21 +9,24 @@ namespace ProjectFlow.DAO
 
     public class TaskDAO
     {
-
-        /**
-         * Insert Task
-         **/
-        public bool Add(Task task)
+        /// <summary>
+        /// Add a new Task into DB with its Allocations
+        /// </summary>
+        /// <param name="task">Task to be Added</param>
+        /// <param name="taskAllocations">Members assigned to the Task</param>
+        /// <returns>Boolean</returns>
+        public bool Add(Task task, List<TaskAllocation> taskAllocations)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 // Check if object exist
                 if (task != null)
                 {
-                    try
-                    {
-                        // Add to DB Context and Save Changes
-                        dbContext.Tasks.Add(task);
+                    try {
+                        
+                        dbContext.Tasks.Add(task);      // Add Task to DB
+                        dbContext.TaskAllocations.AddRange(taskAllocations);        // Add Allocations to DB
+
                         dbContext.SaveChanges();
                         return true;
                     }
@@ -40,13 +43,13 @@ namespace ProjectFlow.DAO
             }
         }
 
-
-
-        /**
-         * Get Task By Team ID
-         * (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
-         **/
-
+        /// <summary>
+        /// Gets all Task information (incl. Task Allocations) By Team ID
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <returns>Anonymous Object</returns>
+        /// 
+        /// (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
         public IEnumerable<object> getTasksByTeamID(int teamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

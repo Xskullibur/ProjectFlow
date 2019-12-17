@@ -16,8 +16,18 @@ namespace ProjectFlow.Tasks
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            refreshData();
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData();
+        }
+
+        private void refreshData()
+        {
             TaskBLL taskBLL = new TaskBLL();
-            
+
             taskGrid.DataSource = taskBLL.GetTasksByTeamId(TEST_TEAM_ID);
             taskGrid.DataBind();
 
@@ -26,8 +36,6 @@ namespace ProjectFlow.Tasks
                 taskGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
                 taskGrid.UseAccessibleHeader = true;
             }
-
         }
-
     }
 }
