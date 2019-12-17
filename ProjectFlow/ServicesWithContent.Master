@@ -15,9 +15,6 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style type="text/css">
-        .auto-style1 {
-            height: 37px;
-        }
         .auto-style2 {
             width: 556px;
         }
@@ -41,12 +38,11 @@
             <div class="container" id="alert_container" style="z-index: -1; position: fixed; width: 100%;"></div>
             <table style="width:100%;">
                 <tr>
-                    <td>
+                    <td class="auto-style2">
                     </td>
                 </tr>
                 <tr>
                     <td class="auto-style2">
-
                         <asp:ListView ID="ListView1" runat="server"
                                         DataKeyNames="">
 

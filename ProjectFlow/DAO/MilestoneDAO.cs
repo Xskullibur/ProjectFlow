@@ -18,7 +18,7 @@ namespace ProjectFlow.DAO
                         Milestone = y.milestoneName,
                         Start = y.startDate,
                         End = y.endDate
-                    }).ToList();
+                    }).ToList;
 
                 return teamMilestone;
             }
