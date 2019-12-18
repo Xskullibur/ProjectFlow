@@ -59,6 +59,16 @@ namespace ProjectFlow.Tasks
             showAddTaskModal();
         }
 
+        protected void showTaskModal2_Click(object sender, EventArgs e)
+        {
+            tTitleLbl.Text = "Add Task";
+            tSaveBtn2.Text = "Save";
+            tSaveAnotherBtn2.Visible = true;
+
+            showModal2();
+            tUpdatePanel.Update();
+        }
+
         // Show Add Modal
         private void showAddTaskModal()
         {
@@ -73,6 +83,11 @@ namespace ProjectFlow.Tasks
         private void showModal()
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
+        }
+
+        private void showModal2()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal2", "$('#taskModal2').modal('show')", true);
         }
 
         private void hideModal()

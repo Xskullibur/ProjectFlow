@@ -32,8 +32,8 @@
             <div class="col-xl-3 col-12 text-right">
 
                 <!-- Button trigger modal -->
-                <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
-
+                <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False"/>
+                <asp:Button Text="Add Issue" CssClass="btn btn-primary" runat="server" ID="addIssueBtn" OnClick="showTaskModal2_Click" CausesValidation="False"/>
             </div>
 
         </div>
@@ -116,6 +116,64 @@
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="" runat="server" OnClick="addTask_Click" />
                                 <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" Visible="false" />
+                            </div>
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+            </div>
+        </div>
+        <div class="modal fade" id="taskModal2" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+
+                <%--Header--%>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                    <ContentTemplate>
+
+                        <%--Modal Content--%>
+                        <div class="modal-content">
+
+                            <%--Header--%>
+                            <div class="modal-header">
+                                <asp:Label ID="Label1" CssClass="modal-title" runat="server" />
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <%--Body--%>
+                            <div class="modal-body">
+                            
+                                <div class="container-fluid" runat="server">
+
+                                    <%--Name--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Issue Name:" AssociatedControlID="tNameTxt" runat="server" />
+                                        <asp:TextBox runat="server" CssClass="form-control" ID="TextBox1" TextMode="SingleLine" />
+                                    </div>
+
+                                    <%--Description--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
+                                        <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server" TextMode="MultiLine" />
+                                    </div>
+
+                                    <%--Status--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="statusDDL" runat="server" />
+                                        <asp:DropDownList ID="DropDownList2" CssClass="form-control" runat="server"></asp:DropDownList>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <%--Footer--%>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <asp:Button id="tSaveBtn2" CssClass="btn btn-primary" Text="" runat="server" OnClick="addTask_Click" />
+                                <asp:Button id="tSaveAnotherBtn2" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" Visible="false" />
                             </div>
                         </div>
 

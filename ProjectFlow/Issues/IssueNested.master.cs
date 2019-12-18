@@ -18,19 +18,11 @@ namespace ProjectFlow.Issues
             {
                 lbMember.Text += (string)Session["SSTest"];
                 lbIssue.Text += (string)Session["SSDesc"];
-                taskView.DataSource = new List<string>()
-                {
-                    "TESTMEM1",
-                    "TESTMEM2",
-                    "TESTMEM3",
-                    "TESTMEM4",
-                    "TESTMEM5"
-                };
-                taskView.DataBind();
+                refreshData();
             }
         }
 
-        /*private void refreshData()
+        private void refreshData()
         {
             TaskBLL taskBLL = new TaskBLL();
 
@@ -42,6 +34,6 @@ namespace ProjectFlow.Issues
                 taskView.HeaderRow.TableSection = TableRowSection.TableHeader;
                 taskView.UseAccessibleHeader = true;
             }
-        }*/
+        }
     }
 }
