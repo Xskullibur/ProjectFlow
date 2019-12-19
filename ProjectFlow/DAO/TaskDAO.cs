@@ -87,7 +87,7 @@ namespace ProjectFlow.DAO
             {
                 try
                 {
-                    task.statusID = dbContext.Status.First(x => x.status1 == "Dropped").ID;
+                    task.dropped = true;
                     dbContext.Entry(task).State = System.Data.Entity.EntityState.Modified;
                     dbContext.SaveChanges();
 
@@ -142,7 +142,7 @@ namespace ProjectFlow.DAO
                         .Include("Milestone")
                         .Include("Status")
                         .Where(x => x.teamID == teamID)
-                        .Where(x => x.Status.status1 != "Dropped")
+                        .Where(x => x.dropped != true)
                         .ToList().Select(y => new
                         {
                             ID = y.taskID,

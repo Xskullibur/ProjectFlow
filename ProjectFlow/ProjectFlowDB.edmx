@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentForIssue">
           <Key>
             <PropertyRef Name="commentID" />
@@ -97,6 +97,7 @@
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="milestoneID" Type="int" />
           <Property Name="statusID" Type="int" Nullable="false" />
+          <Property Name="dropped" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskAllocation">
           <Key>
@@ -413,8 +414,7 @@
             <End Role="TeamMember" EntitySet="TeamMember" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -535,6 +535,7 @@
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Task_ProjectTeam" FromRole="Task" ToRole="ProjectTeam" />
           <NavigationProperty Name="Status" Relationship="Self.FK_Task_Status" FromRole="Task" ToRole="Status" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_Task" FromRole="Task" ToRole="TaskAllocation" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskAllocation">
           <Key>
@@ -958,6 +959,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="ProjectFlowModel.Task">
               <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="taskName" ColumnName="taskName" />
                 <ScalarProperty Name="taskDescription" ColumnName="taskDescription" />
