@@ -16,9 +16,6 @@
                     <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" > 
                         <Columns>
 
-                            <asp:CommandField ShowEditButton="True" />
-                            <asp:CommandField ShowDeleteButton="True" />
-
                             <%--ID--%>
                             <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
 
@@ -91,6 +88,14 @@
                                     <asp:Label ID="gridStatus" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+
+                            <asp:CommandField ShowEditButton="True" ButtonType="Button" >
+                                <ControlStyle CssClass="btn btn-primary mb-2" />
+                            </asp:CommandField>
+
+                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button" >
+                                <ControlStyle CssClass="btn btn-danger" />
+                            </asp:CommandField>
 
                         </Columns>
                         <HeaderStyle CssClass="thead-light" />

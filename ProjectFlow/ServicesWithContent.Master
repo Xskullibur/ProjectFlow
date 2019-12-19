@@ -29,13 +29,9 @@
                 <asp:ScriptReference Name="popper" />
                 <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="bootstrap-select" />
-                <asp:ScriptReference Name="ShowAlert" />
             </Scripts>
         </asp:ScriptManager>
         <div>
-
-            <%--Alert Continer--%>
-            <div class="container" id="alert_container" style="z-index: -1; position: fixed; width: 100%;"></div>
             <table style="width:100%;">
                 <tr>
                     <td class="auto-style2">
