@@ -134,12 +134,17 @@ namespace ProjectFlow.Tasks
 
                     //Set Inital Value
                     string allocationVals = DataBinder.Eval(rowItems, "Allocation").ToString();
-                    string[] allocations = allocationVals.Trim().Split(',');
 
-                    foreach (string allocation in allocations)
+                    if (allocationVals != "-")
                     {
-                        editAllocationList.Items.FindByText(allocation.Trim()).Selected = true;
+                        string[] allocations = allocationVals.Trim().Split(',');
+
+                        foreach (string allocation in allocations)
+                        {
+                            editAllocationList.Items.FindByText(allocation.Trim()).Selected = true;
+                        }
                     }
+
 
                     /**
                      * MILESTONE
@@ -191,7 +196,7 @@ namespace ProjectFlow.Tasks
             // Get Values
             GridViewRow row = taskGrid.Rows[e.RowIndex];
 
-            int id = Convert.ToInt32(row.Cells[1].Text);
+            int id = Convert.ToInt32(row.Cells[2].Text);
             string name = ((TextBox)row.FindControl("editTaskTxt")).Text;
             string desc = ((TextBox)row.FindControl("editDescTxt")).Text;
             int milestoneID = Convert.ToInt32(((DropDownList)row.FindControl("editMilestoneDDL")).SelectedValue);
@@ -248,6 +253,19 @@ namespace ProjectFlow.Tasks
 
             // Return to READ MODE
             taskGrid.EditIndex = -1;
+            refreshData();
+        }
+
+        protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // Selected Task ID
+            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[2].Text);
+
+            // Delete Task
+            TaskBLL taskBLL = new TaskBLL();
+            taskBLL.Delete(id);
+
+            // Refresh Grid
             refreshData();
         }
     }

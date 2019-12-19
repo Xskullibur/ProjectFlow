@@ -13,9 +13,11 @@
             <div class="col">
 
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" > 
+                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" > 
                         <Columns>
+
                             <asp:CommandField ShowEditButton="True" />
+                            <asp:CommandField ShowDeleteButton="True" />
 
                             <%--ID--%>
                             <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
@@ -89,6 +91,7 @@
                                     <asp:Label ID="gridStatus" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+
                         </Columns>
                         <HeaderStyle CssClass="thead-light" />
                     </asp:GridView>

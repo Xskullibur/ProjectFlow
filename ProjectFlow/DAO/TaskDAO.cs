@@ -43,6 +43,13 @@ namespace ProjectFlow.DAO
             }
         }
 
+
+        /// <summary>
+        /// Update Task and Allocations
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="updated_Allocations"></param>
+        /// <returns>Boolean</returns>
         public bool Update(Task task, List<TaskAllocation> updated_Allocations)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -69,6 +76,26 @@ namespace ProjectFlow.DAO
                 catch (Exception e)
                 {
                     Console.Error.WriteLine($"Error While Updating Task: {e.Message}");
+                    return false;
+                }
+            }
+        }
+
+        public bool Delete(Task task)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    task.statusID = dbContext.Status.First(x => x.status1 == "Dropped").ID;
+                    dbContext.Entry(task).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Updating Deleted Task: {e.Message}");
                     return false;
                 }
             }
@@ -103,7 +130,7 @@ namespace ProjectFlow.DAO
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
-        public IEnumerable<object> GetTasksByTeamID(int teamID)
+        public IEnumerable<object> GetOnGoingTasksByTeamID(int teamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -115,6 +142,7 @@ namespace ProjectFlow.DAO
                         .Include("Milestone")
                         .Include("Status")
                         .Where(x => x.teamID == teamID)
+                        .Where(x => x.Status.status1 != "Dropped")
                         .ToList().Select(y => new
                         {
                             ID = y.taskID,
