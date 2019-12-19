@@ -92,6 +92,7 @@
                                     <%--End Date--%>
                                     <div class="form-group">
                                         <asp:Label CssClass="control-label" Text="End Date:" AssociatedControlID="tEndTxt" runat="server" />
+
                                         <asp:TextBox ID="tEndTxt" CssClass="form-control" runat="server" TextMode="Date" />
                                     </div>
 

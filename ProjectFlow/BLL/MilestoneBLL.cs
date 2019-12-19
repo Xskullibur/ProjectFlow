@@ -8,10 +8,10 @@ namespace ProjectFlow.BLL
 {
     public class MilestoneBLL
     {
-        public List<object> GetMilestoneByTeamID(int id)
+        public List<Milestone> GetMilestoneByTeamID(int id)
         {
             MilestoneDAO milestoneDAO = new MilestoneDAO();
-            var milestoneList = milestoneDAO.GetMilestonesByTeamID(id).ToList();
+            var milestoneList = milestoneDAO.GetMilestonesByTeamID(id);
 
             return milestoneList;
         }

@@ -27,7 +27,6 @@ namespace ProjectFlow.Tasks
 
                 statusDDL.DataBind();
 
-
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
                 Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
@@ -43,8 +42,8 @@ namespace ProjectFlow.Tasks
                 var teamMilestones = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
 
                 milestoneDDL.DataSource = teamMilestones;
-                milestoneDDL.DataTextField = "Milestone";
-                milestoneDDL.DataValueField = "ID";
+                milestoneDDL.DataTextField = "milestoneName";
+                milestoneDDL.DataValueField = "milestoneID";
 
                 milestoneDDL.DataBind();
 
