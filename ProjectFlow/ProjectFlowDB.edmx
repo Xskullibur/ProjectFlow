@@ -92,8 +92,8 @@
           <Property Name="taskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="taskName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="taskDescription" Type="varchar" MaxLength="255" />
-          <Property Name="startDate" Type="date" />
-          <Property Name="endDate" Type="date" />
+          <Property Name="startDate" Type="date" Nullable="false" />
+          <Property Name="endDate" Type="date" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="milestoneID" Type="int" />
           <Property Name="statusID" Type="int" Nullable="false" />
@@ -525,8 +525,8 @@
           <Property Name="taskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="taskName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="taskDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="startDate" Type="DateTime" Precision="0" />
-          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="startDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="endDate" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="milestoneID" Type="Int32" />
           <Property Name="statusID" Type="Int32" Nullable="false" />

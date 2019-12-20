@@ -196,7 +196,7 @@ namespace ProjectFlow.Tasks
             // Get Values
             GridViewRow row = taskGrid.Rows[e.RowIndex];
 
-            int id = Convert.ToInt32(row.Cells[2].Text);
+            int id = Convert.ToInt32(row.Cells[0].Text);
             string name = ((TextBox)row.FindControl("editTaskTxt")).Text;
             string desc = ((TextBox)row.FindControl("editDescTxt")).Text;
             int milestoneID = Convert.ToInt32(((DropDownList)row.FindControl("editMilestoneDDL")).SelectedValue);
@@ -259,7 +259,7 @@ namespace ProjectFlow.Tasks
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             // Selected Task ID
-            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[2].Text);
+            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();

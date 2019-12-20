@@ -121,6 +121,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tStartTxt;
         
         /// <summary>
+        /// startDateRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator startDateRequiredValidator;
+        
+        /// <summary>
         /// tEndTxt control.
         /// </summary>
         /// <remarks>
@@ -130,13 +139,22 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tEndTxt;
         
         /// <summary>
-        /// startEndDate_compareValidator control.
+        /// endDateRequiredValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator startEndDate_compareValidator;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator endDateRequiredValidator;
+        
+        /// <summary>
+        /// datesCompareValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator datesCompareValidator;
         
         /// <summary>
         /// allocationList control.

@@ -24,8 +24,8 @@ namespace ProjectFlow
         public int taskID { get; set; }
         public string taskName { get; set; }
         public string taskDescription { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
+        public System.DateTime startDate { get; set; }
+        public System.DateTime endDate { get; set; }
         public int teamID { get; set; }
         public Nullable<int> milestoneID { get; set; }
         public int statusID { get; set; }
