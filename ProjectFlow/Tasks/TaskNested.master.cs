@@ -54,20 +54,10 @@ namespace ProjectFlow.Tasks
         // Add Task OnClick Event
         protected void showTaskModal_Click(object sender, EventArgs e)
         {
-            showAddTaskModal();
+            showModal();
         }
 
         // Show Add Modal
-        private void showAddTaskModal()
-        {
-            tTitleLbl.Text = "Add Task";
-            tSaveBtn.Text = "Save";
-            tSaveAnotherBtn.Visible = true;
-
-            showModal();
-            tUpdatePanel.Update();
-        }
-
         private void showModal()
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);

@@ -31,15 +31,6 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.Button addTaskBtn;
         
         /// <summary>
-        /// tUpdatePanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel tUpdatePanel;
-        
-        /// <summary>
         /// tTitleLbl control.
         /// </summary>
         /// <remarks>
@@ -58,6 +49,24 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tNameTxt;
         
         /// <summary>
+        /// tNameRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator tNameRegexValidator;
+        
+        /// <summary>
+        /// tNameRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator tNameRequiredValidator;
+        
+        /// <summary>
         /// tDescTxt control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,24 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tDescTxt;
+        
+        /// <summary>
+        /// tDescRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator tDescRegexValidator;
+        
+        /// <summary>
+        /// tDescRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator tDescRequiredValidator;
         
         /// <summary>
         /// milestoneDDL control.
@@ -76,13 +103,13 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.DropDownList milestoneDDL;
         
         /// <summary>
-        /// addMilestoneHyperlink control.
+        /// milestoneRequiredValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink addMilestoneHyperlink;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator milestoneRequiredValidator;
         
         /// <summary>
         /// tStartTxt control.
@@ -103,6 +130,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tEndTxt;
         
         /// <summary>
+        /// startEndDate_compareValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator startEndDate_compareValidator;
+        
+        /// <summary>
         /// allocationList control.
         /// </summary>
         /// <remarks>
@@ -119,6 +155,24 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList statusDDL;
+        
+        /// <summary>
+        /// statusRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator statusRequiredValidator;
+        
+        /// <summary>
+        /// addTaskSummaryValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary addTaskSummaryValidator;
         
         /// <summary>
         /// tSaveBtn control.
