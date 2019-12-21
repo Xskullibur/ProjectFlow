@@ -39,6 +39,7 @@ namespace ProjectFlow
                 Path = "~/Scripts/bootstrap-select.min.js",
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
