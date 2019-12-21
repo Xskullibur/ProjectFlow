@@ -24,11 +24,12 @@ namespace ProjectFlow
         public int taskID { get; set; }
         public string taskName { get; set; }
         public string taskDescription { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
+        public System.DateTime startDate { get; set; }
+        public System.DateTime endDate { get; set; }
         public int teamID { get; set; }
         public Nullable<int> milestoneID { get; set; }
         public int statusID { get; set; }
+        public bool dropped { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issues { get; set; }
