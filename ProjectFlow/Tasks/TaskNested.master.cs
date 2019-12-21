@@ -1,5 +1,4 @@
 ﻿using ProjectFlow.BLL;
-using ProjectFlow.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +26,6 @@ namespace ProjectFlow.Tasks
 
                 statusDDL.DataBind();
 
-
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
                 Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
@@ -43,8 +41,8 @@ namespace ProjectFlow.Tasks
                 var teamMilestones = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
 
                 milestoneDDL.DataSource = teamMilestones;
-                milestoneDDL.DataTextField = "Milestone";
-                milestoneDDL.DataValueField = "ID";
+                milestoneDDL.DataTextField = "milestoneName";
+                milestoneDDL.DataValueField = "milestoneID";
 
                 milestoneDDL.DataBind();
 
@@ -56,38 +54,7 @@ namespace ProjectFlow.Tasks
         // Add Task OnClick Event
         protected void showTaskModal_Click(object sender, EventArgs e)
         {
-            showAddTaskModal();
-        }
-
-        protected void showTaskModal2_Click(object sender, EventArgs e)
-        {
-            tTitleLbl.Text = "Add Task";
-            tSaveBtn2.Text = "Save";
-            tSaveAnotherBtn2.Visible = true;
-
-            showModal2();
-            tUpdatePanel.Update();
-        }
-
-        // Show Add Modal
-        private void showAddTaskModal()
-        {
-            tTitleLbl.Text = "Add Task";
-            tSaveBtn.Text = "Save";
-            tSaveAnotherBtn.Visible = true;
-
-            showModal();
-            tUpdatePanel.Update();
-        }
-
-        private void showModal()
-        {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
-        }
-
-        private void showModal2()
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal2", "$('#taskModal2').modal('show')", true);
         }
 
         private void hideModal()
@@ -108,67 +75,117 @@ namespace ProjectFlow.Tasks
         // Add Task Event
         protected void addTask_Click(object sender, EventArgs e)
         {
-            int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
 
-            // Create Task Object
-            Task newTask = new Task();
-            newTask.taskName = tNameTxt.Text;
-            newTask.taskDescription = tDescTxt.Text;
-            newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
-            newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
-            newTask.teamID = TEST_TEAM_ID;
-            newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
-
-            if (selected_milestone != -1)
+            if (Page.IsValid)
             {
-                newTask.milestoneID = selected_milestone;
-            }
+                int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
 
-            // Create all Task Allocations
-            List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
+                // Create Task Object
+                Task newTask = new Task();
+                newTask.taskName = tNameTxt.Text;
+                newTask.taskDescription = tDescTxt.Text;
+                newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
+                newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
+                newTask.teamID = TEST_TEAM_ID;
+                newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
 
-            foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where( x => x.Selected))
-            {
-                TaskAllocation newAllocation = new TaskAllocation();
-                newAllocation.taskID = newTask.taskID;
-                newAllocation.assignedTo = Convert.ToInt32(item.Value);
+                if (selected_milestone != -1)
+                {
+                    newTask.milestoneID = selected_milestone;
+                }
 
-                taskAllocations.Add(newAllocation);
-            }
+                // Create all Task Allocations
+                List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
 
-            // Submit Query
-            TaskBLL taskBLL = new TaskBLL();
-            bool result = taskBLL.Add(newTask, taskAllocations);
+                foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where( x => x.Selected))
+                {
+                    TaskAllocation newAllocation = new TaskAllocation();
+                    newAllocation.taskID = newTask.taskID;
+                    newAllocation.assignedTo = Convert.ToInt32(item.Value);
 
-            // Show Result
-            if (result)
-            {
-                hideModal();
-            }
-            else
-            {
+                    taskAllocations.Add(newAllocation);
+                }
 
+                // Submit Query
+                TaskBLL taskBLL = new TaskBLL();
+                bool result = taskBLL.Add(newTask, taskAllocations);
+
+                // Show Result
+                if (result)
+                {
+                    hideModal();
+                }
+                else
+                {
+
+                }
             }
 
         }
 
-        //// Show Edit Modal
-        //private void showEditTaskModal()
-        //{
-        //    tTitleLbl.Text = "Update Task";
-        //    tSaveBtn.Text = "Update";
-        //    tSaveBtn.Click += new EventHandler(updateTask_Click);
-
-        //    // Fill Update Data
-
-        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('toggle')", true);
-        //    tUpdatePanel.Update();
-        //}
-
-        // Update Task Event
-        protected void updateTask_Click(object sender, EventArgs e)
+        private bool verifyAddTask()
         {
+            bool result = true;
 
+            // Task Name
+            if (string.IsNullOrEmpty(tNameTxt.Text))
+            {
+                tNameRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            if (tNameTxt.Text.Length > 255)
+            {
+                tNameRegexValidator.IsValid = false;
+                result = false;
+            }
+
+            // Description
+            if (string.IsNullOrEmpty(tDescTxt.Text))
+            {
+                tDescRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            if (tDescTxt.Text.Length > 255)
+            {
+                tDescRegexValidator.IsValid = false;
+                result = false;
+            }
+
+            // Milestone
+            if (milestoneDDL.SelectedIndex == -1)
+            {
+                milestoneRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            // Status
+            if (statusDDL.SelectedIndex == -1)
+            {
+                statusRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            return result;
+        }
+
+        // Verify Start and End Dates are valid
+        protected void startEndDateValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            // Verify Both Start Date and End Date has values
+            if (!string.IsNullOrEmpty(tStartTxt.Text) && !string.IsNullOrEmpty(tEndTxt.Text))
+            {
+                // Verify Valid DateTime
+                if (DateTime.TryParse(args.Value, out DateTime dateTime))
+                {
+                    args.IsValid = true;
+                }
+                else
+                {
+                    args.IsValid = false;
+                }
+            }
         }
 
     }
