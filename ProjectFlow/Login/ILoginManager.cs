@@ -46,10 +46,18 @@ namespace ProjectFlow.Login
     /// </summary>
     [Obsolete("This class is only temporary and will be replaced by a DAO class of User", false)]
     public class AuthenticatedCredential {
+        private Services.Role basicUser;
+
         public AuthenticatedCredential(string username, Role role)
         {
             Username = username;
             Role = role;
+        }
+
+        public AuthenticatedCredential(string username, Services.Role basicUser)
+        {
+            Username = username;
+            this.basicUser = basicUser;
         }
 
         public string Username { get; }
