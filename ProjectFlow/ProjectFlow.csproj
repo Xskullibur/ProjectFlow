@@ -409,6 +409,7 @@
     <Compile Include="Tasks\TaskNested.master.designer.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\TaskVerification.cs" />
     <Compile Include="Tasks\tDetailedView.aspx.cs">
       <DependentUpon>tDetailedView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

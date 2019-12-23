@@ -196,66 +196,161 @@ namespace ProjectFlow.Tasks
             // Get Values
             GridViewRow row = taskGrid.Rows[e.RowIndex];
 
-            int id = Convert.ToInt32(row.Cells[0].Text);
-            string name = ((TextBox)row.FindControl("editTaskTxt")).Text;
-            string desc = ((TextBox)row.FindControl("editDescTxt")).Text;
-            int milestoneID = Convert.ToInt32(((DropDownList)row.FindControl("editMilestoneDDL")).SelectedValue);
-            DateTime startDate = Convert.ToDateTime(((TextBox)row.FindControl("editStartDate")).Text);
-            DateTime endDate = Convert.ToDateTime(((TextBox)row.FindControl("editEndDate")).Text);
-            int statusID = Convert.ToInt32(((DropDownList)row.FindControl("editStatusDDL")).SelectedValue);
-
-            // Get Task to Update
+            // Verify Task ID
             TaskBLL taskBLL = new TaskBLL();
+            int id = Convert.ToInt32(row.Cells[0].Text);
+            
             Task updated_task = taskBLL.GetTaskById(id);
-
-            // Update Task
-            updated_task.taskName = name;
-            updated_task.taskDescription = desc;
-            updated_task.startDate = startDate;
-            updated_task.endDate = endDate;
-
-            if (milestoneID != -1)
+            if (updated_task == null)
             {
-                updated_task.milestoneID = milestoneID;
+                // TODO: Error Message Task ID Not Found
             }
             else
             {
-                updated_task.milestoneID = null;
+                // Get Controls
+                TextBox nameTxt = (TextBox)row.FindControl("editTaskTxt");
+                TextBox descTxt = (TextBox)row.FindControl("editDescTxt");
+                DropDownList milestoneDDL = (DropDownList)row.FindControl("editMilestoneDDL");
+                TextBox startTxt = (TextBox)row.FindControl("editStartDate");
+                TextBox endTxt = (TextBox)row.FindControl("editEndDate");
+                DropDownList statusDDL = (DropDownList)row.FindControl("editStatusDDL");
+
+                Label tNameErrorLbl = (Label)row.FindControl("tNameErrorLbl");
+                Label tDescErrorLbl = (Label)row.FindControl("tDescErrorLbl");
+                Label tMilestoneErrorLbl = (Label)row.FindControl("tMilestoneErrorLbl");
+                Label tStartDateErrorLbl = (Label)row.FindControl("tStartDateErrorLbl");
+                Label tEndDateErrorLbl = (Label)row.FindControl("tEndDateErrorLbl");
+                Label startEndDateErrorLbl = (Label)row.FindControl("startEndDateErrorLbl");
+                Label statusErrorLbl = (Label)row.FindControl("statusErrorLbl");
+
+                // Attributes
+                string name = nameTxt.Text;
+                string desc = descTxt.Text;
+                int milestoneIndex = milestoneDDL.SelectedIndex;
+                string startDate = startTxt.Text;
+                string endDate = endTxt.Text;
+                int statusIndex = statusDDL.SelectedIndex;
+
+                // Verify
+                TaskVerification taskVerification = new TaskVerification();
+                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate,  statusIndex);
+
+                // Show Errors
+                if (!verified)
+                {
+                    // Name
+                    if (taskVerification.TNameErrors.Count > 0)
+                    {
+                        tNameErrorLbl.Visible = true;
+                        tNameErrorLbl.Text = string.Join("<br>", taskVerification.TNameErrors);
+                    }
+
+                    // Description
+                    if (taskVerification.TDescErrors.Count > 0)
+                    {
+                        tDescErrorLbl.Visible = true;
+                        tDescErrorLbl.Text = string.Join("<br>", taskVerification.TDescErrors);
+                    }
+
+                    // Milestone
+                    if (taskVerification.TMilestoneErrors.Count > 0)
+                    {
+                        tMilestoneErrorLbl.Visible = true;
+                        tMilestoneErrorLbl.Text = string.Join("<br>", taskVerification.TMilestoneErrors);
+                    }
+
+                    // Start Date
+                    if (taskVerification.TStartDateErrors.Count > 0)
+                    {
+                        tStartDateErrorLbl.Visible = true;
+                        tStartDateErrorLbl.Text = string.Join("<br>", taskVerification.TStartDateErrors);
+                    }
+
+                    // End Date
+                    if (taskVerification.TEndDateErrors.Count > 0)
+                    {
+                        tEndDateErrorLbl.Visible = true;
+                        tEndDateErrorLbl.Text = string.Join("<br>", taskVerification.TEndDateErrors);
+                    }
+
+                    // Start End Date
+                    if (taskVerification.StartEndDateErrors.Count > 0)
+                    {
+                        startEndDateErrorLbl.Visible = true;
+                        startEndDateErrorLbl.Text = string.Join("<br>", taskVerification.StartEndDateErrors);
+                    }
+
+                    // Status
+                    if (taskVerification.TStatusErrors.Count > 0)
+                    {
+                        statusErrorLbl.Visible = true;
+                        statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
+                    }
+                }
+                else
+                {
+                    
+                    /**
+                     * UPDATE TASK
+                     **/
+
+                    int milestoneID = Convert.ToInt32((milestoneDDL).SelectedValue);
+                    int statusID = Convert.ToInt32((statusDDL).SelectedValue);
+                
+                    // Update Task
+                    updated_task.taskName = name;
+                    updated_task.taskDescription = desc;
+                    updated_task.startDate = Convert.ToDateTime(startDate);
+                    updated_task.endDate = Convert.ToDateTime(endDate);
+
+                    if (milestoneID != -1)
+                    {
+                        updated_task.milestoneID = milestoneID;
+                    }
+                    else
+                    {
+                        updated_task.milestoneID = null;
+                    }
+
+                    updated_task.statusID = statusID;
+
+                    // Get Edit Allocation List Control
+                    ListBox editAllocationList = (ListBox)row.FindControl("editAllocationList");
+
+                    // Init Updated Allocations
+                    List<TaskAllocation> updated_Allocations = new List<TaskAllocation>();
+
+                    // Create Updated Allocations
+                    foreach (ListItem item in editAllocationList.Items.Cast<ListItem>().Where(x => x.Selected))
+                    {
+                        TaskAllocation newAllocation = new TaskAllocation();
+                        newAllocation.taskID = updated_task.taskID;
+                        newAllocation.assignedTo = Convert.ToInt32(item.Value);
+
+                        updated_Allocations.Add(newAllocation);
+                    }
+
+                    // Update Task and Allocations
+                    if (taskBLL.Update(updated_task, updated_Allocations))
+                    {
+                        // TODO: Notify Successful Update
+                    }
+                    else
+                    {
+                        // TODO: Notify Failed Update
+                    }
+
+                    // Return to READ MODE
+                    taskGrid.EditIndex = -1;
+                    refreshData();
+
+                }
+
             }
 
-            updated_task.statusID = statusID;
-
-            // Get Edit Allocation List Control
-            ListBox editAllocationList = (ListBox)row.FindControl("editAllocationList");
-
-            // Init Updated Allocations
-            List<TaskAllocation> updated_Allocations = new List<TaskAllocation>();
-
-            // Create Updated Allocations
-            foreach (ListItem item in editAllocationList.Items.Cast<ListItem>().Where(x => x.Selected))
-            {
-                TaskAllocation newAllocation = new TaskAllocation();
-                newAllocation.taskID = updated_task.taskID;
-                newAllocation.assignedTo = Convert.ToInt32(item.Value);
-
-                updated_Allocations.Add(newAllocation);
-            }
-
-            // Update Task and Allocations
-            if (taskBLL.Update(updated_task, updated_Allocations))
-            {
-                // TODO: Notify Successful Update
-            }
-            else
-            {
-                // TODO: Notify Failed Update
-            }
-
-            // Return to READ MODE
-            taskGrid.EditIndex = -1;
-            refreshData();
         }
 
+        // Deleting
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             // Selected Task ID

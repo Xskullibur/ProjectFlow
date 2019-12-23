@@ -73,6 +73,31 @@ namespace ProjectFlow.Tasks
          * TASK MANIPULATION
          **/
 
+        // Clear Task Errors
+        private void ClearErrorMessages()
+        {
+            tNameErrorLbl.Text = string.Empty;
+            tNameErrorLbl.Visible = false;
+
+            tDescErrorLbl.Text = string.Empty;
+            tDescErrorLbl.Visible = false;
+
+            tMilestoneErrorLbl.Text = string.Empty;
+            tMilestoneErrorLbl.Visible = false;
+
+            tStartDateErrorLbl.Text = string.Empty;
+            tStartDateErrorLbl.Visible = false;
+
+            tEndDateErrorLbl.Text = string.Empty;
+            tEndDateErrorLbl.Visible = false;
+
+            startEndDateErrorLbl.Text = string.Empty;
+            startEndDateErrorLbl.Visible = false;
+
+            statusErrorLbl.Text = string.Empty;
+            statusErrorLbl.Visible = false;
+        }
+
         // Remove Add Task Panel
         private void hideModal()
         {
@@ -93,29 +118,101 @@ namespace ProjectFlow.Tasks
         protected void addTask_Click(object sender, EventArgs e)
         {
 
-            if (!taskVerified())
+            // Get Attributes
+            string taskName = tNameTxt.Text;
+            string taskDesc = tDescTxt.Text;
+            int milestoneIndex = milestoneDDL.SelectedIndex;
+            string startDate = tStartTxt.Text;
+            string endDate = tEndTxt.Text;
+            int statusIndex = statusDDL.SelectedIndex;
+
+            // Clear all Error Messages
+            ClearErrorMessages();
+
+            // Verify Attributes
+            TaskVerification taskVerification = new TaskVerification();
+            bool verified = taskVerification.Verify(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
+
+            if (!verified)
             {
-                tTitleLbl.Text = "Error";
+                /**
+                 * Show Error Messages
+                 **/
+
+                // Name
+                if (taskVerification.TNameErrors.Count > 0)
+                {
+                    tNameErrorLbl.Visible = true;
+                    tNameErrorLbl.Text = string.Join("<br>", taskVerification.TNameErrors);
+                }
+
+                // Description
+                if (taskVerification.TDescErrors.Count > 0)
+                {
+                    tDescErrorLbl.Visible = true;
+                    tDescErrorLbl.Text = string.Join("<br>", taskVerification.TDescErrors);
+                }
+
+                // Milestone
+                if (taskVerification.TMilestoneErrors.Count > 0)
+                {
+                    tMilestoneErrorLbl.Visible = true;
+                    tMilestoneErrorLbl.Text = string.Join("<br>", taskVerification.TMilestoneErrors);
+                }
+
+                // Start Date
+                if (taskVerification.TStartDateErrors.Count > 0)
+                {
+                    tStartDateErrorLbl.Visible = true;
+                    tStartDateErrorLbl.Text = string.Join("<br>", taskVerification.TStartDateErrors);
+                }
+
+                // End Date
+                if (taskVerification.TEndDateErrors.Count > 0)
+                {
+                    tEndDateErrorLbl.Visible = true;
+                    tEndDateErrorLbl.Text = string.Join("<br>", taskVerification.TEndDateErrors);
+                }
+
+                // Start End Date
+                if (taskVerification.StartEndDateErrors.Count > 0)
+                {
+                    startEndDateErrorLbl.Visible = true;
+                    startEndDateErrorLbl.Text = string.Join("<br>", taskVerification.StartEndDateErrors);
+                }
+
+                // Status
+                if (taskVerification.TStatusErrors.Count > 0)
+                {
+                    statusErrorLbl.Visible = true;
+                    statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
+                }
+
             }
             else
             {
-                int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
+                /**
+                 * Add Task
+                 **/
+
+                string selected_milestone = milestoneDDL.SelectedValue;
 
                 // Create Task Object
                 Task newTask = new Task();
-                newTask.taskName = tNameTxt.Text;
-                newTask.taskDescription = tDescTxt.Text;
-                newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
-                newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
-                newTask.teamID = TEST_TEAM_ID;
+                newTask.taskName = taskName;
+                newTask.taskDescription = taskDesc;
+                newTask.startDate = Convert.ToDateTime(startDate);
+                newTask.endDate = Convert.ToDateTime(endDate);
                 newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
 
-                if (selected_milestone != -1)
+                newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session
+
+                if (milestoneIndex != -1)
                 {
-                    newTask.milestoneID = selected_milestone;
+                    newTask.milestoneID = Convert.ToInt32(selected_milestone);
                 }
 
-                // Create all Task Allocations
+                // Create Task Allocations
                 List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
 
                 foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where( x => x.Selected))
@@ -142,153 +239,6 @@ namespace ProjectFlow.Tasks
                 }
             }
 
-        }
-
-        // Verify Add Task
-        private bool taskVerified()
-        {
-            bool verified = true;
-            List<string> tNameErrors = new List<string>();
-            List<string> tDescErrors = new List<string>();
-            List<string> tMilestoneErrors = new List<string>();
-            List<string> tStartDateErrors = new List<string>();
-            List<string> tEndDateErrors = new List<string>();
-            List<string> tStatusErrors = new List<string>();
-            List<string> startEndDateErrors = new List<string>();
-
-            /**
-             * Check For Errors
-             **/
-
-            // Task Name
-            if (string.IsNullOrEmpty(tNameTxt.Text))
-            {
-                tNameErrors.Add("Task Name Field is Required!");
-                verified = false;
-            }
-            else if (tNameTxt.Text.Length > 255)
-            {
-                tNameErrors.Add("Maximum Length of 255 Characters!");
-                verified = false;
-            }
-
-            // Description
-            if (string.IsNullOrEmpty(tDescTxt.Text))
-            {
-                tDescErrors.Add("Description Field is Required!");
-                verified = false;
-            }
-            else if (tDescTxt.Text.Length > 255)
-            {
-                tDescErrors.Add("Maximum Length of 255 Characters!");
-                verified = false;
-            }
-
-            // Milestone
-            if (milestoneDDL.SelectedIndex == -1)
-            {
-                tMilestoneErrors.Add("Milestone Field is Required!");
-                verified = false;
-            }
-
-            // Start Date
-            if (string.IsNullOrEmpty(tStartTxt.Text))
-            {
-                tStartDateErrors.Add("Start Date Field is Required!");
-                verified = false;
-            }
-            else if (!DateTime.TryParse(tStartTxt.Text, out DateTime start))
-            {
-                tStartDateErrors.Add("Invalid Format!");
-                verified = false;
-            }
-
-            // End Date
-            if (string.IsNullOrEmpty(tEndTxt.Text))
-            {
-                tEndDateErrors.Add("End Date Field is Required!");
-                verified = false;
-            }
-            else if (!DateTime.TryParse(tEndTxt.Text, out DateTime end))
-            {
-                tEndDateErrors.Add("Invalid Format!");
-                verified = false;
-            }
-
-            // Compare Start End Date
-            if (tStartDateErrors.Count == 0 && tEndDateErrors.Count  == 0)
-            {
-                if (DateTime.Compare(DateTime.Parse(tStartTxt.Text), DateTime.Parse(tEndTxt.Text)) >= 0)
-                {
-                    startEndDateErrors.Add("Start Date cannot be later than End Date!");
-                    verified = false;
-                }
-            }
-
-            // Status
-            if (statusDDL.SelectedIndex == -1)
-            {
-                tStatusErrors.Add("Status Field is Required!");
-                verified = false;
-            }
-
-            /**
-             * Show Error Messages
-             **/
-
-            if (!verified)
-            {
-                // Name
-                if (tNameErrors.Count > 0)
-                {
-                    tNameErrorLbl.Visible = true;
-                    tNameErrorLbl.Text = string.Join("<br>", tNameErrors);
-                }
-
-                // Description
-                if (tDescErrors.Count > 0)
-                {
-                    tDescErrorLbl.Visible = true;
-                    tDescErrorLbl.Text = string.Join("<br>", tDescErrors);
-                }
-
-                // Milestone
-                if (tMilestoneErrors.Count > 0)
-                {
-                    tMilestoneErrorLbl.Visible = true;
-                    tMilestoneErrorLbl.Text = string.Join("<br>", tMilestoneErrors);
-                }
-
-                // Start Date
-                if (tStartDateErrors.Count > 0)
-                {
-                    tStartDateErrorLbl.Visible = true;
-                    tStartDateErrorLbl.Text = string.Join("<br>", tStartDateErrors);
-                }
-
-                // End Date
-                if (tEndDateErrors.Count > 0)
-                {
-                    tEndDateErrorLbl.Visible = true;
-                    tEndDateErrorLbl.Text = string.Join("<br>", tEndDateErrors);
-                }
-
-                // Start End Date
-                if (startEndDateErrors.Count > 0)
-                {
-                    startEndDateErrorLbl.Visible = true;
-                    startEndDateErrorLbl.Text = string.Join("<br>", startEndDateErrors);
-                }
-
-                // Status
-                if (tStatusErrors.Count > 0)
-                {
-                    statusErrorLbl.Visible = true;
-                    statusErrorLbl.Text = string.Join("<br>", tStatusErrors);
-                }
-            }
-
-            return verified;
         }
     }
 }
