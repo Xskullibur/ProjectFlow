@@ -18,7 +18,6 @@ namespace ProjectFlow.Issues
                 int TaskId = int.Parse((string)Session["SSTaskID"]);
                 refreshData(TaskId);
             }
-
         }
         private void refreshData(int id)
         {
