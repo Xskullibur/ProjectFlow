@@ -40,105 +40,116 @@
         <!-- Add Task Modal -->
         <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
+                <asp:UpdatePanel ID="modalUpdatePanel" runat="server" OnInit="modalUpdatePanel_Init">
+                    <ContentTemplate>
 
-                <div class="modal-content">
+                        <div class="modal-content">
 
-                    <%--Header--%>
-                    <div class="modal-header">
-                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                            <%--Header--%>
+                            <div class="modal-header">
+                                <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
 
-                    <%--Body--%>
-                    <div class="modal-body">
+                            <%--Body--%>
+                            <div class="modal-body">
                             
-                        <div class="container-fluid" runat="server">
+                                <div class="container-fluid" runat="server">
 
-                            <%--Name--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Task Name:" AssociatedControlID="tNameTxt" runat="server" />
-                                <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
+                                    <%--Name--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Task Name:" AssociatedControlID="tNameTxt" runat="server" />
+                                        <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
 
-                                <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
-                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Task Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                            </div>
-
-                            <%--Description--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
-                                <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
-
-                                <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
-                                <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                            </div>
-
-                            <%--Milestone--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
-                                <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server" ValidationGroup="AddTask">
-                                    <asp:ListItem Value="-1">Nothing Selected</asp:ListItem>
-                                </asp:DropDownList>
-
-                                <asp:RequiredFieldValidator ID="milestoneRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Milestone Field is Required!" ControlToValidate="milestoneDDL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                                <%--<asp:HyperLink ID="addMilestoneHyperlink" CssClass="form-text text-muted" runat="server">Add new Milestone</asp:HyperLink>--%>
-                            </div>
-
-                            <%--Date--%>
-                            <div class="form-group">
-                                <div class="form-row">
-
-                                    <%--Start Date--%>
-                                    <div class="form-group col-xl-6 col-12">
-                                        <asp:Label CssClass="control-label" Text="Start Date:" AssociatedControlID="tStartTxt" runat="server" />
-                                        <asp:TextBox ID="tStartTxt" CssClass="form-control" runat="server" TextMode="Date" />
-                                        
-                                        <asp:RequiredFieldValidator ID="startDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start-Date Field is Required!" ControlToValidate="tStartTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                        <asp:Label ID="tNameErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                        <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                        <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Task Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                     </div>
 
-                                    <%--End Date--%>
-                                    <div class="form-group col-xl-6 col-12">
-                                        <asp:Label CssClass="control-label" Text="End Date:" AssociatedControlID="tEndTxt" runat="server" />
-                                        <asp:TextBox ID="tEndTxt" CssClass="form-control" runat="server" TextMode="Date" />
+                                    <%--Description--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
+                                        <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
+
+                                        <asp:Label ID="tDescErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                        <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                        <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                    </div>
+
+                                    <%--Milestone--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
+                                        <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server" ValidationGroup="AddTask">
+                                            <asp:ListItem Value="-1">Nothing Selected</asp:ListItem>
+                                        </asp:DropDownList>
+
+                                        <asp:Label ID="tMilestoneErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="milestoneRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Milestone Field is Required!" ControlToValidate="milestoneDDL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                        <%--<asp:HyperLink ID="addMilestoneHyperlink" CssClass="form-text text-muted" runat="server">Add new Milestone</asp:HyperLink>--%>
+                                    </div>
+
+                                    <%--Date--%>
+                                    <div class="form-group">
+                                        <div class="form-row">
+
+                                            <%--Start Date--%>
+                                            <div class="form-group col-xl-6 col-12">
+                                                <asp:Label CssClass="control-label" Text="Start Date:" AssociatedControlID="tStartTxt" runat="server" />
+                                                <asp:TextBox ID="tStartTxt" CssClass="form-control" runat="server" TextMode="Date" />
                                         
-                                        <asp:RequiredFieldValidator ID="endDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="End-Date Field is Required!" ControlToValidate="tEndTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                                <asp:Label ID="tStartDateErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                                <asp:RequiredFieldValidator ID="startDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start-Date Field is Required!" ControlToValidate="tStartTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                            </div>
+
+                                            <%--End Date--%>
+                                            <div class="form-group col-xl-6 col-12">
+                                                <asp:Label CssClass="control-label" Text="End Date:" AssociatedControlID="tEndTxt" runat="server" />
+                                                <asp:TextBox ID="tEndTxt" CssClass="form-control" runat="server" TextMode="Date" />
+                                        
+                                                <asp:Label ID="tEndDateErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                                <asp:RequiredFieldValidator ID="endDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="End-Date Field is Required!" ControlToValidate="tEndTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                            </div>
+
+                                        </div>
+                                        
+                                        <asp:Label ID="startEndDateErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                        <asp:CompareValidator ID="datesCompareValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start Date cannot be later than End Date!" ValidationGroup="AddTask" ControlToValidate="tStartTxt" Display="Dynamic" ControlToCompare="tEndTxt" Operator="LessThanEqual" Type="Date"></asp:CompareValidator>
+                                    </div>
+
+                                    <%--Allocation--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationList" runat="server" />
+                                        <asp:ListBox ID="allocationList" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                    </div>
+
+                                    <%--Status--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="statusDDL" runat="server" />
+                                        <asp:DropDownList ID="statusDDL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                        <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="statusDDL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                     </div>
 
                                 </div>
 
-                                <asp:CompareValidator ID="datesCompareValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start Date cannot be later than End Date!" ValidationGroup="AddTask" ControlToValidate="tStartTxt" Display="Dynamic" ControlToCompare="tEndTxt" Operator="LessThanEqual" Type="Date"></asp:CompareValidator>
+                                <%--Error Summary--%>
+                                <asp:ValidationSummary ID="addTaskSummaryValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ValidationGroup="AddTask" ShowMessageBox="True" ShowSummary="False" />
+
                             </div>
 
-                            <%--Allocation--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="allocationList" runat="server" />
-                                <asp:ListBox ID="allocationList" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                            <%--Footer--%>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
+                                <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary disabled" Text="Save and Add Another Task" Enabled="false" runat="server" />
                             </div>
-
-                            <%--Status--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="statusDDL" runat="server" />
-                                <asp:DropDownList ID="statusDDL" CssClass="form-control" runat="server"></asp:DropDownList>
-
-                                <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="statusDDL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                            </div>
-
                         </div>
 
-                        <%--Error Summary--%>
-                        <asp:ValidationSummary ID="addTaskSummaryValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ValidationGroup="AddTask" ShowMessageBox="True" ShowSummary="False" />
-
-                    </div>
-
-                    <%--Footer--%>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
-                        <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" />
-                    </div>
-                </div>
-
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
 
