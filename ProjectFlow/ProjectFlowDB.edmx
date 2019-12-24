@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentForIssue">
           <Key>
             <PropertyRef Name="commentID" />
@@ -78,7 +78,7 @@
           <Key>
             <PropertyRef Name="studentID" />
           </Key>
-          <Property Name="studentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="firstName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
@@ -112,7 +112,7 @@
             <PropertyRef Name="memberID" />
           </Key>
           <Property Name="memberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="studentID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="roleID" Type="int" Nullable="false" />
         </EntityType>
@@ -414,7 +414,8 @@
             <End Role="TeamMember" EntitySet="TeamMember" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -510,7 +511,7 @@
           <Key>
             <PropertyRef Name="studentID" />
           </Key>
-          <Property Name="studentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="username" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
@@ -525,17 +526,17 @@
           <Property Name="taskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="taskName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="taskDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="startDate" Type="DateTime" Precision="0" Nullable="false" />
-          <Property Name="endDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="milestoneID" Type="Int32" />
           <Property Name="statusID" Type="Int32" Nullable="false" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_Task" FromRole="Task" ToRole="Issue" />
           <NavigationProperty Name="Milestone" Relationship="Self.FK_Task_Milestone" FromRole="Task" ToRole="Milestone" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Task_ProjectTeam" FromRole="Task" ToRole="ProjectTeam" />
           <NavigationProperty Name="Status" Relationship="Self.FK_Task_Status" FromRole="Task" ToRole="Status" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_Task" FromRole="Task" ToRole="TaskAllocation" />
-          <Property Name="dropped" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskAllocation">
           <Key>
@@ -552,7 +553,7 @@
             <PropertyRef Name="memberID" />
           </Key>
           <Property Name="memberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <Property Name="studentID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="roleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="TeamMember" ToRole="CommentForIssue" />
@@ -959,7 +960,6 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="ProjectFlowModel.Task">
               <MappingFragment StoreEntitySet="Task">
-                <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="taskName" ColumnName="taskName" />
                 <ScalarProperty Name="taskDescription" ColumnName="taskDescription" />
@@ -968,6 +968,7 @@
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="milestoneID" ColumnName="milestoneID" />
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
