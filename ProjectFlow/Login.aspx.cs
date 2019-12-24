@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
+using ProjectFlow.BLL;
 
 namespace ProjectFlow
 {
@@ -23,14 +24,26 @@ namespace ProjectFlow
             string email = emailTextBox.Text;
             string password = passwordTextBox.Text;
 
-            StudentDAO dao = new StudentDAO();
+            LoginBLL loginService = new LoginBLL();
 
-            Student student = dao.LoginValidate(email, password);
+            Student student = loginService.LoginValidate(email, password);
 
             if(student != null)
             {
                 //Found student, login success 
-                FormsAuthentication.RedirectFromLoginPage(email, rememberMeCheckBox.Checked);
+
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, email, 
+                    DateTime.Now, DateTime.Now.AddMinutes(2880), rememberMeCheckBox.Checked, "Student", FormsAuthentication.FormsCookiePath);
+
+                string hash = FormsAuthentication.Encrypt(ticket);
+                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+
+                if (ticket.IsPersistent)
+                {
+                    cookie.Expires = ticket.Expiration;
+                }
+                Response.Cookies.Add(cookie);
+                Response.Redirect(FormsAuthentication.GetRedirectUrl(email, rememberMeCheckBox.Checked));
             }
             else
             {

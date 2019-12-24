@@ -7,21 +7,34 @@ namespace ProjectFlow.DAO
 {
     public class StudentDAO
     {
+        
+        
         /// <summary>
-        /// Validate the email exist and matches the password in the database.
-        /// NOTE: password hashing is not perform inside this function,
-        /// The password should be hashed before calling this method
+        /// Find the Student using student id
         /// </summary>
-        /// <param name="email">email of the login credential</param>
-        /// <param name="password">hashed password of the user</param>
-        /// <returns>The Student object which belongs to the login credential</returns>
-        public Student LoginValidate(string email, string password)
+        /// <param name="id">student id of the Studennt</param>
+        /// <returns>Instance of the found Student object</returns>
+        public Student FindStudentById(int id)
         {
-            using(ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.Students.FirstOrDefault(student => student.email.Equals(email) && student.password.Equals(password));
+                return dbContext.Students.Find(id);
             }
         }
+
+        /// <summary>
+        /// Find the Student using student email
+        /// </summary>
+        /// <param name="email">student email of the Student</param>
+        /// <returns>Instance of the found Student object</returns>
+        public Student FindStudentByEmail(string email)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Students.FirstOrDefault(student => student.email.Equals(email));
+            }
+        }
+
 
 
     }
