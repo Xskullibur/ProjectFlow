@@ -15,8 +15,15 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style type="text/css">
-        .auto-style2 {
-            width: 556px;
+        .auto-style3 {
+            width: 286px;
+            height: 23px;
+        }
+        .auto-style4 {
+            width: 95px;
+        }
+        .auto-style5 {
+            width: 286px;
         }
     </style>
 </head>
@@ -32,17 +39,39 @@
             </Scripts>
         </asp:ScriptManager>
         <div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="30" height="30" alt="">
+                  </a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Notifications</a>
+                        </li>                                               
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div>
             <table style="width:100%;">
                 <tr>
-                    <td class="auto-style2">
+                    <td class="auto-style3">                        
                     </td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">
-                        <asp:ListView ID="ListView1" runat="server"
-                                        DataKeyNames="">
-
-                        </asp:ListView>
+                    <td class="auto-style5">
+                        <nav class="navbar navbar-light bg-light">
+                            <ul class = "navbar-nav">
+                              <li class = "nav-item"><a href="ProjectMainPage.aspx">Home</a></li>
+                              <li class = "nav-item"><a href="ProjectMainPage.aspx">Task Management</a></li>
+                              <li class = "nav-item"><a href="ProjectMainPage.aspx">Whiteboard</a></li>
+                              <li class = "nav-item"><a href="ProjectMainPage.aspx">Issue Tracker</a></li>
+                              <li class = "nav-item"><a href="ProjectMainPage.aspx">Christina AI</a></li>
+                            </ul>
+                        </nav>
                     </td>
                     <td>
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
