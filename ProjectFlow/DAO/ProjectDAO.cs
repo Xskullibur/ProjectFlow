@@ -21,5 +21,14 @@ namespace ProjectFlow.DAO
                 dbContext.SaveChanges();
             }
         }
+
+        public List<Project> GetProjectTutor(int TutorID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {               
+                Tutor tutor = dbContext.Tutors.First(x => x.tutorID == TutorID);                
+                return tutor.Projects.ToList();
+            }
+        }
     }
 }

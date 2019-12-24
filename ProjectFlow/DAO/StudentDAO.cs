@@ -7,7 +7,7 @@ namespace ProjectFlow.DAO
 {
     public class StudentDAO
     {
-
+        //not for actual use
         public List<Student> GetStudents()
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

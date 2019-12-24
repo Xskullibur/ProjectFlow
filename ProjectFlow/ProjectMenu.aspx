@@ -64,9 +64,17 @@
                 </div>
             </div>
         </div>
+    <div>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#CreateProject">Open Modal</button>
+    </div>
+    <div>
+        
+        <asp:GridView ID="GridView1" runat="server">
+        </asp:GridView>
+        
+    </div>
+
     </form>
-   
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#CreateProject">Open Modal</button>
 
     <script>
         $('#CreateProject').on('show.bs.modal', function (event) {
