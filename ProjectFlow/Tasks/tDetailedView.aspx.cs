@@ -231,6 +231,28 @@ namespace ProjectFlow.Tasks
                 string endDate = endTxt.Text;
                 int statusIndex = statusDDL.SelectedIndex;
 
+                // Clear Error Messages
+                tNameErrorLbl.Text = string.Empty;
+                tNameErrorLbl.Visible = false;
+
+                tDescErrorLbl.Text = string.Empty;
+                tDescErrorLbl.Visible = false;
+
+                tMilestoneErrorLbl.Text = string.Empty;
+                tMilestoneErrorLbl.Visible = false;
+
+                tStartDateErrorLbl.Text = string.Empty;
+                tStartDateErrorLbl.Visible = false;
+
+                tEndDateErrorLbl.Text = string.Empty;
+                tEndDateErrorLbl.Visible = false;
+
+                startEndDateErrorLbl.Text = string.Empty;
+                startEndDateErrorLbl.Visible = false;
+
+                statusErrorLbl.Text = string.Empty;
+                statusErrorLbl.Visible = false;
+
                 // Verify
                 TaskVerification taskVerification = new TaskVerification();
                 bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate,  statusIndex);
