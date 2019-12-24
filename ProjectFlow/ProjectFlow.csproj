@@ -105,7 +105,6 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -290,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
     <Compile Include="BLL\StatusBLL.cs" />
@@ -304,13 +304,6 @@
     <Compile Include="DAO\StudentDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -331,13 +324,7 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login\IAuthCallback.cs" />
-    <Compile Include="Login\LoginManagers\BasicLoginManager.cs" />
-    <Compile Include="Login\LoginManagers\GoogleLoginManager.cs" />
-    <Compile Include="Login\ILoginManager.cs" />
-    <Compile Include="Login\LoginService.cs" />
-    <Compile Include="Login\RedirectAuthCallback.cs" />
-    <Compile Include="Login\SessionAuthCallback.cs" />
+    <Compile Include="Login\ProjectFlowIdentity.cs" />
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -441,6 +428,8 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\AlertPageExtension.cs" />
+    <Compile Include="Utils\Bootstrap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -457,6 +446,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Tasks\TaskNested.master" />
+    <Content Include="Tasks\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
