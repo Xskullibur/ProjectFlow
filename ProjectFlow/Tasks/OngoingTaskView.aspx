@@ -8,7 +8,7 @@
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container py-2">
+    <div class="container py-2 w-100 h-100">
 
         <div class="row pb-2">
             <div class="col">
