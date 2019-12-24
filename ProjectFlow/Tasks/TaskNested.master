@@ -17,10 +17,10 @@
             <div class="col-xl-3 col-12 align-self-end">
 
                 <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged" AutoPostBack="True">
-                    <asp:ListItem Value="ongoing_tasks">Ongoing Tasks</asp:ListItem>
-                    <asp:ListItem Value="dropped_tasks">Dropped Tasks</asp:ListItem>
-                    <asp:ListItem Enabled="False" Value="calendar">Calendar</asp:ListItem>
-                    <asp:ListItem Enabled="False" Value="swimLanes">Swim Lanes</asp:ListItem>
+                    <asp:ListItem Value="Ongoing Tasks">Ongoing Tasks</asp:ListItem>
+                    <asp:ListItem Value="Dropped Tasks">Dropped Tasks</asp:ListItem>
+                    <asp:ListItem Enabled="False" Value="Calendar">Calendar</asp:ListItem>
+                    <asp:ListItem Enabled="False" Value="Swim Lanes">Swim Lanes</asp:ListItem>
                 </asp:DropDownList>
 
             </div>

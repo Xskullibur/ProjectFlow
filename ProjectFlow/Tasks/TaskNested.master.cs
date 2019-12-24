@@ -11,7 +11,37 @@ namespace ProjectFlow.Tasks
     public partial class TaskNested : System.Web.UI.MasterPage
     {
         private const int TEST_TEAM_ID = 2;
+
+        // Public Attributes and Methods
         public event EventHandler refreshGrid;
+        public enum TaskViews
+        {
+            OngoingTaskView,
+            DroppedTaskView,
+            Calendar,
+            Swimlane
+        }
+
+        public void changeSelectedView(TaskViews selectedView)
+        {
+            switch (selectedView)
+            {
+                case TaskViews.OngoingTaskView:
+                    taskViewDDL.SelectedIndex = 0;
+                    break;
+                case TaskViews.DroppedTaskView:
+                    taskViewDDL.SelectedIndex = 1;
+                    break;
+                case TaskViews.Calendar:
+                    taskViewDDL.SelectedIndex = 2;
+                    break;
+                case TaskViews.Swimlane:
+                    taskViewDDL.SelectedIndex = 3;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,14 +85,15 @@ namespace ProjectFlow.Tasks
         // Switch Views
         protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (taskViewDDL.SelectedValue)
+
+            switch (taskViewDDL.SelectedIndex)
             {
 
-                case "ongoing_tasks":
+                case 0:
                     Response.Redirect("OngoingTaskView.aspx");
                     break;
 
-                case "dropped_tasks":
+                case 1:
                     Response.Redirect("DroppedTaskView.aspx");
                     break;
 

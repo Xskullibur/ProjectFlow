@@ -16,6 +16,7 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+                Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }
         }

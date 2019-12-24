@@ -23,6 +23,7 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+                Master.changeSelectedView(TaskNested.TaskViews.OngoingTaskView);
                 refreshData();
             }
         }
