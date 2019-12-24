@@ -14,12 +14,24 @@
                         <ContentTemplate>
 
                             <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowDeleting="taskGrid_RowDeleting" > 
+                                <HeaderStyle CssClass="thead-light" />
                                 <Columns>
                                     <asp:CommandField DeleteText="Restore" ShowDeleteButton="True" ButtonType="Button" >
                                     <ControlStyle CssClass="btn btn-primary" />
                                     </asp:CommandField>
                                 </Columns>
-                                <HeaderStyle CssClass="thead-light" />
+
+                                <EmptyDataTemplate>
+                                    <div class="jumbotron jumbotron-fluid">
+                                        <div class="container">
+                                            <h1 class="display-4">Good Job, Very Consistent!</h1>
+                                            <p class="load">No Dropped Task Found!</p>
+                                            <hr class="my-4" />
+                                            <p>If dropped tasks are expected but not shown please contact us <asp:HyperLink ID="emailLink" Text="here" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink>.</p>
+                                        </div>
+                                    </div>
+                                </EmptyDataTemplate>
+
                             </asp:GridView>
 
 
