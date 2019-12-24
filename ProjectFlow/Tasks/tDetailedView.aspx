@@ -13,7 +13,7 @@
             <div class="col">
 
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" > 
+                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" OnSelectedIndexChanged="taskGrid_SelectedIndexChanged" > 
                         <Columns>
 
                             <%--ID--%>
@@ -88,6 +88,10 @@
                                     <asp:Label ID="gridStatus" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+
+                            <asp:CommandField ShowSelectButton="True" ButtonType="Button" SelectText="Issues">
+                                <ControlStyle CssClass="btn btn-success mb-2" />
+                            </asp:CommandField>
 
                             <asp:CommandField ShowEditButton="True" ButtonType="Button" >
                                 <ControlStyle CssClass="btn btn-primary mb-2" />

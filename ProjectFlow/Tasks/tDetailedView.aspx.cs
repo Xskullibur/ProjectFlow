@@ -268,5 +268,12 @@ namespace ProjectFlow.Tasks
             // Refresh Grid
             refreshData();
         }
+
+        protected void taskGrid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = taskGrid.SelectedRow;
+            Session["SSTaskID"] = row.Cells[0].Text;
+            Response.Redirect("../Issues/IssueView.aspx");
+        }
     }
 }
