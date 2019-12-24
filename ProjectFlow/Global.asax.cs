@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using ProjectFlow.DAO;
+using ProjectFlow.Login;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
@@ -54,7 +58,28 @@ namespace ProjectFlow
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
+            if (HttpContext.Current.User != null)
+            {
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    if (HttpContext.Current.User.Identity is FormsIdentity)
+                    {
+                        FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
+                        FormsAuthenticationTicket ticket = id.Ticket;
+                        string userData = ticket.UserData;
+                        string[] roles = userData.Split(',');
 
+                        string email = id.Name;
+                        StudentDAO dao = new StudentDAO();
+                        Student student = dao.FindStudentByEmail(email);
+
+                        var projectFlowIdentity = new ProjectFlowIdentity(student, id);
+                        var principal = new GenericPrincipal(projectFlowIdentity, roles);
+
+                        HttpContext.Current.User = principal;
+                    }
+                }
+            }
         }
 
         protected void Application_Error(object sender, EventArgs e)

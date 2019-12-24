@@ -11,8 +11,7 @@ namespace ProjectFlow.DAO
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id)
-                    .Select(y => y).ToList();
+                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id).ToList();
 
                 return teamMilestone;
             }
