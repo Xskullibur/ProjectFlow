@@ -11,7 +11,7 @@
                     </div>
                     <div class="rounded-bottom p-1 bg-light">
                         <asp:Label ID="lbIssue" runat="server" Text=""></asp:Label>
-                    </div>   
+                    </div>    
                 </div>
                 <div>
                     <asp:Button ID="btnYes" CssClass ="btn btn-success" runat="server" Text="Yes" />
