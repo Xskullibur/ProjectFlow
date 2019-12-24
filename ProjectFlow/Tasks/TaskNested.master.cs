@@ -12,6 +12,37 @@ namespace ProjectFlow.Tasks
     {
         private const int TEST_TEAM_ID = 2;
 
+        // Public Attributes and Methods
+        public event EventHandler refreshGrid;
+        public enum TaskViews
+        {
+            OngoingTaskView,
+            DroppedTaskView,
+            Calendar,
+            Swimlane
+        }
+
+        public void changeSelectedView(TaskViews selectedView)
+        {
+            switch (selectedView)
+            {
+                case TaskViews.OngoingTaskView:
+                    taskViewDDL.SelectedIndex = 0;
+                    break;
+                case TaskViews.DroppedTaskView:
+                    taskViewDDL.SelectedIndex = 1;
+                    break;
+                case TaskViews.Calendar:
+                    taskViewDDL.SelectedIndex = 2;
+                    break;
+                case TaskViews.Swimlane:
+                    taskViewDDL.SelectedIndex = 3;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -51,12 +82,74 @@ namespace ProjectFlow.Tasks
             }
         }
 
+        // Switch Views
+        protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            switch (taskViewDDL.SelectedIndex)
+            {
+
+                case 0:
+                    Response.Redirect("OngoingTaskView.aspx");
+                    break;
+
+                case 1:
+                    Response.Redirect("DroppedTaskView.aspx");
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
+
+        /**
+         * MODAL MANIPULATION
+         **/
+
         // Add Task OnClick Event
         protected void showTaskModal_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show');", true);
         }
 
+        // On UpdatePanel Init
+        protected void modalUpdatePanel_Init(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_selectpicker", "$('.selectpicker').selectpicker();", true);
+        }
+
+
+        /**
+         * TASK MANIPULATION
+         **/
+
+        // Clear Task Errors
+        private void ClearErrorMessages()
+        {
+            tNameErrorLbl.Text = string.Empty;
+            tNameErrorLbl.Visible = false;
+
+            tDescErrorLbl.Text = string.Empty;
+            tDescErrorLbl.Visible = false;
+
+            tMilestoneErrorLbl.Text = string.Empty;
+            tMilestoneErrorLbl.Visible = false;
+
+            tStartDateErrorLbl.Text = string.Empty;
+            tStartDateErrorLbl.Visible = false;
+
+            tEndDateErrorLbl.Text = string.Empty;
+            tEndDateErrorLbl.Visible = false;
+
+            startEndDateErrorLbl.Text = string.Empty;
+            startEndDateErrorLbl.Visible = false;
+
+            statusErrorLbl.Text = string.Empty;
+            statusErrorLbl.Visible = false;
+        }
+
+        // Remove Add Task Panel
         private void hideModal()
         {
             // Clear Fields
@@ -76,25 +169,101 @@ namespace ProjectFlow.Tasks
         protected void addTask_Click(object sender, EventArgs e)
         {
 
-            if (Page.IsValid)
+            // Get Attributes
+            string taskName = tNameTxt.Text;
+            string taskDesc = tDescTxt.Text;
+            int milestoneIndex = milestoneDDL.SelectedIndex;
+            string startDate = tStartTxt.Text;
+            string endDate = tEndTxt.Text;
+            int statusIndex = statusDDL.SelectedIndex;
+
+            // Clear all Error Messages
+            ClearErrorMessages();
+
+            // Verify Attributes
+            TaskVerification taskVerification = new TaskVerification();
+            bool verified = taskVerification.Verify(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
+
+            if (!verified)
             {
-                int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
+                /**
+                 * Show Error Messages
+                 **/
+
+                // Name
+                if (taskVerification.TNameErrors.Count > 0)
+                {
+                    tNameErrorLbl.Visible = true;
+                    tNameErrorLbl.Text = string.Join("<br>", taskVerification.TNameErrors);
+                }
+
+                // Description
+                if (taskVerification.TDescErrors.Count > 0)
+                {
+                    tDescErrorLbl.Visible = true;
+                    tDescErrorLbl.Text = string.Join("<br>", taskVerification.TDescErrors);
+                }
+
+                // Milestone
+                if (taskVerification.TMilestoneErrors.Count > 0)
+                {
+                    tMilestoneErrorLbl.Visible = true;
+                    tMilestoneErrorLbl.Text = string.Join("<br>", taskVerification.TMilestoneErrors);
+                }
+
+                // Start Date
+                if (taskVerification.TStartDateErrors.Count > 0)
+                {
+                    tStartDateErrorLbl.Visible = true;
+                    tStartDateErrorLbl.Text = string.Join("<br>", taskVerification.TStartDateErrors);
+                }
+
+                // End Date
+                if (taskVerification.TEndDateErrors.Count > 0)
+                {
+                    tEndDateErrorLbl.Visible = true;
+                    tEndDateErrorLbl.Text = string.Join("<br>", taskVerification.TEndDateErrors);
+                }
+
+                // Start End Date
+                if (taskVerification.StartEndDateErrors.Count > 0)
+                {
+                    startEndDateErrorLbl.Visible = true;
+                    startEndDateErrorLbl.Text = string.Join("<br>", taskVerification.StartEndDateErrors);
+                }
+
+                // Status
+                if (taskVerification.TStatusErrors.Count > 0)
+                {
+                    statusErrorLbl.Visible = true;
+                    statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
+                }
+
+            }
+            else
+            {
+                /**
+                 * Add Task
+                 **/
+
+                string selected_milestone = milestoneDDL.SelectedValue;
 
                 // Create Task Object
                 Task newTask = new Task();
-                newTask.taskName = tNameTxt.Text;
-                newTask.taskDescription = tDescTxt.Text;
-                newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
-                newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
-                newTask.teamID = TEST_TEAM_ID;
+                newTask.taskName = taskName;
+                newTask.taskDescription = taskDesc;
+                newTask.startDate = Convert.ToDateTime(startDate);
+                newTask.endDate = Convert.ToDateTime(endDate);
                 newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
 
-                if (selected_milestone != -1)
+                newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session
+
+                if (selected_milestone != "-1")
                 {
-                    newTask.milestoneID = selected_milestone;
+                    newTask.milestoneID = Convert.ToInt32(selected_milestone);
                 }
 
-                // Create all Task Allocations
+                // Create Task Allocations
                 List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
 
                 foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where( x => x.Selected))
@@ -114,6 +283,7 @@ namespace ProjectFlow.Tasks
                 if (result)
                 {
                     hideModal();
+                    refreshGrid?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -121,71 +291,6 @@ namespace ProjectFlow.Tasks
                 }
             }
 
-        }
-
-        private bool verifyAddTask()
-        {
-            bool result = true;
-
-            // Task Name
-            if (string.IsNullOrEmpty(tNameTxt.Text))
-            {
-                tNameRequiredValidator.IsValid = false;
-                result = false;
-            }
-
-            if (tNameTxt.Text.Length > 255)
-            {
-                tNameRegexValidator.IsValid = false;
-                result = false;
-            }
-
-            // Description
-            if (string.IsNullOrEmpty(tDescTxt.Text))
-            {
-                tDescRequiredValidator.IsValid = false;
-                result = false;
-            }
-
-            if (tDescTxt.Text.Length > 255)
-            {
-                tDescRegexValidator.IsValid = false;
-                result = false;
-            }
-
-            // Milestone
-            if (milestoneDDL.SelectedIndex == -1)
-            {
-                milestoneRequiredValidator.IsValid = false;
-                result = false;
-            }
-
-            // Status
-            if (statusDDL.SelectedIndex == -1)
-            {
-                statusRequiredValidator.IsValid = false;
-                result = false;
-            }
-
-            return result;
-        }
-
-        // Verify Start and End Dates are valid
-        protected void startEndDateValidator_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            // Verify Both Start Date and End Date has values
-            if (!string.IsNullOrEmpty(tStartTxt.Text) && !string.IsNullOrEmpty(tEndTxt.Text))
-            {
-                // Verify Valid DateTime
-                if (DateTime.TryParse(args.Value, out DateTime dateTime))
-                {
-                    args.IsValid = true;
-                }
-                else
-                {
-                    args.IsValid = false;
-                }
-            }
         }
 
     }

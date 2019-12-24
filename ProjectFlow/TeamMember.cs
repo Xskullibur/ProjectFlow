@@ -23,7 +23,7 @@ namespace ProjectFlow
         }
     
         public int memberID { get; set; }
-        public int studentID { get; set; }
+        public string studentID { get; set; }
         public int teamID { get; set; }
         public int roleID { get; set; }
     

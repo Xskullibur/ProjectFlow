@@ -28,16 +28,33 @@ namespace ProjectFlow.BLL
             return taskDAO.Delete(deleted_task);
         }
 
+        public bool Restore(int id)
+        {
+            TaskDAO taskDAO = new TaskDAO();
+            Task restored_task = taskDAO.GetTaskByID(id);
+
+            return taskDAO.Restore(restored_task);
+        }
+
+
         public Task GetTaskById(int id)
         {
             TaskDAO taskDAO = new TaskDAO();
             return taskDAO.GetTaskByID(id);
         }
 
-        public List<object> GetTasksByTeamId(int id)
+        public List<object> GetOngoingTasksByTeamId(int id)
         {
             TaskDAO taskDAO = new TaskDAO();
-            var tasks = taskDAO.GetOnGoingTasksByTeamID(id).ToList();
+            var tasks = taskDAO.GetOngoingTasksByTeamID(id).ToList();
+
+            return tasks;
+        }
+
+        public List<object> GetDroppedTasksByTeamId(int id)
+        {
+            TaskDAO taskDAO = new TaskDAO();
+            var tasks = taskDAO.GetDroppedTasksByTeamID(id).ToList();
 
             return tasks;
         }
