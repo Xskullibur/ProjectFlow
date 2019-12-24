@@ -108,9 +108,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
-    <Content Include="Issues\tConflictRes1.aspx" />
-    <Content Include="Issues\tConflictRes2.aspx" />
-    <Content Include="Issues\IssueView.aspx" />
+    <Content Include="Issues\IssueRes.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -332,26 +330,12 @@
     <Compile Include="Issues\IssueNested.master.designer.cs">
       <DependentUpon>IssueNested.master</DependentUpon>
     </Compile>
-    <Compile Include="Issues\tConflictRes1.aspx.cs">
-      <DependentUpon>tConflictRes1.aspx</DependentUpon>
+    <Compile Include="Issues\IssueRes.aspx.cs">
+      <DependentUpon>IssueRes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Issues\tConflictRes1.aspx.designer.cs">
-      <DependentUpon>tConflictRes1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\tConflictRes2.aspx.cs">
-      <DependentUpon>tConflictRes2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\tConflictRes2.aspx.designer.cs">
-      <DependentUpon>tConflictRes2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueView.aspx.cs">
-      <DependentUpon>IssueView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\IssueView.aspx.designer.cs">
-      <DependentUpon>IssueView.aspx</DependentUpon>
+    <Compile Include="Issues\IssueRes.aspx.designer.cs">
+      <DependentUpon>IssueRes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

@@ -13,7 +13,7 @@
             <div class="col">
 
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" OnSelectedIndexChanged="taskGrid_SelectedIndexChanged1" > 
+                    <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" OnSelectedIndexChanged="taskGrid_SelectedIndexChanged" > 
                         <Columns>
 
                             <%--ID--%>
