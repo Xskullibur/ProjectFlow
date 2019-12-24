@@ -69,7 +69,13 @@
     </div>
     <div>
         
-        <asp:GridView ID="GridView1" runat="server">
+        <asp:GridView ID="projectGV" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="531px">
+            <Columns>
+                <asp:BoundField DataField="projectID" HeaderText="Project ID" />
+                <asp:BoundField DataField="projectName" HeaderText="Name" />
+                <asp:BoundField DataField="projectDescription" HeaderText="Description" />
+                <asp:CommandField SelectText="Open" ShowSelectButton="True" />
+            </Columns>
         </asp:GridView>
         
     </div>

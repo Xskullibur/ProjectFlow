@@ -119,6 +119,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
+    <Content Include="ProjectMainPage.aspx" />
     <Content Include="ProjectMenu.aspx" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -367,6 +368,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectMainPage.aspx.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectMainPage.aspx.designer.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
