@@ -11,6 +11,7 @@ namespace ProjectFlow.Tasks
     public partial class TaskNested : System.Web.UI.MasterPage
     {
         private const int TEST_TEAM_ID = 2;
+        public event EventHandler refreshGrid;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,6 +52,25 @@ namespace ProjectFlow.Tasks
             }
         }
 
+        // Switch Views
+        protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (taskViewDDL.SelectedValue)
+            {
+
+                case "ongoing_tasks":
+                    Response.Redirect("OngoingTaskView.aspx");
+                    break;
+
+                case "dropped_tasks":
+                    Response.Redirect("DroppedTaskView.aspx");
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
 
         /**
          * MODAL MANIPULATION
@@ -207,7 +227,7 @@ namespace ProjectFlow.Tasks
 
                 newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session
 
-                if (milestoneIndex != -1)
+                if (selected_milestone != "-1")
                 {
                     newTask.milestoneID = Convert.ToInt32(selected_milestone);
                 }
@@ -232,6 +252,7 @@ namespace ProjectFlow.Tasks
                 if (result)
                 {
                     hideModal();
+                    refreshGrid?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -240,5 +261,6 @@ namespace ProjectFlow.Tasks
             }
 
         }
+
     }
 }

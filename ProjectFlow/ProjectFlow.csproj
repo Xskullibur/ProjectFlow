@@ -283,7 +283,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Tasks.aspx" />
-    <Content Include="Tasks\tDetailedView.aspx" />
+    <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -410,12 +410,12 @@
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskVerification.cs" />
-    <Compile Include="Tasks\tDetailedView.aspx.cs">
-      <DependentUpon>tDetailedView.aspx</DependentUpon>
+    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tasks\tDetailedView.aspx.designer.cs">
-      <DependentUpon>tDetailedView.aspx</DependentUpon>
+    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
     </Compile>
     <Compile Include="TeamMember.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

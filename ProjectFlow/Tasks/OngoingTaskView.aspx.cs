@@ -14,6 +14,11 @@ namespace ProjectFlow.Tasks
 
         private const int TEST_TEAM_ID = 2;
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

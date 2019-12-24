@@ -32,7 +32,7 @@ namespace ProjectFlow.DAO
                     }
                     catch (Exception e)
                     {
-                        Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                        System.Diagnostics.Debug.WriteLine($"Error While Adding Task: {e.InnerException.Message}");
                         return false;
                     }
                 }
