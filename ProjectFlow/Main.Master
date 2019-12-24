@@ -9,8 +9,8 @@
         <asp:PlaceHolder runat="server">
             <%: Styles.Render("~/Content/css") %>
             <%: Styles.Render("~/Content/bootstrap-select.css") %>
-            <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-            <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<%--            <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+            <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>--%>
         </asp:PlaceHolder>
 
         <asp:ContentPlaceHolder ID="head" runat="server">
@@ -29,7 +29,13 @@
             </asp:ScriptManager>
 
             <%--Alert Continer--%>
-            <div class="container" id="alert_container"></div>
+            <div class="container" id="alert_container">
+                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                    <ContentTemplate>
+                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
 
             <%--ContentPlaceHolder1--%>
             <div class="container">

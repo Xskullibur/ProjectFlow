@@ -297,6 +297,7 @@
     </Compile>
     <Compile Include="DAO\MilestoneDAO.cs" />
     <Compile Include="DAO\StatusDAO.cs" />
+    <Compile Include="DAO\StudentDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
     <Compile Include="Default.aspx.cs">
@@ -422,6 +423,8 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\AlertPageExtension.cs" />
+    <Compile Include="Utils\Bootstrap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
