@@ -32,5 +32,13 @@ namespace ProjectFlow.Issues
                 IssueView.UseAccessibleHeader = true;
             }
         }
+
+        protected void IssueView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = IssueView.SelectedRow;
+            Session["SSTest"] = row.Cells[2].Text;
+            Session["SSDesc"] = row.Cells[4].Text;
+            Response.Redirect("../Issues/IssueRes.aspx");
+        }
     }
 }

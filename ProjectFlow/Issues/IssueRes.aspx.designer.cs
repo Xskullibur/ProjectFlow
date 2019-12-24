@@ -10,16 +10,7 @@
 namespace ProjectFlow.Issues {
     
     
-    public partial class IssueNested {
-        
-        /// <summary>
-        /// head control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+    public partial class IssueRes {
         
         /// <summary>
         /// lbMember control.
@@ -40,21 +31,39 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Label lbIssue;
         
         /// <summary>
-        /// taskView control.
+        /// btnYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView taskView;
+        protected global::System.Web.UI.WebControls.Button btnYes;
         
         /// <summary>
-        /// MainContent control.
+        /// btnNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Button btnNo;
+        
+        /// <summary>
+        /// btnRandom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRandom;
+        
+        /// <summary>
+        /// MemView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView MemView;
     }
 }

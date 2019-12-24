@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
-        <asp:GridView ID="IssueView" runat="server" BorderStyle="None" BorderWidth="0px" GridLines="None" AutoGenerateColumns="False" CellPadding="5" >
+        <asp:GridView ID="IssueView" runat="server" BorderStyle="None" BorderWidth="0px" GridLines="None" AutoGenerateColumns="False" CellPadding="5" OnSelectedIndexChanged="IssueView_SelectedIndexChanged" >
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="Task Id" />
                 <asp:BoundField DataField="Task" HeaderText="Issue Name" />
