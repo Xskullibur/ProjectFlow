@@ -11,7 +11,8 @@ namespace ProjectFlow.Issues
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lbMember.Text += (string)Session["SSCreatedBy"];
+            lbIssue.Text += (string)Session["SSDesc"];
         }
     }
 }
