@@ -75,12 +75,18 @@ namespace ProjectFlow.DAO
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine($"Error While Updating Task: {e.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating Task: {e.Message}");
                     return false;
                 }
             }
         }
 
+
+        /// <summary>
+        /// Drop Task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns>Boolean</returns>
         public bool Delete(Task task)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -95,11 +101,38 @@ namespace ProjectFlow.DAO
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine($"Error While Updating Deleted Task: {e.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating Deleted Task: {e.Message}");
                     return false;
                 }
             }
         }
+
+
+        /// <summary>
+        /// Restore Task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public bool Restore(Task task)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    task.dropped = false;
+                    dbContext.Entry(task).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating Deleted Task: {e.Message}");
+                    return false;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Get Task by Task ID
@@ -117,20 +150,21 @@ namespace ProjectFlow.DAO
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Error While Retrieving Task: {e.Message}");
                     return null;
                 }
             }
         }
 
+
         /// <summary>
-        /// Gets all Task information (incl. Task Allocations) By Team ID
+        /// Gets all Ongoing Task information (incl. Task Allocations) By Team ID
         /// </summary>
         /// <param name="teamID"></param>
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
-        public IEnumerable<object> GetOnGoingTasksByTeamID(int teamID)
+        public IEnumerable<object> GetOngoingTasksByTeamID(int teamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -160,12 +194,59 @@ namespace ProjectFlow.DAO
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Error While Retrieving Task: {e.Message}");
                     return null;
                 }
 
 
             }
         }
+
+
+        /// <summary>
+        /// Gets all Drropped Task information (incl. Task Allocations) By Team ID
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <returns>Anonymous Object</returns>
+        /// 
+        /// (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
+        public IEnumerable<object> GetDroppedTasksByTeamID(int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+
+                    var list = dbContext.Tasks.Include("TaskAllocations.TeamMember.Student")
+                        .Include("Milestone")
+                        .Include("Status")
+                        .Where(x => x.teamID == teamID)
+                        .Where(x => x.dropped == true)
+                        .ToList().Select(y => new
+                        {
+                            ID = y.taskID,
+                            Task = y.taskName,
+                            Description = y.taskDescription,
+                            MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                            Start = y.startDate,
+                            End = y.endDate,
+                            Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
+                            Status = y.Status.status1
+                        });
+
+                    return list;
+
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
+
     }
 }

@@ -31,7 +31,7 @@ namespace ProjectFlow.Tasks
         {
             TaskBLL taskBLL = new TaskBLL();
 
-            taskGrid.DataSource = taskBLL.GetTasksByTeamId(TEST_TEAM_ID);
+            taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamId(TEST_TEAM_ID);
             taskGrid.DataBind();
 
             if (taskGrid.Rows.Count > 0)
@@ -385,10 +385,19 @@ namespace ProjectFlow.Tasks
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
-            taskBLL.Delete(id);
+            bool result = taskBLL.Delete(id);
 
-            // Refresh Grid
             refreshData();
+
+            if (result)
+            {
+                //TODO: Notify Delete Successful
+            }
+            else
+            {
+                //TODO: Notify Delete Failed
+            }
+
         }
     }
 }
