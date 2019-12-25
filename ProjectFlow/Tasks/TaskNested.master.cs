@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -285,10 +286,11 @@ namespace ProjectFlow.Tasks
                 {
                     hideModal();
                     refreshGrid?.Invoke(this, EventArgs.Empty);
+                    this.Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
                 }
                 else
                 {
-
+                    this.Master.ShowAlert("Failed to Add Task!", BootstrapAlertTypes.DANGER);
                 }
             }
 
