@@ -106,6 +106,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ProjectFlow\content-nav.css" />
+    <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -120,7 +121,6 @@
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
     <Content Include="DashBoard\ProjectMainPage.aspx" />
-    <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -308,6 +308,13 @@
     <Compile Include="DAO\StudentDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
+    <Compile Include="DashBoard\ProjectMenu.aspx.cs">
+      <DependentUpon>ProjectMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\ProjectMenu.aspx.designer.cs">
+      <DependentUpon>ProjectMenu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -373,13 +380,6 @@
     </Compile>
     <Compile Include="DashBoard\ProjectMainPage.aspx.designer.cs">
       <DependentUpon>ProjectMainPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DashBoard\ProjectMenu.aspx.cs">
-      <DependentUpon>ProjectMenu.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DashBoard\ProjectMenu.aspx.designer.cs">
-      <DependentUpon>ProjectMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectTeam.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
