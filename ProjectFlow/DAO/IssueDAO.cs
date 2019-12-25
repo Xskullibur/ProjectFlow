@@ -8,23 +8,33 @@ namespace ProjectFlow.DAO
     public class IssueDAO
     {
         /// <summary>
-        /// Get Issue by Issue ID
+        /// Add a new Issue into DB
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Issue</returns>
-        public Issue GetIssueByID1(int id)
+        /// <param name="issue">Issue to be Added</param>
+        /// <returns>Boolean</returns>
+        public bool Add(Issue issue)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                try
+                // Check if object exist
+                if (issue != null)
                 {
-                    Issue issue = dbContext.Issues.First(x => x.taskID == id);
-                    return issue;
+                    try
+                    {
+
+                        dbContext.Issues.Add(issue);   
+                        dbContext.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                        return false;
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
-                    return null;
+                    return false;
                 }
             }
         }

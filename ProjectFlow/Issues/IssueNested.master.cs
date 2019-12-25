@@ -41,39 +41,19 @@ namespace ProjectFlow.Issues
         protected void addTask_Click(object sender, EventArgs e)
         {
 
-            /*if (Page.IsValid)
+            if (Page.IsValid)
             {
-                int selected_milestone = Convert.ToInt32(milestoneDDL.SelectedValue);
 
                 // Create Task Object
-                Task newTask = new Task();
-                newTask.taskName = tNameTxt.Text;
-                newTask.taskDescription = tDescTxt.Text;
-                newTask.startDate = Convert.ToDateTime(tStartTxt.Text);
-                newTask.endDate = Convert.ToDateTime(tEndTxt.Text);
-                newTask.teamID = TEST_TEAM_ID;
-                newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
-
-                if (selected_milestone != -1)
-                {
-                    newTask.milestoneID = selected_milestone;
-                }
-
-                // Create all Task Allocations
-                List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
-
-                foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where(x => x.Selected))
-                {
-                    TaskAllocation newAllocation = new TaskAllocation();
-                    newAllocation.taskID = newTask.taskID;
-                    newAllocation.assignedTo = Convert.ToInt32(item.Value);
-
-                    taskAllocations.Add(newAllocation);
-                }
+                Issue newIssue = new Issue();
+                newIssue.title = tNameTxt.Text;
+                newIssue.description = tDescTxt.Text;
+                newIssue.taskID = 5;                    //this is a placeholder
+                newIssue.createdBy = TEST_TEAM_ID;      //this is also a placeholder
 
                 // Submit Query
-                TaskBLL taskBLL = new TaskBLL();
-                bool result = taskBLL.Add(newTask, taskAllocations);
+                IssueBLL issueBLL = new IssueBLL();
+                bool result = issueBLL.Add(newIssue);
 
                 // Show Result
                 if (result)
@@ -84,7 +64,7 @@ namespace ProjectFlow.Issues
                 {
 
                 }
-            }*/
+            }
 
         }
 

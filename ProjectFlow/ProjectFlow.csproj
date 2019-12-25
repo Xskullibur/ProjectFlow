@@ -299,14 +299,17 @@
     <Compile Include="BLL\StatusBLL.cs" />
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
+    <Compile Include="BLL\PollingBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAO\AllocationDAO.cs" />
     <Compile Include="DAO\IssueDAO.cs" />
     <Compile Include="DAO\MilestoneDAO.cs" />
     <Compile Include="DAO\StatusDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
+    <Compile Include="DAO\PollingDAO.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
