@@ -8,7 +8,7 @@ using ProjectFlow.BLL;
 
 namespace ProjectFlow.Issues
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class iDetailedView : System.Web.UI.Page
     {
         private const int TEST_TEAM_ID = 4;
         protected void Page_Load(object sender, EventArgs e)

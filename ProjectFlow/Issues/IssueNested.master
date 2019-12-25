@@ -1,0 +1,85 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="IssueNested.master.cs" Inherits="ProjectFlow.Issues.IssueNested" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+
+        <%--Tool Bar--%>
+        <div class="row justify-content-between">
+
+            <%--Add Task Button--%>
+            <div class="col-xl-3 col-12 text-right">
+
+                <!-- Button trigger modal -->
+                <asp:Button Text="Add Issue" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
+
+            </div>
+
+        </div>
+
+        <!-- Add Task Modal -->
+        <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+
+                <div class="modal-content">
+
+                    <%--Header--%>
+                    <div class="modal-header">
+                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <%--Body--%>
+                    <div class="modal-body">
+                            
+                        <div class="container-fluid" runat="server">
+
+                            <%--Name--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Issue Name:" AssociatedControlID="tNameTxt" runat="server" />
+                                <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Task Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Description--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
+                                <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+                            
+                            
+
+                        </div>
+
+                        <%--Error Summary--%>
+                        <asp:ValidationSummary ID="addTaskSummaryValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ValidationGroup="AddTask" ShowMessageBox="True" ShowSummary="False" />
+
+                    </div>
+
+                    <%--Footer--%>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
+                        <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <%--Main Content--%>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>

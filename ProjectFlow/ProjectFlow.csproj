@@ -108,6 +108,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
+    <Content Include="Issues\iDetailedView.aspx" />
     <Content Include="Issues\IssueRes.aspx" />
     <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
@@ -272,6 +273,7 @@
     </Content>
     <Content Include="obj\Release\ProjectFlow.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Release\ProjectFlow.csprojAssemblyReference.cache" />
+    <Content Include="Issues\IssueNested.master" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -324,6 +326,20 @@
     </Compile>
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\iDetailedView.aspx.cs">
+      <DependentUpon>iDetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\iDetailedView.aspx.designer.cs">
+      <DependentUpon>iDetailedView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\IssueNested.master.cs">
+      <DependentUpon>IssueNested.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\IssueNested.master.designer.cs">
+      <DependentUpon>IssueNested.master</DependentUpon>
     </Compile>
     <Compile Include="Issues\IssueRes.aspx.cs">
       <DependentUpon>IssueRes.aspx</DependentUpon>
