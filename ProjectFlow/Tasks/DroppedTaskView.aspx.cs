@@ -49,5 +49,11 @@ namespace ProjectFlow.Tasks
                 // TODO: Notify Restore Failed
             }
         }
+
+        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            taskGrid.PageIndex = e.NewPageIndex;
+            refreshData();
+        }
     }
 }

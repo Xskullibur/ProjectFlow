@@ -400,5 +400,11 @@ namespace ProjectFlow.Tasks
             }
 
         }
+
+        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            taskGrid.PageIndex = e.NewPageIndex;
+            refreshData();
+        }
     }
 }
