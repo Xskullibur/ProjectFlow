@@ -20,7 +20,7 @@ namespace ProjectFlow
             this.TeamMembers = new HashSet<TeamMember>();
         }
     
-        public int studentID { get; set; }
+        public string studentID { get; set; }
         public string username { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }

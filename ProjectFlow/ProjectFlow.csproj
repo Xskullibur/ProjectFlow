@@ -105,6 +105,7 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ProjectFlow\content-nav.css" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -284,7 +285,8 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Tasks.aspx" />
-    <Content Include="Tasks\tDetailedView.aspx" />
+    <Content Include="Tasks\DroppedTaskView.aspx" />
+    <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -408,6 +410,13 @@
     <Compile Include="TaskAllocation.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\DroppedTaskView.aspx.cs">
+      <DependentUpon>DroppedTaskView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\DroppedTaskView.aspx.designer.cs">
+      <DependentUpon>DroppedTaskView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tasks\TaskNested.master.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -415,12 +424,13 @@
     <Compile Include="Tasks\TaskNested.master.designer.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
-    <Compile Include="Tasks\tDetailedView.aspx.cs">
-      <DependentUpon>tDetailedView.aspx</DependentUpon>
+    <Compile Include="Tasks\TaskVerification.cs" />
+    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Tasks\tDetailedView.aspx.designer.cs">
-      <DependentUpon>tDetailedView.aspx</DependentUpon>
+    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
     </Compile>
     <Compile Include="TeamMember.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

@@ -43,7 +43,16 @@ namespace ProjectFlow
                     cookie.Expires = ticket.Expiration;
                 }
                 Response.Cookies.Add(cookie);
-                Response.Redirect(FormsAuthentication.GetRedirectUrl(email, rememberMeCheckBox.Checked));
+                string url = FormsAuthentication.GetRedirectUrl(email, rememberMeCheckBox.Checked);
+
+                if (url.Equals("/"))
+                {
+                    Response.Redirect(FormsAuthentication.DefaultUrl);
+                }
+                else
+                {
+                    Response.Redirect(url);
+                }
             }
             else
             {

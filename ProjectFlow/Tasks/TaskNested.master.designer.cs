@@ -22,6 +22,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
+        /// taskViewDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList taskViewDDL;
+        
+        /// <summary>
         /// addTaskBtn control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addTaskBtn;
+        
+        /// <summary>
+        /// modalUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel modalUpdatePanel;
         
         /// <summary>
         /// tTitleLbl control.
@@ -47,6 +65,15 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tNameTxt;
+        
+        /// <summary>
+        /// tNameErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tNameErrorLbl;
         
         /// <summary>
         /// tNameRegexValidator control.
@@ -76,6 +103,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tDescTxt;
         
         /// <summary>
+        /// tDescErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tDescErrorLbl;
+        
+        /// <summary>
         /// tDescRegexValidator control.
         /// </summary>
         /// <remarks>
@@ -103,6 +139,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.DropDownList milestoneDDL;
         
         /// <summary>
+        /// tMilestoneErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tMilestoneErrorLbl;
+        
+        /// <summary>
         /// milestoneRequiredValidator control.
         /// </summary>
         /// <remarks>
@@ -119,6 +164,15 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tStartTxt;
+        
+        /// <summary>
+        /// tStartDateErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tStartDateErrorLbl;
         
         /// <summary>
         /// startDateRequiredValidator control.
@@ -139,6 +193,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox tEndTxt;
         
         /// <summary>
+        /// tEndDateErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tEndDateErrorLbl;
+        
+        /// <summary>
         /// endDateRequiredValidator control.
         /// </summary>
         /// <remarks>
@@ -146,6 +209,15 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator endDateRequiredValidator;
+        
+        /// <summary>
+        /// startEndDateErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label startEndDateErrorLbl;
         
         /// <summary>
         /// datesCompareValidator control.
@@ -173,6 +245,15 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList statusDDL;
+        
+        /// <summary>
+        /// statusErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label statusErrorLbl;
         
         /// <summary>
         /// statusRequiredValidator control.
