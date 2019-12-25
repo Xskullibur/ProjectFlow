@@ -96,6 +96,16 @@
                 </tr>
                 <tr>
                     <td class="h-100 pt-5" style="vertical-align:top;">
+
+                         <%--Alert Continer--%>
+                        <div class="container" id="alert_container">
+                            <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                <ContentTemplate>
+                                    <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                         </asp:ContentPlaceHolder>
                     </td>
