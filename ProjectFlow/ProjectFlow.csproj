@@ -438,8 +438,10 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utils\AlertPageExtension.cs" />
     <Compile Include="Utils\Bootstrap.cs" />
+    <Compile Include="Utils\AlertPageExtension.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
