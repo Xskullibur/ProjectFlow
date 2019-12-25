@@ -51,6 +51,15 @@
                         </li>     
                     </ul>
                 </div>
+                 <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Welcome, <asp:Label ID="LoginUsernameLbl" runat="server"></asp:Label>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
         <div>
@@ -58,15 +67,15 @@
                 <tr>
                     <td class="auto-style5" rowspan="3">                        
                         <ul class="mdc-list mdc-list--two-line border-right h-100">
-                          <a class="nostyle" href="Login.aspx">
                             <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                              <span class="mdc-list-item__primary-text">Home</span>
-                                <span class="mdc-list-item__secondary-text"></span>
-                            </span>
-                            
-                          </li>
-                            </a>
+                                <a class="nostyle" href="Login.aspx">
+                                    <span class="mdc-list-item__text">
+                                      <span class="mdc-list-item__primary-text">Home</span>
+                                        <span class="mdc-list-item__secondary-text"></span>
+                                    </span>
+                                </a>
+                            </li>
+
                           <li class="mdc-list-item">
                             <span class="mdc-list-item__text">
                               <span class="mdc-list-item__primary-text">Task Management</span>

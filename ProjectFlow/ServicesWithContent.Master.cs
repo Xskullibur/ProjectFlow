@@ -1,4 +1,5 @@
-﻿using ProjectFlow.Utils.Alerts;
+﻿using ProjectFlow.Login;
+using ProjectFlow.Utils.Alerts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,11 @@ namespace ProjectFlow
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var user = HttpContext.Current.User;
+            if (user.Identity.IsAuthenticated)
+            {
+                this.LoginUsernameLbl.Text = (user.Identity as ProjectFlowIdentity).Student.username;
+            }
         }
     }
 }
