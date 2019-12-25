@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,6 +23,9 @@ namespace ProjectFlow.Tasks
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            this.Master.Master.ShowAlert("Hello", BootstrapAlertTypes.INFO, false, true);
+
             if (!IsPostBack)
             {
                 Master.changeSelectedView(TaskNested.TaskViews.OngoingTaskView);

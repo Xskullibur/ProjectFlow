@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+
                 Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }

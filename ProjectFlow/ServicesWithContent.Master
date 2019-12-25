@@ -32,7 +32,6 @@
                 <asp:ScriptReference Name="bootstrap-select" />
             </Scripts>
         </asp:ScriptManager>
-
         <div>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">
@@ -97,7 +96,8 @@
                 </tr>
                 <tr>
                     <td class="h-100 pt-5" style="vertical-align:top;">
-                        <%--Alert Continer--%>
+
+                         <%--Alert Continer--%>
                         <div class="container" id="alert_container">
                             <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
                                 <ContentTemplate>
