@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace ProjectFlow.Tasks
 {
-    public partial class TaskNested : System.Web.UI.MasterPage
+    public partial class TaskNested : MasterPage
     {
         private const int TEST_TEAM_ID = 2;
 
