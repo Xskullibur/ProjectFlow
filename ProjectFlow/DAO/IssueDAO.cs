@@ -45,7 +45,7 @@ namespace ProjectFlow.DAO
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, IdTask)
-        public IEnumerable<object> GetIssueByID2(int tID)
+        public IEnumerable<object> GetIssueByID(int tID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -54,6 +54,7 @@ namespace ProjectFlow.DAO
                 {
                     var list = dbContext.Issues.Include("TeamMates.Student")
                         .Where(x => x.taskID == tID)
+                        .Where(x => x.active != false)
                         .Select(y => new
                         {
                             ID = y.taskID,

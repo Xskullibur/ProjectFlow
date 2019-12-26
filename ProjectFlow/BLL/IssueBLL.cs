@@ -16,7 +16,7 @@ namespace ProjectFlow.BLL
         public List<object> GetIssueById(int id)
         {
             IssueDAO issueDAO = new IssueDAO();
-            var issue = issueDAO.GetIssueByID2(id).ToList();
+            var issue = issueDAO.GetIssueByID(id).ToList();
             return issue;
         }
     }

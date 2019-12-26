@@ -13,5 +13,18 @@ namespace ProjectFlow.BLL
             PollingDAO PollingDAO = new PollingDAO();
             return PollingDAO.Add(vote);
         }
+        public bool Check(string iID, int vID)
+        {
+            PollingDAO pollingDAO = new PollingDAO();
+            var list = pollingDAO.GetPollByID(vID).ToList();
+            var exist = list.Contains(iID);
+            return exist;
+        }
+        public List<object> Getcheck(int vID) //this is just for testing and needs to be removed
+        {
+            PollingDAO pollingDAO = new PollingDAO();
+            var list = pollingDAO.GetPollByID(vID).ToList();
+            return list;
+        }
     }
 }

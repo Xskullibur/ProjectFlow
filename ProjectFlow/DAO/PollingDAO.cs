@@ -33,5 +33,33 @@ namespace ProjectFlow.DAO
                 }
             }
         }
+        public IEnumerable<object> GetPollByID(int vID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+                    var list = dbContext.Pollings
+                        .Where(x => x.voterID == vID)
+                        .Select(y => new
+                        {
+                            y.issueID,
+                        }).ToList();
+
+                    System.Diagnostics.Debug.WriteLine("hello world");
+                    System.Diagnostics.Debug.WriteLine(list);
+                    return list;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
     }
 }
