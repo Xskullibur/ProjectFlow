@@ -19,14 +19,14 @@
                 <div class="modal-header">
                     <asp:Label ID="Label4" runat="server" Text="Create Project"></asp:Label>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">                    
                     <table class="auto-style1">
                         <tr>
                             <td class="auto-style2">
                                 <asp:Label ID="Label1" runat="server" Text="Name"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="NameTB" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="NameTB" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -34,7 +34,7 @@
                                 <asp:Label ID="Label2" runat="server" Text="Description"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="DescTB" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="DescTB" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -42,16 +42,16 @@
                                 <asp:Label ID="Label5" runat="server" Text="Project ID"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="ProjectIdTB" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="ProjectIdTB" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style2">&nbsp;</td>
                             <td>
-                                <asp:Button ID="CreateBtn" runat="server" Text="Create" OnClick="CreateBtn_Click" />
+                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
                             </td>
                         </tr>
-                    </table>
+                    </table>                   
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -59,7 +59,7 @@
         </div>
     </div>
     <div>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#CreateProject">Open Modal</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProject">New Project</button>
     </div>
     <div>
         <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="531px">
