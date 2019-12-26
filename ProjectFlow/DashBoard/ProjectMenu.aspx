@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/NavBar.Master" AutoEventWireup="true" CodeBehind="ProjectMenu.aspx.cs" Inherits="ProjectFlow.DashBoard.ProjectMenu" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="ProjectMenu.aspx.cs" Inherits="ProjectFlow.DashBoard.ProjectMenu" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
         <title></title>
         <style type="text/css">
@@ -12,7 +12,7 @@
             }
         </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="modal fade" id="CreateProject" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -73,6 +73,9 @@
     </div>
 
     <script>
+        $(document).ready(function () {
+            hideSidebar();
+        });
         $('#CreateProject').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var modal = $(this)

@@ -9,3 +9,11 @@ a.nostyle:visited {
     color: inherit;
     cursor: auto;
 }
+
+.content-nav {
+    height: 4rem;
+}
+
+.content-sidenav{
+    height: calc(100vh - 4rem);
+}
