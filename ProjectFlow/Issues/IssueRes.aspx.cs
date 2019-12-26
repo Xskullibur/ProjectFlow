@@ -52,9 +52,9 @@ namespace ProjectFlow.Issues
 
                 // Create Task Object
                 Polling newPoll = new Polling();
-                //newPoll.issueID = 1;
-                //newPoll.voterID = 4;   //this is a placeholder and needs to be fixed
-                //newPoll.vote = choice;      //this is also a placeholder and also needs to be fixed
+                newPoll.issueID = 1;
+                newPoll.voterID = 4;   //this is a placeholder and needs to be fixed
+                newPoll.vote = choice;      //this is also a placeholder and also needs to be fixed
 
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();

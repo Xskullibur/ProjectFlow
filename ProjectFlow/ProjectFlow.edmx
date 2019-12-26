@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentForIssue">
           <Key>
             <PropertyRef Name="commentID" />
@@ -23,6 +23,7 @@
           <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="createdBy" Type="int" Nullable="false" />
           <Property Name="taskID" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Milestone">
           <Key>
@@ -41,6 +42,8 @@
           </Key>
           <Property Name="pollingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="issueID" Type="int" Nullable="false" />
+          <Property Name="voterID" Type="int" Nullable="false" />
+          <Property Name="vote" Type="bit" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -78,7 +81,7 @@
           <Key>
             <PropertyRef Name="studentID" />
           </Key>
-          <Property Name="studentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="firstName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
@@ -112,7 +115,7 @@
             <PropertyRef Name="memberID" />
           </Key>
           <Property Name="memberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="studentID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="roleID" Type="int" Nullable="false" />
         </EntityType>
@@ -208,6 +211,18 @@
             </Principal>
             <Dependent Role="Polling">
               <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polling_voter">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="Polling" Type="Self.Polling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="Polling">
+              <PropertyRef Name="voterID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -373,6 +388,10 @@
             <End Role="Issue" EntitySet="Issue" />
             <End Role="Polling" EntitySet="Polling" />
           </AssociationSet>
+          <AssociationSet Name="FK_Polling_voter" Association="Self.FK_Polling_voter">
+            <End Role="TeamMember" EntitySet="TeamMember" />
+            <End Role="Polling" EntitySet="Polling" />
+          </AssociationSet>
           <AssociationSet Name="FK_Project_Tutor" Association="Self.FK_Project_Tutor">
             <End Role="Tutor" EntitySet="Tutor" />
             <End Role="Project" EntitySet="Project" />
@@ -414,7 +433,8 @@
             <End Role="TeamMember" EntitySet="TeamMember" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -438,6 +458,7 @@
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="createdBy" Type="Int32" Nullable="false" />
           <Property Name="taskID" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_Issue" FromRole="Issue" ToRole="CommentForIssue" />
           <NavigationProperty Name="Task" Relationship="Self.FK_Issue_Task" FromRole="Issue" ToRole="Task" />
           <NavigationProperty Name="TeamMember" Relationship="Self.FK_Issue_TeamMember" FromRole="Issue" ToRole="TeamMember" />
@@ -463,7 +484,10 @@
           </Key>
           <Property Name="pollingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="issueID" Type="Int32" Nullable="false" />
+          <Property Name="voterID" Type="Int32" Nullable="false" />
+          <Property Name="vote" Type="Boolean" />
           <NavigationProperty Name="Issue" Relationship="Self.FK_Polling_Issue" FromRole="Polling" ToRole="Issue" />
+          <NavigationProperty Name="TeamMember" Relationship="Self.FK_Polling_voter" FromRole="Polling" ToRole="TeamMember" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -510,7 +534,7 @@
           <Key>
             <PropertyRef Name="studentID" />
           </Key>
-          <Property Name="studentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="username" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
@@ -525,17 +549,17 @@
           <Property Name="taskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="taskName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="taskDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="startDate" Type="DateTime" Precision="0" Nullable="false" />
-          <Property Name="endDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="milestoneID" Type="Int32" />
           <Property Name="statusID" Type="Int32" Nullable="false" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_Task" FromRole="Task" ToRole="Issue" />
           <NavigationProperty Name="Milestone" Relationship="Self.FK_Task_Milestone" FromRole="Task" ToRole="Milestone" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Task_ProjectTeam" FromRole="Task" ToRole="ProjectTeam" />
           <NavigationProperty Name="Status" Relationship="Self.FK_Task_Status" FromRole="Task" ToRole="Status" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_Task" FromRole="Task" ToRole="TaskAllocation" />
-          <Property Name="dropped" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskAllocation">
           <Key>
@@ -552,11 +576,12 @@
             <PropertyRef Name="memberID" />
           </Key>
           <Property Name="memberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <Property Name="studentID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="roleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="TeamMember" ToRole="CommentForIssue" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_TeamMember" FromRole="TeamMember" ToRole="Issue" />
+          <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_voter" FromRole="TeamMember" ToRole="Polling" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="TeamMember" ToRole="ProjectTeam" />
           <NavigationProperty Name="Role" Relationship="Self.FK_TeamMember_Role" FromRole="TeamMember" ToRole="Role" />
           <NavigationProperty Name="Student" Relationship="Self.FK_TeamMember_Student" FromRole="TeamMember" ToRole="Student" />
@@ -667,6 +692,18 @@
             </Principal>
             <Dependent Role="Task">
               <PropertyRef Name="milestoneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polling_voter">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="Polling" Type="Self.Polling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="Polling">
+              <PropertyRef Name="voterID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -824,6 +861,10 @@
             <End Role="Milestone" EntitySet="Milestones" />
             <End Role="Task" EntitySet="Tasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_Polling_voter" Association="Self.FK_Polling_voter">
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+            <End Role="Polling" EntitySet="Pollings" />
+          </AssociationSet>
           <AssociationSet Name="FK_Project_Tutor" Association="Self.FK_Project_Tutor">
             <End Role="Tutor" EntitySet="Tutors" />
             <End Role="Project" EntitySet="Projects" />
@@ -885,6 +926,7 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -905,6 +947,8 @@
               <MappingFragment StoreEntitySet="Polling">
                 <ScalarProperty Name="pollingID" ColumnName="pollingID" />
                 <ScalarProperty Name="issueID" ColumnName="issueID" />
+                <ScalarProperty Name="voterID" ColumnName="voterID" />
+                <ScalarProperty Name="vote" ColumnName="vote" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -959,7 +1003,6 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="ProjectFlowModel.Task">
               <MappingFragment StoreEntitySet="Task">
-                <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="taskName" ColumnName="taskName" />
                 <ScalarProperty Name="taskDescription" ColumnName="taskDescription" />
@@ -968,6 +1011,7 @@
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="milestoneID" ColumnName="milestoneID" />
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
