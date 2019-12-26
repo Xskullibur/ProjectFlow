@@ -17,13 +17,28 @@ namespace ProjectFlow.DashBoard
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
+            testLabel.Text = "";
             ProjectBLL projectBLL = new ProjectBLL();
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
             int tutorID = 1;
 
-            projectBLL.CreateProject(projectID, projectName, projectDesc, tutorID);
+            //projectBLL.CreateProject(projectID, projectName, projectDesc, tutorID);
+            List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
+
+            if(error.Count > 0)
+            {
+                string total = "";
+                foreach(string errorItem in error)
+                {
+                    total += errorItem;
+                }
+                testLabel.Text = total;
+                ProjectIdTB.Text = projectID;
+                NameTB.Text = projectName;
+                DescTB.Text = projectDesc;
+            }
         }
 
         public void ShowProject(int tutorID)

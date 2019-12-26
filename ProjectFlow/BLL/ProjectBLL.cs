@@ -26,23 +26,55 @@ namespace ProjectFlow.BLL
             return projectDAO.GetProjectTutor(tutorID);
         }
 
-        public bool ValidateProject(string ProjectID, string Name, string Desc, int TutorID)
+        public List<string> ValidateProject(string ProjectID, string Name, string Desc, int TutorID)
         {
-            ProjectID = ProjectID.Trim();
+            ProjectID = RemoveWhiteSpace(ProjectID);
             Name = Name.Trim();
-            Desc = Desc.Trim();           
+            Desc = Desc.Trim();
 
-            bool noError = true;
-
-            if (ProjectID.Equals("") || Name.Equals("") || Desc.Equals("") || TutorID == null) { }
+            List<string> errorList = new List<string> { };
+          
+            if (ProjectID.Equals(""))
             {
-                noError = false; 
+                errorList.Add("ID is empty<br>");
             }
 
+            if (Name.Equals(""))
+            {
+                errorList.Add("Name is empty<br>");
+            }
 
+            if (Desc.Equals(""))
+            {
+                errorList.Add("Description is empty<br>");
+            }
 
+            if (TutorID == null)
+            {
+                errorList.Add("TutorID is empty<br>");
+            }
 
-            return noError;
+            if(ProjectID.Length > 6)
+            {
+                errorList.Add("ID cannot be longer than 6<br>");
+            }
+
+            if (Name.Length > 255)
+            {
+                errorList.Add("Name cannot be longer than 255<br>");
+            }
+
+            if (Desc.Length > 255)
+            {
+                errorList.Add("Description cannot be longer than 6<br>");
+            }
+
+            if (errorList.Count == 0)
+            {
+                projectDAO.InsertProject(ProjectID, Name, Desc, TutorID);
+            }
+
+            return errorList;
         }
     }
 }

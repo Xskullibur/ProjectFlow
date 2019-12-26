@@ -49,17 +49,19 @@
                             <td class="auto-style2">&nbsp;</td>
                             <td>
                                 <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
-                            </td>
+                            &nbsp;&nbsp;&nbsp;
+                                </td>
                         </tr>
                     </table>                   
                 </div>
                 <div class="modal-footer">
+                                <asp:Label ID="testLabel" runat="server"></asp:Label>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProject">New Project</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProject">New Project</button>        
     </div>
     <div>
         <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="531px">
