@@ -16,7 +16,7 @@ namespace ProjectFlow
             var user = HttpContext.Current.User;
             if (user.Identity.IsAuthenticated)
             {
-                this.LoginUsernameLbl.Text = "Wecome, " + (user.Identity as ProjectFlowIdentity).Student.username;
+                this.LoginUsernameLbl.Text = "Welcome, " + (user.Identity as ProjectFlowIdentity).Student.username;
                 this.LoginUsernameProfileLbl.Text = (user.Identity as ProjectFlowIdentity).Student.username;
                 this.LoginEmailProfileLbl.Text = (user.Identity as ProjectFlowIdentity).Student.email;
             }
