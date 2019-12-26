@@ -9,9 +9,12 @@ namespace ProjectFlow.Login
 {
     public class ProjectFlowIdentity : ClaimsIdentity
     {
+
+        public override bool IsAuthenticated => Student != null;
+
         public Student Student { get; private set; }
 
-        public ProjectFlowIdentity(Student student, ClaimsIdentity identity): this(identity) {
+        public ProjectFlowIdentity(Student student, ClaimsIdentity identity) : this(identity) {
             this.Student = student;
         }
 
