@@ -54,11 +54,26 @@
                  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Welcome, <asp:Label ID="LoginUsernameLbl" runat="server"></asp:Label>
-                            </a>
+                            <asp:Label Class="nav-link" ID="LoginUsernameLbl" runat="server"></asp:Label>
                         </li>
                     </ul>
+                     <div class="mdc-card content-profile" id="profile-popper">
+                           <div class="mdc-card__primary-action" tabindex="0" style="width: 100%;display: flex;flex-direction: row;">
+                                <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg&quot;);"></div>
+                                
+                               <div style="padding: 1rem;">
+                                   <asp:Label Class="mdc-typography mdc-typography--headline6" ID="LoginUsernameProfileLbl" runat="server"></asp:Label>
+                                   <asp:Label Class="mdc-typography mdc-typography--subtitle2" ID="LoginEmailProfileLbl" runat="server"></asp:Label>
+                               </div>
+                            </div>
+                           <div class="mdc-card__actions">
+                               <div class="mdc-card__action-buttons">
+                                    <asp:LinkButton runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button px-2" OnClick="LogoutEvent">
+                                        <span runat="server" ClientIDMode="Static" class="mdc-button__ripple"></span>Logout
+                                    </asp:LinkButton>
+                               </div>
+                            </div>
+                   </div>
                 </div>
             </nav>
         </div>
@@ -127,6 +142,27 @@
         </div>
     </form>
     <script type="text/javascript">
+
+        //Initialize popper
+        var reference = $("#LoginUsernameLbl");
+        var popper = $("#profile-popper");
+        popper.hide();
+
+        $(document).on('click touchend', function (e) {
+            var target = $(e.target);
+            if (target.is(reference) || target.is(popper)) {
+                e.preventDefault();
+                popper.show();
+                var popperInstance = new Popper(reference, popper, {
+                    placement: 'bottom'
+                });
+            } else {
+                popper.hide();
+            }
+            
+        });
+
+        //Initialize side bar
         function hideSidebar() {
             $('#sidebar').hide();
             $('#content').removeClass('col-md-10');

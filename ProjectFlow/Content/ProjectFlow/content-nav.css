@@ -17,3 +17,14 @@ a.nostyle:visited {
 .content-sidenav{
     height: calc(100vh - 4rem);
 }
+
+/* Profile */
+
+.content-profile {
+    width: 350px;
+    margin: 48px 0;
+}
+
+.content-profile-image {
+    width: 110px;
+}
