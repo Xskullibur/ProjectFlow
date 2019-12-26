@@ -287,6 +287,7 @@
     <Content Include="Services\Tasks.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
+    <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="Utils\EmailTemplates\TaskNotification.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -432,6 +433,13 @@
     </Compile>
     <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
       <DependentUpon>OngoingTaskView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\EmailTest.aspx.cs">
+      <DependentUpon>EmailTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\EmailTest.aspx.designer.cs">
+      <DependentUpon>EmailTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="TeamMember.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

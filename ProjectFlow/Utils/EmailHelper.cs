@@ -5,6 +5,7 @@ using System.Web;
 using System.Net;
 using System.Net.Mail;
 using System.Configuration;
+using System.IO;
 
 namespace ProjectFlow.Utils
 {
@@ -14,6 +15,38 @@ namespace ProjectFlow.Utils
         string senderPW= ConfigurationManager.AppSettings["EmailPW"].ToString();
         string smtp= ConfigurationManager.AppSettings["SMTP"].ToString();
         int portNo = Convert.ToInt32(ConfigurationManager.AppSettings["PortNo"].ToString());
+
+        public string GetTaskNotificationTemplate(int dueDays, string taskName, string taskDesc, DateTime startDate, DateTime endDate, string milestone, string status, string allocations)
+        {
+
+            try
+            {
+                string templateDir = HttpContext.Current.Server.MapPath("~/Utils/EmailTemplates/TaskNotification.html");
+
+                using (StreamReader streamReader = new StreamReader(templateDir))
+                {
+                    string textBody = streamReader.ReadToEnd();
+
+                    //Update Template Values
+                    textBody = textBody.Replace("[DueDays]", dueDays.ToString());
+                    textBody = textBody.Replace("[TaskName]", taskName);
+                    textBody = textBody.Replace("[TaskDesc]", taskDesc);
+                    textBody = textBody.Replace("[StartDate]", startDate.ToString());
+                    textBody = textBody.Replace("[EndDate]", endDate.ToString());
+                    textBody = textBody.Replace("[Milestone]", milestone);
+                    textBody = textBody.Replace("[Status]", status);
+                    textBody = textBody.Replace("[Allocations]", allocations);
+
+                    return textBody;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return null;
+            }
+
+        }
 
         /// <summary>
         /// Send Email
