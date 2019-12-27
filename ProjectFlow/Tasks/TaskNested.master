@@ -156,7 +156,7 @@
                                             <%--Start Date--%>
                                             <div class="form-group col-xl-6 col-12">
                                                 <asp:Label CssClass="control-label" Text="Start Date:" AssociatedControlID="tStartTxt" runat="server" />
-                                                <asp:TextBox ID="tStartTxt" CssClass="form-control" runat="server" TextMode="Date" />
+                                                <asp:TextBox ID="tStartTxt" CssClass="form-control datetimepicker" runat="server" TextMode="DateTime" />
                                         
                                                 <asp:Label ID="tStartDateErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="startDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start-Date Field is Required!" ControlToValidate="tStartTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
@@ -165,7 +165,7 @@
                                             <%--End Date--%>
                                             <div class="form-group col-xl-6 col-12">
                                                 <asp:Label CssClass="control-label" Text="End Date:" AssociatedControlID="tEndTxt" runat="server" />
-                                                <asp:TextBox ID="tEndTxt" CssClass="form-control" runat="server" TextMode="Date" />
+                                                <asp:TextBox ID="tEndTxt" CssClass="form-control datetimepicker" runat="server" TextMode="DateTime" />
                                         
                                                 <asp:Label ID="tEndDateErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
                                                 <asp:RequiredFieldValidator ID="endDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="End-Date Field is Required!" ControlToValidate="tEndTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
@@ -174,7 +174,6 @@
                                         </div>
                                         
                                         <asp:Label ID="startEndDateErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                        <asp:CompareValidator ID="datesCompareValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start Date cannot be later than End Date!" ValidationGroup="AddTask" ControlToValidate="tStartTxt" Display="Dynamic" ControlToCompare="tEndTxt" Operator="LessThanEqual" Type="Date"></asp:CompareValidator>
                                     </div>
 
                                     <%--Allocation--%>

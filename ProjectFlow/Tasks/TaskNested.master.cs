@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -80,7 +81,6 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataBind();
 
                 milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
-
             }
         }
 
@@ -118,7 +118,8 @@ namespace ProjectFlow.Tasks
         // On UpdatePanel Init
         protected void modalUpdatePanel_Init(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_selectpicker", "$('.selectpicker').selectpicker();", true);
+            // Init SelectPicker And DateTimePicker
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_pickers", "$('.datetimepicker').datetimepicker(); $('.selectpicker').selectpicker();", true);
         }
 
 
@@ -254,8 +255,8 @@ namespace ProjectFlow.Tasks
                 Task newTask = new Task();
                 newTask.taskName = taskName;
                 newTask.taskDescription = taskDesc;
-                newTask.startDate = Convert.ToDateTime(startDate);
-                newTask.endDate = Convert.ToDateTime(endDate);
+                newTask.startDate = DateFormatter.ParseFormattedDateTime(startDate);
+                newTask.endDate = DateFormatter.ParseFormattedDateTime(endDate);
                 newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
 
                 newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session

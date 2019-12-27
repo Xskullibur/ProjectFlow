@@ -49,6 +49,12 @@ namespace ProjectFlow
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
 
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap-datetimepicker", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.js",
+                DebugPath = "~/Scripts/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.js"
+            });
+
         }
 
         protected void Session_Start(object sender, EventArgs e)

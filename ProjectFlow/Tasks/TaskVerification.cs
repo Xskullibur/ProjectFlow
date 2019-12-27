@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,8 +83,11 @@ namespace ProjectFlow.Tasks
             }
             else if (!DateTime.TryParse(startDate, out DateTime start))
             {
-                TStartDateErrors.Add("Invalid Format!");
-                verified = false;
+                if (!DateFormatter.TryParseFormattedDateTime(startDate))
+                {
+                    TStartDateErrors.Add("Invalid Format!");
+                    verified = false;
+                }
             }
 
             // End Date
@@ -94,14 +98,17 @@ namespace ProjectFlow.Tasks
             }
             else if (!DateTime.TryParse(endDate, out DateTime end))
             {
-                TEndDateErrors.Add("Invalid Format!");
-                verified = false;
+                if (!DateFormatter.TryParseFormattedDateTime(endDate))
+                {
+                    TEndDateErrors.Add("Invalid Format!");
+                    verified = false;
+                }
             }
 
             // Compare Start End Date
             if (TStartDateErrors.Count == 0 && TEndDateErrors.Count == 0)
             {
-                if (DateTime.Compare(DateTime.Parse(startDate), DateTime.Parse(endDate)) >= 0)
+                if (DateTime.Compare(DateFormatter.ParseFormattedDateTime(startDate), DateFormatter.ParseFormattedDateTime(endDate)) >= 0)
                 {
                     StartEndDateErrors.Add("Start Date cannot be later than End Date!");
                     verified = false;
@@ -116,62 +123,6 @@ namespace ProjectFlow.Tasks
             }
 
             return verified;
-
-            ///**
-            // * Show Error Messages
-            // **/
-
-            //if (!verified)
-            //{
-            //    // Name
-            //    if (TNameErrors.Count > 0)
-            //    {
-            //        tNameErrorLbl.Visible = true;
-            //        tNameErrorLbl.Text = string.Join("<br>", TNameErrors);
-            //    }
-
-            //    // Description
-            //    if (tDescErrors.Count > 0)
-            //    {
-            //        tDescErrorLbl.Visible = true;
-            //        tDescErrorLbl.Text = string.Join("<br>", tDescErrors);
-            //    }
-
-            //    // Milestone
-            //    if (tMilestoneErrors.Count > 0)
-            //    {
-            //        tMilestoneErrorLbl.Visible = true;
-            //        tMilestoneErrorLbl.Text = string.Join("<br>", tMilestoneErrors);
-            //    }
-
-            //    // Start Date
-            //    if (tStartDateErrors.Count > 0)
-            //    {
-            //        tStartDateErrorLbl.Visible = true;
-            //        tStartDateErrorLbl.Text = string.Join("<br>", tStartDateErrors);
-            //    }
-
-            //    // End Date
-            //    if (tEndDateErrors.Count > 0)
-            //    {
-            //        tEndDateErrorLbl.Visible = true;
-            //        tEndDateErrorLbl.Text = string.Join("<br>", tEndDateErrors);
-            //    }
-
-            //    // Start End Date
-            //    if (startEndDateErrors.Count > 0)
-            //    {
-            //        startEndDateErrorLbl.Visible = true;
-            //        startEndDateErrorLbl.Text = string.Join("<br>", startEndDateErrors);
-            //    }
-
-            //    // Status
-            //    if (tStatusErrors.Count > 0)
-            //    {
-            //        statusErrorLbl.Visible = true;
-            //        statusErrorLbl.Text = string.Join("<br>", tStatusErrors);
-            //    }
-            //}
         }
 
     }

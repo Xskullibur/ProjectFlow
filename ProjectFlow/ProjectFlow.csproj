@@ -101,6 +101,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.css" />
+    <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -131,6 +133,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -457,6 +460,7 @@
     <Compile Include="Utils\AlertPageExtension.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
   </ItemGroup>
   <ItemGroup>
