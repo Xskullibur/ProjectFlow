@@ -12,8 +12,9 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowProject(1);           
+            ShowProject(1);
             //newProjectBtn_Click(null, null);
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "openModel()", true);
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -39,10 +40,12 @@ namespace ProjectFlow.DashBoard
                 ProjectIdTB.Text = projectID;
                 NameTB.Text = projectName;
                 DescTB.Text = projectDesc;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "openModel()", true);
             }
             else
             {
                 ClearField();
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "hideModel()", true);
             }
         }
 
