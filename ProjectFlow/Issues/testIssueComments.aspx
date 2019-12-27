@@ -11,7 +11,7 @@
                 <asp:TextBox ID="TextBox1" runat="server" TextMode="MultiLine"></asp:TextBox>
             </div>
             <div class =" row">
-                <asp:Button ID="Button1" CssClass ="btn btn-success" runat="server" Text="submit" />
+                <asp:Button ID="Button1" CssClass ="btn btn-success" runat="server" Text="submit" OnClick="Button1_Click" />
             </div>
         </div>
     </div>    

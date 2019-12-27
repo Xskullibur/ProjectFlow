@@ -14,9 +14,13 @@ namespace ProjectFlow.Issues
         int idVoter = 4;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //lbMember2.Text = (string)Session["SSCreatedBy"];
-            //lbIssue.Text = (string)Session["SSDesc"];
-            check(idIssue , idVoter);
+            if (!IsPostBack)
+            {
+                //lbMember2.Text = (string)Session["SSCreatedBy"];
+                //lbIssue.Text = (string)Session["SSDesc"];
+                check(idIssue, idVoter);
+                refreshCommentData(idIssue);
+            }
         }
 
         protected void btnYes_Click(object sender, EventArgs e)
@@ -87,6 +91,49 @@ namespace ProjectFlow.Issues
 
             //List<int> MyList = pollingBLL.Getcheck(vID);
             //Label1.Text = string.Join(",", MyList);
+        }
+
+        private void refreshCommentData(int id)
+        {
+            CommentForIssueBLL commentForIssueBLL = new CommentForIssueBLL();
+
+            Repeater1.DataSource = commentForIssueBLL.GetCommentByIssueId(id);
+            Repeater1.DataBind();
+
+        }
+
+        protected void addComment()
+        {
+
+            if (Page.IsValid)
+            {
+
+                // Create Task Object
+                CommentForIssue newComment = new CommentForIssue();
+                newComment.comment = TextBox1.Text;
+                newComment.issueID = idIssue;
+                newComment.createdBy = idVoter;    //this is a placeholder  
+
+                // Submit Query
+                CommentForIssueBLL commentBLL = new CommentForIssueBLL();
+                bool result = commentBLL.Add(newComment);
+
+                // Show Result
+                if (result)
+                {
+                    refreshCommentData(idIssue);
+                }
+                else
+                {
+
+                }
+            }
+
+        }
+
+        protected void btnCommentSubmit_Click(object sender, EventArgs e)
+        {
+            addComment();
         }
     }
 }

@@ -7,22 +7,22 @@ namespace ProjectFlow.DAO
 {
     public class CommentForIssueDAO
     {
-        /*/// <summary>
+        /// <summary>
         /// Add a new Comment into DB
         /// </summary>
-        /// <param name="issue">Issue to be Added</param>
+        /// <param name="comment">comment to be Added</param>
         /// <returns>Boolean</returns>
-        public bool Add(Issue issue)
+        public bool Add(CommentForIssue comment)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 // Check if object exist
-                if (issue != null)
+                if (comment != null)
                 {
                     try
                     {
 
-                        dbContext.Issues.Add(issue);
+                        dbContext.CommentForIssues.Add(comment);
                         dbContext.SaveChanges();
                         return true;
                     }
@@ -37,7 +37,7 @@ namespace ProjectFlow.DAO
                     return false;
                 }
             }
-        }*/
+        }
         /// <summary>
         /// Gets Comments
         /// </summary>

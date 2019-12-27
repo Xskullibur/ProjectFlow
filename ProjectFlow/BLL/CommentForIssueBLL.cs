@@ -8,6 +8,11 @@ namespace ProjectFlow.BLL
 {
     public class CommentForIssueBLL
     {
+        public bool Add(CommentForIssue comment)
+        {
+            CommentForIssueDAO commentForIssueDAO = new CommentForIssueDAO();
+            return commentForIssueDAO.Add(comment);
+        }
         public List<object> GetCommentByIssueId(int id)
         {
             CommentForIssueDAO commentForIssueDAO = new CommentForIssueDAO();

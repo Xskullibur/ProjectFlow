@@ -17,23 +17,6 @@ namespace ProjectFlow.Issues
             refreshData(idIssue);
         }
 
-        /*public void repeaterData()
-        {
-            List<string> myList = new List<string>();
-            myList.Add("Test1");
-            myList.Add("Test2");
-            myList.Add("Test3");
-
-            var myList = new List<Tuple<string, string>> {
-                Tuple.Create("penguin","penguin"),
-                Tuple.Create("penguin1","penguin1"),
-                Tuple.Create("penguin2","penguin2")
-            };
-
-            Repeater1.DataSource = myList;
-            Repeater1.DataBind();
-        }*/
-
         private void refreshData(int id)
         {
             CommentForIssueBLL commentForIssueBLL = new CommentForIssueBLL();
@@ -41,6 +24,40 @@ namespace ProjectFlow.Issues
             Repeater1.DataSource = commentForIssueBLL.GetCommentByIssueId(id);
             Repeater1.DataBind();
 
+        }
+
+        protected void addComment()
+        {
+
+            if (Page.IsValid)
+            {
+
+                // Create Task Object
+                CommentForIssue newComment = new CommentForIssue();
+                newComment.comment = TextBox1.Text;
+                newComment.issueID = idIssue;                 
+                newComment.createdBy = idVoter;    //this is a placeholder  
+
+                // Submit Query
+                CommentForIssueBLL commentBLL = new CommentForIssueBLL();
+                bool result = commentBLL.Add(newComment);
+
+                // Show Result
+                if (result)
+                {
+                    refreshData(idIssue);
+                }
+                else
+                {
+
+                }
+            }
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            addComment();
         }
     }
 }
