@@ -16,19 +16,21 @@ namespace ProjectFlow.Issues
         {
             //lbMember2.Text = (string)Session["SSCreatedBy"];
             //lbIssue.Text = (string)Session["SSDesc"];
-            check("{ issueID = 1 }", idVoter);
+            check(idIssue , idVoter);
         }
 
         protected void btnYes_Click(object sender, EventArgs e)
         {
             Label1.Text = "Yes";
             vote(true);
+            check(idIssue, idVoter);
         }
 
         protected void btnNo_Click(object sender, EventArgs e)
         {
             Label1.Text = "No";
             vote(false);
+            check(idIssue, idVoter);
         }
 
         protected void btnRandom_Click(object sender, EventArgs e)
@@ -38,11 +40,13 @@ namespace ProjectFlow.Issues
             if (decision > 5) {
                 Label1.Text = "Yes";
                 vote(true);
+                check(idIssue, idVoter);
             }
             else
             {
                 Label1.Text = "No";
                 vote(false);
+                check(idIssue, idVoter);
             }
         }
 
@@ -63,7 +67,7 @@ namespace ProjectFlow.Issues
             }
         }
 
-        protected void check(string iID, int vID)
+        protected void check(int iID, int vID)
         {
             PollingBLL pollingBLL = new PollingBLL();
 
@@ -74,15 +78,15 @@ namespace ProjectFlow.Issues
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
-                Label1.Text = checking.ToString();
+                Label1.Text = "Already voted!";
             }
             else
             {
-                Label1.Text = checking.ToString();
+                //Label1.Text = checking.ToString();
             }
 
-            List<object> MyList = pollingBLL.Getcheck(vID);
-            Label1.Text = string.Join(",", MyList);
+            //List<int> MyList = pollingBLL.Getcheck(vID);
+            //Label1.Text = string.Join(",", MyList);
         }
     }
 }

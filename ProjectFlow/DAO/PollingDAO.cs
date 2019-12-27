@@ -33,7 +33,7 @@ namespace ProjectFlow.DAO
                 }
             }
         }
-        public IEnumerable<object> GetPollByID(int vID)
+        /*public IEnumerable<int> GetPollByID(int vID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -42,13 +42,13 @@ namespace ProjectFlow.DAO
                 {
                     var list = dbContext.Pollings
                         .Where(x => x.voterID == vID)
-                        .Select(y => new
-                        {
-                            y.issueID,
-                        }).ToList();
+                        .Select(y =>
+                        
+                            y.issueID
+                        ).ToList();
 
-                    System.Diagnostics.Debug.WriteLine("hello world");
-                    System.Diagnostics.Debug.WriteLine(list);
+                    //System.Diagnostics.Debug.WriteLine("hello world");
+                    //System.Diagnostics.Debug.WriteLine(list);
                     return list;
 
                 }
@@ -59,7 +59,7 @@ namespace ProjectFlow.DAO
                 }
 
 
-            }
+            }*/
         }
     }
 }

@@ -76,5 +76,35 @@ namespace ProjectFlow.DAO
 
             }
         }
+
+        public IEnumerable<object> GetCommentsByIssue(int tID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+                    var list = dbContext.Issues.Include("CommentForIssue")
+                        .Where(x => x.issueID == tID)
+                        .Where(x => x.active != false)
+                        .Select(y => new
+                        {
+                            //comment = y.CommentForIssue.comment,
+                            //createdBy = ,
+                            //issue = 
+                        }).ToList();
+
+                    return list;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
     }
 }
