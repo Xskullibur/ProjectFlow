@@ -62,9 +62,10 @@
     </div>
     <div>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateProject">New Project</button>        
+        <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
     </div>
     <div>
-        <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="531px">
+        <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1325px">
             <Columns>
                 <asp:BoundField DataField="projectID" HeaderText="Project ID" />
                 <asp:BoundField DataField="projectName" HeaderText="Name" />
@@ -76,11 +77,7 @@
 
     <script>
         $(document).ready(function () {
-            hideSidebar();
-        });
-        $('#CreateProject').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var modal = $(this)
-        })
+            hideSidebar();           
+        });      
     </script>
 </asp:Content>

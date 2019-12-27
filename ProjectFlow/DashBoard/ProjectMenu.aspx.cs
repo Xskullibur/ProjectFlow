@@ -12,7 +12,8 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowProject(1);
+            ShowProject(1);           
+            //newProjectBtn_Click(null, null);
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -67,6 +68,11 @@ namespace ProjectFlow.DashBoard
             NameTB.Text = "";
             DescTB.Text = "";
             testLabel.Text = "";
-        }   
+        }
+
+        protected void newProjectBtn_Click(object sender, EventArgs e)
+        {
+            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "none", "<script>$('#CreateProject').modal('show');</script>", false);
+        }
     }
 }
