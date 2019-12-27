@@ -1,6 +1,9 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.DAO;
 using ProjectFlow.Login;
+using ProjectFlow.Scheduler;
+using Quartz;
+using Quartz.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +23,8 @@ namespace ProjectFlow
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            JobScheduler.StartAsync();
+
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
             {
                 Path = "~/Scripts/jquery-3.4.1.min.js",
@@ -94,7 +99,10 @@ namespace ProjectFlow
 
         protected void Application_End(object sender, EventArgs e)
         {
-
+            // Shutdown Scheduler
+            IScheduler scheduler = (IScheduler)StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.Clear();
+            scheduler.Shutdown();
         }
     }
 }

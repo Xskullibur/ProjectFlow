@@ -53,9 +53,9 @@ namespace ProjectFlow.Utils
         /// </summary>
         /// <param name="recivers">List of Reciver's Emails</param>
         /// <param name="subject">Subject of Email</param>
-        /// <param name="mailText">Body of the Email</param>
+        /// <param name="textBody">Body of the Email</param>
         /// <returns>Boolean</returns>
-        public bool SendEmail(List<string> recivers, string subject, string mailText)
+        public bool SendEmail(List<string> recivers, string subject, string textBody)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace ProjectFlow.Utils
                 }
 
                 _mailMessage.Subject = subject;
-                _mailMessage.Body = mailText;
+                _mailMessage.Body = textBody;
 
                 SmtpClient _smtp = new SmtpClient();
                 _smtp.Host = smtp;
