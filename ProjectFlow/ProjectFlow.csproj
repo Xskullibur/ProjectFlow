@@ -296,6 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="BLL\CommentForIssueBLL.cs" />
     <Compile Include="BLL\IssueBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\StatusBLL.cs" />
@@ -306,6 +307,7 @@
       <DependentUpon>ProjectFlow.tt</DependentUpon>
     </Compile>
     <Compile Include="DAO\AllocationDAO.cs" />
+    <Compile Include="DAO\CommentForIssueDAO.cs" />
     <Compile Include="DAO\IssueDAO.cs" />
     <Compile Include="DAO\MilestoneDAO.cs" />
     <Compile Include="DAO\StatusDAO.cs" />

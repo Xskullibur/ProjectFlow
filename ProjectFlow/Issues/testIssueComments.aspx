@@ -22,7 +22,7 @@
             </HeaderTemplate>
             <ItemTemplate>
                 <div class="row">
-                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label><asp:Label ID="Label3" runat="server" Text="<%# Container.DataItem %>"></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Eval("CreatedBy") %>'></asp:Label><asp:Label ID="Label3" runat="server" Text='<%# Eval("Comment") %>'></asp:Label>
                 </div>
             </ItemTemplate>     
         </asp:Repeater>
