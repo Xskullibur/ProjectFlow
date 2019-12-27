@@ -33,7 +33,7 @@ namespace ProjectFlow.DAO
                 }
             }
         }
-        /*public IEnumerable<int> GetPollByID(int vID)
+        public IEnumerable<int> GetPollByID(int vID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -59,7 +59,7 @@ namespace ProjectFlow.DAO
                 }
 
 
-            }*/
+            }
         }
     }
 }

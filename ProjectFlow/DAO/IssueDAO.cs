@@ -77,7 +77,7 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public IEnumerable<object> GetCommentsByIssue(int tID)
+        /*public IEnumerable<object> GetCommentsByIssue(int tID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -105,6 +105,6 @@ namespace ProjectFlow.DAO
 
 
             }
-        }
+        }*/
     }
 }
