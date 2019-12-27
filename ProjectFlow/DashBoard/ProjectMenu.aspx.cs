@@ -39,6 +39,10 @@ namespace ProjectFlow.DashBoard
                 NameTB.Text = projectName;
                 DescTB.Text = projectDesc;
             }
+            else
+            {
+                ClearField();
+            }
         }
 
         public void ShowProject(int tutorID)
@@ -56,5 +60,13 @@ namespace ProjectFlow.DashBoard
             Session["PassProjectID"] = row.Cells[0].Text;
             Response.Redirect("ProjectMainPage.aspx");
         }
+
+        public void ClearField()
+        {
+            ProjectIdTB.Text = "";
+            NameTB.Text = "";
+            DescTB.Text = "";
+            testLabel.Text = "";
+        }   
     }
 }

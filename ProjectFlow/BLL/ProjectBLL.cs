@@ -15,7 +15,7 @@ namespace ProjectFlow.BLL
         {
             return Regex.Replace(input, @"\s+", "");
         }
-
+     
         public void CreateProject(string ProjectID, string Name, string Desc, int TutorID)
         {
             projectDAO.InsertProject(ProjectID, Name, Desc, TutorID);
@@ -67,6 +67,11 @@ namespace ProjectFlow.BLL
             if (Desc.Length > 255)
             {
                 errorList.Add("Description cannot be longer than 6<br>");
+            }
+
+            if (projectDAO.CheckUniqueProjectID(ProjectID) == false)
+            {
+                errorList.Add("Project ID is taken");
             }
 
             if (errorList.Count == 0)

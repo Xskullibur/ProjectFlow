@@ -30,5 +30,20 @@ namespace ProjectFlow.DAO
                 return tutor.Projects.ToList();
             }
         }
+
+        public bool CheckUniqueProjectID(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if(dbContext.Projects.Any(x => x.projectID == ProjectID))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
     }
 }
