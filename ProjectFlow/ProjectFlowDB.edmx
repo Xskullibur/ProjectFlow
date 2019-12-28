@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CommentForIssue">
           <Key>
             <PropertyRef Name="commentID" />
@@ -66,6 +66,16 @@
           </Key>
           <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomID" />
+          </Key>
+          <Property Name="roomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="createdBy" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
+          <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="accessToken" Type="varbinary" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -235,6 +245,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Room_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Milestone">
           <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -339,6 +373,7 @@
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTeam" EntityType="Self.ProjectTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
@@ -381,6 +416,14 @@
             <End Role="Project" EntitySet="Project" />
             <End Role="ProjectTeam" EntitySet="ProjectTeam" />
           </AssociationSet>
+          <AssociationSet Name="FK_Room_Project" Association="Self.FK_Room_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_Student" Association="Self.FK_Room_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Milestone" Association="Self.FK_Task_Milestone">
             <End Role="Milestone" EntitySet="Milestone" />
             <End Role="Task" EntitySet="Task" />
@@ -414,8 +457,7 @@
             <End Role="TeamMember" EntitySet="TeamMember" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -477,6 +519,7 @@
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_Project" FromRole="Project" ToRole="Milestone" />
           <NavigationProperty Name="Tutor" Relationship="Self.FK_Project_Tutor" FromRole="Project" ToRole="Tutor" />
           <NavigationProperty Name="ProjectTeams" Relationship="Self.FK_ProjectTeam_Project" FromRole="Project" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Rooms" Relationship="ProjectFlowModel.FK_Room_Project" FromRole="Project" ToRole="Room" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -518,6 +561,7 @@
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Student" FromRole="Student" ToRole="TeamMember" />
+          <NavigationProperty Name="Rooms" Relationship="ProjectFlowModel.FK_Room_Student" FromRole="Student" ToRole="Room" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -861,8 +905,53 @@
             <End Role="TeamMember" EntitySet="TeamMembers" />
             <End Role="TaskAllocation" EntitySet="TaskAllocations" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="Rooms" EntityType="ProjectFlowModel.Room" />
+          <AssociationSet Name="FK_Room_Project" Association="ProjectFlowModel.FK_Room_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_Student" Association="ProjectFlowModel.FK_Room_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomID" />
+          </Key>
+          <Property Name="roomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="createdBy" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="projectID" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="accessToken" Type="Binary" Nullable="false" MaxLength="32" FixedLength="false" />
+          <NavigationProperty Name="Project" Relationship="ProjectFlowModel.FK_Room_Project" FromRole="Room" ToRole="Project" />
+          <NavigationProperty Name="Student" Relationship="ProjectFlowModel.FK_Room_Student" FromRole="Room" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_Room_Project">
+          <End Type="ProjectFlowModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="ProjectFlowModel.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_Student">
+          <End Type="ProjectFlowModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="ProjectFlowModel.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1000,6 +1089,17 @@
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="accessToken" ColumnName="accessToken" />
+                <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="roomID" ColumnName="roomID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

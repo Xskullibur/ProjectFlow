@@ -18,6 +18,7 @@ namespace ProjectFlow
         public Student()
         {
             this.TeamMembers = new HashSet<TeamMember>();
+            this.Rooms = new HashSet<Room>();
         }
     
         public string studentID { get; set; }
@@ -29,5 +30,7 @@ namespace ProjectFlow
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamMember> TeamMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

@@ -35,7 +35,10 @@
         <AssociationConnector Association="ProjectFlowModel.FK_TeamMember_Student" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_Task" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="ProjectFlowModel.Room" Width="1.5" PointX="10.5" PointY="13.625" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Room_Project" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Room_Student" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -1,13 +1,13 @@
-﻿using ProjectFlow.BLL;
+﻿using ProjectFlow.App_Start;
 using ProjectFlow.DAO;
 using ProjectFlow.Login;
+using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Optimization;
+using System.Web.Routing;
 using System.Web.Security;
-using System.Web.SessionState;
 using System.Web.UI;
 
 namespace ProjectFlow
@@ -17,6 +17,8 @@ namespace ProjectFlow
     /// </summary>
     public class Global : System.Web.HttpApplication
     {
+
+        public static ConnectionMultiplexer Redis = null;
 
         protected void Application_Start(object sender, EventArgs e)
         {
@@ -43,6 +45,19 @@ namespace ProjectFlow
                 Path = "~/Scripts/bootstrap-select.min.js",
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
+
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("signalr", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/jquery.signalR-2.4.1.min.js",
+                DebugPath = "~/Scripts/jquery.signalR-2.4.1.js"
+            });
+
+
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Create redis connection
+            Redis = ConnectionMultiplexer.Connect("192.168.99.100");
 
         }
 
@@ -94,7 +109,8 @@ namespace ProjectFlow
 
         protected void Application_End(object sender, EventArgs e)
         {
-
+            //Close redis connection
+            Redis.Close();
         }
     }
 }
