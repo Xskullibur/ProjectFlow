@@ -56,8 +56,9 @@
                             </td>
                             <td class="auto-style10">
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="Name is Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
-                                &nbsp;<br />
+                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                <br />
                                 <br />
                             </td>
                         </tr>                        
@@ -74,7 +75,8 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                <asp:RequiredFieldValidator ID="descRequiredValidator" runat="server" ControlToValidate="DescTB" ErrorMessage="Description is Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="descRequiredValidator" runat="server" ControlToValidate="DescTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" validationexpression="^.{1,255}$" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red" ControlToValidate="DescTB"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />
 
@@ -94,9 +96,9 @@
                             <td class="auto-style10">
                                 &nbsp;
 
+                                &nbsp;<asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
                                 &nbsp;<asp:RegularExpressionValidator ID="projectIdRegexValidator" runat="server" validationexpression="^[a-zA-Z0-9]{6}$" ControlToValidate="ProjectIdTB" ErrorMessage="6 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
 
-                                <asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="Project ID is required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
                                 <br />
                                 <br />
 
@@ -112,7 +114,7 @@
                     </table>                   
                 </div>
                 <div class="modal-footer">
-                                <asp:Label ID="testLabel" runat="server"></asp:Label>
+                                <asp:Label ID="errorLabel" runat="server" ForeColor="Red"></asp:Label>
                 </div>
             </div>
         </div>

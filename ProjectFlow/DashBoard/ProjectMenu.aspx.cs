@@ -17,7 +17,7 @@ namespace ProjectFlow.DashBoard
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
-            testLabel.Text = "";
+            errorLabel.Text = "";
             ProjectBLL projectBLL = new ProjectBLL();
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
@@ -34,7 +34,7 @@ namespace ProjectFlow.DashBoard
                 {
                     total += errorItem;
                 }
-                testLabel.Text = total;
+                errorLabel.Text = total;
                 ProjectIdTB.Text = projectID;
                 NameTB.Text = projectName;
                 DescTB.Text = projectDesc;
@@ -68,7 +68,7 @@ namespace ProjectFlow.DashBoard
             ProjectIdTB.Text = "";
             NameTB.Text = "";
             DescTB.Text = "";
-            testLabel.Text = "";
+            errorLabel.Text = "";
         }
 
         protected void newProjectBtn_Click(object sender, EventArgs e)

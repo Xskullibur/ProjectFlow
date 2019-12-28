@@ -49,6 +49,15 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator nameRequiredValidator;
         
         /// <summary>
+        /// nameRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator nameRegexValidator;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator descRequiredValidator;
         
         /// <summary>
+        /// descRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator descRegexValidator;
+        
+        /// <summary>
         /// Label5 control.
         /// </summary>
         /// <remarks>
@@ -94,15 +112,6 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.TextBox ProjectIdTB;
         
         /// <summary>
-        /// projectIdRegexValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator projectIdRegexValidator;
-        
-        /// <summary>
         /// IdRequirdValidator control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator IdRequirdValidator;
+        
+        /// <summary>
+        /// projectIdRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator projectIdRegexValidator;
         
         /// <summary>
         /// CreateBtn control.
@@ -121,13 +139,13 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Button CreateBtn;
         
         /// <summary>
-        /// testLabel control.
+        /// errorLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label testLabel;
+        protected global::System.Web.UI.WebControls.Label errorLabel;
         
         /// <summary>
         /// newProjectBtn control.
