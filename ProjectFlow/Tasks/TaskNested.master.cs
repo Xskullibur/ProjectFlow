@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Scheduler;
 using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
@@ -285,6 +286,45 @@ namespace ProjectFlow.Tasks
                 // Show Result
                 if (result)
                 {
+                    StatusBLL statusBLL = new StatusBLL();
+                    string status = statusBLL.GetStatusByID(newTask.statusID);
+
+                    // Check Task Status
+                    if (status != StatusBLL.COMPLETED)
+                    {
+
+                        // Get User's names and email from allocation
+                        List<string> allocatedNames = null;
+                        List<string> allocatedEmails = null;
+                        StudentBLL studentBLL = new StudentBLL();
+
+                        if (taskAllocations.Count > 0)
+                        {
+                            List<Student> allocatedStudents = studentBLL.GetAllocationsByTaskID(newTask.taskID);
+
+                            allocatedNames = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
+                            allocatedEmails = allocatedStudents.Select(x => x.email).ToList();
+                        }
+
+                        // Get Team Leader's email
+                        Student leader = studentBLL.GetLeaderByTaskID(newTask.taskID);
+                        string leaderEmail = leader.email;
+
+                        // TODO: Get User Notification Preference
+
+                        if (status == StatusBLL.VERIFICATON)
+                        {
+                            // Verificaton Job
+                        }
+                        else
+                        {
+                            // Schedule Email Notification Job
+                            NotificationHelper.AddEmail_TaskReminder_ONEDAY(newTask, allocatedNames, allocatedEmails);
+                        }
+
+                    }
+
+                    // Update Page
                     hideModal();
                     refreshGrid?.Invoke(this, EventArgs.Empty);
                     this.Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);

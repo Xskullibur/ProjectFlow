@@ -304,6 +304,7 @@
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
     <Compile Include="BLL\StatusBLL.cs" />
+    <Compile Include="BLL\StudentBLL.cs" />
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
     <Compile Include="CommentForIssue.cs">
@@ -462,6 +463,7 @@
     </Compile>
     <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
+    <Compile Include="Utils\NotificationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -97,6 +97,56 @@ namespace ProjectFlow.DAO
             }
         }
 
+        /// <summary>
+        /// Get Team Leader By Team ID
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <returns>Student</returns>
+        public Student GetTeamLeaderByTeamID(int teamID)
+        {
+            try
+            {
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+                {
+                    Student leader = dbContext.TeamMembers.Where(x => x.teamID == teamID)
+                        .Where(x => x.roleID == 1)
+                        .Select(x => x.Student)
+                        .First();
+
+                    return leader;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error While Retrieving Student: {e.Message}");
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Get Allocations by Task ID
+        /// </summary>
+        /// <param name="taskID"></param>
+        /// <returns>Students</returns>
+        public List<Student> GetAllocationsByTaskID(int taskID)
+        {
+            try
+            {
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+                {
+                    List<Student> allocationList = dbContext.TaskAllocations.Where(x => x.taskID == taskID)
+                        .Select(x => x.TeamMember.Student).ToList();
+
+                    return allocationList;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error While Retrieving Students: {e.Message}");
+                return null;
+            }
+        }
 
     }
 }

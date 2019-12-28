@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Configuration;
 using System.IO;
+using ProjectFlow.BLL;
 
 namespace ProjectFlow.Utils
 {
@@ -16,12 +17,23 @@ namespace ProjectFlow.Utils
         string smtp= ConfigurationManager.AppSettings["SMTP"].ToString();
         int portNo = Convert.ToInt32(ConfigurationManager.AppSettings["PortNo"].ToString());
 
-        public string GetTaskNotificationTemplate(int dueDays, string taskName, string taskDesc, DateTime startDate, DateTime endDate, string milestone, string status, string allocations)
+        public static string GetTaskNotificationTemplate(int dueDays, Task task, List<string> allocations)
         {
 
             try
             {
                 string templateDir = HttpContext.Current.Server.MapPath("~/Utils/EmailTemplates/TaskNotification.html");
+
+                StatusBLL statusBLL = new StatusBLL();
+                MilestoneBLL milestoneBLL = new MilestoneBLL();
+
+                string status = statusBLL.GetStatusByID(task.statusID);
+                string milestone = "-";
+
+                if (task.milestoneID != null)
+                {
+                    milestone = milestoneBLL.GetMilestoneByID(task.milestoneID).milestoneName;
+                }
 
                 using (StreamReader streamReader = new StreamReader(templateDir))
                 {
@@ -29,13 +41,13 @@ namespace ProjectFlow.Utils
 
                     //Update Template Values
                     textBody = textBody.Replace("[DueDays]", dueDays.ToString());
-                    textBody = textBody.Replace("[TaskName]", taskName);
-                    textBody = textBody.Replace("[TaskDesc]", taskDesc);
-                    textBody = textBody.Replace("[StartDate]", startDate.ToString());
-                    textBody = textBody.Replace("[EndDate]", endDate.ToString());
+                    textBody = textBody.Replace("[TaskName]", task.taskName);
+                    textBody = textBody.Replace("[TaskDesc]", task.taskDescription);
+                    textBody = textBody.Replace("[StartDate]", task.startDate.ToString());
+                    textBody = textBody.Replace("[EndDate]", task.endDate.ToString());
                     textBody = textBody.Replace("[Milestone]", milestone);
                     textBody = textBody.Replace("[Status]", status);
-                    textBody = textBody.Replace("[Allocations]", allocations);
+                    textBody = textBody.Replace("[Allocations]", string.Join(", ", allocations));
 
                     return textBody;
                 }

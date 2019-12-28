@@ -33,6 +33,44 @@ namespace ProjectFlow.Scheduler
         }
 
         /// <summary>
+        /// Create an Email Job
+        /// </summary>
+        /// <param name="jobName"></param>
+        /// <param name="emailRecivers"></param>
+        /// <param name="emailSubject"></param>
+        /// <param name="emailBody"></param>
+        /// <returns></returns>
+        public static IJobDetail CreateEmailJob(string jobName, List<string> emailRecivers, string emailSubject, string emailBody)
+        {
+            IJobDetail job = JobBuilder.Create<EmailJob>()
+                .WithIdentity(jobName, "EmailJob")
+                .UsingJobData("Subject", emailSubject)
+                .UsingJobData("TextBody", emailBody)
+                .Build();
+
+            job.JobDataMap.Put("Recivers", emailRecivers);
+
+            return job;
+        }
+
+
+        public static  ISimpleTrigger CreateSimpleTrigger(IJobDetail job, DateTime triggerDate)
+        {
+            string jobName = job.Key.Name;
+            string triggerGrp = $"{jobName}_trigger";
+            string triggerName = $"{triggerGrp}_{triggerDate.ToShortDateString()}";
+
+            // Create Job Trigger
+            ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create()
+                .WithIdentity(triggerName, triggerGrp)
+                .StartAt(triggerDate.ToLocalTime())
+                .Build();
+
+            return trigger;
+        }
+
+
+        /// <summary>
         /// Add a Job for sending email
         /// </summary>
         /// <param name="jobName">Must Be Unique!</param>
@@ -41,7 +79,7 @@ namespace ProjectFlow.Scheduler
         /// <param name="subject">Email's Subject</param>
         /// <param name="textBody">Email's Contents (In HTML)</param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task AddEmailJobAsync(string jobName, DateTime triggerDate, List<string> recivers, string subject, string textBody)
+        public static async System.Threading.Tasks.Task AddEmailJobAsync(IJobDetail job, ISimpleTrigger trigger)
         {
             try
             {
@@ -49,25 +87,9 @@ namespace ProjectFlow.Scheduler
                 IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
                 await scheduler.Start();
 
-                // Create Email Job
-                IJobDetail job = JobBuilder.Create<EmailJob>()
-                    .WithIdentity(jobName, "EmailJob")
-                    .UsingJobData("Subject", subject)
-                    .UsingJobData("TextBody", textBody)
-                    .Build();
-
-                job.JobDataMap.Put("Recivers", recivers);
-
-                // Create Job Trigger
-                ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create()
-                    .WithIdentity(jobName + "_trigger", jobName + "_trigger")
-                    .StartAt(triggerDate.ToUniversalTime())
-                    .ForJob(job)
-                    .Build();
-
                 // Schedule Job with Trigger
                 await scheduler.ScheduleJob(job, trigger);
-                System.Diagnostics.Debug.WriteLine($"\n\n{jobName} Scheduled for {triggerDate.ToString()} !\n\n");
+                System.Diagnostics.Debug.WriteLine($"\n\n{job.Key.Name} Scheduled for {trigger.StartTimeUtc.ToString()} !\n\n");
             }
             catch (Exception e)
             {

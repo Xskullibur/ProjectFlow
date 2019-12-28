@@ -10,15 +10,42 @@ namespace ProjectFlow.DAO
 
         public Dictionary<int, string> Get()
         {
-            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            try
             {
-                var status = dbContext.Status.Select(x => new
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
                 {
-                    Key = x.ID,
-                    Value = x.status1
-                }).ToDictionary(y => y.Key, z => z.Value);
+                    var status = dbContext.Status.Select(x => new
+                    {
+                        Key = x.ID,
+                        Value = x.status1
+                    }).ToDictionary(y => y.Key, z => z.Value);
 
-                return status;
+                    return status;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error While Retrieving Status: {e.Message}");
+                return null;
+            }
+        }
+
+        public string GetStatusByID(int id)
+        {
+            try
+            {
+
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+                {
+                    string status = dbContext.Status.First(x => x.ID == id).status1;
+
+                    return status;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error While Retrieving Status: {e.Message}");
+                return null;
             }
         }
 

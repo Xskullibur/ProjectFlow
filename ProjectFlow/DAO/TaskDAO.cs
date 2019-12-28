@@ -250,5 +250,30 @@ namespace ProjectFlow.DAO
             }
         }
 
+
+        /// <summary>
+        /// Get ProjectTeam by Task ID
+        /// </summary>
+        /// <param name="taskID"></param>
+        /// <returns>ProjectTeam</returns>
+        public ProjectTeam GetProjectTeamByTaskID(int taskID)
+        {
+            try
+            {
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+                {
+                    ProjectTeam team = dbContext.Tasks.Where(x => x.taskID == taskID)
+                        .Select(x => x.ProjectTeam).First();
+
+                    return team;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error While Retrieving ProjectTeam: {e.Message}");
+                return null;
+            }
+        }
+
     }
 }
