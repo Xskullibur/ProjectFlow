@@ -57,8 +57,34 @@ namespace ProjectFlow.DAO
                     Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
                     return null;
                 }
+            }
+        }
 
+        public int GetResultByID(int iID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    var count = dbContext.Pollings
+                        .Where(x => x.issueID == iID)
+                        .Where(x => x.vote == true)
+                        .Select(y => y
+                        ).Count() - dbContext.Pollings
+                        .Where(x => x.issueID == iID)
+                        .Where(x => x.vote == false)
+                        .Select(y => y
+                        ).Count(); ;
 
+                    System.Diagnostics.Debug.WriteLine(count);
+                    return count;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return 0;
+                }
             }
         }
     }

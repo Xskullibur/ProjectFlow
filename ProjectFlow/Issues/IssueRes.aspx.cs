@@ -76,8 +76,11 @@ namespace ProjectFlow.Issues
             PollingBLL pollingBLL = new PollingBLL();
 
             bool checking = pollingBLL.Check(iID, vID);
-            
-            if(checking == true)
+
+            int result = pollingBLL.GetResult(iID);
+            Label2.Text = result.ToString();
+
+            if (checking == true)
             {
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
@@ -110,7 +113,7 @@ namespace ProjectFlow.Issues
 
                 // Create Task Object
                 CommentForIssue newComment = new CommentForIssue();
-                newComment.comment = TextBox1.Text;
+                newComment.comment = tbComments.Text;
                 newComment.issueID = idIssue;
                 newComment.createdBy = idVoter;    //this is a placeholder  
 
@@ -134,6 +137,7 @@ namespace ProjectFlow.Issues
         protected void btnCommentSubmit_Click(object sender, EventArgs e)
         {
             addComment();
+            tbComments.Text = "";
         }
     }
 }

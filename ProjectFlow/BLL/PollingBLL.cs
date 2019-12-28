@@ -26,5 +26,11 @@ namespace ProjectFlow.BLL
             var list = pollingDAO.GetPollByID(vID).ToList();
             return list;
         }
+        public int GetResult(int iID)
+        {
+            PollingDAO pollingDAO = new PollingDAO();
+            var result = pollingDAO.GetResultByID(iID);
+            return result;
+        }
     }
 }

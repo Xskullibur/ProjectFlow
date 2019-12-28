@@ -111,7 +111,6 @@
     <Content Include="Issues\iDetailedView.aspx" />
     <Content Include="Issues\IssueRes.aspx" />
     <Content Include="Issues\IssueView.aspx" />
-    <Content Include="Issues\testIssueComments.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ProjectFlow.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -361,13 +360,6 @@
     </Compile>
     <Compile Include="Issues\IssueView.aspx.designer.cs">
       <DependentUpon>IssueView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\testIssueComments.aspx.cs">
-      <DependentUpon>testIssueComments.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\testIssueComments.aspx.designer.cs">
-      <DependentUpon>testIssueComments.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
