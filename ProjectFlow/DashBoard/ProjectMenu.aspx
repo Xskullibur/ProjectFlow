@@ -56,8 +56,8 @@
                             </td>
                             <td class="auto-style10">
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="Name is Required" ForeColor="Red"></asp:RequiredFieldValidator>
-                                <br />
+                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="Name is Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
+                                &nbsp;<br />
                                 <br />
                             </td>
                         </tr>                        
@@ -74,7 +74,7 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                <asp:RequiredFieldValidator ID="descRequiredValidator" runat="server" ControlToValidate="DescTB" ErrorMessage="Description is Required" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="descRequiredValidator" runat="server" ControlToValidate="DescTB" ErrorMessage="Description is Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
                                 <br />
                                 <br />
 
@@ -94,7 +94,9 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                <asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="Project ID is required" ForeColor="Red"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="projectIdRegexValidator" runat="server" validationexpression="^[a-zA-Z0-9]{6}$" ControlToValidate="ProjectIdTB" ErrorMessage="6 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+
+                                <asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="Project ID is required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
                                 <br />
                                 <br />
 
