@@ -119,7 +119,7 @@ namespace ProjectFlow.Tasks
         protected void modalUpdatePanel_Init(object sender, EventArgs e)
         {
             // Init SelectPicker And DateTimePicker
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_pickers", "$('.datetimepicker').datetimepicker(); $('.selectpicker').selectpicker();", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_pickers", "$('.selectpicker').selectpicker();", true);
         }
 
 
@@ -255,8 +255,8 @@ namespace ProjectFlow.Tasks
                 Task newTask = new Task();
                 newTask.taskName = taskName;
                 newTask.taskDescription = taskDesc;
-                newTask.startDate = DateFormatter.ParseFormattedDateTime(startDate);
-                newTask.endDate = DateFormatter.ParseFormattedDateTime(endDate);
+                newTask.startDate = DateTime.Parse(startDate);
+                newTask.endDate = DateTime.Parse(endDate);
                 newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
 
                 newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session

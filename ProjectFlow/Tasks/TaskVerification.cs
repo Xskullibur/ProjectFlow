@@ -83,11 +83,8 @@ namespace ProjectFlow.Tasks
             }
             else if (!DateTime.TryParse(startDate, out DateTime start))
             {
-                if (!DateFormatter.TryParseFormattedDateTime(startDate))
-                {
-                    TStartDateErrors.Add("Invalid Format!");
-                    verified = false;
-                }
+                TStartDateErrors.Add("Invalid Format!");
+                verified = false;
             }
 
             // End Date
@@ -98,17 +95,14 @@ namespace ProjectFlow.Tasks
             }
             else if (!DateTime.TryParse(endDate, out DateTime end))
             {
-                if (!DateFormatter.TryParseFormattedDateTime(endDate))
-                {
-                    TEndDateErrors.Add("Invalid Format!");
-                    verified = false;
-                }
+                TEndDateErrors.Add("Invalid Format!");
+                verified = false;
             }
 
             // Compare Start End Date
             if (TStartDateErrors.Count == 0 && TEndDateErrors.Count == 0)
             {
-                if (DateTime.Compare(DateFormatter.ParseFormattedDateTime(startDate), DateFormatter.ParseFormattedDateTime(endDate)) >= 0)
+                if (DateTime.Compare(DateTime.Parse(startDate), DateTime.Parse(endDate)) >= 0)
                 {
                     StartEndDateErrors.Add("Start Date cannot be later than End Date!");
                     verified = false;

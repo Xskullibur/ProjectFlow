@@ -177,6 +177,8 @@ namespace ProjectFlow.DAO
                         .Include("Status")
                         .Where(x => x.teamID == teamID)
                         .Where(x => x.dropped != true)
+                        .OrderBy(x => x.startDate)
+                        .ThenBy(x => x.endDate)
                         .ToList().Select(y => new
                         {
                             ID = y.taskID,
