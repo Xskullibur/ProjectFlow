@@ -40,6 +40,15 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.TextBox NameTB;
         
         /// <summary>
+        /// nameRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator nameRequiredValidator;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.TextBox DescTB;
         
         /// <summary>
+        /// descRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator descRequiredValidator;
+        
+        /// <summary>
         /// Label5 control.
         /// </summary>
         /// <remarks>
@@ -74,6 +92,15 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ProjectIdTB;
+        
+        /// <summary>
+        /// IdRequirdValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator IdRequirdValidator;
         
         /// <summary>
         /// CreateBtn control.
