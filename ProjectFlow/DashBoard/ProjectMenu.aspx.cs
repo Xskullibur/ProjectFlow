@@ -12,9 +12,7 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowProject(1);
-            //newProjectBtn_Click(null, null);
-            //Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "openModel()", true);
+            ShowProject(1);            
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -40,12 +38,12 @@ namespace ProjectFlow.DashBoard
                 ProjectIdTB.Text = projectID;
                 NameTB.Text = projectName;
                 DescTB.Text = projectDesc;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "openModel()", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "pop", "$('#CreateProject').modal('show');", true);
             }
             else
             {
                 ClearField();
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "hideModel()", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "pop", "$('#CreateProject').modal('hide');", true);
             }
         }
 
@@ -75,7 +73,7 @@ namespace ProjectFlow.DashBoard
 
         protected void newProjectBtn_Click(object sender, EventArgs e)
         {
-            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "none", "<script>$('#CreateProject').modal('show');</script>", false);
+            
         }
     }
 }

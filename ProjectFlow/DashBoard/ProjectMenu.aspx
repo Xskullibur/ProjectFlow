@@ -10,15 +10,7 @@
             .auto-style2 {
                 width: 234px;
             }
-        </style>
-        <script type="text/javascript">
-            function openModel() {
-                $('#CreateProject').modal('show');
-            }
-            function hideModel() {
-                $('#CreateProject').modal('hide');
-            }
-        </script>
+        </style>       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="modal fade" id="CreateProject" role="dialog">
@@ -85,7 +77,8 @@
 
     <script>
         $(document).ready(function () {
-            hideSidebar();           
+            hideSidebar();    
+            $('#CreateProject').modal('hide');
         });      
     </script>
 </asp:Content>
