@@ -22,6 +22,24 @@ namespace ProjectFlow.DAO
             }
         }
 
+        public void UpdateProject(string ProjectID, string Name, string Desc, string ChangeID = "")
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var project = dbContext.Projects.Single(x => x.projectID.Equals(ProjectID));
+                if(project != null)
+                {
+                    if (!ChangeID.Equals(""))
+                    {
+                        project.projectID = ChangeID;
+                    }
+                    project.projectName = Name;
+                    project.projectDescription = Desc;
+                    dbContext.SaveChanges();
+                }               
+            }
+        }
+
         public List<Project> GetProjectTutor(int TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -42,6 +60,21 @@ namespace ProjectFlow.DAO
                 else
                 {
                     return true;
+                }
+            }
+        }
+
+        public bool CheckOwnership(string ProjectID, int TutorID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if (dbContext.Projects.Any(x => x.projectID == ProjectID && x.tutorID == TutorID))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
