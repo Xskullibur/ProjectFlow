@@ -119,18 +119,23 @@
             </div>
         </div>
     </div>
-    <div>             
-        <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
-    </div>
-    <div>
-        <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1325px">
-            <Columns>
-                <asp:BoundField DataField="projectID" HeaderText="Project ID" />
-                <asp:BoundField DataField="projectName" HeaderText="Name" />
-                <asp:BoundField DataField="projectDescription" HeaderText="Description" />
-                <asp:CommandField SelectText="Open" ShowSelectButton="True" />
-            </Columns>
-        </asp:GridView>
+    <div class="container">
+        <div>             
+            <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
+        </div>
+        <br>
+        <div>
+            <asp:GridView ID="projectGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1325px">
+                <Columns>
+                    <asp:BoundField DataField="projectID" HeaderText="Project ID" />
+                    <asp:BoundField DataField="projectName" HeaderText="Name" />
+                    <asp:BoundField DataField="projectDescription" HeaderText="Description" />
+                    <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
+                        <ControlStyle CssClass="btn btn-primary"/>
+                    </asp:CommandField>
+                </Columns>
+            </asp:GridView>
+        </div>
     </div>
 
     <script>
