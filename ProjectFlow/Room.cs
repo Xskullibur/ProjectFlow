@@ -17,10 +17,10 @@ namespace ProjectFlow
         public int roomID { get; set; }
         public string createdBy { get; set; }
         public System.DateTime creationDate { get; set; }
-        public string projectID { get; set; }
+        public int teamID { get; set; }
         public byte[] accessToken { get; set; }
     
-        public virtual Project Project { get; set; }
+        public virtual ProjectTeam ProjectTeam { get; set; }
         public virtual Student Student { get; set; }
     }
 }

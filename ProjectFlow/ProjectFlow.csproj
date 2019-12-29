@@ -536,6 +536,7 @@
     <Content Include="Tasks\Web.config" />
     <Content Include="Services\Christina\rsa.private" />
     <Content Include="Services\Christina\rsa.public" />
+    <Content Include="Services\Christina\key.bin" />
     <None Include="Services\Christina\salt.bin" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

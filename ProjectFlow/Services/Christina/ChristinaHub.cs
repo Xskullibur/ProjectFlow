@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Crypto.Encodings;
 using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
 using ProjectFlow.BLL;
 using ProjectFlow.Login;
@@ -9,6 +12,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Web.Hosting;
+using System.Collections.Generic;
 
 namespace ProjectFlow.Services.Christina
 {
@@ -19,7 +23,7 @@ namespace ProjectFlow.Services.Christina
     public class ChristinaHub : Hub
     {
 
-        public async System.Threading.Tasks.Task CreateRoom(string projectID)
+        public async System.Threading.Tasks.Task CreateRoom(int teamID)
         {
             //Generate secure password
             byte[] password = new byte[256];
@@ -30,8 +34,7 @@ namespace ProjectFlow.Services.Christina
             byte[] salt = File.ReadAllBytes(HostingEnvironment.MapPath("~/Services/Christina/salt.bin"));
             byte[] passwordWithSalt = ExclusiveOR(password, salt);
 
-            byte[] key = new byte[256];
-            rng.GetBytes(key);
+            byte[] key = File.ReadAllBytes(HostingEnvironment.MapPath("~/Services/Christina/key.bin"));
 
             using (HMACSHA256 hmac = new HMACSHA256(key))
             {
@@ -40,7 +43,7 @@ namespace ProjectFlow.Services.Christina
                 Room room = new Room
                 {
                     accessToken = hashedPasswordWithSalt,
-                    projectID = projectID,
+                    teamID = teamID,
                     creationDate = DateTime.Now,
                     createdBy = (Context.User.Identity as ProjectFlowIdentity).Student.studentID,
                     
@@ -49,18 +52,31 @@ namespace ProjectFlow.Services.Christina
                 bll.CreateRoom(room);
 
                 //Store the project id and hashed password in redis 
-                Global.Redis.GetDatabase().StringSet(room.accessToken, $@"{{
-                        'roomID': '{room.roomID}',
-                        'projectID': '{room.projectID}'
-                }}", new TimeSpan(0, 1, 0));
+                Global.Redis.GetDatabase().StringSet(Convert.ToBase64String(room.accessToken), $@"{{
+                        ""roomID"": ""{room.roomID}"",
+                        ""teamID"": ""{room.teamID}""
+                }}", new TimeSpan(0, 5, 0));
 
                 //Encrypt the hashed password with private key
 
                 var publicKey = readPublicKey(HostingEnvironment.MapPath("~/Services/Christina/rsa.public"));
-                RsaEngine e = new RsaEngine();
+                var e = new Pkcs1Encoding(new RsaEngine());
                 e.Init(true, publicKey);
 
-                byte[] encryptedBytes = e.ProcessBlock(password, 0, password.Length);
+                int length = password.Length;
+                int blockSize = e.GetInputBlockSize();
+                List<byte> cipherTextBytes = new List<byte>();
+                for (int chunkPosition = 0;
+                    chunkPosition < length;
+                    chunkPosition += blockSize)
+                {
+                    int chunkSize = Math.Min(blockSize, length - chunkPosition);
+                    cipherTextBytes.AddRange(e.ProcessBlock(
+                        password, chunkPosition, chunkSize
+                    ));
+                }
+
+                byte[] encryptedBytes = cipherTextBytes.ToArray();
 
                 //Send encrypted password back to client
                 Clients.Caller.SendPassword(Convert.ToBase64String(encryptedBytes));
@@ -72,10 +88,10 @@ namespace ProjectFlow.Services.Christina
 
         static AsymmetricKeyParameter readPublicKey(string publicKeyFileName)
         {
-            AsymmetricKeyParameter keyParameter;
+            RsaKeyParameters keyParameter;
 
             using (var reader = File.OpenText(publicKeyFileName))
-                keyParameter = (AsymmetricKeyParameter)new PemReader(reader).ReadObject();
+                keyParameter = (RsaKeyParameters)new PemReader(reader).ReadObject();
 
             return keyParameter;
         }
@@ -88,7 +104,7 @@ namespace ProjectFlow.Services.Christina
 
                 for(int i = 0; i < ba1.Length; i++)
                 {
-                    result[i] = (byte) (ba1[i] ^ ba2[2]);
+                    result[i] = (byte) (ba1[i] ^ ba2[i]);
                 }
                 return result;
             }

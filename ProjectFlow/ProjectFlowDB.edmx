@@ -74,8 +74,8 @@
           <Property Name="roomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="createdBy" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="creationDate" Type="datetime" Nullable="false" />
-          <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="accessToken" Type="varbinary" MaxLength="256" Nullable="false" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="accessToken" Type="varbinary" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -245,15 +245,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Room_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+        <Association Name="FK_Room_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
           <End Role="Room" Type="Self.Room" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="projectID" />
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="Room">
-              <PropertyRef Name="projectID" />
+              <PropertyRef Name="teamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -416,8 +416,8 @@
             <End Role="Project" EntitySet="Project" />
             <End Role="ProjectTeam" EntitySet="ProjectTeam" />
           </AssociationSet>
-          <AssociationSet Name="FK_Room_Project" Association="Self.FK_Room_Project">
-            <End Role="Project" EntitySet="Project" />
+          <AssociationSet Name="FK_Room_ProjectTeam" Association="Self.FK_Room_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
             <End Role="Room" EntitySet="Room" />
           </AssociationSet>
           <AssociationSet Name="FK_Room_Student" Association="Self.FK_Room_Student">
@@ -519,7 +519,6 @@
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_Project" FromRole="Project" ToRole="Milestone" />
           <NavigationProperty Name="Tutor" Relationship="Self.FK_Project_Tutor" FromRole="Project" ToRole="Tutor" />
           <NavigationProperty Name="ProjectTeams" Relationship="Self.FK_ProjectTeam_Project" FromRole="Project" ToRole="ProjectTeam" />
-          <NavigationProperty Name="Rooms" Relationship="ProjectFlowModel.FK_Room_Project" FromRole="Project" ToRole="Room" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -533,6 +532,7 @@
           <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTeam_Project" FromRole="ProjectTeam" ToRole="Project" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
+          <NavigationProperty Name="Rooms" Relationship="ProjectFlowModel.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -906,8 +906,8 @@
             <End Role="TaskAllocation" EntitySet="TaskAllocations" />
           </AssociationSet>
           <EntitySet Name="Rooms" EntityType="ProjectFlowModel.Room" />
-          <AssociationSet Name="FK_Room_Project" Association="ProjectFlowModel.FK_Room_Project">
-            <End Role="Project" EntitySet="Projects" />
+          <AssociationSet Name="FK_Room_ProjectTeam" Association="ProjectFlowModel.FK_Room_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
           <AssociationSet Name="FK_Room_Student" Association="ProjectFlowModel.FK_Room_Student">
@@ -922,20 +922,20 @@
           <Property Name="roomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="createdBy" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="projectID" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="accessToken" Type="Binary" Nullable="false" MaxLength="32" FixedLength="false" />
-          <NavigationProperty Name="Project" Relationship="ProjectFlowModel.FK_Room_Project" FromRole="Room" ToRole="Project" />
+          <NavigationProperty Name="ProjectTeam" Relationship="ProjectFlowModel.FK_Room_ProjectTeam" FromRole="Room" ToRole="ProjectTeam" />
           <NavigationProperty Name="Student" Relationship="ProjectFlowModel.FK_Room_Student" FromRole="Room" ToRole="Student" />
         </EntityType>
-        <Association Name="FK_Room_Project">
-          <End Type="ProjectFlowModel.Project" Role="Project" Multiplicity="1" />
+        <Association Name="FK_Room_ProjectTeam">
+          <End Type="ProjectFlowModel.ProjectTeam" Role="ProjectTeam" Multiplicity="1" />
           <End Type="ProjectFlowModel.Room" Role="Room" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="projectID" />
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="Room">
-              <PropertyRef Name="projectID" />
+              <PropertyRef Name="teamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1096,7 +1096,7 @@
             <EntityTypeMapping TypeName="ProjectFlowModel.Room">
               <MappingFragment StoreEntitySet="Room">
                 <ScalarProperty Name="accessToken" ColumnName="accessToken" />
-                <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="roomID" ColumnName="roomID" />

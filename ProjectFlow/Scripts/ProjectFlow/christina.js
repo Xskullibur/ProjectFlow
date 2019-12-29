@@ -6,20 +6,48 @@ $(document).ready(function () {
 
     christinaHub.client.sendPassword = function (password) {
         console.log(password);
-        const byteCharacters = atob(password);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: contentType });
+        //const byteCharacters = atob(password);
+        //const byteNumbers = new Array(byteCharacters.length);
+        //for (let i = 0; i < byteCharacters.length; i++) {
+        //    byteNumbers[i] = byteCharacters.charCodeAt(i);
+        //}
+        //const byteArray = new Uint8Array(byteNumbers);
+        //const blob = new Blob([byteArray], { type: contentType });
+
+        startRecording();
+
+        const socket = new WebSocket("ws://" + window.location.hostname + ":9000");
+
+        socket.onopen = function (e) {
+            alert("[open] Connection established");
+
+            //Handshake
+            handshake(socket, password);
+        };
+
+        socket.onmessage = function (event) {
+            alert(`[message] Data received from server: ${event.data}`);
+        };
+
+        socket.onclose = function (event) {
+            if (event.wasClean) {
+                alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+            } else {
+                alert('[close] Connection died');
+            }
+        };
+
+        socket.onerror = function (error) {
+            alert(`[error] ${error.message}`);
+        };
+
     };
 
     $.connection.hub.start().done(function () {
 
-        christinaHub.server.createRoom("ITP211");
+        christinaHub.server.createRoom(2);
     });
-    startRecording();
+    
 });
 
 let recording = false;
@@ -54,3 +82,8 @@ async function processAudio(recorder) {
     let blob = await recorder.getBlob();
     recorder.startRecording();
 }
+
+function handshake(socket, password) {
+    socket.send(password);
+}
+
