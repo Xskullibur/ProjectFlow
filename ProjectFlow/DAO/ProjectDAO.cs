@@ -22,17 +22,13 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public void UpdateProject(string ProjectID, string Name, string Desc, string ChangeID = "")
+        public void UpdateProject(string ProjectID, string Name, string Desc)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var project = dbContext.Projects.Single(x => x.projectID.Equals(ProjectID));
                 if(project != null)
-                {
-                    if (!ChangeID.Equals(""))
-                    {
-                        project.projectID = ChangeID;
-                    }
+                {                   
                     project.projectName = Name;
                     project.projectDescription = Desc;
                     dbContext.SaveChanges();

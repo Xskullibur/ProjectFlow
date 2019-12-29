@@ -122,15 +122,19 @@
     <div class="container">
         <div>             
             <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
+            <asp:Label ID="Label6" runat="server"></asp:Label>
         </div>
         <br>
         <div>
-            <asp:GridView ID="projectGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1325px">
+            <asp:GridView ID="projectGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1325px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating">
                 <Columns>
                     <asp:BoundField DataField="projectID" HeaderText="Project ID" />
                     <asp:BoundField DataField="projectName" HeaderText="Name" />
                     <asp:BoundField DataField="projectDescription" HeaderText="Description" />
                     <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
+                        <ControlStyle CssClass="btn btn-primary"/>
+                    </asp:CommandField>
+                    <asp:CommandField ButtonType="Button" ShowEditButton="True">
                         <ControlStyle CssClass="btn btn-primary"/>
                     </asp:CommandField>
                 </Columns>

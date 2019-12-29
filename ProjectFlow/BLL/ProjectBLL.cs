@@ -77,14 +77,12 @@ namespace ProjectFlow.BLL
             return errorList;
         }
 
-        public List<string> ValidateUpdate(string ProjectID, string Name, string Desc, int TutorID, string ChangeID)
+        public List<string> ValidateUpdate(string ProjectID, string Name, string Desc, int TutorID)
         {
             ProjectID = RemoveWhiteSpace(ProjectID);
             Name = Name.Trim();
             Desc = Desc.Trim();
-            ChangeID = RemoveWhiteSpace(ChangeID);
-
-
+            
             List<string> errorList = new List<string> { };
 
             if (ProjectID.Equals(""))
@@ -121,15 +119,10 @@ namespace ProjectFlow.BLL
             {
                 errorList.Add("Project is does not belong to you");
             }
-
-            if (projectDAO.CheckUniqueProjectID(ProjectID) == false)
-            {
-                errorList.Add("Project ID is taken");
-            }
-
+           
             if (errorList.Count == 0)
             {
-                projectDAO.UpdateProject(ProjectID, Name, Desc, ChangeID);
+                projectDAO.UpdateProject(ProjectID, Name, Desc);
             }
 
             return errorList;
