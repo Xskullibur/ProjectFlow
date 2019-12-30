@@ -108,9 +108,6 @@
     <Content Include="Content\ProjectFlow\content-nav.css" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
-    <Content Include="Issues\iDetailedView.aspx" />
-    <Content Include="Issues\IssueRes.aspx" />
-    <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -122,6 +119,8 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
+    <Content Include="ProjectMainPage.aspx" />
+    <Content Include="ProjectMenu.aspx" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -264,10 +263,6 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="obj\Release\ProjectFlow.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Release\ProjectFlow.csprojAssemblyReference.cache" />
-    <Content Include="Issues\IssueNested.master" />
-    <Content Include="Logon.Master" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
@@ -275,7 +270,6 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Issues\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -297,28 +291,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="BLL\CommentForIssueBLL.cs" />
-    <Compile Include="BLL\IssueBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
     <Compile Include="BLL\StatusBLL.cs" />
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
-    <Compile Include="BLL\PollingBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAO\AllocationDAO.cs" />
-    <Compile Include="DAO\CommentForIssueDAO.cs" />
-    <Compile Include="DAO\IssueDAO.cs" />
     <Compile Include="DAO\MilestoneDAO.cs" />
     <Compile Include="DAO\ProjectDAO.cs" />
     <Compile Include="DAO\StatusDAO.cs" />
     <Compile Include="DAO\StudentDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
-    <Compile Include="DAO\PollingDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -332,34 +319,6 @@
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Issues\iDetailedView.aspx.cs">
-      <DependentUpon>iDetailedView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\iDetailedView.aspx.designer.cs">
-      <DependentUpon>iDetailedView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueNested.master.cs">
-      <DependentUpon>IssueNested.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\IssueNested.master.designer.cs">
-      <DependentUpon>IssueNested.master</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueRes.aspx.cs">
-      <DependentUpon>IssueRes.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\IssueRes.aspx.designer.cs">
-      <DependentUpon>IssueRes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueView.aspx.cs">
-      <DependentUpon>IssueView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\IssueView.aspx.designer.cs">
-      <DependentUpon>IssueView.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -368,13 +327,6 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login\ProjectFlowIdentity.cs" />
-    <Compile Include="Logon.Master.cs">
-      <DependentUpon>Logon.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Logon.Master.designer.cs">
-      <DependentUpon>Logon.Master</DependentUpon>
-    </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -406,14 +358,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ProjectMainPage.aspx.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectMainPage.aspx.designer.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectMenu.aspx.cs">
+      <DependentUpon>ProjectMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectMenu.aspx.designer.cs">
+      <DependentUpon>ProjectMenu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ProjectTeam.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Room.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ServicesWithContent.Master.cs">
@@ -454,13 +417,6 @@
     <Compile Include="Tasks\DroppedTaskView.aspx.designer.cs">
       <DependentUpon>DroppedTaskView.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
-      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
-      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Tasks\TaskNested.master.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -469,16 +425,22 @@
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskVerification.cs" />
+    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TeamMember.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utils\AlertPageExtension.cs" />
     <Compile Include="Utils\Bootstrap.cs" />
-    <Compile Include="VoiceRecording.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    <Compile Include="Utils\AlertPageExtension.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
