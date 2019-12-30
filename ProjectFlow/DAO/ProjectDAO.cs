@@ -45,6 +45,28 @@ namespace ProjectFlow.DAO
             }
         }
 
+        public void InsertTeam(string TeamName, string Desc, string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var projectTeam = new ProjectTeam() {
+                    teamName = TeamName,
+                    teamDescription = Desc,
+                    projectID = ProjectID
+                };
+                dbContext.ProjectTeams.Add(projectTeam);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public List<ProjectTeam> GetTeam(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Where(x => x.Equals(ProjectID)).ToList();
+            }
+        }
+
         public bool CheckUniqueProjectID(string ProjectID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
