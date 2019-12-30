@@ -1,4 +1,5 @@
-﻿using ProjectFlow.Scheduler;
+﻿using ProjectFlow.BLL;
+using ProjectFlow.Scheduler;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,25 @@ namespace ProjectFlow.Utils
 {
     public class NotificationHelper
     {
+
+        public static void Send_Notification_Reminder_ONEDAY(int taskID)
+        {
+            TaskBLL taskBLL = new TaskBLL();
+            StudentBLL studentBLL = new StudentBLL();
+
+            // Get Task
+            Task task = taskBLL.GetTaskById(taskID);
+
+            // Get All Allocated People
+            List<Student> allocatedStudents = studentBLL.GetAllocationsByTaskID(taskID);
+
+            // Get Team Leader
+            Student leader = studentBLL.GetLeaderByTaskID(taskID);
+
+            
+
+        }
+
 
         /// <summary>
         /// Add Email Task Reminder
