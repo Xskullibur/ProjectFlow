@@ -360,13 +360,7 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login\IAuthCallback.cs" />
-    <Compile Include="Login\LoginManagers\BasicLoginManager.cs" />
-    <Compile Include="Login\LoginManagers\GoogleLoginManager.cs" />
-    <Compile Include="Login\ILoginManager.cs" />
-    <Compile Include="Login\LoginService.cs" />
-    <Compile Include="Login\RedirectAuthCallback.cs" />
-    <Compile Include="Login\SessionAuthCallback.cs" />
+    <Compile Include="Login\ProjectFlowIdentity.cs" />
     <Compile Include="Logon.Master.cs">
       <DependentUpon>Logon.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
