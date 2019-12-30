@@ -70,6 +70,16 @@
           <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomID" />
+          </Key>
+          <Property Name="roomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="createdBy" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="accessToken" Type="varbinary" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="ID" />
@@ -129,6 +139,13 @@
           <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VoiceRecording">
+          <Key>
+            <PropertyRef Name="recordingName" />
+          </Key>
+          <Property Name="studentID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="recordingName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK_CommentForIssue_Issue">
           <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
@@ -250,6 +267,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Room_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Milestone">
           <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -346,6 +387,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="VoiceRecording_FK">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="VoiceRecording" Type="Self.VoiceRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="VoiceRecording">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProjectFlowModelStoreContainer">
           <EntitySet Name="CommentForIssue" EntityType="Self.CommentForIssue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
@@ -354,12 +407,14 @@
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTeam" EntityType="Self.ProjectTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskAllocation" EntityType="Self.TaskAllocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamMember" EntityType="Self.TeamMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoiceRecording" EntityType="Self.VoiceRecording" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issue" />
             <End Role="CommentForIssue" EntitySet="CommentForIssue" />
@@ -400,6 +455,14 @@
             <End Role="Project" EntitySet="Project" />
             <End Role="ProjectTeam" EntitySet="ProjectTeam" />
           </AssociationSet>
+          <AssociationSet Name="FK_Room_ProjectTeam" Association="Self.FK_Room_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_Student" Association="Self.FK_Room_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Milestone" Association="Self.FK_Task_Milestone">
             <End Role="Milestone" EntitySet="Milestone" />
             <End Role="Task" EntitySet="Task" />
@@ -431,6 +494,10 @@
           <AssociationSet Name="FK_TeamMember_Student" Association="Self.FK_TeamMember_Student">
             <End Role="Student" EntitySet="Student" />
             <End Role="TeamMember" EntitySet="TeamMember" />
+          </AssociationSet>
+          <AssociationSet Name="VoiceRecording_FK" Association="Self.VoiceRecording_FK">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="VoiceRecording" EntitySet="VoiceRecording" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -511,6 +578,7 @@
           <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_ProjectTeam" FromRole="ProjectTeam" ToRole="Milestone" />
           <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTeam_Project" FromRole="ProjectTeam" ToRole="Project" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
         </EntityType>
@@ -521,6 +589,18 @@
           <Property Name="roleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="role1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Role" FromRole="Role" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomID" />
+          </Key>
+          <Property Name="roomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="createdBy" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="accessToken" Type="Binary" MaxLength="32" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Room_ProjectTeam" FromRole="Room" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Room_Student" FromRole="Room" ToRole="Student" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -540,7 +620,9 @@
           <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_Student" FromRole="Student" ToRole="Room" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Student" FromRole="Student" ToRole="TeamMember" />
+          <NavigationProperty Name="VoiceRecordings" Relationship="Self.VoiceRecording_FK" FromRole="Student" ToRole="VoiceRecording" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -598,6 +680,14 @@
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Tutor" FromRole="Tutor" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="VoiceRecording">
+          <Key>
+            <PropertyRef Name="recordingName" />
+          </Key>
+          <Property Name="studentID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="recordingName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="Self.VoiceRecording_FK" FromRole="VoiceRecording" ToRole="Student" />
         </EntityType>
         <Association Name="FK_CommentForIssue_Issue">
           <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
@@ -731,6 +821,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Room_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_ProjectTeam">
           <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -767,6 +869,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Room_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -787,6 +901,18 @@
               <PropertyRef Name="studentID" />
             </Principal>
             <Dependent Role="TeamMember">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VoiceRecording_FK">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="VoiceRecording" Type="Self.VoiceRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="VoiceRecording">
               <PropertyRef Name="studentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -823,12 +949,14 @@
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectTeams" EntityType="Self.ProjectTeam" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
           <EntitySet Name="TaskAllocations" EntityType="Self.TaskAllocation" />
           <EntitySet Name="TeamMembers" EntityType="Self.TeamMember" />
           <EntitySet Name="Tutors" EntityType="Self.Tutor" />
+          <EntitySet Name="VoiceRecordings" EntityType="Self.VoiceRecording" />
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issues" />
             <End Role="CommentForIssue" EntitySet="CommentForIssues" />
@@ -873,6 +1001,10 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
           </AssociationSet>
+          <AssociationSet Name="FK_Room_ProjectTeam" Association="Self.FK_Room_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_ProjectTeam" Association="Self.FK_Task_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="Task" EntitySet="Tasks" />
@@ -885,6 +1017,10 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Room_Student" Association="Self.FK_Room_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Status" Association="Self.FK_Task_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="Task" EntitySet="Tasks" />
@@ -892,6 +1028,10 @@
           <AssociationSet Name="FK_TeamMember_Student" Association="Self.FK_TeamMember_Student">
             <End Role="Student" EntitySet="Students" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="VoiceRecording_FK" Association="Self.VoiceRecording_FK">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="VoiceRecording" EntitySet="VoiceRecordings" />
           </AssociationSet>
           <AssociationSet Name="FK_TaskAllocation_Task" Association="Self.FK_TaskAllocation_Task">
             <End Role="Task" EntitySet="Tasks" />
@@ -980,6 +1120,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="roomID" ColumnName="roomID" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="accessToken" ColumnName="accessToken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="ProjectFlowModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -1043,6 +1194,14 @@
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoiceRecordings">
+            <EntityTypeMapping TypeName="ProjectFlowModel.VoiceRecording">
+              <MappingFragment StoreEntitySet="VoiceRecording">
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+                <ScalarProperty Name="recordingName" ColumnName="recordingName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
