@@ -21,7 +21,7 @@
                       <asp:HyperLink runat="server">Create Account</asp:HyperLink>
                   </div>
               </div>
-              <asp:Button CssClass="btn btn-primary" ID="submitBtn" runat="server" Text="Submit" />
+              <asp:Button CssClass="btn btn-primary" ID="submitBtn" runat="server" Text="Submit" OnClick="LoginValidateAction" />
         </div>
     </div>
 

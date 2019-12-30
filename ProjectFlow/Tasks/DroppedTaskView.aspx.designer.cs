@@ -7,38 +7,39 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow
-{
-
-
-    public partial class Default
-    {
-
+namespace ProjectFlow.Tasks {
+    
+    
+    public partial class DroppedTaskView {
+        
         /// <summary>
-        /// form1 control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
         /// <summary>
-        /// Label3 control.
+        /// taskGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-
+        protected global::System.Web.UI.WebControls.GridView taskGrid;
+        
         /// <summary>
-        /// LoginForm control.
+        /// Master property.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated property.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Login LoginForm;
+        public new ProjectFlow.Tasks.TaskNested Master {
+            get {
+                return ((ProjectFlow.Tasks.TaskNested)(base.Master));
+            }
+        }
     }
 }

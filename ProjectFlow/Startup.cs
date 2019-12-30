@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Owin;
+using System;
 using System.Threading.Tasks;
-using Microsoft.Owin;
-using Owin;
 
-[assembly: OwinStartup(typeof(ProjectFlow.Startup))]
 
 namespace ProjectFlow
 {
