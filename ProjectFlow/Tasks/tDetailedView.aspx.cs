@@ -273,7 +273,7 @@ namespace ProjectFlow.Tasks
         {
             GridViewRow row = taskGrid.SelectedRow;
             Session["SSTaskID"] = row.Cells[0].Text;
-            Response.Redirect("../Issues/IssueView.aspx");
+            Response.Redirect("../Issues/iDetailedView.aspx");
         }
     }
 }
