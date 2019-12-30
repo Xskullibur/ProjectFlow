@@ -31,10 +31,10 @@ namespace ProjectFlow.Services.Christina
             rng.GetBytes(password);
 
             //Hash the password
-            byte[] salt = File.ReadAllBytes(HostingEnvironment.MapPath("~/Services/Christina/salt.bin"));
+            byte[] salt = File.ReadAllBytes(HostingEnvironment.MapPath("~/Services/Christina/_Keys/salt.bin"));
             byte[] passwordWithSalt = ExclusiveOR(password, salt);
 
-            byte[] key = File.ReadAllBytes(HostingEnvironment.MapPath("~/Services/Christina/key.bin"));
+            byte[] key = File.ReadAllBytes(HostingEnvironment.MapPath("~/Services/Christina/_Keys/key.bin"));
 
             using (HMACSHA256 hmac = new HMACSHA256(key))
             {
@@ -59,7 +59,7 @@ namespace ProjectFlow.Services.Christina
 
                 //Encrypt the hashed password with private key
 
-                var publicKey = readPublicKey(HostingEnvironment.MapPath("~/Services/Christina/rsa.public"));
+                var publicKey = readPublicKey(HostingEnvironment.MapPath("~/Services/Christina/_Keys/rsa.public"));
                 var e = new Pkcs1Encoding(new RsaEngine());
                 e.Init(true, publicKey);
 

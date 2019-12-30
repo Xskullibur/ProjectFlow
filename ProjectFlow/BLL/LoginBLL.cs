@@ -16,22 +16,58 @@ namespace ProjectFlow.BLL
         /// </summary>
         /// <param name="email">email of the login credential</param>
         /// <param name="password">hashed password of the user</param>
-        /// <returns>The Student object which belongs to the login credential</returns>
-        public Student LoginValidate(string email, string password)
+        /// <returns>A instance of AuthenticatedUser containing Student or Tutor object belonging to the login credentials</returns>
+        public AuthenticatedUser LoginValidate(string email, string password)
         {
-            StudentDAO dao = new StudentDAO();
+            AuthenticatedUser authenticatedUser = new AuthenticatedUser();
 
-            Student student = dao.FindStudentByEmail(email);
+            StudentDAO studentDAO = new StudentDAO();
+            Student student = studentDAO.FindStudentByEmail(email);
 
-            //Check password is the same
-            if (student != null && student.password.Equals(password)){
-                return student;
-            }else
+            //First check if the email belongs to a student
+            if (student != null)
             {
-                return null;
+                //Check password is the same
+                if (student != null && student.password.Equals(password))
+                {
+                    authenticatedUser.Student = student;
+                }
             }
+            else
+            {
+                //If not we find the tutor with the email instead
+
+                TutorDAO tutorDAO = new TutorDAO();
+                Tutor tutor = tutorDAO.FindTutorByEmail(email);
+
+                //Check if the email belongs to a tutor
+                if(tutor != null)
+                {
+                    //Check password is the same
+                    if (tutor != null && tutor.password.Equals(password))
+                    {
+                        authenticatedUser.Tutor = tutor;
+                    }
+                }
+
+            }
+
+            return authenticatedUser;
 
         }
 
     }
+
+    public struct AuthenticatedUser
+    {
+        public Student Student;
+        public Tutor Tutor;
+
+        public bool IsTutor { get => Tutor != null; }
+        public bool IsStudent { get => Student != null; }
+
+        public bool Authenticated { get => IsTutor || IsStudent; }
+
+    }
+
 }

@@ -16,10 +16,21 @@ namespace ProjectFlow
             var user = HttpContext.Current.User;
             if (user.Identity.IsAuthenticated)
             {
-                this.LoginUsernameLbl.Text = "Welcome, " + (user.Identity as ProjectFlowIdentity).Student.username;
-                this.LoginUsernameProfileLbl.Text = (user.Identity as ProjectFlowIdentity).Student.username;
-                this.LoginEmailProfileLbl.Text = (user.Identity as ProjectFlowIdentity).Student.email;
+                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                if (projectFlowIdentity.IsStudent)
+                {
+                    this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Student.username;
+                    this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Student.username;
+                    this.LoginEmailProfileLbl.Text = projectFlowIdentity.Student.email;
+                }
+                else if (projectFlowIdentity.IsTutor)
+                {
+                    this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Tutor.username;
+                    this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Tutor.username;
+                    this.LoginEmailProfileLbl.Text = projectFlowIdentity.Tutor.email;
+                }
             }
+            
         }
 
         protected void LogoutEvent(object sender, EventArgs e)

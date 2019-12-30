@@ -83,15 +83,36 @@ namespace ProjectFlow
                         FormsAuthenticationTicket ticket = id.Ticket;
                         string userData = ticket.UserData;
                         string[] roles = userData.Split(',');
+                        string role = roles[0];
 
                         string email = id.Name;
-                        StudentDAO dao = new StudentDAO();
-                        Student student = dao.FindStudentByEmail(email);
 
-                        var projectFlowIdentity = new ProjectFlowIdentity(student, id);
-                        var principal = new GenericPrincipal(projectFlowIdentity, roles);
+                        if (role.Equals("Student"))
+                        {
+                            StudentDAO dao = new StudentDAO();
+                            Student student = dao.FindStudentByEmail(email);
 
-                        HttpContext.Current.User = principal;
+                            var projectFlowIdentity = new ProjectFlowIdentity(student, id);
+                            var principal = new GenericPrincipal(projectFlowIdentity, roles);
+
+                            HttpContext.Current.User = principal;
+                        }
+                        else if(role.Equals("Tutor"))
+                        {
+                            TutorDAO dao = new TutorDAO();
+                            Tutor tutor = dao.FindTutorByEmail(email);
+
+                            var projectFlowIdentity = new ProjectFlowIdentity(tutor, id);
+                            var principal = new GenericPrincipal(projectFlowIdentity, roles);
+
+                            HttpContext.Current.User = principal;
+                        }
+                        else
+                        {
+                            throw new Exception("No such role: " + role);
+                        }
+
+                       
                     }
                 }
             }

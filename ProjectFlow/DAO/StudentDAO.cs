@@ -85,10 +85,10 @@ namespace ProjectFlow.DAO
         }
 
         /// <summary>
-        /// Find the Student using student email
+        /// Find the Student using email
         /// </summary>
-        /// <param name="email">student email of the Student</param>
-        /// <returns>Instance of the found Student object</returns>
+        /// <param name="email">email of the Student</param>
+        /// <returns>Instance of the found Student object, null if email does not exist in the Student table</returns>
         public Student FindStudentByEmail(string email)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

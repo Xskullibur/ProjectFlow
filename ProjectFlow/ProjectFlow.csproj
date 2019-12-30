@@ -162,7 +162,8 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\ProjectFlow\content-nav.css" />
+    <Content Include="Content\ProjectFlow\CSS\content-nav.css" />
+    <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
@@ -346,7 +347,6 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Christina\Christina.aspx" />
-    <Content Include="Services\Tasks.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Web.config" />
@@ -370,6 +370,7 @@
     <Compile Include="DAO\StudentDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
+    <Compile Include="DAO\TutorDAO.cs" />
     <Compile Include="DashBoard\ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -461,17 +462,6 @@
       <DependentUpon>Christina.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\Christina\ChristinaHub.cs" />
-    <Compile Include="Services\Mark.cs" />
-    <Compile Include="Services\ServicePage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Services\Tasks.aspx.cs">
-      <DependentUpon>Tasks.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Services\Tasks.aspx.designer.cs">
-      <DependentUpon>Tasks.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -517,6 +507,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
+    <Compile Include="Utils\LoginUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -534,10 +525,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Tasks\TaskNested.master" />
     <Content Include="Tasks\Web.config" />
-    <Content Include="Services\Christina\rsa.private" />
-    <Content Include="Services\Christina\rsa.public" />
-    <Content Include="Services\Christina\key.bin" />
-    <None Include="Services\Christina\salt.bin" />
+    <Content Include="Services\Christina\_Keys\rsa.private" />
+    <Content Include="Services\Christina\_Keys\rsa.public" />
+    <Content Include="Services\Christina\_Keys\key.bin" />
+    <None Include="Services\Christina\_Keys\salt.bin" />
+    <Content Include="Services\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
