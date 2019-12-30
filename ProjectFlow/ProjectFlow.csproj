@@ -290,6 +290,8 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Tasks.aspx" />
+    <Content Include="Tasks\DroppedTaskView.aspx" />
+    <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -444,6 +446,20 @@
     <Compile Include="TaskAllocation.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\DroppedTaskView.aspx.cs">
+      <DependentUpon>DroppedTaskView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\DroppedTaskView.aspx.designer.cs">
+      <DependentUpon>DroppedTaskView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
+      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tasks\TaskNested.master.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -451,6 +467,7 @@
     <Compile Include="Tasks\TaskNested.master.designer.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\TaskVerification.cs" />
     <Compile Include="TeamMember.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -478,6 +495,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Tasks\TaskNested.master" />
+    <Content Include="Tasks\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
