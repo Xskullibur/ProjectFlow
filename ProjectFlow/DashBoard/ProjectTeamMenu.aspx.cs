@@ -30,9 +30,27 @@ namespace ProjectFlow.DashBoard
             ProjectBLL bll = new ProjectBLL();
             string teamName = NameTB.Text;
             string desc = DescTB.Text;
+            List<string> errorList = new List<string> { };
 
-            bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
-            ShowTeam(Session["PassProjectID"].ToString());
+
+            errorList = bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
+            if (errorList.Count > 0)
+            {
+                string total = "";
+                foreach (string errorItem in errorList)
+                {
+                    total += errorItem;
+                }
+                errorLabel.Text = total;
+                NameTB.Text = teamName;
+                DescTB.Text = desc;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateTeam').modal('show');", true);
+            }
+            else
+            {               
+                Response.Redirect("ProjectTeamMenu.aspx");
+            }
+            
         }
 
         public void ShowTeam(string ProjectID)
@@ -46,5 +64,7 @@ namespace ProjectFlow.DashBoard
                 TeamGV.DataBind();
             }           
         }
+
+        
     }
 }

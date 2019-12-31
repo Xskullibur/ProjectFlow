@@ -26,10 +26,32 @@ namespace ProjectFlow.BLL
             return projectDAO.GetTeam(ProjectID);
         }
 
-        public void InsertProjectTeam(string TeamName, string Desc, string ProjectID)
+        public List<string> InsertProjectTeam(string TeamName, string Desc, string ProjectID)
         {
             ProjectDAO projectDAO = new ProjectDAO();
-            projectDAO.InsertTeam(TeamName, Desc, ProjectID);
+            List<string> errorList = new List<string> { };
+
+            if (TeamName.Equals(""))
+            {
+                errorList.Add("Name is empty<br>");
+            }
+
+            if(TeamName.Length > 255)
+            {
+                errorList.Add("Name cannot be more than 255 empty<br>");
+            }
+
+            if (Desc.Length > 255)
+            {
+                errorList.Add("Description cannot be more than 255 empty<br>");
+            }
+
+            if (errorList.Count == 0)
+            {
+                projectDAO.InsertTeam(TeamName, Desc, ProjectID);
+            }
+
+            return errorList;          
         }
 
         public List<string> ValidateProject(string ProjectID, string Name, string Desc, int TutorID)
