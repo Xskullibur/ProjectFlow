@@ -63,7 +63,7 @@ namespace ProjectFlow.DAO
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.ProjectTeams.Where(x => x.Equals(ProjectID)).ToList();
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID)).ToList();
             }
         }
 

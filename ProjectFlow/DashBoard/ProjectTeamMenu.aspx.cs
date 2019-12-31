@@ -12,7 +12,7 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //ShowTeam();
+            ShowTeam(Session["PassProjectID"].ToString());
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)

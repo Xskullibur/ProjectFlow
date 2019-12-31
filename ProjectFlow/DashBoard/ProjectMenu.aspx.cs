@@ -62,7 +62,7 @@ namespace ProjectFlow.DashBoard
         {
             GridViewRow row = projectGV.SelectedRow;
             Session["PassProjectID"] = row.Cells[0].Text;
-            Response.Redirect("ProjectMainPage.aspx");
+            Response.Redirect("ProjectTeamMenu.aspx");
         }
 
         public void ClearField()
