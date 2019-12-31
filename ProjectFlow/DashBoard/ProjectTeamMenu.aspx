@@ -85,7 +85,9 @@
                     <asp:BoundField DataField="teamID" HeaderText="ID" />
                     <asp:BoundField DataField="teamName" HeaderText="Team Name" />
                     <asp:BoundField DataField="teamDescription" HeaderText="Description" />
-                    <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True" />
+                    <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
+                        <ControlStyle CssClass="btn btn-primary"/>
+                    </asp:CommandField>
                 </Columns>
             </asp:GridView>
             

@@ -12,12 +12,27 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowTeam(Session["PassProjectID"].ToString());
+            if (!IsPostBack)
+            {
+                if (Session["PassProjectID"] != null)
+                {
+                    ShowTeam(Session["PassProjectID"].ToString());
+                }
+                else
+                {
+                    Response.Redirect("ProjectMenu.aspx");
+                }
+            }              
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
+            ProjectBLL bll = new ProjectBLL();
+            string teamName = NameTB.Text;
+            string desc = DescTB.Text;
 
+            bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
+            ShowTeam(Session["PassProjectID"].ToString());
         }
 
         public void ShowTeam(string ProjectID)

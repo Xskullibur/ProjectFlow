@@ -8,9 +8,7 @@ using ProjectFlow.DAO;
 namespace ProjectFlow.BLL
 {
     public class ProjectBLL
-    {
-        ProjectDAO projectDAO = new ProjectDAO();
-
+    {        
         public string RemoveWhiteSpace(string input)
         {
             return Regex.Replace(input, @"\s+", "");
@@ -18,16 +16,25 @@ namespace ProjectFlow.BLL
           
         public List<Project> GetProjectTutor(int tutorID)
         {
+            ProjectDAO projectDAO = new ProjectDAO();
             return projectDAO.GetProjectTutor(tutorID);
         }
 
         public List<ProjectTeam> GetProjectTeam(string ProjectID)
         {
+            ProjectDAO projectDAO = new ProjectDAO();
             return projectDAO.GetTeam(ProjectID);
+        }
+
+        public void InsertProjectTeam(string TeamName, string Desc, string ProjectID)
+        {
+            ProjectDAO projectDAO = new ProjectDAO();
+            projectDAO.InsertTeam(TeamName, Desc, ProjectID);
         }
 
         public List<string> ValidateProject(string ProjectID, string Name, string Desc, int TutorID)
         {
+            ProjectDAO projectDAO = new ProjectDAO();
             ProjectID = RemoveWhiteSpace(ProjectID);
             Name = Name.Trim();
             Desc = Desc.Trim();
@@ -84,6 +91,7 @@ namespace ProjectFlow.BLL
 
         public List<string> ValidateUpdate(string ProjectID, string Name, string Desc, int TutorID)
         {
+            ProjectDAO projectDAO = new ProjectDAO();
             ProjectID = RemoveWhiteSpace(ProjectID);
             Name = Name.Trim();
             Desc = Desc.Trim();

@@ -46,6 +46,7 @@ namespace ProjectFlow.DashBoard
             {
                 ClearField();
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "pop", "$('#CreateProject').modal('hide');", true);
+                ShowProject(1);
             }
         }
 
