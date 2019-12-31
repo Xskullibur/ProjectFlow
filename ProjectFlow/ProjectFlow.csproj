@@ -107,6 +107,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ProjectFlow\content-nav.css" />
     <Content Include="DashBoard\ProjectMenu.aspx" />
+    <Content Include="DashBoard\ProjectTeamMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -314,6 +315,13 @@
     <Compile Include="DashBoard\ProjectMenu.aspx.designer.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DashBoard\ProjectTeamMenu.aspx.cs">
+      <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\ProjectTeamMenu.aspx.designer.cs">
+      <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -439,7 +447,9 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utils\AlertPageExtension.cs" />
+    <Compile Include="Utils\AlertPageExtension.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
   </ItemGroup>
   <ItemGroup>

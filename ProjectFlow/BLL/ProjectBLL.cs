@@ -21,6 +21,11 @@ namespace ProjectFlow.BLL
             return projectDAO.GetProjectTutor(tutorID);
         }
 
+        public List<ProjectTeam> GetProjectTeam(string ProjectID)
+        {
+            return projectDAO.GetTeam(ProjectID);
+        }
+
         public List<string> ValidateProject(string ProjectID, string Name, string Desc, int TutorID)
         {
             ProjectID = RemoveWhiteSpace(ProjectID);
