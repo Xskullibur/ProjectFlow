@@ -73,7 +73,8 @@ namespace ProjectFlow.DashBoard
 
         protected void TeamGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-
+            TeamGV.EditIndex = -1;
+            ShowTeam(Session["PassProjectID"].ToString());
         }
 
         protected void TeamGV_SelectedIndexChanged(object sender, EventArgs e)

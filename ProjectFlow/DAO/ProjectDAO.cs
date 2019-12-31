@@ -59,6 +59,20 @@ namespace ProjectFlow.DAO
             }
         }
 
+        public void UpdateTeam(int TeamID, string TeamName, string Desc)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var projectTeam = dbContext.ProjectTeams.Single(x => x.teamID == TeamID);
+                if(projectTeam != null)
+                {
+                    projectTeam.teamName = TeamName;
+                    projectTeam.teamDescription = Desc;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
         public List<ProjectTeam> GetTeam(string ProjectID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
