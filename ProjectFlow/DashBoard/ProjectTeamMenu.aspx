@@ -6,7 +6,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <asp:Label ID="Label4" runat="server" Text="Create Project"></asp:Label>
+                    <asp:Label ID="Label4" runat="server" Text="Create Team"></asp:Label>
                 </div>
                 <div class="modal-body">                    
                     <table class="auto-style1">
@@ -75,7 +75,7 @@
     </div>
     <div class="container">
         <div>                        
-            <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create" />           
+            <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />           
         </div>
         <br>
         <div>
