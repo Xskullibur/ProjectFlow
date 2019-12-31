@@ -1,0 +1,30 @@
+﻿a.nostyle:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+.content-nav {
+    height: 4rem;
+}
+
+.content-sidenav{
+    height: calc(100vh - 4rem);
+}
+
+/* Profile */
+
+.content-profile {
+    width: 350px;
+    margin: 48px 0;
+}
+
+.content-profile-image {
+    width: 110px;
+}
