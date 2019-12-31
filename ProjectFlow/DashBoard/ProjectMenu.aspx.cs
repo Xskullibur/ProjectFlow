@@ -15,6 +15,13 @@ namespace ProjectFlow.DashBoard
             if (!IsPostBack)
             {
                 ShowProject(1);
+                if(ViewState["success"] != null)
+                {
+                    if (ViewState["success"].Equals("true"))
+                    {
+                        ClearField();
+                    }
+                }               
             }                   
         }
 
@@ -40,12 +47,14 @@ namespace ProjectFlow.DashBoard
                 ProjectIdTB.Text = projectID;
                 NameTB.Text = projectName;
                 DescTB.Text = projectDesc;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "pop", "$('#CreateProject').modal('show');", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateProject').modal('show');", true);
+                ViewState["success"] = "false";
             }
             else
             {
+                ViewState["success"] = "true";
                 ClearField();
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "pop", "$('#CreateProject').modal('hide');", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateProject').modal('hide');", true);
                 ShowProject(1);
             }
         }
