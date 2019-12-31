@@ -96,5 +96,35 @@ namespace ProjectFlow.DAO
                 }
             }
         }
+
+        public bool CheckProjectExist(int TutorID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if (dbContext.Projects.Any(x => x.tutorID == TutorID))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool CheckProjectTeamExist(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if (dbContext.ProjectTeams.Any(x => x.projectID == ProjectID))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

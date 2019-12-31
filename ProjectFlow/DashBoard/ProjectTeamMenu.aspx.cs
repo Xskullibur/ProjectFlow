@@ -23,10 +23,13 @@ namespace ProjectFlow.DashBoard
         public void ShowTeam(string ProjectID)
         {
             ProjectBLL projectBLL = new ProjectBLL();
-            List<ProjectTeam> teamList = new List<ProjectTeam> { };
-            teamList = projectBLL.GetProjectTeam(ProjectID);
-            TeamGV.DataSource = teamList;
-            TeamGV.DataBind();
+            if (projectBLL.CheckProjectTeamExist(ProjectID))
+            {
+                List<ProjectTeam> teamList = new List<ProjectTeam> { };
+                teamList = projectBLL.GetProjectTeam(ProjectID);
+                TeamGV.DataSource = teamList;
+                TeamGV.DataBind();
+            }           
         }
     }
 }

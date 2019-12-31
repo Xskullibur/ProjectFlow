@@ -50,12 +50,15 @@ namespace ProjectFlow.DashBoard
         }
 
         public void ShowProject(int tutorID)
-        {
+        {           
             ProjectBLL projectBLL = new ProjectBLL();
-            List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.GetProjectTutor(tutorID);
-            projectGV.DataSource = projectList;
-            projectGV.DataBind();
+            if (projectBLL.CheckProjectExist(tutorID))
+            {
+                List<Project> projectList = new List<Project> { };
+                projectList = projectBLL.GetProjectTutor(tutorID);
+                projectGV.DataSource = projectList;
+                projectGV.DataBind();
+            }           
         }
 
         protected void projectGV_SelectedIndexChanged(object sender, EventArgs e)

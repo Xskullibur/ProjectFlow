@@ -132,5 +132,17 @@ namespace ProjectFlow.BLL
 
             return errorList;
         }
-    }
+
+        public bool CheckProjectExist(int TutorID)
+        {
+            ProjectDAO dao = new ProjectDAO();
+            return dao.CheckProjectExist(TutorID);
+        }
+
+        public bool CheckProjectTeamExist(string ProjectID)
+        {
+            ProjectDAO dao = new ProjectDAO();
+            return dao.CheckProjectTeamExist(ProjectID);
+        }
+    }  
 }
