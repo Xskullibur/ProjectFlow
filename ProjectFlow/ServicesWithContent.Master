@@ -58,7 +58,7 @@
                 <tr>
                     <td class="auto-style5" rowspan="3">                        
                         <ul class="mdc-list mdc-list--two-line border-right h-100">
-                          <a class="nostyle" href="Login.aspx">
+                          <a class="nostyle" href="../Login.aspx">
                             <li class="mdc-list-item">
                                 <span class="mdc-list-item__text">
                               <span class="mdc-list-item__primary-text">Home</span>
@@ -67,24 +67,28 @@
                             
                           </li>
                             </a>
+                          <a class="nostyle" href="../Tasks/OngoingTaskView.aspx">
                           <li class="mdc-list-item">
                             <span class="mdc-list-item__text">
                               <span class="mdc-list-item__primary-text">Task Management</span>
                                 <span class="mdc-list-item__secondary-text"></span>
                             </span>
                           </li>
+                          </a>
                           <li class="mdc-list-item">
                             <span class="mdc-list-item__text">
                               <span class="mdc-list-item__primary-text">Whiteboard</span>
                                 <span class="mdc-list-item__secondary-text"></span>
                             </span>
                           </li>
+                          <a class="nostyle" href="../Issues/iDetailedView.aspx">
                           <li class="mdc-list-item">
                             <span class="mdc-list-item__text">
                               <span class="mdc-list-item__primary-text">Issue Tracker</span>
                                 <span class="mdc-list-item__secondary-text"></span>
                             </span>
                           </li>
+                          </a>
                           <li class="mdc-list-item">
                             <span class="mdc-list-item__text">
                               <span class="mdc-list-item__primary-text">Meeting Minutes Logger</span>

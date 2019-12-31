@@ -22,6 +22,15 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
+        /// taskViewDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList taskViewDDL;
+        
+        /// <summary>
         /// addTaskBtn control.
         /// </summary>
         /// <remarks>
@@ -110,15 +119,6 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button tSaveBtn;
-        
-        /// <summary>
-        /// tSaveAnotherBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button tSaveAnotherBtn;
         
         /// <summary>
         /// MainContent control.

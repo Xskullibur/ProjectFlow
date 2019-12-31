@@ -109,6 +109,7 @@
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Issues\iDetailedView.aspx" />
+    <Content Include="Issues\iDroppedView.aspx" />
     <Content Include="Issues\IssueRes.aspx" />
     <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
@@ -338,6 +339,13 @@
     </Compile>
     <Compile Include="Issues\iDetailedView.aspx.designer.cs">
       <DependentUpon>iDetailedView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\iDroppedView.aspx.cs">
+      <DependentUpon>iDroppedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\iDroppedView.aspx.designer.cs">
+      <DependentUpon>iDroppedView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Issues\IssueNested.master.cs">
       <DependentUpon>IssueNested.master</DependentUpon>

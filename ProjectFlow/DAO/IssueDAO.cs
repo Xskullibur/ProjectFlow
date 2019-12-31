@@ -39,29 +39,52 @@ namespace ProjectFlow.DAO
             }
         }
         /// <summary>
-        /// Gets all Task information (incl. Task Allocations) By taskID
+        /// Gets Issues By taskID
         /// </summary>
         /// <param name="tID"></param>
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, IdTask)
-        public IEnumerable<object> GetIssueByID(int tID)
+        public Issue GetIssueByID(int id)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
 
                 try
                 {
-                    var list = dbContext.Issues.Include("TeamMates.Student")
-                        .Where(x => x.taskID == tID)
+                    Issue issue = dbContext.Issues.First(x => x.issueID == id);
+                    return issue;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
+
+        public IEnumerable<object> GetIssueByTeamID(int tID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+                    var list = dbContext.Issues.Include("TeamMembers.Student")
+                        .Include("Task")
+                        .Where(x => x.Task.teamID == tID)
                         .Where(x => x.active != false)
                         .Select(y => new
                         {
-                            ID = y.taskID,
+                            ID = y.issueID,
+                            TaskID = y.taskID,
                             Task = y.title,
                             Description = y.description,
-                            CreatedBy= y.TeamMember.Student.username,
-                           
+                            CreatedBy = y.TeamMember.Student.username,
+
                         }).ToList();
 
                     return list;
@@ -77,21 +100,25 @@ namespace ProjectFlow.DAO
             }
         }
 
-        /*public IEnumerable<object> GetCommentsByIssue(int tID)
+        public IEnumerable<object> GetDroppedIssueByTeamID(int tID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
 
                 try
                 {
-                    var list = dbContext.Issues.Include("CommentForIssue")
-                        .Where(x => x.issueID == tID)
-                        .Where(x => x.active != false)
+                    var list = dbContext.Issues.Include("TeamMembers.Student")
+                        .Include("Task")
+                        .Where(x => x.Task.teamID == tID)
+                        .Where(x => x.active == false)
                         .Select(y => new
                         {
-                            //comment = y.CommentForIssue.comment,
-                            //createdBy = ,
-                            //issue = 
+                            ID = y.issueID,
+                            TaskID = y.taskID,
+                            Task = y.title,
+                            Description = y.description,
+                            CreatedBy = y.TeamMember.Student.username,
+
                         }).ToList();
 
                     return list;
@@ -105,6 +132,31 @@ namespace ProjectFlow.DAO
 
 
             }
-        }*/
+        }
+
+        /// <summary>
+        /// Drop Issue
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns>Boolean</returns>
+        public bool drop(Issue issue)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    issue.active = false;
+                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating Deleted Task: {e.Message}");
+                    return false;
+                }
+            }
+        }
     }
 }

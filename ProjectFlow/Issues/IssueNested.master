@@ -10,6 +10,17 @@
         <%--Tool Bar--%>
         <div class="row justify-content-between">
 
+            <%--Change View DropDownList--%>
+            <div class="col-xl-3 col-12 align-self-end">
+
+                <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged">
+                    <asp:ListItem Value="Ongoing Tasks">Ongoing Issues</asp:ListItem>
+                    <asp:ListItem Value="Dropped Tasks">Dropped Issues</asp:ListItem>
+                    
+                </asp:DropDownList>
+
+            </div>
+
             <%--Add Task Button--%>
             <div class="col-xl-3 col-12 text-right">
 
@@ -70,7 +81,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
-                        <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" />
                     </div>
                 </div>
 

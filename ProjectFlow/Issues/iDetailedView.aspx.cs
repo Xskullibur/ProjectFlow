@@ -10,13 +10,14 @@ namespace ProjectFlow.Issues
 {
     public partial class iDetailedView : System.Web.UI.Page
     {
-        private const int TEST_TEAM_ID = 4;
+        private const int TEST_TEAM_ID = 2;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                int TaskId = int.Parse((string)Session["SSTaskID"]);
-                refreshData(TaskId);
+                //int TaskId = int.Parse((string)Session["SSTaskID"]);
+                refreshData(TEST_TEAM_ID);
                 
             }
             //refreshData(TEST_TEAM_ID);
@@ -25,7 +26,7 @@ namespace ProjectFlow.Issues
         {
             IssueBLL issueBLL = new IssueBLL();
 
-            IssueView.DataSource = issueBLL.GetIssueById(id);
+            IssueView.DataSource = issueBLL.GetIssueByTeamId(id);
             IssueView.DataBind();
 
             if (IssueView.Rows.Count > 0)
@@ -41,6 +42,30 @@ namespace ProjectFlow.Issues
             Session["SSCreatedBy"] = row.Cells[3].Text;
             Session["SSDesc"] = row.Cells[1].Text;
             Response.Redirect("../Issues/IssueRes.aspx");
+        }
+
+        protected void IssueView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+            // Selected Task ID
+            int id = Convert.ToInt32(IssueView.Rows[e.RowIndex].Cells[0].Text);
+
+            // Delete Task
+            IssueBLL issueBLL = new IssueBLL();
+            bool result = issueBLL.Drop(id);
+
+            refreshData(TEST_TEAM_ID);
+
+            if (result)
+            {
+                //TODO: Notify Delete Successful
+            }
+            else
+            {
+                //TODO: Notify Delete Failed
+            }
+           
+
         }
     }
 }

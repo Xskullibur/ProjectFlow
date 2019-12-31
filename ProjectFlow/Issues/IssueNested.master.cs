@@ -12,6 +12,13 @@ namespace ProjectFlow.Issues
     {
         private const int TEST_TEAM_ID = 2;
 
+        // Public Attributes and Methods
+        public enum IssueViews
+        {
+            iDetailedView,
+            iDroppedView
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -99,6 +106,40 @@ namespace ProjectFlow.Issues
             }
 
             return result;
+        }
+
+        protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (taskViewDDL.SelectedIndex)
+            {
+
+                case 0:
+                    Response.Redirect("iDetailedView.aspx");
+                    break;
+
+                case 1:
+                    Response.Redirect("iDroppedView.aspx");
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
+
+        public void changeSelectedView(IssueViews selectedView)
+        {
+            switch (selectedView)
+            {
+                case IssueViews.iDetailedView:
+                    taskViewDDL.SelectedIndex = 0;
+                    break;
+                case IssueViews.iDroppedView:
+                    taskViewDDL.SelectedIndex = 1;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

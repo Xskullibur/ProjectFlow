@@ -24,7 +24,7 @@ namespace ProjectFlow.Issues
         {
             IssueBLL issueBLL = new IssueBLL();
 
-            IssueView.DataSource = issueBLL.GetIssueById(id);
+            IssueView.DataSource = issueBLL.GetIssueByTeamId(id);
             IssueView.DataBind();
 
             if (IssueView.Rows.Count > 0)
