@@ -65,6 +65,26 @@ namespace ProjectFlow.DashBoard
             }           
         }
 
-        
+        protected void TeamGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            TeamGV.EditIndex = -1;
+            ShowTeam(Session["PassProjectID"].ToString());
+        }
+
+        protected void TeamGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+
+        protected void TeamGV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void TeamGV_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            TeamGV.EditIndex = e.NewEditIndex;
+            ShowTeam(Session["PassProjectID"].ToString());
+        }
     }
 }

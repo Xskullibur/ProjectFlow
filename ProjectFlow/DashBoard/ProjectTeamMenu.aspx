@@ -80,12 +80,15 @@
         <br>
         <div>
             
-            <asp:GridView ID="TeamGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1320px">
+            <asp:GridView ID="TeamGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1320px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged">
                 <Columns>
                     <asp:BoundField DataField="teamID" HeaderText="ID" />
                     <asp:BoundField DataField="teamName" HeaderText="Team Name" />
                     <asp:BoundField DataField="teamDescription" HeaderText="Description" />
                     <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
+                        <ControlStyle CssClass="btn btn-primary"/>
+                    </asp:CommandField>
+                    <asp:CommandField ButtonType="Button" ShowEditButton="True">
                         <ControlStyle CssClass="btn btn-primary"/>
                     </asp:CommandField>
                 </Columns>
