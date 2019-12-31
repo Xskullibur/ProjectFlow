@@ -39,8 +39,8 @@ namespace ProjectFlow.Issues
         protected void IssueView_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = IssueView.SelectedRow;
-            Session["SSCreatedBy"] = row.Cells[3].Text;
-            Session["SSDesc"] = row.Cells[1].Text;
+            Session["SSName"] = row.Cells[2].Text;
+            Session["SSDesc"] = row.Cells[3].Text;
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 

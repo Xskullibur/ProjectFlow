@@ -16,8 +16,8 @@ namespace ProjectFlow.Issues
         {
             if (!IsPostBack)
             {
-                //lbMember2.Text = (string)Session["SSCreatedBy"];
-                //lbIssue.Text = (string)Session["SSDesc"];
+                lbMember.Text = (string)Session["SSName"];
+                lbIssue.Text = (string)Session["SSDesc"];
                 check(idIssue, idVoter);
                 refreshCommentData(idIssue);
             }
