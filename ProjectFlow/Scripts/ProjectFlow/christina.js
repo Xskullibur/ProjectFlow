@@ -1,78 +1,94 @@
 ﻿"use strict";
 
+let socket = null;
+
 $(document).ready(function () {
     var christinaHub = $.connection.christina;
 
 
-    //christinaHub.client.sendPassword = function (password) {
-    //    console.log(password);
-    //    startRecording();
+    christinaHub.client.sendPassword = function (password) {
+        connectToWebsocket(password);
+        startRecording();
+    };
 
-    //    const socket = new WebSocket("ws://" + window.location.hostname + ":9000");
+    $.connection.hub.start().done(function () {
 
-    //    socket.onopen = function (e) {
-    //        alert("[open] Connection established");
-
-    //        //Handshake
-    //        handshake(socket, password);
-    //    };
-
-    //    socket.onmessage = function (event) {
-    //        alert(`[message] Data received from server: ${event.data}`);
-    //    };
-
-    //    socket.onclose = function (event) {
-    //        if (event.wasClean) {
-    //            alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-    //        } else {
-    //            alert('[close] Connection died');
-    //        }
-    //    };
-
-    //    socket.onerror = function (error) {
-    //        alert(`[error] ${error.message}`);
-    //    };
-
-    //};
-
-    //$.connection.hub.start().done(function () {
-
-    //    christinaHub.server.createRoom(2);
-    //});
+        christinaHub.server.createRoom(2);
+    });
     
 });
 
 let recording = false;
 
 async function startRecording() {
-    let stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
-    let recorder = new RecordRTCPromisesHandler(stream, {
-        type: 'audio',
-        mimeType: 'audio/wav',
-        sampleRate: 16000,
-        numberOfAudioChannels: 1
+    let AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioContext = new AudioContext({ sampleRate: 16000 });
+
+    let stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
+    let input = audioContext.createMediaStreamSource(stream);
+    let recorder = new Recorder(input, {
+        numChannels: 1
     });
     recording = true;
-    recorder.startRecording();
+    recorder.record();
 
-    startTimeoutForRecording(recorder);
+    startTimeoutForRecording(recorder, stream);
 
 }
 
-async function startTimeoutForRecording(recorder) {
-    setTimeout(async function () {
+function startTimeoutForRecording(recorder, stream) {
+    setTimeout(function () {
         if (recording) {
-            processAudio(recorder);
-            startTimeoutForRecording();
+            processAudio(recorder, stream, () => {
+                startTimeoutForRecording();
+            });
+            
         }
-        else await recorder.stopRecording();
+        else recorder.stop();
     }, 3000);
 }
 
-async function processAudio(recorder) {
-    await recorder.stopRecording();
-    let blob = await recorder.getBlob();
-    recorder.startRecording();
+function processAudio(recorder, stream, cb) {
+    recorder.stop();
+    stream.getAudioTracks()[0].stop();
+
+    recorder.exportWAV(function (blob) {
+        //Send to websocket
+        socket.send(blob);
+
+        recorder.clear();
+        recorder.record();
+
+        cb();
+    });
+
+}
+
+function connectToWebsocket(password) {
+    socket = new WebSocket("ws://" + window.location.hostname + ":9000");
+
+    socket.onopen = function (e) {
+        console.log("[open] Connection established");
+
+        //Handshake
+        handshake(socket, password);
+    };
+
+    socket.onmessage = function (event) {
+        console.log(`[message] Data received from server: ${event.data}`);
+    };
+
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        } else {
+            console.log('[close] Connection died');
+        }
+    };
+
+    socket.onerror = function (error) {
+        console.log(`[error] ${error.message}`);
+    };
 }
 
 function handshake(socket, password) {
@@ -80,8 +96,8 @@ function handshake(socket, password) {
 }
 
 
-const min_size = 30;
-const max_size = 60;
+const min_size = 60;
+const max_size = 130;
 
 const drawHeight = 1000;
 const drawWidth = 1000;
@@ -89,8 +105,11 @@ const drawWidth = 1000;
 let speakers_circles = [];
 
 function init_display(bound_window, display_canvas) {
-
-    speakers_circles = [create_speaker('Peh Zi Heng', null), create_speaker('Peh Zi Heng2', null)];
+    let testImg = new Image();
+    testImg.src = 'https://image.flaticon.com/icons/png/512/123/123172.png';
+    let testImg2 = new Image();
+    testImg2.src = 'https://www.jodilogik.com/wordpress/wp-content/uploads/2016/05/people.png';
+    speakers_circles = [create_speaker('Peh Zi Heng', testImg), create_speaker('Peh Zi Heng2', testImg2)];
 
     animate();
 
@@ -106,7 +125,6 @@ function init_display(bound_window, display_canvas) {
         let scaleY = height / drawHeight;
         let scale = (width * height) / (drawWidth * drawHeight)
 
-        console.log('Drawing');
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, width, height);
 
@@ -122,11 +140,18 @@ function init_display(bound_window, display_canvas) {
 
             let size = (ease(speaker_circle.percent) * (max_size - min_size)) + min_size;
 
+            ctx.save();
             ctx.beginPath();
             ctx.strokeStyle = 'blue';
             ctx.globalAlpha = speaker_circle.percent * .8 + .2;
             ctx.arc(speaker_circle.x * scaleX, speaker_circle.y * scaleY, size * scale, 0, Math.PI * 2, false);
             ctx.stroke();
+            if (speaker_circle.speaker_image != null) {
+                ctx.clip()
+                ctx.drawImage(speaker_circle.speaker_image, speaker_circle.x * scaleX - (size * scale / 2), speaker_circle.y * scaleY - (size * scale / 2), size * scale, size * scale);
+            }
+            ctx.restore();
+
         }
         
     }

@@ -6,7 +6,7 @@
     <script type="text/javascript" src="/signalr/hubs"></script>
     <script type="text/javascript" src="/Scripts/ProjectFlow/christina.js"></script>
 
-    <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
 
     <div class="row">
         <div id="canvas_window" class="col-12">
