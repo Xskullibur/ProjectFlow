@@ -4,20 +4,43 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="133101d6dabd4f2bbe5107450540d04a" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="ProjectFlowModel.CommentForIssue" Width="1.5" PointX="17.25" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Issue" Width="1.5" PointX="12" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Milestone" Width="1.5" PointX="7.5" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Polling" Width="1.5" PointX="14.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Project" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.ProjectTeam" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Role" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Status" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Student" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Task" Width="1.5" PointX="9.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.TaskAllocation" Width="1.5" PointX="15" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.TeamMember" Width="1.5" PointX="7.5" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Tutor" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+      <Diagram DiagramId="17752992e3a743ccaa93e2306aba6598" Name="Diagram1" ZoomLevel="40">
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Applications" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Membership" Width="1.5" PointX="6" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Paths" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Profile" Width="1.5" PointX="10.5" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Roles" Width="1.5" PointX="3" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_SchemaVersions" Width="1.5" PointX="9.375" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Users" Width="1.5" PointX="8.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.aspnet_WebEvent_Events" Width="1.5" PointX="11.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.CommentForIssue" Width="1.5" PointX="18" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Issue" Width="1.5" PointX="21" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Milestone" Width="1.5" PointX="13.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Polling" Width="1.5" PointX="23.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Project" Width="1.5" PointX="8.25" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.ProjectTeam" Width="1.5" PointX="10.5" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Role" Width="1.5" PointX="13.5" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Room" Width="1.5" PointX="12.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Status" Width="1.5" PointX="13.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Student" Width="1.5" PointX="10.5" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.sysdiagram" Width="1.5" PointX="15.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Task" Width="1.5" PointX="15.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.TaskAllocation" Width="1.5" PointX="18" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.TeamMember" Width="1.5" PointX="15.75" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Tutor" Width="1.5" PointX="6" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectFlowModel.VoiceRecording" Width="1.5" PointX="12.75" PointY="28.125" IsExpanded="true" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Me__Appli__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Pa__Appli__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Ro__Appli__05D8E0BE" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Us__Appli__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Me__UserI__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Pe__PathI__1EA48E88" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Pe__PathI__22751F6C" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Pe__UserI__236943A5" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Pr__UserI__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Student_aspnet_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_CommentForIssue_Issue" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_CommentForIssue_TeamMember" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Issue_Task" ManuallyRouted="false" />
@@ -26,19 +49,22 @@
         <AssociationConnector Association="ProjectFlowModel.FK_Milestone_Project" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Milestone_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Task_Milestone" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectFlowModel.FK_Project_Tutor" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Polling_voter" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_ProjectTeam_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.PK_Project_Tutor" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Room_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Task_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TeamMember_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TeamMember_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Room_Student" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Task_Status" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TeamMember_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_VoiceRecording_Student" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_Task" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ProjectFlowModel.Room" Width="1.5" PointX="7.5" PointY="15.375" />
-        <AssociationConnector Association="ProjectFlowModel.FK_Room_ProjectTeam" />
-        <AssociationConnector Association="ProjectFlowModel.FK_Room_Student" />
-        </Diagram>
+        <AssociationConnector Association="ProjectFlowModel.aspnet_UsersInRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Tutor_aspnet_Users" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

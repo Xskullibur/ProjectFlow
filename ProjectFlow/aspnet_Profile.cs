@@ -12,15 +12,14 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class aspnet_Profile
     {
-        public int roomID { get; set; }
-        public System.Guid createdBy { get; set; }
-        public System.DateTime creationDate { get; set; }
-        public int teamID { get; set; }
-        public byte[] accessToken { get; set; }
+        public System.Guid UserId { get; set; }
+        public string PropertyNames { get; set; }
+        public string PropertyValuesString { get; set; }
+        public byte[] PropertyValuesBinary { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public virtual ProjectTeam ProjectTeam { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual aspnet_Users aspnet_Users { get; set; }
     }
 }

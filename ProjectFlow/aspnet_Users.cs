@@ -12,24 +12,31 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Project
+    public partial class aspnet_Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Project()
+        public aspnet_Users()
         {
-            this.Milestones = new HashSet<Milestone>();
-            this.ProjectTeams = new HashSet<ProjectTeam>();
+            this.aspnet_PersonalizationPerUser = new HashSet<aspnet_PersonalizationPerUser>();
+            this.aspnet_Roles = new HashSet<aspnet_Roles>();
         }
     
-        public string projectID { get; set; }
-        public string projectName { get; set; }
-        public string projectDescription { get; set; }
+        public System.Guid ApplicationId { get; set; }
         public System.Guid UserId { get; set; }
+        public string UserName { get; set; }
+        public string LoweredUserName { get; set; }
+        public string MobileAlias { get; set; }
+        public bool IsAnonymous { get; set; }
+        public System.DateTime LastActivityDate { get; set; }
     
+        public virtual aspnet_Applications aspnet_Applications { get; set; }
+        public virtual aspnet_Membership aspnet_Membership { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Milestone> Milestones { get; set; }
+        public virtual ICollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser { get; set; }
+        public virtual aspnet_Profile aspnet_Profile { get; set; }
+        public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
+        public virtual ICollection<aspnet_Roles> aspnet_Roles { get; set; }
         public virtual Tutor Tutor { get; set; }
     }
 }

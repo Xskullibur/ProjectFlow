@@ -45,7 +45,7 @@ namespace ProjectFlow.Services.Christina
                     accessToken = hashedPasswordWithSalt,
                     teamID = teamID,
                     creationDate = DateTime.Now,
-                    createdBy = (Context.User.Identity as ProjectFlowIdentity).Student.studentID,
+                    createdBy = (Context.User.Identity as ProjectFlowIdentity).Student.UserId,
                     
                 };
                 RoomBLL bll = new RoomBLL();

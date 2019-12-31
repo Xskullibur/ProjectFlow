@@ -12,7 +12,8 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowProject(1);
+            Guid tutorUserId = Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3");
+            ShowProject(tutorUserId);
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -21,16 +22,16 @@ namespace ProjectFlow.DashBoard
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
-            int tutorID = 1;
+            Guid tutorUserId = Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3");
 
-            projectBLL.CreateProject(projectID, projectName, projectDesc, tutorID);
+            projectBLL.CreateProject(projectID, projectName, projectDesc, tutorUserId);
         }
 
-        public void ShowProject(int tutorID)
+        public void ShowProject(Guid tutorUserId)
         {
             ProjectBLL projectBLL = new ProjectBLL();
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.GetProjectTutor(tutorID);
+            projectList = projectBLL.GetProjectTutor(tutorUserId);
             projectGV.DataSource = projectList;
             projectGV.DataBind();
         }

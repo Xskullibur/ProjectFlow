@@ -12,15 +12,12 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class sysdiagram
     {
-        public int roomID { get; set; }
-        public System.Guid createdBy { get; set; }
-        public System.DateTime creationDate { get; set; }
-        public int teamID { get; set; }
-        public byte[] accessToken { get; set; }
-    
-        public virtual ProjectTeam ProjectTeam { get; set; }
-        public virtual Student Student { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

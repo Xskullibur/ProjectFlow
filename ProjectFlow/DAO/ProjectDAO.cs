@@ -7,7 +7,7 @@ namespace ProjectFlow.DAO
 {
     public class ProjectDAO
     {
-        public void InsertProject(string ProjectID, string Name, string Desc, int TutorID)
+        public void InsertProject(string ProjectID, string Name, string Desc, Guid tutorUserId)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -15,18 +15,18 @@ namespace ProjectFlow.DAO
                     projectID = ProjectID,
                     projectName = Name,
                     projectDescription = Desc,
-                    tutorID = TutorID                   
+                    UserId = tutorUserId
                 };
                 dbContext.Projects.Add(project);
                 dbContext.SaveChanges();
             }
         }
 
-        public List<Project> GetProjectTutor(int TutorID)
+        public List<Project> GetProjectTutor(Guid tutorUserId)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {               
-                Tutor tutor = dbContext.Tutors.First(x => x.tutorID == TutorID);                
+                Tutor tutor = dbContext.Tutors.First(x => x.UserId.Equals(tutorUserId));
                 return tutor.Projects.ToList();
             }
         }

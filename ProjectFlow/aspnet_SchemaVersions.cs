@@ -12,15 +12,10 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class aspnet_SchemaVersions
     {
-        public int roomID { get; set; }
-        public System.Guid createdBy { get; set; }
-        public System.DateTime creationDate { get; set; }
-        public int teamID { get; set; }
-        public byte[] accessToken { get; set; }
-    
-        public virtual ProjectTeam ProjectTeam { get; set; }
-        public virtual Student Student { get; set; }
+        public string Feature { get; set; }
+        public string CompatibleSchemaVersion { get; set; }
+        public bool IsCurrentVersion { get; set; }
     }
 }

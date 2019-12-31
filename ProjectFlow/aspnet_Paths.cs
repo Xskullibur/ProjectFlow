@@ -12,24 +12,22 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Project
+    public partial class aspnet_Paths
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Project()
+        public aspnet_Paths()
         {
-            this.Milestones = new HashSet<Milestone>();
-            this.ProjectTeams = new HashSet<ProjectTeam>();
+            this.aspnet_PersonalizationPerUser = new HashSet<aspnet_PersonalizationPerUser>();
         }
     
-        public string projectID { get; set; }
-        public string projectName { get; set; }
-        public string projectDescription { get; set; }
-        public System.Guid UserId { get; set; }
+        public System.Guid ApplicationId { get; set; }
+        public System.Guid PathId { get; set; }
+        public string Path { get; set; }
+        public string LoweredPath { get; set; }
     
+        public virtual aspnet_Applications aspnet_Applications { get; set; }
+        public virtual aspnet_PersonalizationAllUsers aspnet_PersonalizationAllUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Milestone> Milestones { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
-        public virtual Tutor Tutor { get; set; }
+        public virtual ICollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser { get; set; }
     }
 }

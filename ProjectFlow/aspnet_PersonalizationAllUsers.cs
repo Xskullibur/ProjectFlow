@@ -12,15 +12,12 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class aspnet_PersonalizationAllUsers
     {
-        public int roomID { get; set; }
-        public System.Guid createdBy { get; set; }
-        public System.DateTime creationDate { get; set; }
-        public int teamID { get; set; }
-        public byte[] accessToken { get; set; }
+        public System.Guid PathId { get; set; }
+        public byte[] PageSettings { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public virtual ProjectTeam ProjectTeam { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual aspnet_Paths aspnet_Paths { get; set; }
     }
 }

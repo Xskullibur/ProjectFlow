@@ -18,9 +18,9 @@ namespace ProjectFlow
         public ProjectTeam()
         {
             this.Milestones = new HashSet<Milestone>();
+            this.Rooms = new HashSet<Room>();
             this.Tasks = new HashSet<Task>();
             this.TeamMembers = new HashSet<TeamMember>();
-            this.Rooms = new HashSet<Room>();
         }
     
         public int teamID { get; set; }
@@ -32,10 +32,10 @@ namespace ProjectFlow
         public virtual ICollection<Milestone> Milestones { get; set; }
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamMember> TeamMembers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

@@ -19,15 +19,15 @@ namespace ProjectFlow
                 var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
                 if (projectFlowIdentity.IsStudent)
                 {
-                    this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Student.username;
-                    this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Student.username;
-                    this.LoginEmailProfileLbl.Text = projectFlowIdentity.Student.email;
+                    this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Student.aspnet_Users.UserName;
+                    this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Student.aspnet_Users.UserName;
+                    this.LoginEmailProfileLbl.Text = projectFlowIdentity.Student.aspnet_Users.aspnet_Membership.Email;
                 }
                 else if (projectFlowIdentity.IsTutor)
                 {
-                    this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Tutor.username;
-                    this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Tutor.username;
-                    this.LoginEmailProfileLbl.Text = projectFlowIdentity.Tutor.email;
+                    this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Tutor.aspnet_Users.UserName;
+                    this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Tutor.aspnet_Users.UserName;
+                    this.LoginEmailProfileLbl.Text = projectFlowIdentity.Tutor.aspnet_Users.aspnet_Membership.Email;
                 }
             }
             

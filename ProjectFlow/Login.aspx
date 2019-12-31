@@ -8,11 +8,11 @@
         </div>
         <div class="col-12 col-md-5 mx-auto">
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                  <asp:TextBox CssClass="form-control" ID="emailTextBox" runat="server" placeholder="Email"></asp:TextBox>
+                <label for="usernameTextBox">Username:</label>
+                  <asp:TextBox CssClass="form-control" ID="usernameTextBox" runat="server" placeholder="Username"></asp:TextBox>
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
+                <label for="passwordTextBox">Password</label>
                  <asp:TextBox  CssClass="form-control" ID="passwordTextBox" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
               </div>
               <div class="row">
@@ -24,7 +24,7 @@
                       <asp:HyperLink runat="server">Create Account</asp:HyperLink>
                   </div>
               </div>
-              <asp:Button CssClass="btn btn-primary" ID="submitBtn" runat="server" Text="Submit" OnClick="LoginValidateAction" />
+              <asp:Button CssClass="btn btn-primary" ID="submitBtn" runat="server" Text="Login" OnClick="LoginValidateAction" />
         </div>
     </div>
 

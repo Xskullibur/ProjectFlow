@@ -85,12 +85,12 @@ namespace ProjectFlow
                         string[] roles = userData.Split(',');
                         string role = roles[0];
 
-                        string email = id.Name;
+                        string username = id.Name;
 
                         if (role.Equals("Student"))
                         {
                             StudentDAO dao = new StudentDAO();
-                            Student student = dao.FindStudentByEmail(email);
+                            Student student = dao.FindStudentByUsername(username);
 
                             var projectFlowIdentity = new ProjectFlowIdentity(student, id);
                             var principal = new GenericPrincipal(projectFlowIdentity, roles);
@@ -100,7 +100,7 @@ namespace ProjectFlow
                         else if(role.Equals("Tutor"))
                         {
                             TutorDAO dao = new TutorDAO();
-                            Tutor tutor = dao.FindTutorByEmail(email);
+                            Tutor tutor = dao.FindTutorByUsername(username);
 
                             var projectFlowIdentity = new ProjectFlowIdentity(tutor, id);
                             var principal = new GenericPrincipal(projectFlowIdentity, roles);
