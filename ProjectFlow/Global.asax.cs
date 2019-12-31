@@ -1,13 +1,13 @@
-﻿using ProjectFlow.BLL;
+﻿using ProjectFlow.App_Start;
 using ProjectFlow.DAO;
 using ProjectFlow.Login;
+using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Optimization;
+using System.Web.Routing;
 using System.Web.Security;
-using System.Web.SessionState;
 using System.Web.UI;
 
 namespace ProjectFlow
@@ -17,6 +17,8 @@ namespace ProjectFlow
     /// </summary>
     public class Global : System.Web.HttpApplication
     {
+
+        public static ConnectionMultiplexer Redis = null;
 
         protected void Application_Start(object sender, EventArgs e)
         {
@@ -44,6 +46,19 @@ namespace ProjectFlow
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
 
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("signalr", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/jquery.signalR-2.4.1.min.js",
+                DebugPath = "~/Scripts/jquery.signalR-2.4.1.js"
+            });
+
+
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Create redis connection
+            Redis = ConnectionMultiplexer.Connect("192.168.99.100");
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
@@ -68,15 +83,36 @@ namespace ProjectFlow
                         FormsAuthenticationTicket ticket = id.Ticket;
                         string userData = ticket.UserData;
                         string[] roles = userData.Split(',');
+                        string role = roles[0];
 
-                        string email = id.Name;
-                        StudentDAO dao = new StudentDAO();
-                        Student student = dao.FindStudentByEmail(email);
+                        string username = id.Name;
 
-                        var projectFlowIdentity = new ProjectFlowIdentity(student, id);
-                        var principal = new GenericPrincipal(projectFlowIdentity, roles);
+                        if (role.Equals("Student"))
+                        {
+                            StudentDAO dao = new StudentDAO();
+                            Student student = dao.FindStudentByUsername(username);
 
-                        HttpContext.Current.User = principal;
+                            var projectFlowIdentity = new ProjectFlowIdentity(student, id);
+                            var principal = new GenericPrincipal(projectFlowIdentity, roles);
+
+                            HttpContext.Current.User = principal;
+                        }
+                        else if(role.Equals("Tutor"))
+                        {
+                            TutorDAO dao = new TutorDAO();
+                            Tutor tutor = dao.FindTutorByUsername(username);
+
+                            var projectFlowIdentity = new ProjectFlowIdentity(tutor, id);
+                            var principal = new GenericPrincipal(projectFlowIdentity, roles);
+
+                            HttpContext.Current.User = principal;
+                        }
+                        else
+                        {
+                            throw new Exception("No such role: " + role);
+                        }
+
+                       
                     }
                 }
             }
@@ -94,7 +130,8 @@ namespace ProjectFlow
 
         protected void Application_End(object sender, EventArgs e)
         {
-
+            //Close redis connection
+            Redis.Close();
         }
     }
 }

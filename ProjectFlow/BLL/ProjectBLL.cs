@@ -10,14 +10,14 @@ namespace ProjectFlow.BLL
     {
         ProjectDAO projectDAO = new ProjectDAO();
 
-        public void CreateProject(string ProjectID, string Name, string Desc, int TutorID)
+        public void CreateProject(string ProjectID, string Name, string Desc, Guid tutorUserId)
         {
-            projectDAO.InsertProject(ProjectID, Name, Desc, TutorID);
+            projectDAO.InsertProject(ProjectID, Name, Desc, tutorUserId);
         }
 
-        public List<Project> GetProjectTutor(int tutorID)
+        public List<Project> GetProjectTutor(Guid tutorUserId)
         {
-            return projectDAO.GetProjectTutor(tutorID);
+            return projectDAO.GetProjectTutor(tutorUserId);
         }
     }
 }
