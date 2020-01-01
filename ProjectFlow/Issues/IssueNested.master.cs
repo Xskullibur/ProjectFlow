@@ -12,11 +12,27 @@ namespace ProjectFlow.Issues
     {
         private const int TEST_TEAM_ID = 2;
 
+        public event EventHandler refreshGrid;
         // Public Attributes and Methods
         public enum IssueViews
         {
             iDetailedView,
             iDroppedView
+        }
+
+        public void changeSelectedView(IssueViews selectedView)
+        {
+            switch (selectedView)
+            {
+                case IssueViews.iDetailedView:
+                    taskViewDDL.SelectedIndex = 0;
+                    break;
+                case IssueViews.iDroppedView:
+                    taskViewDDL.SelectedIndex = 1;
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -110,6 +126,7 @@ namespace ProjectFlow.Issues
 
         protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            refreshGrid(this, EventArgs.Empty);
             switch (taskViewDDL.SelectedIndex)
             {
 
@@ -124,22 +141,7 @@ namespace ProjectFlow.Issues
                 default:
                     break;
 
-            }
-        }
-
-        public void changeSelectedView(IssueViews selectedView)
-        {
-            switch (selectedView)
-            {
-                case IssueViews.iDetailedView:
-                    taskViewDDL.SelectedIndex = 0;
-                    break;
-                case IssueViews.iDroppedView:
-                    taskViewDDL.SelectedIndex = 1;
-                    break;
-                default:
-                    break;
-            }
+            }         
         }
     }
 }

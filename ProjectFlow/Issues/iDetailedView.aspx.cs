@@ -12,16 +12,25 @@ namespace ProjectFlow.Issues
     {
         private const int TEST_TEAM_ID = 2;
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                //int TaskId = int.Parse((string)Session["SSTaskID"]);
-                refreshData(TEST_TEAM_ID);
-                
+                Master.changeSelectedView(IssueNested.IssueViews.iDetailedView);
+                refreshData(TEST_TEAM_ID); 
             }
-            //refreshData(TEST_TEAM_ID);
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData(TEST_TEAM_ID);
+        }
+
         private void refreshData(int id)
         {
             IssueBLL issueBLL = new IssueBLL();

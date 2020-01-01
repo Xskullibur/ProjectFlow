@@ -20,5 +20,17 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView IssueView;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new ProjectFlow.Issues.IssueNested Master {
+            get {
+                return ((ProjectFlow.Issues.IssueNested)(base.Master));
+            }
+        }
     }
 }

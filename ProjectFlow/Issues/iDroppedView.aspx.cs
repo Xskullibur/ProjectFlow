@@ -14,6 +14,7 @@ namespace ProjectFlow.Issues
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.changeSelectedView(IssueNested.IssueViews.iDroppedView);
             refreshData(TEST_TEAM_ID);
         }
 
