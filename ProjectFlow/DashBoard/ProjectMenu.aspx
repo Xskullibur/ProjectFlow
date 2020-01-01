@@ -75,7 +75,6 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                <asp:RequiredFieldValidator ID="descRequiredValidator" runat="server" ControlToValidate="DescTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
                                 &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" validationexpression="^.{1,255}$" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red" ControlToValidate="DescTB"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />

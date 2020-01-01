@@ -22,9 +22,7 @@
                             </td>
                             <td class="auto-style10">
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
-                                <br />
+                                &nbsp;<br />
                                 <br />
                             </td>
                         </tr>                        
@@ -41,8 +39,7 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" validationexpression="^.{1,255}$" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red" ControlToValidate="DescTB"></asp:RegularExpressionValidator>
-                                <br />
+                                &nbsp;<br />
                                 <br />
 
                             </td>

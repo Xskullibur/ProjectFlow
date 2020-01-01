@@ -72,12 +72,7 @@ namespace ProjectFlow.BLL
             {
                 errorList.Add("Name is empty<br>");
             }
-
-            if (Desc.Equals(""))
-            {
-                errorList.Add("Description is empty<br>");
-            }
-
+            
             if (TutorID == null)
             {
                 errorList.Add("TutorID is empty<br>");
@@ -129,12 +124,7 @@ namespace ProjectFlow.BLL
             {
                 errorList.Add("Name is empty<br>");
             }
-
-            if (Desc.Equals(""))
-            {
-                errorList.Add("Description is empty<br>");
-            }
-          
+                   
             if (ProjectID.Length > 6)
             {
                 errorList.Add("ID cannot be longer than 6<br>");
