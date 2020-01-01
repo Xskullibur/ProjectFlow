@@ -16,7 +16,7 @@
                     <div class="col-xl-3 col-12 text-right">
 
                         <div>
-                            <asp:Button ID="btnYes" CssClass ="" runat="server" Text="&#128077;" OnClick="btnYes_Click" BorderStyle="None" BackColor="White" />&nbsp;
+                            <asp:Button ID="btnYes" CssClass ="" runat="server" Text="&#128077;" OnClick="btnYes_Click" BorderStyle="None"/>&nbsp;
                         </div>
                         <div>
                             <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
@@ -25,37 +25,38 @@
                             <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
                         </div>
                         <div>
-                            <asp:Button ID="btnNo" CssClass ="" runat="server" Text="&#128078;" OnClick="btnNo_Click" BorderStyle="None" BackColor="White" />&nbsp;
+                            <asp:Button ID="btnNo" CssClass ="" runat="server" Text="&#128078;" OnClick="btnNo_Click" BorderStyle="None" />&nbsp;
                         </div>
                         <div>
-                            <asp:Button ID="btnRandom" CssClass ="" runat="server" Text="&#127922;" OnClick="btnRandom_Click" BorderStyle="None" BackColor="White" />
+                            <asp:Button ID="btnRandom" CssClass ="" runat="server" Text="&#127922;" OnClick="btnRandom_Click" BorderStyle="None"/>
                         </div>
                     </div>
                 </div>
             
             <hr/>
-        <div>
-            <asp:TextBox ID="tbComments" runat="server" TextMode="MultiLine"></asp:TextBox>&nbsp;
-            <asp:Button ID="Button1" CssClass ="btn btn-success" runat="server" Text="submit" OnClick="btnCommentSubmit_Click" />
-           
-        </div>
-        
-            <div class ="col">
-            <asp:Repeater ID="Repeater1" runat="server">
-                <HeaderTemplate>
-                </HeaderTemplate>
-                <ItemTemplate>
-                    <br>
-                    <div class="row">
-                        <asp:Label ID="lbCreatedBy" runat="server" Text='<%# Eval("CreatedBy") %>' ForeColor="#0066FF"></asp:Label>
-                    </div>
-                    <div class="row">
-                        <asp:Label ID="lbComment" runat="server" Text='<%# Eval("Comment") %>'></asp:Label>
-                    </div>                
-                </ItemTemplate>     
-            </asp:Repeater>
+            <div class="">
+                <asp:TextBox ID="tbComments" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                
+                <div class="text-right">
+                <asp:Button ID="btnComment" CssClass ="btn btn-info" runat="server" Text="post" OnClick="btnCommentSubmit_Click"/>
+                </div>
             </div>
-        </div>   
-    </div>
+            <div class ="col">
+                <asp:Repeater ID="Repeater1" runat="server">
+                    <HeaderTemplate>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        </br>
+                        <div class="mdc-card">
+                            <div class="card-body">
+                                <asp:Label ID="lbCreatedBy" CssClass="card-title" runat="server" Text='<%# Eval("CreatedBy") %>' ForeColor="#0066FF"></asp:Label>
+                                <asp:Label ID="lbComment" CssClass="card-text" runat="server" Text='<%# Eval("Comment") %>'></asp:Label>
+                            </div>
+                        </div>
+                                  
+                    </ItemTemplate>     
+                </asp:Repeater>
+            </div>   
+        </div>
     </div>
 </asp:Content>

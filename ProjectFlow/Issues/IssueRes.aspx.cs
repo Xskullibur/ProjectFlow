@@ -136,8 +136,15 @@ namespace ProjectFlow.Issues
 
         protected void btnCommentSubmit_Click(object sender, EventArgs e)
         {
-            addComment();
-            tbComments.Text = "";
+            if(tbComments.Text != "")
+            {
+                addComment();
+                tbComments.Text = "";
+            }
+            else
+            {
+                //tbComments.ToolTip = "Please enter a comment";
+            }
         }
     }
 }
