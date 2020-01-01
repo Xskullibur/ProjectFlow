@@ -32,7 +32,7 @@
             .auto-style13 {
                 width: 1525px;
                 height: 30px;
-            }
+            }           
         </style>       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -124,23 +124,27 @@
             <asp:Label ID="Label6" runat="server"></asp:Label>
         </div>
         <br>
-        <div>
-            <asp:GridView ID="projectGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1325px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating">
-                <Columns>
-                    <asp:BoundField DataField="projectID" HeaderText="Project ID" />
-                    <asp:BoundField DataField="projectName" HeaderText="Name" />
-                    <asp:BoundField DataField="projectDescription" HeaderText="Description" />
-                    <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
-                        <ControlStyle CssClass="btn btn-primary"/>
-                    </asp:CommandField>
-                    <asp:CommandField ButtonType="Button" ShowEditButton="True">
-                        <ControlStyle CssClass="btn btn-primary"/>
-                    </asp:CommandField>
-                </Columns>
-            </asp:GridView>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating">
+                        <HeaderStyle CssClass="thead-light"/>
+                        <Columns>
+                            <asp:BoundField DataField="projectID" HeaderText="Project ID" />
+                            <asp:BoundField DataField="projectName" HeaderText="Name" />
+                            <asp:BoundField DataField="projectDescription" HeaderText="Description" />
+                            <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
+                                <ControlStyle CssClass="btn btn-success" />
+                            </asp:CommandField>
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                                <ControlStyle CssClass="btn btn-warning" />
+                            </asp:CommandField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </div>
         </div>
     </div>
-
     <script>
         $(document).ready(function () {
             hideSidebar();    

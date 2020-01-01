@@ -100,22 +100,25 @@
             <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />           
         </div>
         <br>
-        <div>
-            
-            <asp:GridView ID="TeamGV" CssClass="table table-dark table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1320px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged">
-                <Columns>
-                    <asp:BoundField DataField="teamID" HeaderText="ID" />
-                    <asp:BoundField DataField="teamName" HeaderText="Team Name" />
-                    <asp:BoundField DataField="teamDescription" HeaderText="Description" />
-                    <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
-                        <ControlStyle CssClass="btn btn-primary"/>
-                    </asp:CommandField>
-                    <asp:CommandField ButtonType="Button" ShowEditButton="True">
-                        <ControlStyle CssClass="btn btn-primary"/>
-                    </asp:CommandField>
-                </Columns>
-            </asp:GridView>
-            
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <asp:GridView ID="TeamGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged">
+                        <HeaderStyle CssClass="thead-light"/>
+                        <Columns>
+                            <asp:BoundField DataField="teamID" HeaderText="ID" />
+                            <asp:BoundField DataField="teamName" HeaderText="Team Name" />
+                            <asp:BoundField DataField="teamDescription" HeaderText="Description" />
+                            <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
+                                <ControlStyle CssClass="btn btn-success" />
+                            </asp:CommandField>
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                                <ControlStyle CssClass="btn btn-warning" />
+                            </asp:CommandField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </div>
         </div>
     </div>
     <script>
