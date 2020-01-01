@@ -1,5 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="ProjectTeamMenu.aspx.cs" Inherits="ProjectFlow.DashBoard.ProjectTeamMenu" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        .auto-style8 {
+            width: 147px;
+        }
+        .auto-style9 {
+            width: 111px;
+        }
+        .auto-style10 {
+            width: 111px;
+            height: 42px;
+        }
+        .auto-style12 {
+            width: 147px;
+            height: 42px;
+        }
+        .auto-style13 {
+            width: 231px;
+        }
+        .auto-style14 {
+            width: 231px;
+            height: 42px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="modal fade" id="CreateTeam" role="dialog">
@@ -13,30 +36,32 @@
                         <tr>
                             <td class="auto-style9">
                                 <asp:Label ID="Label1" runat="server" Text="Team Name"></asp:Label>
-                                <br />
+                                &nbsp;<br />
                                 <br />
                             </td>
                             <td class="auto-style13">
-                                <asp:TextBox ID="NameTB" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="NameTB" CssClass="form-control" runat="server" Width="223px"></asp:TextBox>
                                 <br />
                             </td>
-                            <td class="auto-style10">
+                            <td class="auto-style8">
                                 &nbsp;
-                                &nbsp;<br />
+                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                <br />
                                 <br />
                             </td>
                         </tr>                        
                         <tr>
-                            <td class="auto-style9">
+                            <td class="auto-style10">
                                 <asp:Label ID="Label2" runat="server" Text="Description"></asp:Label>
                                 <br />
                                 <br />
                             </td>
-                            <td class="auto-style13">
-                                <asp:TextBox ID="DescTB" CssClass="form-control" runat="server"></asp:TextBox>
+                            <td class="auto-style14">
+                                <asp:TextBox ID="DescTB" CssClass="form-control" runat="server" Width="222px"></asp:TextBox>
                                 <br />
                             </td>
-                            <td class="auto-style10">
+                            <td class="auto-style12">
                                 &nbsp;
 
                                 &nbsp;<br />
@@ -46,15 +71,15 @@
                         </tr>
 
                         <tr>
-                            <td class="auto-style6">
+                            <td class="auto-style9">
                                 <br />
                                 <br />
                             </td>
-                            <td class="auto-style7">
+                            <td class="auto-style13">
                                 <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
                                 <br />
                             </td>
-                            <td class="auto-style10">
+                            <td class="auto-style8">
                                 &nbsp;
 
                                 &nbsp;&nbsp;<br />

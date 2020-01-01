@@ -56,7 +56,7 @@
                             </td>
                             <td class="auto-style10">
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
                                 &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />
@@ -95,7 +95,7 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                &nbsp;<asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="Required!" ForeColor="Red" Font-Size="Small"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
                                 &nbsp;<asp:RegularExpressionValidator ID="projectIdRegexValidator" runat="server" validationexpression="^[a-zA-Z0-9]{6}$" ControlToValidate="ProjectIdTB" ErrorMessage="6 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
 
                                 <br />
