@@ -14,6 +14,10 @@ namespace ProjectFlow.DashBoard
         {
             if (!IsPostBack)
             {
+                Session["PassProjectID"] = null;
+                Session["PassProjectName"] = null;
+                Session["PassTeamID"] = null;
+                Session["PassTeamName"] = null;
                 ShowProject(1);                        
             }                   
         }
@@ -66,6 +70,7 @@ namespace ProjectFlow.DashBoard
         {
             GridViewRow row = projectGV.SelectedRow;
             Session["PassProjectID"] = row.Cells[0].Text;
+            Session["PassProjectName"] = row.Cells[1].Text;
             Response.Redirect("ProjectTeamMenu.aspx");
         }
 

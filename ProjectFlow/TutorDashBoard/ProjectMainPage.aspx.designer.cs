@@ -13,12 +13,12 @@ namespace ProjectFlow {
     public partial class ProjectMainPage {
         
         /// <summary>
-        /// titleLabel control.
+        /// InfoLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label titleLabel;
+        protected global::System.Web.UI.WebControls.Label InfoLabel;
     }
 }

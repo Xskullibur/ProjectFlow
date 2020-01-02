@@ -95,8 +95,13 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div>                        
+    <div class="container">        
+        <div>
+            
+            <asp:Label ID="InfoLabel" runat="server" Font-Size="Large"></asp:Label>
+            <br />
+            <br />
+            
             <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />           
         </div>
         <br>

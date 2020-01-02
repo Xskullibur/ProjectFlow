@@ -16,7 +16,10 @@ namespace ProjectFlow.DashBoard
             {
                 if (Session["PassProjectID"] != null)
                 {
+                    Session["PassTeamID"] = null;
+                    Session["PassTeamName"] = null;
                     ShowTeam(Session["PassProjectID"].ToString());
+                    InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString();
                 }
                 else
                 {
@@ -79,7 +82,10 @@ namespace ProjectFlow.DashBoard
 
         protected void TeamGV_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            GridViewRow row = TeamGV.SelectedRow;
+            Session["PassTeamID"] = row.Cells[0].Text;
+            Session["PassTeamName"] = row.Cells[1].Text;
+            Response.Redirect("ProjectMainPage.aspx");
         }
 
         protected void TeamGV_RowEditing(object sender, GridViewEditEventArgs e)
