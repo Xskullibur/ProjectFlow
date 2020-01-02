@@ -151,11 +151,11 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                           
-                            <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button" ValidationGroup="tableValidation">
+                            <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
 
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
 
