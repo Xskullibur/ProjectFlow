@@ -45,8 +45,8 @@
                             </td>
                             <td class="auto-style8">
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />
                             </td>
@@ -76,7 +76,7 @@
                                 <br />
                             </td>
                             <td class="auto-style13">
-                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
+                                <asp:Button ID="CreateBtn" ValidationGroup="modelValidation" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
                                 <br />
                             </td>
                             <td class="auto-style8">
@@ -111,9 +111,26 @@
                     <asp:GridView ID="TeamGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
-                            <asp:BoundField DataField="teamID" HeaderText="ID" />
-                            <asp:BoundField DataField="teamName" HeaderText="Team Name" />
-                            <asp:BoundField DataField="teamDescription" HeaderText="Description" />
+                            <asp:BoundField DataField="teamID" HeaderText="ID" ReadOnly="true"/>
+
+                            <asp:TemplateField HeaderText="Team Name">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("teamName") %>'></asp:TextBox>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("teamName") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Description">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editDescTB" CssClass="form-control" runat="server" Text='<%# Bind("teamDescription") %>'></asp:TextBox>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="descLabel" runat="server" Text='<%# Bind("teamDescription") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            
                             <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>

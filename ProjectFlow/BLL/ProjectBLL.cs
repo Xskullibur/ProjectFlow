@@ -153,6 +153,34 @@ namespace ProjectFlow.BLL
             return errorList;
         }
 
+        public List<string> UpdateProjectTeam(int TeamID, string TeamName, string Desc)
+        {
+            ProjectDAO projectDAO = new ProjectDAO();
+            List<string> errorList = new List<string> { };
+            
+            if (TeamName.Equals(""))
+            {
+                errorList.Add("Name is empty<br>");
+            }
+
+            if (TeamName.Length > 255)
+            {
+                errorList.Add("Name cannot be more than 255 empty<br>");
+            }
+
+            if (Desc.Length > 255)
+            {
+                errorList.Add("Description cannot be more than 255 empty<br>");
+            }
+
+            if (errorList.Count == 0)
+            {
+                projectDAO.UpdateTeam(TeamID, TeamName, Desc);
+            }
+
+            return errorList;
+        }
+
         public bool CheckProjectExist(int TutorID)
         {
             ProjectDAO dao = new ProjectDAO();

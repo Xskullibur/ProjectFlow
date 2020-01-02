@@ -76,6 +76,14 @@ namespace ProjectFlow.DashBoard
 
         protected void TeamGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            GridViewRow row = TeamGV.Rows[e.RowIndex];
+            ProjectBLL projectBLL = new ProjectBLL();
+
+            int teamID = int.Parse(row.Cells[0].Text);
+            TextBox editName = (TextBox)row.FindControl("editNameTB");
+            TextBox editDesc = (TextBox)row.FindControl("editDescTB");
+                    
+            List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text);
             TeamGV.EditIndex = -1;
             ShowTeam(Session["PassProjectID"].ToString());
         }
