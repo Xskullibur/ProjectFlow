@@ -133,7 +133,8 @@
                             
                             <asp:TemplateField  HeaderText="Project Name">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editName" CssClass="form-control" runat="server" Text='<%# Bind("projectName") %>'></asp:TextBox>
+                                    <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("projectName") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="editNameRequiredValidator" runat="server" ControlToValidate="editNameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large" ValidationGroup="tableValidation"></asp:RequiredFieldValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("projectName") %>'></asp:Label>
@@ -142,14 +143,14 @@
 
                             <asp:TemplateField  HeaderText="Description">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editDesc" CssClass="form-control" runat="server" Text='<%# Bind("projectDescription") %>'></asp:TextBox>
+                                    <asp:TextBox ID="editDescTB" CssClass="form-control" runat="server" Text='<%# Bind("projectDescription") %>'></asp:TextBox>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="descLabel" runat="server" Text='<%# Bind("projectDescription") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                           
-                            <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
+                            <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
 

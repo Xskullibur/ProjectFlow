@@ -104,15 +104,18 @@ namespace ProjectFlow.DashBoard
             GridViewRow row = projectGV.Rows[e.RowIndex];
             ProjectBLL projectBLL = new ProjectBLL();
 
-            TextBox editNameTB = (TextBox)row.FindControl("editName");
-            TextBox editDescTB = (TextBox)row.FindControl("editDesc");
+            TextBox editName = (TextBox)row.FindControl("editNameTB");
+            TextBox editDesc = (TextBox)row.FindControl("editDescTB");
+            RequiredFieldValidator editValidator = (RequiredFieldValidator)row.FindControl("editNameRequiredValidator");
 
             string projectID = row.Cells[0].Text;
 
-            List<string> error = projectBLL.ValidateUpdate(projectID, editNameTB.Text, editDescTB.Text, 1);
-
-            projectGV.EditIndex = -1;
-            ShowProject(1);
+            if (editValidator.IsValid)
+            {
+                List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, 1);
+                projectGV.EditIndex = -1;
+                ShowProject(1);
+            }           
         }
     }
 }
