@@ -56,8 +56,8 @@
                             </td>
                             <td class="auto-style10">
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large" ValidationGroup="modelValidation"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />
                             </td>
@@ -75,7 +75,7 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" validationexpression="^.{1,255}$" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red" ControlToValidate="DescTB"></asp:RegularExpressionValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red" ControlToValidate="DescTB"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />
 
@@ -95,8 +95,8 @@
                             <td class="auto-style10">
                                 &nbsp;
 
-                                &nbsp;<asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ControlToValidate="ProjectIdTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="projectIdRegexValidator" runat="server" validationexpression="^[a-zA-Z0-9]{6}$" ControlToValidate="ProjectIdTB" ErrorMessage="6 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                &nbsp;<asp:RequiredFieldValidator ID="IdRequirdValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="ProjectIdTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="projectIdRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^[a-zA-Z0-9]{6}$" ControlToValidate="ProjectIdTB" ErrorMessage="6 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
 
                                 <br />
                                 <br />
@@ -106,7 +106,7 @@
                         <tr>
                             <td class="auto-style2">&nbsp;</td>
                             <td class="auto-style8">
-                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
+                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" ValidationGroup="modelValidation"/>
                             &nbsp;&nbsp;&nbsp;
                                 </td>
                         </tr>
@@ -130,15 +130,34 @@
                     <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
-                            <asp:BoundField DataField="projectID" HeaderText="Project ID" />
-                            <asp:BoundField DataField="projectName" HeaderText="Name" />
-                            <asp:BoundField DataField="projectDescription" HeaderText="Description" />
+                            <asp:BoundField DataField="projectID" HeaderText="Project ID" ReadOnly="true"/>    
+                            
+                            <asp:TemplateField  HeaderText="Project Name">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editName" CssClass="form-control" runat="server"></asp:TextBox>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("projectName") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField  HeaderText="Description">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editDesc" CssClass="form-control" runat="server"></asp:TextBox>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="descLabel" runat="server" Text='<%# Bind("projectDescription") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                          
                             <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
+
                             <asp:CommandField ButtonType="Button" ShowEditButton="True">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
+
                         </Columns>
                     </asp:GridView>
                 </div>

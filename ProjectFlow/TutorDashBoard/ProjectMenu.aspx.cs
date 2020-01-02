@@ -100,23 +100,7 @@ namespace ProjectFlow.DashBoard
         }
 
         protected void projectGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            ProjectBLL projectBLL = new ProjectBLL();
-            GridViewRow row = projectGV.Rows[e.RowIndex];
-            TextBox projectID = (TextBox)row.Cells[0].Controls[0];
-            TextBox name = (TextBox)row.Cells[1].Controls[0];
-            TextBox desc = (TextBox)row.Cells[2].Controls[0];
-
-            List<string> error = projectBLL.ValidateUpdate(projectID.Text, name.Text, desc.Text, 1);
-            if(error.Count > 0)
-            {
-                string total = "";
-                foreach(string item in error)
-                {
-                    total += item;
-                }
-                Label6.Text = total;
-            }
+        {           
             projectGV.EditIndex = -1;
             ShowProject(1);
         }
