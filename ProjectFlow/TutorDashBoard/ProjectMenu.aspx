@@ -121,7 +121,6 @@
     <div class="container">
         <div>             
             <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
-            <asp:Label ID="Label6" runat="server"></asp:Label>
         </div>
         <br>
         <div class="row">
@@ -134,7 +133,7 @@
                             
                             <asp:TemplateField  HeaderText="Project Name">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editName" CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="editName" CssClass="form-control" runat="server" Text='<%# Bind("projectName") %>'></asp:TextBox>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("projectName") %>'></asp:Label>
@@ -143,7 +142,7 @@
 
                             <asp:TemplateField  HeaderText="Description">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editDesc" CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="editDesc" CssClass="form-control" runat="server" Text='<%# Bind("projectDescription") %>'></asp:TextBox>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="descLabel" runat="server" Text='<%# Bind("projectDescription") %>'></asp:Label>

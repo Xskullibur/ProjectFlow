@@ -88,7 +88,7 @@ namespace ProjectFlow.DashBoard
         }
 
         protected void projectGV_RowEditing(object sender, GridViewEditEventArgs e)
-        {
+        {            
             projectGV.EditIndex = e.NewEditIndex;
             ShowProject(1);
         }
@@ -100,7 +100,17 @@ namespace ProjectFlow.DashBoard
         }
 
         protected void projectGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {           
+        {
+            GridViewRow row = projectGV.Rows[e.RowIndex];
+            ProjectBLL projectBLL = new ProjectBLL();
+
+            TextBox editNameTB = (TextBox)row.FindControl("editName");
+            TextBox editDescTB = (TextBox)row.FindControl("editDesc");
+
+            string projectID = row.Cells[0].Text;
+
+            List<string> error = projectBLL.ValidateUpdate(projectID, editNameTB.Text, editDescTB.Text, 1);
+
             projectGV.EditIndex = -1;
             ShowProject(1);
         }
