@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,14 +15,27 @@ namespace ProjectFlow
             if (Page.IsPostBack == false)
             {
                 if (Session["PassProjectID"] != null && Session["PassTeamID"] != null) {
-                    InfoLabel.Text = Session["PassProjectID"].ToString();
                     InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString()
                                      + " -> Team ID: " + Session["PassTeamID"].ToString() + " - " + Session["PassTeamName"].ToString();
+                    ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+
                 }
                 else
                 {
                     Response.Redirect("ProjectTeamMenu.aspx");
                 }
+            }
+        }
+
+        public void ShowMember(int TeamID)
+        {
+            ProjectBLL projectBLL = new ProjectBLL();
+            if (projectBLL.CheckProjectMemberExist(TeamID))
+            {
+                List<TeamMember> memberList = new List<TeamMember> { };
+                memberList = projectBLL.GetTeamMember(TeamID);
+                MemberGV.DataSource = memberList;
+                MemberGV.DataBind();
             }
         }
     }

@@ -81,6 +81,28 @@ namespace ProjectFlow.DAO
             }
         }
 
+        public List<TeamMember> GetMember(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Where(x => x.teamID == TeamID).ToList();              
+            }
+        }
+
+        public void InsertMember(string StudentID, int TeamID, int RoleID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = new TeamMember() {
+                    studentID = StudentID,
+                    teamID = TeamID,
+                    roleID = RoleID
+                };
+                dbContext.TeamMembers.Add(member);
+                dbContext.SaveChanges();
+            }
+        }
+
         public bool CheckUniqueProjectID(string ProjectID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -131,6 +153,21 @@ namespace ProjectFlow.DAO
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 if (dbContext.ProjectTeams.Any(x => x.projectID == ProjectID))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+       public bool CheckProjectMemberExist(int TeamID)
+       {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if (dbContext.TeamMembers.Any(x => x.teamID == TeamID))
                 {
                     return true;
                 }

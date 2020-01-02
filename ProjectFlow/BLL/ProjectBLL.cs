@@ -191,6 +191,18 @@ namespace ProjectFlow.BLL
         {
             ProjectDAO dao = new ProjectDAO();
             return dao.CheckProjectTeamExist(ProjectID);
-        }        
+        }  
+        
+        public bool CheckProjectMemberExist(int TeamID)
+        {
+            ProjectDAO dao = new ProjectDAO();
+            return dao.CheckProjectMemberExist(TeamID);
+        }
+
+        public List<TeamMember> GetTeamMember(int TeamID)
+        {
+            ProjectDAO dao = new ProjectDAO();
+            return dao.GetMember(TeamID);
+        }
     }  
 }
