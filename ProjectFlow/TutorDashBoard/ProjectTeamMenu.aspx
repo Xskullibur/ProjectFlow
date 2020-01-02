@@ -64,7 +64,8 @@
                             <td class="auto-style12">
                                 &nbsp;
 
-                                &nbsp;<br />
+                                &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ControlToValidate="DescTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                <br />
                                 <br />
 
                             </td>
@@ -116,6 +117,8 @@
                             <asp:TemplateField HeaderText="Team Name">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("teamName") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="editNameRequiredValidator" runat="server" ValidationGroup="tableValidation" ControlToValidate="editNameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="editNameRegexValidator" runat="server" ValidationGroup="tableValidation" validationexpression="^.{1,255}$" ControlToValidate="editNameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("teamName") %>'></asp:Label>
@@ -125,6 +128,7 @@
                             <asp:TemplateField HeaderText="Description">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editDescTB" CssClass="form-control" runat="server" Text='<%# Bind("teamDescription") %>'></asp:TextBox>
+                                    <asp:RegularExpressionValidator ID="editDescRegexValidator" runat="server" ValidationGroup="tableValidation" validationexpression="^.{1,255}$" ControlToValidate="editDescTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="descLabel" runat="server" Text='<%# Bind("teamDescription") %>'></asp:Label>
@@ -134,7 +138,7 @@
                             <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
                         </Columns>
