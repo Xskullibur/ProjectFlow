@@ -1,13 +1,13 @@
 ﻿"use strict";
 
-let socket = null;
+let websocket_worker = new Worker('/Scripts/ProjectFlow/christina-worker.js');
 
 $(document).ready(function () {
     var christinaHub = $.connection.christina;
 
 
     christinaHub.client.sendPassword = function (password) {
-        connectToWebsocket(password);
+        websocket_worker.postMessage({hostname: window.location.hostname, password});
         startRecording();
     };
 
@@ -21,78 +21,39 @@ $(document).ready(function () {
 let recording = false;
 
 async function startRecording() {
-    let AudioContext = window.AudioContext || window.webkitAudioContext;
-    let audioContext = new AudioContext({ sampleRate: 16000 });
-
     let stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
-    let input = audioContext.createMediaStreamSource(stream);
-    let recorder = new Recorder(input, {
-        numChannels: 1
+    let recorder = new RecordRTCPromisesHandler(stream, {
+        type: 'audio',
+        mimeType: 'audio/wav',
+        sampleRate: 16000,
+        numberOfAudioChannels: 1,
+        disableLogs: false
     });
+
     recording = true;
-    recorder.record();
+    recorder.startRecording();
 
     startTimeoutForRecording(recorder, stream);
 
 }
 
-function startTimeoutForRecording(recorder, stream) {
-    setTimeout(function () {
+async function startTimeoutForRecording(recorder, stream) {
+    setTimeout(async function () {
         if (recording) {
-            processAudio(recorder, stream, () => {
-                startTimeoutForRecording();
-            });
-            
+            processAudio(recorder);
+            startTimeoutForRecording();
         }
-        else recorder.stop();
+        else await recorder.stopRecording();
     }, 3000);
 }
 
-function processAudio(recorder, stream, cb) {
-    recorder.stop();
-    stream.getAudioTracks()[0].stop();
+async function processAudio(recorder) {
+    await recorder.stopRecording();
+    let blob = await recorder.getBlob();
+    recorder.startRecording();
 
-    recorder.exportWAV(function (blob) {
-        //Send to websocket
-        socket.send(blob);
-
-        recorder.clear();
-        recorder.record();
-
-        cb();
-    });
-
-}
-
-function connectToWebsocket(password) {
-    socket = new WebSocket("ws://" + window.location.hostname + ":9000");
-
-    socket.onopen = function (e) {
-        console.log("[open] Connection established");
-
-        //Handshake
-        handshake(socket, password);
-    };
-
-    socket.onmessage = function (event) {
-        console.log(`[message] Data received from server: ${event.data}`);
-    };
-
-    socket.onclose = function (event) {
-        if (event.wasClean) {
-            console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-        } else {
-            console.log('[close] Connection died');
-        }
-    };
-
-    socket.onerror = function (error) {
-        console.log(`[error] ${error.message}`);
-    };
-}
-
-function handshake(socket, password) {
-    socket.send(password);
+    //Send to websocket
+    websocket_worker.postMessage({blob});
 }
 
 

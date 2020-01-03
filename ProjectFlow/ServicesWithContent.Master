@@ -79,7 +79,7 @@
         </div>
         
             <%--Alert Continer--%>
-        <div class="container d-none" id="alert_container">
+        <div class="container" id="alert_container">
             <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
