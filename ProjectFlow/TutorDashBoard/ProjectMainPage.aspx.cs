@@ -38,5 +38,10 @@ namespace ProjectFlow
                 MemberGV.DataBind();
             }
         }
+
+        protected void CreateBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
