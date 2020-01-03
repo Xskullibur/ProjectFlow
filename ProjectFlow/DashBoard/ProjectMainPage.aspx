@@ -89,16 +89,20 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <asp:GridView ID="MemberGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px">
+                    <asp:GridView ID="MemberGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
                             <asp:BoundField DataField="studentID" HeaderText="Student ID" ReadOnly="True" />
                             <asp:TemplateField HeaderText="Role ID">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editRoleTB" CssClass="form-control" runat="server" Text='<%# Bind("roleID") %>'></asp:TextBox>
+                                </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="roleLabel" runat="server" Text='<%# Bind("roleID") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True" />
                         </Columns>
                     </asp:GridView>
                 </div>

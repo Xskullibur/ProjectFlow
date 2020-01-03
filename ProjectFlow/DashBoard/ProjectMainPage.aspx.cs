@@ -63,5 +63,23 @@ namespace ProjectFlow
                 Response.Redirect("ProjectMainPage.aspx");
             }
         }
+
+        protected void MemberGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            MemberGV.EditIndex = -1;
+            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void MemberGV_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            MemberGV.EditIndex = e.NewEditIndex;
+            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void MemberGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            MemberGV.EditIndex = -1;
+            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+        }
     }
 }
