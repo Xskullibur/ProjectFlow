@@ -15,7 +15,7 @@ namespace ProjectFlow
     public partial class CommentForIssue
     {
         public int commentID { get; set; }
-        public int comment { get; set; }
+        public string comment { get; set; }
         public int createdBy { get; set; }
         public int issueID { get; set; }
     
