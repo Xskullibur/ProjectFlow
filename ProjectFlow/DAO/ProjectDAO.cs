@@ -103,6 +103,19 @@ namespace ProjectFlow.DAO
             }
         }
 
+        public void UpdateMember(int MemberID, int RoleID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Single(x => x.memberID == MemberID);
+                if(member != null)
+                {
+                    member.roleID = RoleID;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
         public bool CheckUniqueProjectID(string ProjectID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

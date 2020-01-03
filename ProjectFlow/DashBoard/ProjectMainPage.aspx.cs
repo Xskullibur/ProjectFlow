@@ -66,6 +66,14 @@ namespace ProjectFlow
 
         protected void MemberGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            GridViewRow row = MemberGV.Rows[e.RowIndex];
+            ProjectBLL projectBLL = new ProjectBLL();
+
+            int memberID = int.Parse(row.Cells[0].Text);
+            TextBox editRole = (TextBox)row.FindControl("editRoleTB");
+           
+            List<string> errorList = projectBLL.ValidateUpdateMember(memberID, int.Parse(editRole.Text));
+                     
             MemberGV.EditIndex = -1;
             ShowMember(int.Parse(Session["PassTeamID"].ToString()));
         }
@@ -77,9 +85,14 @@ namespace ProjectFlow
         }
 
         protected void MemberGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
+        {                     
             MemberGV.EditIndex = -1;
             ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void CreateMemberBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

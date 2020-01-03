@@ -252,5 +252,32 @@ namespace ProjectFlow.BLL
 
             return errorList;
         }
+
+        public List<string> ValidateUpdateMember(int MemberID, int RoleID)
+        {
+            List<string> errorList = new List<string> { };
+            ProjectDAO dao = new ProjectDAO();
+
+            if (RoleID.ToString().Length > 4)
+            {
+                errorList.Add("role ID cannot contain more than 4 digit<br>");
+            }
+
+            if (RoleID < 0)
+            {
+                errorList.Add("role ID cannot be negative<br>");
+            }
+
+            if (RoleID == null)
+            {
+                errorList.Add("role ID cannot be null<br>");
+            }
+
+            if (errorList.Count == 0)
+            {
+                dao.UpdateMember(MemberID, RoleID);
+            }
+            return errorList;
+        }
     }  
 }

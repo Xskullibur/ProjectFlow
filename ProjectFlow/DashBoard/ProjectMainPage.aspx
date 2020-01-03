@@ -83,7 +83,7 @@
         <div>
             <asp:Label ID="InfoLabel" runat="server"></asp:Label>
             <br>
-            <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" />
+            <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" />
         </div>
         <br>
         <div class="row">
