@@ -167,5 +167,11 @@ namespace ProjectFlow.DAO
             }
         }
 
+
+        //public List<string> GetEmailsOfStudentsWithEmailPreference(List<Student> students)
+        //{
+
+        //}
+
     }
 }

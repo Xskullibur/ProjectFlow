@@ -40,7 +40,7 @@ namespace ProjectFlow.Scheduler
         /// <param name="emailSubject"></param>
         /// <param name="emailBody"></param>
         /// <returns></returns>
-        public static IJobDetail CreateEmailJob(string jobName, List<string> emailRecivers, string emailSubject, string emailBody)
+        public static IJobDetail CreateEmailJob(string jobName, List<string> emailRecivers, string emailSubject, string emailBody, string cc = null)
         {
             IJobDetail job = JobBuilder.Create<EmailJob>()
                 .WithIdentity(jobName, "EmailJob")
@@ -49,6 +49,7 @@ namespace ProjectFlow.Scheduler
                 .Build();
 
             job.JobDataMap.Put("Recivers", emailRecivers);
+            job.JobDataMap.Put("CC", cc);
 
             return job;
         }
@@ -63,7 +64,7 @@ namespace ProjectFlow.Scheduler
             // Create Job Trigger
             ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create()
                 .WithIdentity(triggerName, triggerGrp)
-                .StartAt(triggerDate.ToLocalTime())
+                .StartAt(triggerDate.ToUniversalTime())
                 .Build();
 
             return trigger;
@@ -89,7 +90,7 @@ namespace ProjectFlow.Scheduler
 
                 // Schedule Job with Trigger
                 await scheduler.ScheduleJob(job, trigger);
-                System.Diagnostics.Debug.WriteLine($"\n\n{job.Key.Name} Scheduled for {trigger.StartTimeUtc.ToString()} !\n\n");
+                System.Diagnostics.Debug.WriteLine($"\n\n{job.Key.Name} Scheduled for {trigger.StartTimeUtc.ToLocalTime().ToString()} !\n\n");
             }
             catch (Exception e)
             {

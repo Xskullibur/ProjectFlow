@@ -30,14 +30,15 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public string GetStatusByID(int id)
+        public Status GetStatusByID(int id)
         {
             try
             {
 
                 using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
                 {
-                    string status = dbContext.Status.First(x => x.ID == id).status1;
+                    Status status = dbContext.Status
+                        .First(x => x.ID == id);
 
                     return status;
                 }

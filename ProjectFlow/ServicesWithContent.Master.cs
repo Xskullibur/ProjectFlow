@@ -69,7 +69,7 @@ namespace ProjectFlow
                         setTimeout(function(){{ $('#{id}').alert('close'); }}, {time});
                    </script>
             ";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "timeout-" + id, timeoutScript, false);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "timeout-" + id, timeoutScript, false);
         }
 
         public void ShowAlert(string alertMsg, string alertType, bool escapedHtml = true, bool dismissable = true)

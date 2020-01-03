@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.DAO
 {
@@ -145,7 +146,9 @@ namespace ProjectFlow.DAO
             {
                 try
                 {
-                    Task task = dbContext.Tasks.First(x => x.taskID == id);
+                    Task task = dbContext.Tasks
+                        .Include(x => x.Status)
+                        .First(x => x.taskID == id);
                     return task;
                 }
                 catch (Exception e)

@@ -20,7 +20,7 @@ namespace ProjectFlow.BLL
             return statusDAO.Get();
         }
 
-        public string GetStatusByID(int id)
+        public Status GetStatusByID(int id)
         {
             StatusDAO statusDAO = new StatusDAO();
             return statusDAO.GetStatusByID(id);

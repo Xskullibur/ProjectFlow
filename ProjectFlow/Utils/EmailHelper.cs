@@ -27,7 +27,7 @@ namespace ProjectFlow.Utils
                 StatusBLL statusBLL = new StatusBLL();
                 MilestoneBLL milestoneBLL = new MilestoneBLL();
 
-                string status = statusBLL.GetStatusByID(task.statusID);
+                string status = statusBLL.GetStatusByID(task.statusID).status1;
                 string milestone = "-";
 
                 if (task.milestoneID != null)
@@ -67,7 +67,7 @@ namespace ProjectFlow.Utils
         /// <param name="subject">Subject of Email</param>
         /// <param name="textBody">Body of the Email</param>
         /// <returns>Boolean</returns>
-        public bool SendEmail(List<string> recivers, string subject, string textBody)
+        public bool SendEmail(List<string> recivers, string subject, string textBody, string cc = null)
         {
             try
             {
@@ -75,10 +75,17 @@ namespace ProjectFlow.Utils
                 _mailMessage.IsBodyHtml = true;
                 _mailMessage.From = new MailAddress(sender);
 
+
                 foreach (string reciver in recivers)
                 {
                     _mailMessage.To.Add(reciver);
                 }
+
+                if (cc != null)
+                {
+                    _mailMessage.CC.Add(cc);
+                }
+
 
                 _mailMessage.Subject = subject;
                 _mailMessage.Body = textBody;

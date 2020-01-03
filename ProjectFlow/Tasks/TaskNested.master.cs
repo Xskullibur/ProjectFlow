@@ -286,43 +286,8 @@ namespace ProjectFlow.Tasks
                 // Show Result
                 if (result)
                 {
-                    StatusBLL statusBLL = new StatusBLL();
-                    string status = statusBLL.GetStatusByID(newTask.statusID);
-
-                    // Check Task Status
-                    if (status != StatusBLL.COMPLETED)
-                    {
-
-                        // Get User's names and email from allocation
-                        List<string> allocatedNames = null;
-                        List<string> allocatedEmails = null;
-                        StudentBLL studentBLL = new StudentBLL();
-
-                        if (taskAllocations.Count > 0)
-                        {
-                            List<Student> allocatedStudents = studentBLL.GetAllocationsByTaskID(newTask.taskID);
-
-                            allocatedNames = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
-                            allocatedEmails = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
-                        }
-
-                        // Get Team Leader's email
-                        Student leader = studentBLL.GetLeaderByTaskID(newTask.taskID);
-                        string leaderEmail = leader.aspnet_Users.aspnet_Membership.Email;
-
-                        // TODO: Get User Notification Preference
-
-                        if (status == StatusBLL.VERIFICATON)
-                        {
-                            // Verificaton Job
-                        }
-                        else
-                        {
-                            // Schedule Email Notification Job
-                            NotificationHelper.AddEmail_TaskReminder_ONEDAY(newTask, allocatedNames, allocatedEmails);
-                        }
-
-                    }
+                    // Default Notification Setup (One Day Reminder + Delay Update and Alert)
+                    NotificationHelper.Default_AddTask_Notification_Setup(newTask.taskID);
 
                     // Update Page
                     hideModal();
