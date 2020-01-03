@@ -48,8 +48,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
-                ClearField();
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateProject').modal('hide');", true);
+                ClearField();               
                 Response.Redirect("ProjectMenu.aspx");
             }
         }

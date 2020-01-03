@@ -204,5 +204,53 @@ namespace ProjectFlow.BLL
             ProjectDAO dao = new ProjectDAO();
             return dao.GetMember(TeamID);
         }
+
+        public List<string> ValidateInsertMember(string StudentID, int TeamID, int RoleID)
+        {
+            List<string> errorList = new List<string> { };
+            ProjectDAO dao = new ProjectDAO();
+
+            if (StudentID.Equals(""))
+            {
+                errorList.Add("student ID is empty<br>");
+            }
+
+            if(dao.CheckStudentExist(StudentID) == false)
+            {
+                errorList.Add("student ID does not exist<br>");
+            }
+
+            if(dao.CheckStudentAlreadyExist(StudentID, TeamID))
+            {
+                errorList.Add("student already is a member<br>");
+            }
+
+            if(TeamID.ToString().Length > 4)
+            {
+                errorList.Add("team ID cannot contain more than 4 digit<br>");
+            }
+
+            if (RoleID.ToString().Length > 4)
+            {
+                errorList.Add("role ID cannot contain more than 4 digit<br>");
+            }
+
+            if (TeamID < 0)
+            {
+                errorList.Add("team ID cannot be negative<br>");
+            }
+
+            if (RoleID < 0)
+            {
+                errorList.Add("role ID cannot be negative<br>");
+            }
+
+            if(errorList.Count == 0)
+            {
+                dao.InsertMember(StudentID, TeamID, RoleID);
+            }
+
+            return errorList;
+        }
     }  
 }

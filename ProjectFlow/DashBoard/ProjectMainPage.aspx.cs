@@ -41,7 +41,27 @@ namespace ProjectFlow
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
+            ProjectBLL bll = new ProjectBLL();
+            List<string> errorList = new List<string> { };
+            string studentID = studentIDTB.Text;
+            int teamID = int.Parse(Session["PassTeamID"].ToString());
+            int roleID = int.Parse(RoleIDTB.Text);
 
+            errorList = bll.ValidateInsertMember(studentID, teamID, roleID);
+            if(errorList.Count > 0)
+            {
+                string total = "";
+                foreach(string error in errorList)
+                {
+                    total += error;
+                }
+                errorLabel.Text = total;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateMember').modal('show');", true);
+            }
+            else
+            {
+                Response.Redirect("ProjectMainPage.aspx");
+            }
         }
     }
 }

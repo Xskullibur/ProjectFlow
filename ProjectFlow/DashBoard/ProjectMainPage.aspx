@@ -28,7 +28,7 @@
                             <td class="auto-style8">
                                 &nbsp;
                                 <asp:RequiredFieldValidator ID="studentRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="studentIDTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="studentRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^[0-9]{1,4}$" ControlToValidate="studentIDTB" ErrorMessage="max 4 numbers!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                &nbsp;<asp:RegularExpressionValidator ID="studentRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^[a-zA-Z0-9]{7}$" ControlToValidate="studentIDTB" ErrorMessage="7 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 <br />
                                 <br />
                             </td>

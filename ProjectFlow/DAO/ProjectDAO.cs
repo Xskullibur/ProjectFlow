@@ -177,5 +177,35 @@ namespace ProjectFlow.DAO
                 }
             }
         }
+
+        public bool CheckStudentExist(string StudentID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if (dbContext.Students.Any(x => x.studentID.Equals(StudentID)))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool CheckStudentAlreadyExist(string StudentID, int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                if(dbContext.TeamMembers.Any(x => x.studentID.Equals(StudentID) && x.teamID == TeamID))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }
