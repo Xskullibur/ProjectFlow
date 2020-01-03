@@ -106,8 +106,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ProjectFlow\content-nav.css" />
-    <Content Include="TutorDashBoard\ProjectMenu.aspx" />
-    <Content Include="TutorDashBoard\ProjectTeamMenu.aspx" />
+    <Content Include="DashBoard\ProjectMenu.aspx" />
+    <Content Include="DashBoard\ProjectTeamMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -121,7 +121,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
-    <Content Include="TutorDashBoard\ProjectMainPage.aspx" />
+    <Content Include="DashBoard\ProjectMainPage.aspx" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -271,7 +271,7 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="TutorDashBoard\Web.config" />
+    <Content Include="DashBoard\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -308,18 +308,18 @@
     <Compile Include="DAO\StudentDAO.cs" />
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
-    <Compile Include="TutorDashBoard\ProjectMenu.aspx.cs">
+    <Compile Include="DashBoard\ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TutorDashBoard\ProjectMenu.aspx.designer.cs">
+    <Compile Include="DashBoard\ProjectMenu.aspx.designer.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TutorDashBoard\ProjectTeamMenu.aspx.cs">
+    <Compile Include="DashBoard\ProjectTeamMenu.aspx.cs">
       <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TutorDashBoard\ProjectTeamMenu.aspx.designer.cs">
+    <Compile Include="DashBoard\ProjectTeamMenu.aspx.designer.cs">
       <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -374,11 +374,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="TutorDashBoard\ProjectMainPage.aspx.cs">
+    <Compile Include="DashBoard\ProjectMainPage.aspx.cs">
       <DependentUpon>ProjectMainPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TutorDashBoard\ProjectMainPage.aspx.designer.cs">
+    <Compile Include="DashBoard\ProjectMainPage.aspx.designer.cs">
       <DependentUpon>ProjectMainPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectTeam.cs">
