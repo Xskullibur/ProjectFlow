@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 
 namespace ProjectFlow.DAO
@@ -121,9 +122,11 @@ namespace ProjectFlow.DAO
             {
                 using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
                 {
-                    Student leader = dbContext.TeamMembers.Where(x => x.teamID == teamID)
+                    Student leader = dbContext.TeamMembers
+                        .Where(x => x.teamID == teamID)
                         .Where(x => x.roleID == 1)
                         .Select(x => x.Student)
+                        .Include(x => x.aspnet_Users.aspnet_Membership)
                         .First();
 
                     return leader;
@@ -148,8 +151,11 @@ namespace ProjectFlow.DAO
             {
                 using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
                 {
-                    List<Student> allocationList = dbContext.TaskAllocations.Where(x => x.taskID == taskID)
-                        .Select(x => x.TeamMember.Student).ToList();
+                    List<Student> allocationList = dbContext.TaskAllocations
+                        .Where(x => x.taskID == taskID)
+                        .Select(x => x.TeamMember.Student)
+                        .Include(x => x.aspnet_Users.aspnet_Membership)
+                        .ToList();
 
                     return allocationList;
                 }

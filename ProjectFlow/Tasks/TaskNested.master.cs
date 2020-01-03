@@ -303,12 +303,12 @@ namespace ProjectFlow.Tasks
                             List<Student> allocatedStudents = studentBLL.GetAllocationsByTaskID(newTask.taskID);
 
                             allocatedNames = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
-                            allocatedEmails = allocatedStudents.Select(x => x.email).ToList();
+                            allocatedEmails = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
                         }
 
                         // Get Team Leader's email
                         Student leader = studentBLL.GetLeaderByTaskID(newTask.taskID);
-                        string leaderEmail = leader.email;
+                        string leaderEmail = leader.aspnet_Users.aspnet_Membership.Email;
 
                         // TODO: Get User Notification Preference
 
