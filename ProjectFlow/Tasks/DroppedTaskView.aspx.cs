@@ -1,5 +1,7 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,6 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
-
                 Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }
@@ -44,12 +45,18 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                // TODO: Notify Restore Successful
+                this.Master.Master.ShowAlertWithTiming("Successfully Restore Task!", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
             {
-                // TODO: Notify Restore Failed
+                this.Master.Master.ShowAlert("Failed to Restore Task!", BootstrapAlertTypes.DANGER);
             }
+        }
+
+        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            taskGrid.PageIndex = e.NewPageIndex;
+            refreshData();
         }
     }
 }

@@ -2,6 +2,9 @@
 using ProjectFlow.DAO;
 using ProjectFlow.Login;
 using StackExchange.Redis;
+using ProjectFlow.Scheduler;
+using Quartz;
+using Quartz.Impl;
 using System;
 using System.Security.Principal;
 using System.Web;
@@ -22,6 +25,8 @@ namespace ProjectFlow
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            JobScheduler.StartAsync();
+
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
             {
                 Path = "~/Scripts/jquery-3.4.1.min.js",
@@ -58,6 +63,12 @@ namespace ProjectFlow
 
             //Create redis connection
             Redis = ConnectionMultiplexer.Connect("192.168.99.100");
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap-datetimepicker", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.js",
+                DebugPath = "~/Scripts/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.js"
+            });
 
         }
 
@@ -132,6 +143,10 @@ namespace ProjectFlow
         {
             //Close redis connection
             Redis.Close();
+            // Shutdown Scheduler
+            IScheduler scheduler = (IScheduler)StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.Clear();
+            scheduler.Shutdown();
         }
     }
 }
