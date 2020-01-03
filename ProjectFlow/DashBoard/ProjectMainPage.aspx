@@ -97,12 +97,14 @@
                             <asp:TemplateField HeaderText="Role ID">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editRoleTB" CssClass="form-control" runat="server" Text='<%# Bind("roleID") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="editRoleRequiredValidator" runat="server" ValidationGroup="tableValidation" ControlToValidate="editRoleTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="editRoleRegexValidator" runat="server" ValidationGroup="tableValidation" validationexpression="^[0-9]{1,4}$" ControlToValidate="editRoleTB" ErrorMessage="max 4 numbers!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="roleLabel" runat="server" Text='<%# Bind("roleID") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True" />
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation"/>
                         </Columns>
                     </asp:GridView>
                 </div>
