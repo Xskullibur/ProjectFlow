@@ -54,34 +54,49 @@ namespace ProjectFlow.Utils
             List<Student> allocatedStudents = studentBLL.GetAllocationsByTaskID(task.taskID);
             Student leader = studentBLL.GetLeaderByTaskID(task.taskID);
 
-            // Names of those allocated
-            List<string> Allocated_Names = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
+            // TODO: Check Leader Preference
 
-            // TODO: Check Notification Preference
+            // Check if allocatedStudents is not empty
+            if (allocatedStudents.Count > 0)
+            {
+                // Names of those allocated
+                List<string> Allocated_Names = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
 
-                /**
-                 * EMAIL PREFERENCE
-                 **/
-                List<Student> Email_AllocatedStudents = allocatedStudents; // TODO: Filter allocated students by those who prefer email
-                List<string> recivers = Email_AllocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
+                // TODO: Check Notification Preference
 
-                // Check if Leader in Email_AllocatedStudents
-                if (!Email_AllocatedStudents.Contains(leader))
-                {
-                    string leader_email = leader.aspnet_Users.aspnet_Membership.Email;
-                    Email_TaskReminder_ONEDAY(task, Allocated_Names, recivers, leader_email);
-                }
-                else
-                {
-                    Email_TaskReminder_ONEDAY(task, Allocated_Names, recivers);
-                }
+                    /**
+                     * EMAIL PREFERENCE
+                     **/
+                    List<Student> Email_AllocatedStudents = allocatedStudents; // TODO: Filter allocated students by those who prefer email
+                    List<string> recivers = Email_AllocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
 
-                /**
-                 * SMS PREFERENCE
-                 **/
-                List<string> HP_AllocatedStudents = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.MobilePIN).ToList();
+                    // Check if Leader in Email_AllocatedStudents
+                    if (!Email_AllocatedStudents.Select(x => x.studentID).Contains(leader.studentID))
+                    {
+                        string leader_email = leader.aspnet_Users.aspnet_Membership.Email;
+                        Email_TaskReminder_ONEDAY(task, Allocated_Names, recivers, leader_email);
+                    }
+                    else
+                    {
+                        Email_TaskReminder_ONEDAY(task, Allocated_Names, recivers);
+                    }
 
-            // END OF TODO
+                    /**
+                     * SMS PREFERENCE
+                     **/
+                    List<string> HP_AllocatedStudents = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.MobilePIN).ToList();
+
+                // END OF TODO
+            }
+            else
+            {
+                // TODO: Condition Leader's Preference
+                
+                // Email
+                Email_TaskReminder_ONEDAY(task, null, new List<string> { leader.aspnet_Users.aspnet_Membership.Email });
+            }
+
+
         }
 
         /// <summary>

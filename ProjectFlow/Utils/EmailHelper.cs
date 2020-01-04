@@ -47,14 +47,22 @@ namespace ProjectFlow.Utils
                     textBody = textBody.Replace("[EndDate]", task.endDate.ToString());
                     textBody = textBody.Replace("[Milestone]", milestone);
                     textBody = textBody.Replace("[Status]", status);
-                    textBody = textBody.Replace("[Allocations]", string.Join(", ", allocations));
+
+                    if (allocations == null)
+                    {
+                        textBody = textBody.Replace("[Allocations]", "-");
+                    }
+                    else
+                    {
+                        textBody = textBody.Replace("[Allocations]", string.Join(", ", allocations));
+                    }
 
                     return textBody;
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                System.Diagnostics.Debug.WriteLine($"Email Template Error: \n{e.Message}");
                 return null;
             }
 
