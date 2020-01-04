@@ -4,6 +4,7 @@ using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -60,14 +61,17 @@ namespace ProjectFlow.Tasks
             refreshData();
         }
 
-        //  Setup Editing Data
+        // On DataBind
         protected void taskGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+
                 if ((e.Row.RowState & DataControlRowState.Edit) > 0)
                 {
+                    // Setup Edit Mode
+
                     object rowItems = e.Row.DataItem;
 
                     /**
@@ -185,6 +189,41 @@ namespace ProjectFlow.Tasks
                     else
                     {
                         editMilestoneDDL.SelectedValue = teamMilestone.First(x => x.milestoneName == milestoneVal).milestoneID.ToString();
+                    }
+                }
+                else
+                {
+                    // Setup Due Date
+
+                    TableCell DueDateCell = e.Row.Cells[1];
+
+                    // Task End Date
+                    DateTime EndDate = DateTime.Parse(((Label)e.Row.FindControl("gridEnd")).Text);
+                    int DaysLeft = TaskVerification.VerifyDaysLeft(EndDate);
+
+                    if (DaysLeft > 0)
+                    {
+                        DueDateCell.Text = $"{DaysLeft} Days";
+
+                        if (DaysLeft > 5)
+                        {
+                            DueDateCell.CssClass = "text-success";
+                        }
+                        else
+                        {
+                            DueDateCell.CssClass = "text-warning";
+                        }
+
+                    }
+                    else if (DaysLeft == 0)
+                    {
+                        DueDateCell.Text = "Today";
+                        DueDateCell.CssClass = "text-danger";
+                    }
+                    else
+                    {
+                        DueDateCell.Text = $"Overdue {Math.Abs(DaysLeft)} Days!";
+                        DueDateCell.CssClass = "text-danger";
                     }
                 }
             }

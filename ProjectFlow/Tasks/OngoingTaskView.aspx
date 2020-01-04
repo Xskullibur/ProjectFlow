@@ -26,6 +26,7 @@
                                     <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
 
                                     <%--Task--%>
+                                    <asp:BoundField HeaderText="Due" ReadOnly="True" />
                                     <asp:TemplateField HeaderText="Task">
                                         <EditItemTemplate>
                                             <asp:TextBox ID="editTaskTxt" CssClass="form-control" runat="server" Text='<%# Bind("Task") %>'></asp:TextBox>

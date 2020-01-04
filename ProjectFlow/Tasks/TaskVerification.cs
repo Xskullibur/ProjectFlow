@@ -119,5 +119,11 @@ namespace ProjectFlow.Tasks
             return verified;
         }
 
+
+        public static int VerifyDaysLeft(DateTime endDate)
+        {
+            return (endDate - DateTime.Now.Date).Days;
+        }
+
     }
 }
