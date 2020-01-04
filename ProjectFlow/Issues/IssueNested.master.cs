@@ -73,6 +73,7 @@ namespace ProjectFlow.Issues
                 newIssue.description = tDescTxt.Text;
                 newIssue.taskID = 5;                    //this is a placeholder
                 newIssue.createdBy = TEST_TEAM_ID;      //this is also a placeholder
+                newIssue.active = true;
 
                 // Submit Query
                 IssueBLL issueBLL = new IssueBLL();
@@ -82,6 +83,7 @@ namespace ProjectFlow.Issues
                 if (result)
                 {
                     hideModal();
+                    refreshGrid?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
