@@ -18,7 +18,7 @@ namespace ProjectFlow.DashBoard
                 Session["PassProjectName"] = null;
                 Session["PassTeamID"] = null;
                 Session["PassTeamName"] = null;
-                ShowProject(1);                        
+                ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));                        
             }                   
         }
 
@@ -29,7 +29,7 @@ namespace ProjectFlow.DashBoard
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
-            int tutorID = 1;
+            Guid tutorID = Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3");
 
             List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
 
@@ -53,7 +53,7 @@ namespace ProjectFlow.DashBoard
             }
         }
 
-        public void ShowProject(int tutorID)
+        public void ShowProject(Guid tutorID)
         {           
             ProjectBLL projectBLL = new ProjectBLL();
             if (projectBLL.CheckProjectExist(tutorID))
@@ -89,13 +89,13 @@ namespace ProjectFlow.DashBoard
         protected void projectGV_RowEditing(object sender, GridViewEditEventArgs e)
         {            
             projectGV.EditIndex = e.NewEditIndex;
-            ShowProject(1);
+            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
         }
 
         protected void projectGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             projectGV.EditIndex = -1;
-            ShowProject(1);
+            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
         }
 
         protected void projectGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -108,9 +108,9 @@ namespace ProjectFlow.DashBoard
 
             string projectID = row.Cells[0].Text;
 
-            List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, 1);
+            List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
             projectGV.EditIndex = -1;
-            ShowProject(1);
+            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
 
         }
     }

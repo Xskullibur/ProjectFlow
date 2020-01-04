@@ -7,15 +7,16 @@ namespace ProjectFlow.DAO
 {
     public class ProjectDAO
     {
-        public void InsertProject(string ProjectID, string Name, string Desc, int TutorID)
+        public void InsertProject(string ProjectID, string Name, string Desc, Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
+
                 var project = new Project() {
                     projectID = ProjectID,
                     projectName = Name,
                     projectDescription = Desc,
-                    tutorID = TutorID                   
+                    UserId = TutorID                  
                 };
                 dbContext.Projects.Add(project);
                 dbContext.SaveChanges();
@@ -36,11 +37,11 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public List<Project> GetProjectTutor(int TutorID)
+        public List<Project> GetProjectTutor(Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {               
-                Tutor tutor = dbContext.Tutors.First(x => x.tutorID == TutorID);                
+                Tutor tutor = dbContext.Tutors.First(x => x.UserId == TutorID);                
                 return tutor.Projects.ToList();
             }
         }
@@ -93,8 +94,10 @@ namespace ProjectFlow.DAO
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
+                var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
+
                 var member = new TeamMember() {
-                    studentID = StudentID,
+                    UserId = student.UserId,
                     teamID = TeamID,
                     roleID = RoleID
                 };
@@ -131,11 +134,11 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public bool CheckOwnership(string ProjectID, int TutorID)
+        public bool CheckOwnership(string ProjectID, Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                if (dbContext.Projects.Any(x => x.projectID == ProjectID && x.tutorID == TutorID))
+                if (dbContext.Projects.Any(x => x.projectID == ProjectID && x.UserId == TutorID))
                 {
                     return true;
                 }
@@ -146,11 +149,11 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public bool CheckProjectExist(int TutorID)
+        public bool CheckProjectExist(Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                if (dbContext.Projects.Any(x => x.tutorID == TutorID))
+                if (dbContext.Projects.Any(x => x.UserId == TutorID))
                 {
                     return true;
                 }
@@ -195,7 +198,8 @@ namespace ProjectFlow.DAO
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                if (dbContext.Students.Any(x => x.studentID.Equals(StudentID)))
+                var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
+                if (dbContext.Students.Any(x => x.UserId.Equals(student.UserId)))
                 {
                     return true;
                 }
@@ -210,7 +214,8 @@ namespace ProjectFlow.DAO
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                if(dbContext.TeamMembers.Any(x => x.studentID.Equals(StudentID) && x.teamID == TeamID))
+                var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
+                if (dbContext.TeamMembers.Any(x => x.UserId.Equals(student.UserId) && x.teamID == TeamID))
                 {
                     return true;
                 }

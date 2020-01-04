@@ -93,7 +93,7 @@
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
-                            <asp:BoundField DataField="studentID" HeaderText="Student ID" ReadOnly="True" />
+                            <asp:BoundField DataField="UserID" HeaderText="Student ID" ReadOnly="True" />
                             <asp:TemplateField HeaderText="Role ID">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editRoleTB" CssClass="form-control" runat="server" Text='<%# Bind("roleID") %>'></asp:TextBox>

@@ -14,7 +14,7 @@ namespace ProjectFlow.BLL
             return Regex.Replace(input, @"\s+", "");
         }
           
-        public List<Project> GetProjectTutor(int tutorID)
+        public List<Project> GetProjectTutor(Guid tutorID)
         {
             ProjectDAO projectDAO = new ProjectDAO();
             return projectDAO.GetProjectTutor(tutorID);
@@ -54,7 +54,7 @@ namespace ProjectFlow.BLL
             return errorList;          
         }
 
-        public List<string> ValidateProject(string ProjectID, string Name, string Desc, int TutorID)
+        public List<string> ValidateProject(string ProjectID, string Name, string Desc, Guid TutorID)
         {
             ProjectDAO projectDAO = new ProjectDAO();
             ProjectID = RemoveWhiteSpace(ProjectID);
@@ -106,7 +106,7 @@ namespace ProjectFlow.BLL
             return errorList;
         }
 
-        public List<string> ValidateUpdate(string ProjectID, string Name, string Desc, int TutorID)
+        public List<string> ValidateUpdate(string ProjectID, string Name, string Desc, Guid TutorID)
         {
             ProjectDAO projectDAO = new ProjectDAO();
             ProjectID = RemoveWhiteSpace(ProjectID);
@@ -181,7 +181,7 @@ namespace ProjectFlow.BLL
             return errorList;
         }
 
-        public bool CheckProjectExist(int TutorID)
+        public bool CheckProjectExist(Guid TutorID)
         {
             ProjectDAO dao = new ProjectDAO();
             return dao.CheckProjectExist(TutorID);
