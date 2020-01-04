@@ -15,5 +15,13 @@ namespace ProjectFlow.BLL
 
             return milestoneList;
         }
+
+        public Milestone GetMilestoneByID(int? id)
+        {
+            MilestoneDAO milestoneDAO = new MilestoneDAO();
+            var milestone = milestoneDAO.GetMilestoneByID(id);
+
+            return milestone;
+        }
     }
 }

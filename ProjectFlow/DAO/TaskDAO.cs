@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.DAO
 {
@@ -145,7 +146,9 @@ namespace ProjectFlow.DAO
             {
                 try
                 {
-                    Task task = dbContext.Tasks.First(x => x.taskID == id);
+                    Task task = dbContext.Tasks
+                        .Include(x => x.Status)
+                        .First(x => x.taskID == id);
                     return task;
                 }
                 catch (Exception e)
@@ -177,6 +180,8 @@ namespace ProjectFlow.DAO
                         .Include("Status")
                         .Where(x => x.teamID == teamID)
                         .Where(x => x.dropped != true)
+                        .OrderBy(x => x.startDate)
+                        .ThenBy(x => x.endDate)
                         .ToList().Select(y => new
                         {
                             ID = y.taskID,
@@ -245,6 +250,31 @@ namespace ProjectFlow.DAO
                 }
 
 
+            }
+        }
+
+
+        /// <summary>
+        /// Get ProjectTeam by Task ID
+        /// </summary>
+        /// <param name="taskID"></param>
+        /// <returns>ProjectTeam</returns>
+        public ProjectTeam GetProjectTeamByTaskID(int taskID)
+        {
+            try
+            {
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+                {
+                    ProjectTeam team = dbContext.Tasks.Where(x => x.taskID == taskID)
+                        .Select(x => x.ProjectTeam).First();
+
+                    return team;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error While Retrieving ProjectTeam: {e.Message}");
+                return null;
             }
         }
 

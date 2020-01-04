@@ -16,5 +16,16 @@ namespace ProjectFlow.DAO
                 return teamMilestone;
             }
         }
+
+        public Milestone GetMilestoneByID(int? id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                Milestone milestone = dbContext.Milestones.First(x => x.milestoneID == id);
+
+                return milestone;
+            }
+        }
+
     }
 }
