@@ -246,7 +246,7 @@ namespace ProjectFlow.Tasks
             // Verify Task ID
             TaskBLL taskBLL = new TaskBLL();
             int id = Convert.ToInt32(row.Cells[0].Text);
-            
+
             Task updated_task = taskBLL.GetTaskById(id);
             if (updated_task == null)
             {
@@ -302,7 +302,7 @@ namespace ProjectFlow.Tasks
 
                 // Verify
                 TaskVerification taskVerification = new TaskVerification();
-                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate,  statusIndex);
+                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
 
                 // Show Errors
                 if (!verified)
@@ -358,14 +358,14 @@ namespace ProjectFlow.Tasks
                 }
                 else
                 {
-                    
+
                     /**
                      * UPDATE TASK
                      **/
 
                     int milestoneID = Convert.ToInt32((milestoneDDL).SelectedValue);
                     int statusID = Convert.ToInt32((statusDDL).SelectedValue);
-                
+
                     // Update Task
                     updated_task.taskName = name;
                     updated_task.taskDescription = desc;
