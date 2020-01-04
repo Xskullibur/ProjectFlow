@@ -8,17 +8,17 @@
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container py-2 w-100 h-100">
+    <div class="container py-2">
 
         <div class="row pb-2">
             <div class="col">
 
-                <div style="overflow-x: auto;">
+                <div>
 
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered table-responsive" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 

@@ -43,6 +43,7 @@
                 $('.datetimepicker').datetimepicker();
             })
         </script>
+
         <div class="sticky-top">
             <nav class="navbar content-nav navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">
@@ -133,24 +134,21 @@
                 </div>
 
                 <div id="content" class="col-12 col-md-10">
-                    <table style="width:100%;height:100vh;">
-                        <tr>
-                            <td class="h-100 pt-5" style="vertical-align:top;">
+                    <div class="row h-100 pt-5" style="vertical-align:top;">
 
-                                <%--Alert Continer--%>
-                                <div class="container" id="alert_container">
-                                    <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                        <ContentTemplate>
-                                            <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
-                                </div>
+                        <%--Alert Continer--%>
+                        <div class="container" id="alert_container">
+                            <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                <ContentTemplate>
+                                    <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
 
-                                <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                                </asp:ContentPlaceHolder>
-                            </td>
-                        </tr>
-                    </table>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                        </asp:ContentPlaceHolder>
+
+                    </div>
                 </div>
             </div>
         </div>
