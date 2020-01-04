@@ -33,15 +33,15 @@ async function startRecording() {
     recording = true;
     recorder.startRecording();
 
-    startTimeoutForRecording(recorder, stream);
+    startTimeoutForRecording(recorder);
 
 }
 
-async function startTimeoutForRecording(recorder, stream) {
+async function startTimeoutForRecording(recorder) {
     setTimeout(async function () {
         if (recording) {
             processAudio(recorder);
-            startTimeoutForRecording();
+            startTimeoutForRecording(recorder);
         }
         else await recorder.stopRecording();
     }, 3000);
