@@ -40,7 +40,7 @@ namespace ProjectFlow.Tasks
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
-            bool result = taskBLL.Restore(id);
+            bool result = taskBLL.Restore(taskBLL.GetTaskByID(id));
             refreshData();
 
             if (result)

@@ -25,7 +25,7 @@ namespace ProjectFlow.Utils
             StatusBLL statusBLL = new StatusBLL();
 
             // Get Task
-            Task task = taskBLL.GetTaskById(taskID);
+            Task task = taskBLL.GetTaskByID(taskID);
             Status task_status = statusBLL.GetStatusByID(task.statusID);
 
             // Check Status

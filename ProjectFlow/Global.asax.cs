@@ -1,5 +1,4 @@
 ﻿using ProjectFlow.App_Start;
-using ProjectFlow.DAO;
 using ProjectFlow.Login;
 using StackExchange.Redis;
 using ProjectFlow.Scheduler;
@@ -12,6 +11,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.UI;
+using ProjectFlow.BLL;
 
 namespace ProjectFlow
 {
@@ -100,8 +100,8 @@ namespace ProjectFlow
 
                         if (role.Equals("Student"))
                         {
-                            StudentDAO dao = new StudentDAO();
-                            Student student = dao.FindStudentByUsername(username);
+                            StudentBLL bll = new StudentBLL();
+                            Student student = bll.FindStudentByUsername(username);
 
                             var projectFlowIdentity = new ProjectFlowIdentity(student, id);
                             var principal = new GenericPrincipal(projectFlowIdentity, roles);
@@ -110,8 +110,8 @@ namespace ProjectFlow
                         }
                         else if(role.Equals("Tutor"))
                         {
-                            TutorDAO dao = new TutorDAO();
-                            Tutor tutor = dao.FindTutorByUsername(username);
+                            TutorBLL bll = new TutorBLL();
+                            Tutor tutor = bll.FindTutorByUsername(username);
 
                             var projectFlowIdentity = new ProjectFlowIdentity(tutor, id);
                             var principal = new GenericPrincipal(projectFlowIdentity, roles);

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ProjectFlow.DAO
+namespace ProjectFlow.BLL
 {
-    public class TutorDAO
+    public class TutorBLL
     {
         /// <summary>
         /// Find the Tutor using email

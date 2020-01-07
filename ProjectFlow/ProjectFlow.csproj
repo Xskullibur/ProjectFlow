@@ -396,6 +396,7 @@
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
+    <Compile Include="BLL\ProjectTeamBLL.cs" />
     <Compile Include="BLL\RoomBLL.cs" />
     <Compile Include="BLL\StatusBLL.cs" />
     <Compile Include="BLL\StudentBLL.cs" />
@@ -404,15 +405,7 @@
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAO\aspnet_UsersDAO.cs" />
-    <Compile Include="DAO\MilestoneDAO.cs" />
-    <Compile Include="DAO\ProjectDAO.cs" />
-    <Compile Include="DAO\RoomDAO.cs" />
-    <Compile Include="DAO\StatusDAO.cs" />
-    <Compile Include="DAO\StudentDAO.cs" />
-    <Compile Include="DAO\TaskDAO.cs" />
-    <Compile Include="DAO\TeamMemberDAO.cs" />
-    <Compile Include="DAO\TutorDAO.cs" />
+    <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="DashBoard\ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
