@@ -17,7 +17,7 @@ namespace ProjectFlow.Utils
         string smtp= ConfigurationManager.AppSettings["SMTP"].ToString();
         int portNo = Convert.ToInt32(ConfigurationManager.AppSettings["PortNo"].ToString());
 
-        public static string GetTaskNotificationTemplate(int dueDays, Task task, List<string> allocations)
+        public static string GetTaskNotificationTemplate(string title, int dueDays, Task task, List<string> allocations)
         {
 
             try
@@ -40,8 +40,8 @@ namespace ProjectFlow.Utils
                     string textBody = streamReader.ReadToEnd();
 
                     //Update Template Values
+                    textBody = textBody.Replace("[Title]", title);
                     textBody = textBody.Replace("[DueDays]", dueDays.ToString());
-                    textBody = textBody.Replace("[TaskName]", task.taskName);
                     textBody = textBody.Replace("[TaskDesc]", task.taskDescription);
                     textBody = textBody.Replace("[StartDate]", task.startDate.ToString());
                     textBody = textBody.Replace("[EndDate]", task.endDate.ToString());

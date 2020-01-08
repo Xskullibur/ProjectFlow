@@ -199,7 +199,7 @@ namespace ProjectFlow.Tasks
 
                     // Task End Date
                     DateTime EndDate = DateTime.Parse(((Label)e.Row.FindControl("gridEnd")).Text);
-                    int DaysLeft = TaskVerification.VerifyDaysLeft(EndDate);
+                    int DaysLeft = TaskHelper.VerifyDaysLeft(EndDate);
 
                     if (DaysLeft > 0)
                     {
@@ -301,7 +301,7 @@ namespace ProjectFlow.Tasks
                 statusErrorLbl.Visible = false;
 
                 // Verify
-                TaskVerification taskVerification = new TaskVerification();
+                TaskHelper taskVerification = new TaskHelper();
                 bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
 
                 // Show Errors

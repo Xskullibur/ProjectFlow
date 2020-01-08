@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ProjectFlow.Tasks
 {
-    public class TaskVerification
+    public class TaskHelper
     {
         public List<string> TNameErrors { get; set; }
         public List<string> TDescErrors { get; set; }
@@ -17,7 +17,7 @@ namespace ProjectFlow.Tasks
         public List<string> TStatusErrors { get; set; }
         public List<string> StartEndDateErrors { get; set; }
 
-        public TaskVerification()
+        public TaskHelper()
         {
             TNameErrors = new List<string>();
             TDescErrors = new List<string>();

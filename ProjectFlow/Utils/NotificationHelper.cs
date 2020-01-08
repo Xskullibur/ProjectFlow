@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Scheduler;
+using ProjectFlow.Tasks;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -13,22 +14,30 @@ namespace ProjectFlow.Utils
     public class NotificationHelper
     {
 
-        public NotificationHelper(Task task)
+        public enum REMINDER_TYPE
         {
-
+            DAY_7, DAY_1, DAY_0, OVERDUE
         }
 
+        private static bool LeaderInAllocation(List<Student> allocatedStudents, Student leader)
+        {
+            return allocatedStudents.Select(x => x.studentID).Contains(leader.studentID);
+        }
+
+        /// <summary>
+        /// Send Status Reminders (Completed / Verification / Due Dates) based on Task ID
+        /// </summary>
+        /// <param name="taskID">int</param>
         public static void Default_AddTask_Notification_Setup(int taskID)
         {
-            // Check Task Status
-            TaskBLL taskBLL = new TaskBLL();
-            StatusBLL statusBLL = new StatusBLL();
-
             // Get Task
+            TaskBLL taskBLL = new TaskBLL();
             Task task = taskBLL.GetTaskByID(taskID);
-            Status task_status = statusBLL.GetStatusByID(task.statusID);
 
             // Check Status
+            StatusBLL statusBLL = new StatusBLL();
+            Status task_status = statusBLL.GetStatusByID(task.statusID);
+
             if (task_status.status1 == StatusBLL.COMPLETED)
             {
                 // TODO: Task Completed Job
@@ -39,91 +48,135 @@ namespace ProjectFlow.Utils
             }
             else
             {
-                // TODO: Task Reminder Job
-                Send_Notification_Reminder_ONEDAY(task);
+                // Task Reminder Job
+                int days_remaining = TaskHelper.VerifyDaysLeft(task.endDate);
+
+                // In-progress Reminder
+                if (days_remaining >= 0)
+                {
+                    //  7 DAYS
+                    if (days_remaining >= 7)
+                    {
+                        GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_7, task);
+                    }
+
+                    // TOMORROW
+                    if (days_remaining >= 1)
+                    {
+                        GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_1, task);
+                    }
+
+                    // TODO: TODAY Reminder
+                }
+
+                // TODO: Overdue Reminder
             }
 
-            // TODO: Task Overdue Job
         }
 
-        public static void Send_Notification_Reminder_ONEDAY(Task task)
+        /// <summary>
+        /// Send Email Reminder Based on Task Details (Allocated Students / Leader)
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="task"></param>
+        public static void GetDetailsAndSendReminderEmail(REMINDER_TYPE type, Task task)
         {
             StudentBLL studentBLL = new StudentBLL();
 
             // Get Students Involved  (Allocated Team Members / Team Leader)
             List<Student> allocatedStudents = studentBLL.GetAllocationsByTaskID(task.taskID);
             Student leader = studentBLL.GetLeaderByTaskID(task.taskID);
+            bool students_allocated_exist = allocatedStudents.Count > 0 ? true : false;
 
-            // TODO: Check Leader Preference
+            // Default Values
+            List<string> allocated_names = new List<string>();
+            List<string> email_recivers = new List<string>();
+            string leader_email = leader.aspnet_Users.aspnet_Membership.Email;
 
-            // Check if allocatedStudents is not empty
+            // Send Notification to Leader if No Allocation
             if (allocatedStudents.Count > 0)
             {
-                // Names of those allocated
-                List<string> Allocated_Names = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
+                allocated_names = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
+                email_recivers = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
+            }
 
-                // TODO: Check Notification Preference
-
-                    /**
-                     * EMAIL PREFERENCE
-                     **/
-                    List<Student> Email_AllocatedStudents = allocatedStudents; // TODO: Filter allocated students by those who prefer email
-                    List<string> recivers = Email_AllocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
-
-                    // Check if Leader in Email_AllocatedStudents
-                    if (!Email_AllocatedStudents.Select(x => x.studentID).Contains(leader.studentID))
-                    {
-                        string leader_email = leader.aspnet_Users.aspnet_Membership.Email;
-                        Email_TaskReminder_ONEDAY(task, Allocated_Names, recivers, leader_email);
-                    }
-                    else
-                    {
-                        Email_TaskReminder_ONEDAY(task, Allocated_Names, recivers);
-                    }
-
-                    /**
-                     * SMS PREFERENCE
-                     **/
-                    List<string> HP_AllocatedStudents = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.MobilePIN).ToList();
-
-                // END OF TODO
+            if (students_allocated_exist)
+            {
+                // Send Allocated Students
+                if (!LeaderInAllocation(allocatedStudents, leader))
+                {
+                    // Leader Not in Allocation
+                    Email_TaskReminder(type, task, allocated_names, email_recivers);
+                }
+                else
+                {
+                    // Leader in Allocation
+                    Email_TaskReminder(type, task, allocated_names, email_recivers, leader_email);
+                }
             }
             else
             {
-                // TODO: Condition Leader's Preference
-                
-                // Email
-                Email_TaskReminder_ONEDAY(task, null, new List<string> { leader.aspnet_Users.aspnet_Membership.Email });
+                // Send Leader
+                Email_TaskReminder(type, task, null, new List<string> { leader_email });
             }
-
-
         }
 
         /// <summary>
-        /// Add Email Task Reminder
+        /// Create an Email Task Reminder Job
         /// </summary>
+        /// <param name="type">Reminder Type</param>
         /// <param name="task">Task to notify</param>
-        /// <param name="allocatorsNames">Names of team members allocated</param>
-        /// <param name="recivers">Emails of team members allocated</param>
-        public static void Email_TaskReminder_ONEDAY(Task task, List<string> allocatorsNames, List<string> recivers, string cc =  null)
+        /// <param name="allocatedNames">Names of allocated team members</param>
+        /// <param name="reciversEmail">Email of allocated team members</param>
+        /// <param name="cc"></param>
+        private static void Email_TaskReminder(REMINDER_TYPE type, Task task, List<string> allocatedNames, List<string> reciversEmail, string cc = null)
         {
-            string jobName = $"{task.taskID}_Email_OneDayReminder";
-            string emailSubject = $"{task.taskName} Due in ONE DAY";
-            string emailBody = EmailHelper.GetTaskNotificationTemplate(1, task, allocatorsNames);
+            string jobName = task.taskID.ToString();
+            string subject = null;
+            string emailBody = null;
+            DateTime triggerDate = new DateTime();
 
-            DateTime triggerDate = task.endDate.Date.AddDays(-1);
-
-            if (DateTime.Compare(triggerDate.Date, DateTime.Now.Date) >= 0)
+            // Setup Email Based on Type
+            switch (type)
             {
-                IJobDetail job = JobScheduler.CreateEmailJob(jobName, recivers, emailSubject, emailBody, cc);
+                case REMINDER_TYPE.DAY_7:
+                    jobName += "_EMAIL_REMINDER_7DAYS";
+                    subject = $"{task.taskName} is Due in 7 Days";
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    triggerDate = task.endDate.AddDays(-7);
+                    break;
+                case REMINDER_TYPE.DAY_1:
+                    jobName += "_EMAIL_REMINDER_1DAYS";
+                    subject = $"{task.taskName} is Due Tomorrow";
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    triggerDate = task.endDate.AddDays(1);
+                    break;
+                case REMINDER_TYPE.DAY_0:
+                    jobName += "_EMAIL_REMINDER_0DAYS";
+                    subject = $"{task.taskName} is Due Today";
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    triggerDate = task.endDate;
+                    break;
+                case REMINDER_TYPE.OVERDUE:
+                    jobName += "_EMAIL_REMINDER_OVERDUE";
+                    subject = $"{task.taskName} is Overdue";
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    triggerDate = task.endDate.AddDays(1);
+                    break;
+            }
+
+            // Check if setup successful
+            if (subject != null && emailBody != null && triggerDate != DateTime.MinValue)
+            {
+                // Schedule Email Job
+                IJobDetail job = JobScheduler.CreateEmailJob(jobName, reciversEmail, subject, emailBody, cc);
                 ISimpleTrigger trigger = JobScheduler.CreateSimpleTrigger(job, triggerDate);
                 JobScheduler.AddEmailJobAsync(job, trigger);
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine($"Job Passed Date");
+                System.Diagnostics.Debug.WriteLine($"\nError in Scheduling EMAIL REMINDER\n");
             }
-
         }
 
     }

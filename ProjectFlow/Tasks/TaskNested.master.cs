@@ -185,7 +185,7 @@ namespace ProjectFlow.Tasks
             ClearErrorMessages();
 
             // Verify Attributes
-            TaskVerification taskVerification = new TaskVerification();
+            TaskHelper taskVerification = new TaskHelper();
             bool verified = taskVerification.Verify(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
 
             if (!verified)
