@@ -13,5 +13,31 @@ namespace ProjectFlow.Services.Christina
         {
             
         }
+
+        /// <summary>
+        /// Create speaker on the client side so all the speaker are displayed
+        /// 
+        /// Called during Page_Load
+        /// 
+        /// </summary>
+        /// <param name="speakers"></param>
+        private void InjectSpeaker(Student[] speakers)
+        {
+            
+            string createSpeakers = @"
+                <script type=""text/javascript"">
+                    
+                </script>
+            ";
+
+            foreach(var speaker in speakers)
+            {
+                createSpeakers += $"create_speaker({speaker.aspnet_Users});";
+            }
+
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "create_speakers", createSpeakers, false);
+        }
+
     }
 }
