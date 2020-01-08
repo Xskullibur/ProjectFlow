@@ -16,7 +16,7 @@ namespace ProjectFlow.Utils
 
         public enum REMINDER_TYPE
         {
-            DAY_7, DAY_1, DAY_0, OVERDUE
+            COMPLETED, VERIFICATION, DAY_7, DAY_1, DAY_0, OVERDUE
         }
 
         private static bool LeaderInAllocation(List<Student> allocatedStudents, Student leader)
@@ -66,10 +66,14 @@ namespace ProjectFlow.Utils
                         GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_1, task);
                     }
 
-                    // TODO: TODAY Reminder
+                    // TODAY
+                    GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_0, task);
+                    // TODO: SMS Today Reminder
                 }
 
-                // TODO: Overdue Reminder
+                // Overdue
+                GetDetailsAndSendReminderEmail(REMINDER_TYPE.OVERDUE, task);
+                // TODO: SMS Overdue Reminder
             }
 
         }
