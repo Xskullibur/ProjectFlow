@@ -13,7 +13,7 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             var user = HttpContext.Current.User;
             if (user.Identity.IsAuthenticated)
@@ -91,7 +91,7 @@ namespace ProjectFlow
         /// <summary>
         /// Return the current selected project
         /// </summary>
-        public Project GetCurrentProject {
+        public Project CurrentProject {
             get => Session["CurrentProject"] as Project;
         }
 
