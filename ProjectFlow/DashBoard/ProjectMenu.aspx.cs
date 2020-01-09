@@ -56,13 +56,11 @@ namespace ProjectFlow.DashBoard
         public void ShowProject(Guid tutorID)
         {           
             ProjectBLL projectBLL = new ProjectBLL();
-            if (projectBLL.CheckProjectExist(tutorID))
-            {
-                List<Project> projectList = new List<Project> { };
-                projectList = projectBLL.GetProjectTutor(tutorID);
-                projectGV.DataSource = projectList;
-                projectGV.DataBind();
-            }           
+
+            List<Project> projectList = new List<Project> { };
+            projectList = projectBLL.GetProjectTutor(tutorID);
+            projectGV.DataSource = projectList;
+            projectGV.DataBind();
         }
 
         protected void projectGV_SelectedIndexChanged(object sender, EventArgs e)

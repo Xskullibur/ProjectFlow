@@ -159,6 +159,14 @@
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
                         </Columns>
+                        <EmptyDataTemplate>
+                           <div class="jumbotron jumbotron-fluid">
+                                <div class="container">
+                                    <h1 class="display-4">Seem Empty, add some projects now!</h1>                                          
+                                    <p>Projects not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                </div>
+                           </div>
+                       </EmptyDataTemplate>
                     </asp:GridView>
                    </div>
                 </div>

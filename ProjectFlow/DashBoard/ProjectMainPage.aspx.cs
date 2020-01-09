@@ -30,13 +30,11 @@ namespace ProjectFlow
         public void ShowMember(int TeamID)
         {
             ProjectBLL projectBLL = new ProjectBLL();
-            if (projectBLL.CheckProjectMemberExist(TeamID))
-            {
-                List<TeamMember> memberList = new List<TeamMember> { };
-                memberList = projectBLL.GetTeamMember(TeamID);
-                MemberGV.DataSource = memberList;
-                MemberGV.DataBind();
-            }
+
+            List<TeamMember> memberList = new List<TeamMember> { };
+            memberList = projectBLL.GetTeamMember(TeamID);
+            MemberGV.DataSource = memberList;
+            MemberGV.DataBind();
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)

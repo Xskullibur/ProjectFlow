@@ -139,8 +139,16 @@
                             </asp:CommandField>
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
-                            </asp:CommandField>
+                            </asp:CommandField>                            
                         </Columns>
+                        <EmptyDataTemplate>
+                           <div class="jumbotron jumbotron-fluid">
+                                <div class="container">
+                                    <h1 class="display-4">Seem Empty, create a team now!</h1>                                          
+                                    <p>Team not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                </div>
+                           </div>
+                       </EmptyDataTemplate>
                     </asp:GridView>
                 </div>
             </div>

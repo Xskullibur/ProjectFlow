@@ -59,13 +59,11 @@ namespace ProjectFlow.DashBoard
         public void ShowTeam(string ProjectID)
         {
             ProjectBLL projectBLL = new ProjectBLL();
-            if (projectBLL.CheckProjectTeamExist(ProjectID))
-            {
-                List<ProjectTeam> teamList = new List<ProjectTeam> { };
-                teamList = projectBLL.GetProjectTeam(ProjectID);
-                TeamGV.DataSource = teamList;
-                TeamGV.DataBind();
-            }           
+            
+            List<ProjectTeam> teamList = new List<ProjectTeam> { };
+            teamList = projectBLL.GetProjectTeam(ProjectID);
+            TeamGV.DataSource = teamList;
+            TeamGV.DataBind();
         }
 
         protected void TeamGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
