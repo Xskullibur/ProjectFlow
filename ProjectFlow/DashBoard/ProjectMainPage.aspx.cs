@@ -94,5 +94,11 @@ namespace ProjectFlow
         {
 
         }
+
+        protected void MemberGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            MemberGV.PageIndex = e.NewPageIndex;
+            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+        }
     }
 }

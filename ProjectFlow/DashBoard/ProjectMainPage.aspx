@@ -89,7 +89,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <asp:GridView ID="MemberGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating">
+                    <asp:GridView ID="MemberGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />

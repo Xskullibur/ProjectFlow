@@ -113,5 +113,11 @@ namespace ProjectFlow.DashBoard
             ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
 
         }
+
+        protected void projectGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            projectGV.PageIndex = e.NewPageIndex;
+            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+        }
     }
 }

@@ -101,5 +101,11 @@ namespace ProjectFlow.DashBoard
             TeamGV.EditIndex = e.NewEditIndex;
             ShowTeam(Session["PassProjectID"].ToString());
         }
+
+        protected void TeamGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            TeamGV.PageIndex = e.NewPageIndex;
+            ShowTeam(Session["PassProjectID"].ToString());
+        }
     }
 }

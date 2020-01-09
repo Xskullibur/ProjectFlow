@@ -119,14 +119,14 @@
         </div>
     </div>
     <div class="container">
-        <div>             
+        <div class="row">             
             <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
         </div>
         <br>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <asp:GridView ID="projectGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating">
+            <div class="col">
+                <div style="overflow-x: auto;">
+                    <asp:GridView ID="projectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
                             <asp:BoundField DataField="projectID" HeaderText="Project ID" ReadOnly="true"/>    
@@ -158,13 +158,12 @@
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
-
                         </Columns>
                     </asp:GridView>
+                   </div>
                 </div>
             </div>
         </div>
-    </div>
     <script>
         $(document).ready(function () {
             hideSidebar();    
