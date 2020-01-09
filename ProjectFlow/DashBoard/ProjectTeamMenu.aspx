@@ -97,12 +97,13 @@
         </div>
     </div>
     <div class="container">        
-        <div class="row">           
-            <asp:Label ID="InfoLabel" runat="server" Font-Size="Large"></asp:Label>
-            <br />
-            <br />
-            
-            <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />           
+        <div class="row"> 
+            <div class="col">
+                <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />
+            </div>
+            <div class="col">
+                <asp:Label ID="InfoLabel" runat="server" Font-Size="Large"></asp:Label>
+            </div>                                 
         </div>
         <br>
         <div class="row">

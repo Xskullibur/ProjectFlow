@@ -119,8 +119,13 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">             
-            <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
+        <div class="row">
+            <div class="col">
+                <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
+            </div>
+            <div class="col">
+                 <asp:Label ID="Label6" runat="server" Text="Project Select"></asp:Label>
+            </div>               
         </div>
         <br>
         <div class="row">
