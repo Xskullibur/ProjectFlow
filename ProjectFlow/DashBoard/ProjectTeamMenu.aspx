@@ -97,8 +97,7 @@
         </div>
     </div>
     <div class="container">        
-        <div>
-            
+        <div class="row">           
             <asp:Label ID="InfoLabel" runat="server" Font-Size="Large"></asp:Label>
             <br />
             <br />
@@ -107,9 +106,9 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <asp:GridView ID="TeamGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged" OnPageIndexChanging="TeamGV_PageIndexChanging">
+            <div class="col">
+                <div style="overflow-x: auto;">
+                    <asp:GridView ID="TeamGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged" OnPageIndexChanging="TeamGV_PageIndexChanging">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
                             <asp:BoundField DataField="teamID" HeaderText="ID" ReadOnly="true"/>

@@ -79,17 +79,19 @@
             </div>
         </div>
     </div>
-    <div = "container">
-        <div>
-            <asp:Label ID="InfoLabel" runat="server"></asp:Label>
-            <br>
-            <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" />
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <asp:Label ID="InfoLabel" runat="server"></asp:Label>
+                <br>
+                <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" />
+            </div>            
         </div>
         <br>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <asp:GridView ID="MemberGV" CssClass="table table-hover table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging">
+            <div class="col">
+                <div style="overflow-x: auto;">
+                    <asp:GridView ID="MemberGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
