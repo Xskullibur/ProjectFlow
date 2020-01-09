@@ -121,25 +121,37 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="MilestoneGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px">
+                    <asp:GridView ID="MilestoneGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MilestoneGV_RowCancelingEdit" OnRowEditing="MilestoneGV_RowEditing" OnRowUpdating="MilestoneGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="MilestoneGV_PageIndexChanging">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
-                            <asp:BoundField DataField="milestoneID" HeaderText="ID" />
+                            <asp:BoundField DataField="milestoneID" HeaderText="ID" ReadOnly="true"/>
                             <asp:TemplateField HeaderText="Name">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("milestoneName") %>'></asp:TextBox>
+                                </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("milestoneName") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Start">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editStartTB" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                                </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="startLabel" runat="server" Text='<%# Bind("startDate", "{0:dd/MM/yyyy}") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="End">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editEndTB" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                                </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="endLabel" runat="server" Text='<%# Bind("endDate", "{0:dd/MM/yyyy}") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                                <ControlStyle CssClass="btn btn-warning" />
+                            </asp:CommandField>
                         </Columns>
                         <EmptyDataTemplate>
                            <div class="jumbotron jumbotron-fluid">

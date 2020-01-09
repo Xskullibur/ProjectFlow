@@ -112,7 +112,7 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="TeamGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged" OnPageIndexChanging="TeamGV_PageIndexChanging">
+                    <asp:GridView ID="TeamGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="TeamGV_RowCancelingEdit" OnRowEditing="TeamGV_RowEditing" OnRowUpdating="TeamGV_RowUpdating" OnSelectedIndexChanged="TeamGV_SelectedIndexChanged" OnPageIndexChanging="TeamGV_PageIndexChanging" AllowPaging="True" PageSize="4">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
                             <asp:BoundField DataField="teamID" HeaderText="ID" ReadOnly="true"/>

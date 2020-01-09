@@ -43,5 +43,29 @@ namespace ProjectFlow.DashBoard
                 Response.Redirect("ProjectMainPage.aspx");
             }
         }
+
+        protected void MilestoneGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            MilestoneGV.EditIndex = -1;
+            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void MilestoneGV_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            MilestoneGV.EditIndex = e.NewEditIndex;
+            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void MilestoneGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            MilestoneGV.EditIndex = -1;
+            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void MilestoneGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            MilestoneGV.PageIndex = e.NewPageIndex;
+            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+        }
     }
 }
