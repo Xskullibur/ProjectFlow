@@ -12,6 +12,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <asp:Label ID="Label4" runat="server" Text="Add Member"></asp:Label>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">                    
                     <table class="auto-style1">
@@ -113,7 +116,9 @@
                                     <asp:Label ID="roleLabel" runat="server" Text='<%# Bind("roleID") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation"/>
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
+                                <ControlStyle CssClass="btn btn-warning" />
+                            </asp:CommandField>
                         </Columns>
                         <EmptyDataTemplate>
                            <div class="jumbotron jumbotron-fluid">
