@@ -170,6 +170,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ProjectFlow\CSS\content-nav.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
+    <Content Include="DashBoard\AddMilestone.aspx" />
     <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="DashBoard\ProjectTeamMenu.aspx" />
     <Content Include="Global.asax" />
@@ -414,6 +415,13 @@
     <Compile Include="DAO\TaskDAO.cs" />
     <Compile Include="DAO\TeamMemberDAO.cs" />
     <Compile Include="DAO\TutorDAO.cs" />
+    <Compile Include="DashBoard\AddMilestone.aspx.cs">
+      <DependentUpon>AddMilestone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\AddMilestone.aspx.designer.cs">
+      <DependentUpon>AddMilestone.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DashBoard\ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

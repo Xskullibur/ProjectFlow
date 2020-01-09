@@ -18,7 +18,7 @@ namespace ProjectFlow
                     InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString()
                                      + " -> Team ID: " + Session["PassTeamID"].ToString() + " - " + Session["PassTeamName"].ToString();
                     ShowMember(int.Parse(Session["PassTeamID"].ToString()));
-
+                    PageSelectDP.SelectedIndex = 0;
                 }
                 else
                 {
@@ -97,6 +97,14 @@ namespace ProjectFlow
         {
             MemberGV.PageIndex = e.NewPageIndex;
             ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+        }
+
+        protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(PageSelectDP.SelectedIndex == 1)
+            {
+                Response.Redirect("addMilestone.aspx");
+            }
         }
     }
 }
