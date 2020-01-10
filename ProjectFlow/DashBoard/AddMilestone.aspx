@@ -155,6 +155,8 @@
                             <asp:TemplateField HeaderText="Name">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("milestoneName") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="editNameRequiredValidator" runat="server" ValidationGroup="tableValidation" ControlToValidate="editNameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="editNameRegexValidator" runat="server" ValidationGroup="tableValidation" validationexpression="^.{1,255}$" ControlToValidate="editNameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("milestoneName") %>'></asp:Label>
@@ -162,7 +164,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Start">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editStartTB" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                                    <asp:TextBox ID="editStartTB" CssClass="form-control" runat="server" Text='<%# Bind("startDate", "{0:yyyy-MM-dd}") %>' TextMode="Date"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="editStartRequiredValidator" runat="server" ValidationGroup="tableValidation" ControlToValidate="editStartTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="startLabel" runat="server" Text='<%# Bind("startDate", "{0:dd/MM/yyyy}") %>'></asp:Label>
@@ -170,13 +173,14 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="End">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editEndTB" CssClass="form-control" runat="server" TextMode="Date"></asp:TextBox>
+                                    <asp:TextBox ID="editEndTB" CssClass="form-control" runat="server" Text='<%# Bind("endDate", "{0:yyyy-MM-dd}") %>' TextMode="Date"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="editEndRequiredValidator" runat="server" ValidationGroup="tableValidation" ControlToValidate="editEndTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="endLabel" runat="server" Text='<%# Bind("endDate", "{0:dd/MM/yyyy}") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
                         </Columns>
