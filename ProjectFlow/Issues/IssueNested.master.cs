@@ -128,7 +128,6 @@ namespace ProjectFlow.Issues
 
         protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            refreshGrid(this, EventArgs.Empty);
             switch (taskViewDDL.SelectedIndex)
             {
 
