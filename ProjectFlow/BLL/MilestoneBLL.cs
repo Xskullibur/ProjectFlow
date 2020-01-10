@@ -82,7 +82,51 @@ namespace ProjectFlow.BLL
 
             if(errorList.Count == 0)
             {
-                dao.CreateMileStone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+                dao.CreateMilestone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+            }
+
+            return errorList;
+        }
+
+        public List<string> ValidateUpdateMilestone(int MilestoneID, string Name, string StartDate, string EndDate)
+        {
+            List<string> errorList = new List<string> { };
+            DateTime validateValue;
+            MilestoneDAO dao = new MilestoneDAO();
+
+            if (Name.Equals(""))
+            {
+                errorList.Add("Name cannot be empty<br>");
+            }
+
+            if (Name.Length > 255)
+            {
+                errorList.Add("Name cannot be more than 255 character<br>");
+            }
+            
+            if (StartDate.Equals(""))
+            {
+                errorList.Add("Start date cannot be empty<br>");
+            }
+
+            if (EndDate.Equals(""))
+            {
+                errorList.Add("End date cannot be empty<br>");
+            }
+
+            if (!DateTime.TryParse(StartDate.ToString(), out validateValue))
+            {
+                errorList.Add("Start Date not valid<br>");
+            }
+
+            if (!DateTime.TryParse(EndDate.ToString(), out validateValue))
+            {
+                errorList.Add("End Date not valid<br>");
+            }
+
+            if(errorList.Count == 0)
+            {
+                dao.UpdateMilestone(MilestoneID, Name, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
             }
 
             return errorList;

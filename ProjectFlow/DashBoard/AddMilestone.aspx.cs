@@ -68,6 +68,15 @@ namespace ProjectFlow.DashBoard
 
         protected void MilestoneGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            GridViewRow row = MilestoneGV.Rows[e.RowIndex];
+            MilestoneBLL milestoneBLL = new MilestoneBLL();
+
+            int milestoneID = int.Parse(row.Cells[0].Text);
+            TextBox editName = (TextBox)row.FindControl("editNameTB");
+            TextBox editStartDate = (TextBox)row.FindControl("editStartTB");
+            TextBox editEndDate = (TextBox)row.FindControl("editEndTB");
+
+            List<string> errorList = milestoneBLL.ValidateUpdateMilestone(milestoneID, editName.Text, editStartDate.Text, editEndDate.Text);           
             MilestoneGV.EditIndex = -1;
             ShowMilestone();
         }
