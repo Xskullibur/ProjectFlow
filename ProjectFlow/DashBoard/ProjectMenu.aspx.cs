@@ -18,7 +18,7 @@ namespace ProjectFlow.DashBoard
                 Session["PassProjectName"] = null;
                 Session["PassTeamID"] = null;
                 Session["PassTeamName"] = null;
-                ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));                        
+                ShowProject();                        
             }                   
         }
 
@@ -29,7 +29,7 @@ namespace ProjectFlow.DashBoard
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
-            Guid tutorID = Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3");
+            Guid tutorID = Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3");  //currently hardcoded
 
             List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
 
@@ -53,12 +53,12 @@ namespace ProjectFlow.DashBoard
             }
         }
 
-        public void ShowProject(Guid tutorID)
+        public void ShowProject()
         {           
             ProjectBLL projectBLL = new ProjectBLL();
 
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.GetProjectTutor(tutorID);
+            projectList = projectBLL.GetProjectTutor(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
             projectGV.DataSource = projectList;
             projectGV.DataBind();
         }
@@ -87,13 +87,13 @@ namespace ProjectFlow.DashBoard
         protected void projectGV_RowEditing(object sender, GridViewEditEventArgs e)
         {            
             projectGV.EditIndex = e.NewEditIndex;
-            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+            ShowProject();
         }
 
         protected void projectGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             projectGV.EditIndex = -1;
-            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+            ShowProject();
         }
 
         protected void projectGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -108,14 +108,14 @@ namespace ProjectFlow.DashBoard
 
             List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
             projectGV.EditIndex = -1;
-            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+            ShowProject();
 
         }
 
         protected void projectGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             projectGV.PageIndex = e.NewPageIndex;
-            ShowProject(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+            ShowProject();
         }
     }
 }

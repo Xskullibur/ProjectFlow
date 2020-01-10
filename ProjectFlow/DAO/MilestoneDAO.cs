@@ -27,11 +27,11 @@ namespace ProjectFlow.DAO
             }
         }
 
-        public void CreateMileStone(string Name, DateTime StartDate, DateTime EndDate, string ProjectID, int TeamID)
+        public void CreateMileStone(string Name, string ProjectID, int TeamID, DateTime StartDate, DateTime EndDate)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var milestone = new Milestone {
+                var milestone = new Milestone {                   
                     milestoneName = Name,
                     startDate = StartDate,
                     endDate = EndDate,

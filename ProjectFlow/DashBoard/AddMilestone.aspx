@@ -84,7 +84,7 @@
                             </td>
                             <td class="auto-style6">
                                 <br />
-                                <asp:Button ID="addBtn" CssClass="btn btn-success" runat="server" Text="Add" />
+                                <asp:Button ID="addBtn" CssClass="btn btn-success" runat="server" Text="Add" OnClick="addBtn_Click" />
                             </td>
                             <td class="auto-style7">
                                 &nbsp;

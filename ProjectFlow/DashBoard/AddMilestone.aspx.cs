@@ -18,7 +18,7 @@ namespace ProjectFlow.DashBoard
                 {
                     InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString()
                                      + " -> Team ID: " + Session["PassTeamID"].ToString() + " - " + Session["PassTeamName"].ToString();
-                    ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+                    ShowMilestone();
                     PageSelectDP.SelectedIndex = 1;
                 }
                 else
@@ -28,10 +28,20 @@ namespace ProjectFlow.DashBoard
             }
         }
 
-        public void ShowMilestone(int TeamID)
+        public string GetProjectID()
+        {
+            return Session["PassProjectID"].ToString();
+        }
+
+        public int GetTeamID()
+        {
+            return int.Parse(Session["PassTeamID"].ToString());
+        }
+
+        public void ShowMilestone()
         {
             MilestoneBLL milestoneBLL = new MilestoneBLL();
-            List<Milestone> milestoneList = milestoneBLL.GetMilestoneByTeamID(TeamID);
+            List<Milestone> milestoneList = milestoneBLL.GetMilestoneByTeamID(GetTeamID());
             MilestoneGV.DataSource = milestoneList;
             MilestoneGV.DataBind();       
         }
@@ -47,25 +57,55 @@ namespace ProjectFlow.DashBoard
         protected void MilestoneGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             MilestoneGV.EditIndex = -1;
-            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMilestone();
         }
 
         protected void MilestoneGV_RowEditing(object sender, GridViewEditEventArgs e)
         {
             MilestoneGV.EditIndex = e.NewEditIndex;
-            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMilestone();
         }
 
         protected void MilestoneGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             MilestoneGV.EditIndex = -1;
-            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMilestone();
         }
 
         protected void MilestoneGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             MilestoneGV.PageIndex = e.NewPageIndex;
-            ShowMilestone(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMilestone();
+        }
+
+        protected void addBtn_Click(object sender, EventArgs e)
+        {
+            MilestoneBLL bll = new MilestoneBLL();
+            string name = NameTB.Text;
+            string projectID = GetProjectID();
+            int teamID = GetTeamID();
+            DateTime start = Convert.ToDateTime(startTB.Text);
+            DateTime end = Convert.ToDateTime(endTB.Text);
+
+            List<string> errorList = bll.ValidateCreateMilestone(name, projectID, teamID, start, end);
+
+            if(errorList.Count > 0)
+            {
+                string total = "";
+                foreach(string error in errorList)
+                {
+                    total += error;
+                }
+                errorLabel.Text = total;
+                NameTB.Text = name;
+                startTB.Text = start.ToString();
+                endTB.Text = end.ToString();
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#addMilestone').modal('show');", true);
+            }
+            else
+            {
+                Response.Redirect("AddMilestone.aspx");
+            }
         }
     }
 }

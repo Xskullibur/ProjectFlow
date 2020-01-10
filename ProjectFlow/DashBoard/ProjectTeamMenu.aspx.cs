@@ -18,7 +18,7 @@ namespace ProjectFlow.DashBoard
                 {
                     Session["PassTeamID"] = null;
                     Session["PassTeamName"] = null;
-                    ShowTeam(Session["PassProjectID"].ToString());
+                    ShowTeam();
                     InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString();
                 }
                 else
@@ -26,6 +26,10 @@ namespace ProjectFlow.DashBoard
                     Response.Redirect("ProjectMenu.aspx");
                 }
             }              
+        }
+        public string GetProjectID()
+        {
+            return Session["PassProjectID"].ToString();
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -56,12 +60,12 @@ namespace ProjectFlow.DashBoard
             
         }
 
-        public void ShowTeam(string ProjectID)
+        public void ShowTeam()
         {
             ProjectBLL projectBLL = new ProjectBLL();
             
             List<ProjectTeam> teamList = new List<ProjectTeam> { };
-            teamList = projectBLL.GetProjectTeam(ProjectID);
+            teamList = projectBLL.GetProjectTeam(GetProjectID());
             TeamGV.DataSource = teamList;
             TeamGV.DataBind();
         }
@@ -69,7 +73,7 @@ namespace ProjectFlow.DashBoard
         protected void TeamGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             TeamGV.EditIndex = -1;
-            ShowTeam(Session["PassProjectID"].ToString());
+            ShowTeam();
         }
 
         protected void TeamGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -83,7 +87,7 @@ namespace ProjectFlow.DashBoard
                     
             List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text);
             TeamGV.EditIndex = -1;
-            ShowTeam(Session["PassProjectID"].ToString());
+            ShowTeam();
         }
 
         protected void TeamGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,13 +101,13 @@ namespace ProjectFlow.DashBoard
         protected void TeamGV_RowEditing(object sender, GridViewEditEventArgs e)
         {
             TeamGV.EditIndex = e.NewEditIndex;
-            ShowTeam(Session["PassProjectID"].ToString());
+            ShowTeam();
         }
 
         protected void TeamGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             TeamGV.PageIndex = e.NewPageIndex;
-            ShowTeam(Session["PassProjectID"].ToString());
+            ShowTeam();
         }
     }
 }

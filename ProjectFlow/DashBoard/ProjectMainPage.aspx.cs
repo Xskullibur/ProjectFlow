@@ -17,7 +17,7 @@ namespace ProjectFlow
                 if (Session["PassProjectID"] != null && Session["PassTeamID"] != null) {
                     InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString()
                                      + " -> Team ID: " + Session["PassTeamID"].ToString() + " - " + Session["PassTeamName"].ToString();
-                    ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+                    ShowMember();
                     PageSelectDP.SelectedIndex = 0;
                 }
                 else
@@ -26,13 +26,17 @@ namespace ProjectFlow
                 }
             }
         }
+        public int GetTeamID()
+        {
+            return int.Parse(Session["PassTeamID"].ToString());
+        }
 
-        public void ShowMember(int TeamID)
+        public void ShowMember()
         {
             ProjectBLL projectBLL = new ProjectBLL();
 
             List<TeamMember> memberList = new List<TeamMember> { };
-            memberList = projectBLL.GetTeamMember(TeamID);
+            memberList = projectBLL.GetTeamMember(GetTeamID());
             MemberGV.DataSource = memberList;
             MemberGV.DataBind();
         }
@@ -73,19 +77,19 @@ namespace ProjectFlow
             List<string> errorList = projectBLL.ValidateUpdateMember(memberID, int.Parse(editRole.Text));
                      
             MemberGV.EditIndex = -1;
-            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMember();
         }
 
         protected void MemberGV_RowEditing(object sender, GridViewEditEventArgs e)
         {
             MemberGV.EditIndex = e.NewEditIndex;
-            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMember();
         }
 
         protected void MemberGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {                     
             MemberGV.EditIndex = -1;
-            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMember();
         }
 
         protected void CreateMemberBtn_Click(object sender, EventArgs e)
@@ -96,7 +100,7 @@ namespace ProjectFlow
         protected void MemberGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             MemberGV.PageIndex = e.NewPageIndex;
-            ShowMember(int.Parse(Session["PassTeamID"].ToString()));
+            ShowMember();
         }
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
