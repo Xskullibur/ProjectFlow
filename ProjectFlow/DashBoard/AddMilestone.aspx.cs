@@ -84,8 +84,8 @@ namespace ProjectFlow.DashBoard
             string name = NameTB.Text;
             string projectID = GetProjectID();
             int teamID = GetTeamID();
-            DateTime start = Convert.ToDateTime(startTB.Text);
-            DateTime end = Convert.ToDateTime(endTB.Text);
+            string start = startTB.Text;
+            string end = endTB.Text;
 
             List<string> errorList = bll.ValidateCreateMilestone(name, projectID, teamID, start, end);
 

@@ -24,7 +24,7 @@ namespace ProjectFlow.BLL
             return milestone;
         }
 
-        public List<string> ValidateCreateMilestone(string Name, string ProjectID, int TeamID, DateTime StartDate, DateTime EndDate)
+        public List<string> ValidateCreateMilestone(string Name, string ProjectID, int TeamID, string StartDate, string EndDate)
         {
             List<string> errorList = new List<string> { };
             DateTime validateValue;
@@ -60,6 +60,16 @@ namespace ProjectFlow.BLL
                 errorList.Add("Team ID cannot be more than 4 character<br>");
             }
 
+            if (StartDate.Equals(""))
+            {
+                errorList.Add("Start date cannot be empty<br>");
+            }
+
+            if (EndDate.Equals(""))
+            {
+                errorList.Add("End date cannot be empty<br>");
+            }
+
             if (!DateTime.TryParse(StartDate.ToString(), out validateValue))
             {
                 errorList.Add("Start Date not valid<br>");
@@ -72,7 +82,7 @@ namespace ProjectFlow.BLL
 
             if(errorList.Count == 0)
             {
-                dao.CreateMileStone(Name, ProjectID, TeamID, StartDate, EndDate);
+                dao.CreateMileStone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
             }
 
             return errorList;

@@ -5,10 +5,32 @@
             width: 16px;
         }
         .auto-style7 {
-            width: 102px;
+            width: 156px;
         }
         .auto-style8 {
             width: 96px;
+        }
+        .auto-style9 {
+            width: 96px;
+            height: 41px;
+        }
+        .auto-style10 {
+            height: 41px;
+        }
+        .auto-style11 {
+            width: 156px;
+            height: 41px;
+        }
+        .auto-style12 {
+            width: 96px;
+            height: 42px;
+        }
+        .auto-style13 {
+            height: 42px;
+        }
+        .auto-style14 {
+            width: 156px;
+            height: 42px;
         }
     </style>
 </asp:Content>
@@ -25,32 +47,35 @@
                 <div class="modal-body">                    
                     <table class="auto-style1">
                         <tr>
-                            <td class="auto-style8">
+                            <td class="auto-style9">
                                 <asp:Label ID="Label1" runat="server" CssClass="control-label" Text="Name"></asp:Label>
                                 &nbsp;<br />
                                 <br />
                             </td>
-                            <td class="auto-style13">
+                            <td class="auto-style10">
                                 <asp:TextBox ID="NameTB" CssClass="form-control" runat="server" Width="223px"></asp:TextBox>
                                 <br />
                             </td>
-                            <td class="auto-style7">
-                                &nbsp;
-                                &nbsp;<br />
+                            <td class="auto-style11">
+                                &nbsp;<asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                &nbsp;&nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                <br />
                                 <br />
                             </td>
                         </tr>                        
                         <tr>
-                            <td class="auto-style8">
+                            <td class="auto-style12">
                                 <asp:Label ID="Label2" runat="server" CssClass="control-label" Text="Start Date"></asp:Label>
                                 <br />
                                 <br />
                             </td>
-                            <td class="auto-style14">
+                            <td class="auto-style13">
                                 <asp:TextBox ID="startTB" CssClass="form-control" runat="server" TextMode="Date" Width="222px"></asp:TextBox>
                                 <br />
                             </td>
-                            <td class="auto-style7">
+                            <td class="auto-style14">
+                                &nbsp;
+                                <asp:RequiredFieldValidator ID="startDateRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="startTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
                                 &nbsp;
 
                                 &nbsp;<br />
@@ -70,6 +95,8 @@
                             </td>
                             <td class="auto-style7">
                                 &nbsp;
+                                <asp:RequiredFieldValidator ID="endDateRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="endTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
+                                &nbsp;
 
                                 &nbsp;<br />
                                 <br />
@@ -84,7 +111,7 @@
                             </td>
                             <td class="auto-style6">
                                 <br />
-                                <asp:Button ID="addBtn" CssClass="btn btn-success" runat="server" Text="Add" OnClick="addBtn_Click" />
+                                <asp:Button ID="addBtn" CssClass="btn btn-success" runat="server" Text="Add" OnClick="addBtn_Click" ValidationGroup="modelValidation" />
                             </td>
                             <td class="auto-style7">
                                 &nbsp;
