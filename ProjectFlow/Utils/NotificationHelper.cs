@@ -25,6 +25,16 @@ namespace ProjectFlow.Utils
         }
 
 
+
+        // Task Updated
+        public static void Task_Update_Setup(int taskID)
+        {
+
+        }
+
+
+        //  Task Drop and Restore
+
         /// <summary>
         /// Pause all jobs assigned to task when task is dropped
         /// </summary>
@@ -64,6 +74,8 @@ namespace ProjectFlow.Utils
             }
         }
 
+
+        // Task Added
 
         /// <summary>
         /// Send Status Reminders (Completed / Verification / Due Dates) based on Task ID
@@ -120,12 +132,14 @@ namespace ProjectFlow.Utils
         }
 
 
+        // Private methods
+
         /// <summary>
         /// Send Email Reminder Based on Task Details (Allocated Students / Leader)
         /// </summary>
         /// <param name="type"></param>
         /// <param name="task"></param>
-        public static void GetDetailsAndSendReminderEmail(REMINDER_TYPE type, Task task)
+        private static void GetDetailsAndSendReminderEmail(REMINDER_TYPE type, Task task)
         {
             StudentBLL studentBLL = new StudentBLL();
 
@@ -229,7 +243,7 @@ namespace ProjectFlow.Utils
                 // Schedule Email Job
                 IJobDetail job = JobScheduler.CreateEmailJob(jobName, jobGroup, reciversEmail, subject, emailBody, cc);
                 ISimpleTrigger trigger = JobScheduler.CreateSimpleTrigger(job, triggerDate);
-                JobScheduler.AddEmailJobAsync(job, trigger);
+                JobScheduler.ScheduleJobWithTrigger(job, trigger);
             }
             else
             {

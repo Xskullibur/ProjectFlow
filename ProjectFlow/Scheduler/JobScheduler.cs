@@ -26,6 +26,52 @@ namespace ProjectFlow.Scheduler
             }
         }
 
+        /// <summary>
+        /// Update job details based on Job Name and Job Group
+        /// </summary>
+        /// <param name="jobName"></param>
+        /// <param name="jobGrp"></param>
+        /// <param name="emailSubject"></param>
+        /// <param name="emailBody"></param>
+        /// <param name="emailRecivers"></param>
+        /// <param name="cc"></param>
+        /// <returns></returns>
+        public static async System.Threading.Tasks.Task UpdateJobDataMap_Email(IJobDetail jobDetail, string emailSubject, string emailBody, List<string> emailRecivers, string cc = null)
+        {
+            // Get Scheduler
+            IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
+            await scheduler.Start();
+
+            // Update Datamap
+            jobDetail.JobDataMap.Put("Subject", emailSubject);
+            jobDetail.JobDataMap.Put("TextBody", emailBody);
+            jobDetail.JobDataMap.Put("Recivers", emailRecivers);
+            jobDetail.JobDataMap.Put("CC", cc);
+
+            await scheduler.AddJob(jobDetail, true);
+        }
+
+        /// <summary>
+        /// Update old trigger with new trigger
+        /// </summary>
+        /// <param name="oldTrigger"></param>
+        /// <param name="newTrigger"></param>
+        /// <returns></returns>
+        public static async System.Threading.Tasks.Task UpdateTriggerAsync(ISimpleTrigger oldTrigger, ISimpleTrigger newTrigger)
+        {
+            IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
+            await scheduler.Start();
+
+            await scheduler.RescheduleJob(oldTrigger.Key, newTrigger);
+        }
+
+
+        /// <summary>
+        /// Pause specified job based on Job Name and Job Group
+        /// </summary>
+        /// <param name="jobName">string</param>
+        /// <param name="jobGrp">string</param>
+        /// <returns></returns>
         public static async System.Threading.Tasks.Task PauseJob(string jobName, string jobGrp)
         {
             // Get Scheduler
@@ -37,6 +83,12 @@ namespace ProjectFlow.Scheduler
         }
 
 
+        /// <summary>
+        /// Resume specifiec job based ono Job Name and Job Group
+        /// </summary>
+        /// <param name="jobName"></param>
+        /// <param name="jobGrp"></param>
+        /// <returns></returns>
         public static async System.Threading.Tasks.Task ResumeJob(string jobName, string jobGrp)
         {
             // Get Scheduler
@@ -44,6 +96,7 @@ namespace ProjectFlow.Scheduler
             await scheduler.Start();
             await scheduler.ResumeJob(new JobKey(jobName, jobGrp));
         }
+
 
         /// <summary>
         /// Create an Email Job
@@ -57,10 +110,10 @@ namespace ProjectFlow.Scheduler
         {
             IJobDetail job = JobBuilder.Create<EmailJob>()
                 .WithIdentity(jobName, jobGrp)
-                .UsingJobData("Subject", emailSubject)
-                .UsingJobData("TextBody", emailBody)
                 .Build();
 
+            job.JobDataMap.Put("Subject", emailSubject);
+            job.JobDataMap.Put("TextBody", emailBody);
             job.JobDataMap.Put("Recivers", emailRecivers);
             job.JobDataMap.Put("CC", cc);
 
@@ -68,6 +121,12 @@ namespace ProjectFlow.Scheduler
         }
 
 
+        /// <summary>
+        /// Create a trigger for specified Job
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="triggerDate"></param>
+        /// <returns></returns>
         public static ISimpleTrigger CreateSimpleTrigger(IJobDetail job, DateTime triggerDate)
         {
             string jobName = job.Key.Name;
@@ -85,7 +144,7 @@ namespace ProjectFlow.Scheduler
 
 
         /// <summary>
-        /// Add a Job for sending email
+        /// Schedule Specified Job
         /// </summary>
         /// <param name="jobName">Must Be Unique!</param>
         /// <param name="triggerDate">When the job will trigger</param>
@@ -93,7 +152,7 @@ namespace ProjectFlow.Scheduler
         /// <param name="subject">Email's Subject</param>
         /// <param name="textBody">Email's Contents (In HTML)</param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task AddEmailJobAsync(IJobDetail job, ISimpleTrigger trigger)
+        public static async System.Threading.Tasks.Task ScheduleJobWithTrigger(IJobDetail job, ISimpleTrigger trigger)
         {
             try
             {
