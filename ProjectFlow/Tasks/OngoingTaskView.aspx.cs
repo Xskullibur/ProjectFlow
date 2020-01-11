@@ -207,8 +207,8 @@ namespace ProjectFlow.Tasks
             // Verify Task ID
             TaskBLL taskBLL = new TaskBLL();
             int id = Convert.ToInt32(row.Cells[0].Text);
-            
-            Task updated_task = taskBLL.GetTaskById(id);
+
+            Task updated_task = taskBLL.GetTaskByID(id);
             if (updated_task == null)
             {
                 this.Master.Master.ShowAlert("Task Not Found!", BootstrapAlertTypes.DANGER);
@@ -263,7 +263,7 @@ namespace ProjectFlow.Tasks
 
                 // Verify
                 TaskVerification taskVerification = new TaskVerification();
-                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate,  statusIndex);
+                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
 
                 // Show Errors
                 if (!verified)
@@ -319,14 +319,14 @@ namespace ProjectFlow.Tasks
                 }
                 else
                 {
-                    
+
                     /**
                      * UPDATE TASK
                      **/
 
                     int milestoneID = Convert.ToInt32((milestoneDDL).SelectedValue);
                     int statusID = Convert.ToInt32((statusDDL).SelectedValue);
-                
+
                     // Update Task
                     updated_task.taskName = name;
                     updated_task.taskDescription = desc;
@@ -388,7 +388,7 @@ namespace ProjectFlow.Tasks
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
-            bool result = taskBLL.Delete(id);
+            bool result = taskBLL.Delete(taskBLL.GetTaskByID(id));
 
             refreshData();
 
