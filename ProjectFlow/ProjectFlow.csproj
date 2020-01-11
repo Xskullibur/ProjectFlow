@@ -173,6 +173,7 @@
     <Content Include="DashBoard\AddMilestone.aspx" />
     <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="DashBoard\ProjectTeamMenu.aspx" />
+    <Content Include="DashBoard\studentProject.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -431,6 +432,13 @@
     </Compile>
     <Compile Include="DashBoard\ProjectTeamMenu.aspx.designer.cs">
       <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DashBoard\studentProject.aspx.cs">
+      <DependentUpon>studentProject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\studentProject.aspx.designer.cs">
+      <DependentUpon>studentProject.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

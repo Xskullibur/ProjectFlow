@@ -1,0 +1,36 @@
+﻿using ProjectFlow.BLL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace ProjectFlow.DashBoard
+{
+    public partial class studentProject : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            ShowProject();
+        }
+
+        protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ProjectGV_PageIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void ShowProject()
+        {
+            StudentBLL studentBLL = new StudentBLL();
+            IEnumerable<ProjectTeam> teamList = studentBLL.GetStudentProject(Guid.Parse("E227DC5B-EBF4-43F6-8081-5EC2E58037EA"));
+            ProjectGV.DataSource = teamList;
+            ProjectGV.DataBind();
+        }
+    }
+}
