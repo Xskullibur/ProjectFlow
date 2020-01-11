@@ -395,14 +395,17 @@
     <Compile Include="aspnet_WebEvent_Events.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\aspnet_UsersBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
+    <Compile Include="BLL\ProjectTeamBLL.cs" />
     <Compile Include="BLL\RoomBLL.cs" />
     <Compile Include="BLL\StatusBLL.cs" />
     <Compile Include="BLL\StudentBLL.cs" />
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
+    <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
