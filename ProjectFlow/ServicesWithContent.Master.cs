@@ -1,4 +1,5 @@
-﻿using ProjectFlow.Login;
+﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using ProjectFlow.Utils.Alerts;
 using System;
 using System.Web;
@@ -12,7 +13,7 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             var user = HttpContext.Current.User;
             if (user.Identity.IsAuthenticated)
@@ -31,7 +32,13 @@ namespace ProjectFlow
                     this.LoginEmailProfileLbl.Text = projectFlowIdentity.Tutor.aspnet_Users.aspnet_Membership.Email;
                 }
             }
-            
+
+#if SELECTEDPROJECT
+            ProjectBLL projectBLL = new ProjectBLL();
+            //Set Current Project
+            SetCurrentProject(projectBLL.GetProjectByProjectId("ITP213"));
+
+#endif
         }
 
         protected void LogoutEvent(object sender, EventArgs e)
@@ -46,62 +53,48 @@ namespace ProjectFlow
             }
         }
 
-        public void ShowAlertWithTiming(string alertMsg, string alertType, int time, bool escapedHtml = true, bool dismissable = true)
+        /// <summary>
+        /// Change the currently selected project, 
+        /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc
+        /// </summary>
+        public void SetCurrentProject(Project project)
         {
 
-            if (AlertsPlaceHolder.Controls.Count >= 10)
+            //Check for access right into the project
+            var user = HttpContext.Current.User;
+            if (user.Identity.IsAuthenticated)
             {
-                //Max alert reached
-                Console.Error.WriteLine("Max Alerts reached!");
-                return;
+                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                if (projectFlowIdentity.IsStudent)
+                {
+                    var student = projectFlowIdentity.Student;
+
+                    StudentBLL studentBLL = new StudentBLL();
+                    if (studentBLL.ContainsProject(student, project))
+                    {
+                        //Set the session of the current projects
+                        Session["CurrentProject"] = project;
+
+
+                        //Inject html for project
+                        ProjectID.Value = project.projectID;
+
+                    }
+                }else if (projectFlowIdentity.IsTutor)
+                {
+                    throw new NotImplementedException("tutor cannot access all project for now");
+                }
             }
 
-            string id = Guid.NewGuid().ToString();
-            string html = CreateAlertHTML(alertMsg, alertType, id, escapedHtml, dismissable);
-
-            var control = new LiteralControl();
-            control.Text = html;
-
-            AlertsPlaceHolder.Controls.Add(control);
-
-            string timeoutScript = $@"
-                   <script type=""text/javascript"">
-                        setTimeout(function(){{ $('#{id}').alert('close'); }}, {time});
-                   </script>
-            ";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "timeout-" + id, timeoutScript, false);
         }
 
-        public void ShowAlert(string alertMsg, string alertType, bool escapedHtml = true, bool dismissable = true)
-        {
-            if (AlertsPlaceHolder.Controls.Count >= 10)
-            {
-                //Max alert reached
-                Console.Error.WriteLine("Max Alerts reached!");
-                return;
-            }
-
-            string html = CreateAlertHTML(alertMsg, alertType, null, escapedHtml, dismissable);
-
-            var control = new LiteralControl();
-            control.Text = html;
-
-            AlertsPlaceHolder.Controls.Add(control);
-
+        /// <summary>
+        /// Return the current selected project
+        /// </summary>
+        public Project CurrentProject {
+            get => Session["CurrentProject"] as Project;
         }
 
-        private string CreateAlertHTML(string alertMsg, string alertType, string id, bool escapedHtml, bool dismissable)
-        {
-
-            string closeBtn = @"<button type=""button"" class=""close"" data-dismiss=""alert"" aria-label=""Close"">
-                <span aria-hidden=""true"">&times;</ span >
-            </button> ";
-
-            return $@"<div {((id != null) ? $"id=\"{id}\"" : "")} class=""alert {alertType} {(dismissable ? "alert-dismissible" : "")} fade show"" role=""alert"">
-                    {(escapedHtml ? Server.HtmlEncode(alertMsg) : alertMsg)}
-                    {(dismissable ? closeBtn : "")}
-            </div> ";
-        }
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using ProjectFlow.DAO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,9 +9,10 @@ namespace ProjectFlow.BLL
     {
         public aspnet_Users GetUserFromUsername(string username)
         {
-            aspnet_UsersDAO dao = new aspnet_UsersDAO();
-            var user = dao.GetUserFromUserName(username);
-            return user;
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.aspnet_Users.Include("Student").Include("Tutor").FirstOrDefault(user => user.UserName.Equals(username));
+            }
         }
 
 
