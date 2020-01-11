@@ -16,13 +16,7 @@ namespace ProjectFlow.Scheduler
         {
             try
             {
-                // Construct and Start Scheduler
-                NameValueCollection props = new NameValueCollection
-                {
-                { "quartz.serializer.type", "binary" }
-                };
-
-                StdSchedulerFactory factory = new StdSchedulerFactory(props);
+                StdSchedulerFactory factory = new StdSchedulerFactory();
                 IScheduler scheduler = await factory.GetScheduler();
                 await scheduler.Start();
             }
@@ -30,6 +24,25 @@ namespace ProjectFlow.Scheduler
             {
                 System.Diagnostics.Debug.WriteLine($"Error While Starting Scheduler: {e.Message}");
             }
+        }
+
+        public static async System.Threading.Tasks.Task PauseJob(string jobName, string jobGrp)
+        {
+            // Get Scheduler
+            IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
+            await scheduler.Start();
+            await scheduler.PauseJob(new JobKey(jobName, jobGrp));
+
+            System.Diagnostics.Debug.WriteLine($"\nPausing Job: {jobName}, {jobGrp}\n");
+        }
+
+
+        public static async System.Threading.Tasks.Task ResumeJob(string jobName, string jobGrp)
+        {
+            // Get Scheduler
+            IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
+            await scheduler.Start();
+            await scheduler.ResumeJob(new JobKey(jobName, jobGrp));
         }
 
         /// <summary>
@@ -40,10 +53,10 @@ namespace ProjectFlow.Scheduler
         /// <param name="emailSubject"></param>
         /// <param name="emailBody"></param>
         /// <returns></returns>
-        public static IJobDetail CreateEmailJob(string jobName, List<string> emailRecivers, string emailSubject, string emailBody, string cc = null)
+        public static IJobDetail CreateEmailJob(string jobName, string jobGrp, List<string> emailRecivers, string emailSubject, string emailBody, string cc = null)
         {
             IJobDetail job = JobBuilder.Create<EmailJob>()
-                .WithIdentity(jobName, "EmailJob")
+                .WithIdentity(jobName, jobGrp)
                 .UsingJobData("Subject", emailSubject)
                 .UsingJobData("TextBody", emailBody)
                 .Build();
@@ -55,10 +68,10 @@ namespace ProjectFlow.Scheduler
         }
 
 
-        public static  ISimpleTrigger CreateSimpleTrigger(IJobDetail job, DateTime triggerDate)
+        public static ISimpleTrigger CreateSimpleTrigger(IJobDetail job, DateTime triggerDate)
         {
             string jobName = job.Key.Name;
-            string triggerGrp = $"{jobName}_trigger";
+            string triggerGrp = $"{jobName}_email_trigger";
             string triggerName = $"{triggerGrp}_{triggerDate.ToShortDateString()}";
 
             // Create Job Trigger

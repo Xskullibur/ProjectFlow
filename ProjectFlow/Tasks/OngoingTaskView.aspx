@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="OngoingTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.tDetailedView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="OngoingTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.tDetailedView" Async="true" %>
 <%@ MasterType VirtualPath="~/Tasks/TaskNested.master" %> 
 
 <%--TaskNested Master--%>

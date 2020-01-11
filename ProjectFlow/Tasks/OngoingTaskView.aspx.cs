@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -433,6 +434,7 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
+                NotificationHelper.Task_Drop_Setup(id);
                 this.Master.Master.ShowAlertWithTiming("Task Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else

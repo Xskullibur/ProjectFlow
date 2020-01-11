@@ -287,7 +287,7 @@ namespace ProjectFlow.Tasks
                 if (result)
                 {
                     // Default Notification Setup (One Day Reminder + Delay Update and Alert)
-                    NotificationHelper.Default_AddTask_Notification_Setup(newTask.taskID);
+                    NotificationHelper.Default_AddTask_Setup(newTask.taskID);
 
                     // Update Page
                     hideModal();

@@ -64,6 +64,9 @@
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.aspnet_UsersInRoles" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Tutor_aspnet_Users" />
+        <EntityTypeShape EntityType="ProjectFlowModel.QRTZ_JOB_DETAILS" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="ProjectFlowModel.QRTZ_TRIGGERS" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="ProjectFlowModel.FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

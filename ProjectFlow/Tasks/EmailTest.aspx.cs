@@ -17,21 +17,25 @@ namespace ProjectFlow.Tasks
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //EmailHelper emailHelper = new EmailHelper();
-            //string textBody = emailHelper.GetTaskNotificationTemplate(1, "Do this", "Do this or do that", new DateTime(), new DateTime(), "Project Closure", "Work-in-progress", "Nosla");
+
         }
 
-        protected async void Button1_ClickAsync(object sender, EventArgs e)
+        protected void Button2_Click(object sender, EventArgs e)
         {
+            NotificationHelper.Default_AddTask_Setup(1033);
+            Response.Write("Jobs Created");
+        }
 
-            //DateTime date = Convert.ToDateTime(TextBox1.Text);
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            NotificationHelper.Task_Drop_Setup(1033);
+            Response.Write("Jobs Paused");
+        }
 
-            //date = date.AddDays(-1);
-
-            //IJobDetail job = JobScheduler.CreateEmailJob("habsdkas", new List<string> { "test" }, "asdsad", "asdasd");
-            //ISimpleTrigger trigger = JobScheduler.CreateSimpleTrigger(job, date.ToUniversalTime());
-
-            //Response.Write(date);
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            NotificationHelper.Task_Restore_Setup(1033);
+            Response.Write("Jobs Resumed");
         }
     }
 }

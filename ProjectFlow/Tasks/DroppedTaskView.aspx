@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="DroppedTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.DroppedTaskView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="DroppedTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.DroppedTaskView" Async="true" %>
 <%@ MasterType VirtualPath="~/Tasks/TaskNested.master" %> 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

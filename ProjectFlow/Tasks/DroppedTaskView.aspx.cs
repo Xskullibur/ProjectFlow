@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -45,7 +46,8 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                this.Master.Master.ShowAlertWithTiming("Successfully Restore Task!", BootstrapAlertTypes.SUCCESS, 2000);
+                NotificationHelper.Task_Restore_Setup(id);
+                this.Master.Master.ShowAlertWithTiming("Task Successfully Restored !", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
             {

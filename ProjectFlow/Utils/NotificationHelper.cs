@@ -2,6 +2,7 @@
 using ProjectFlow.Scheduler;
 using ProjectFlow.Tasks;
 using Quartz;
+using Quartz.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace ProjectFlow.Utils
 {
     public class NotificationHelper
     {
-
         public enum REMINDER_TYPE
         {
             COMPLETED, VERIFICATION, DAY_7, DAY_1, DAY_0, OVERDUE
@@ -24,11 +24,52 @@ namespace ProjectFlow.Utils
             return allocatedStudents.Select(x => x.studentID).Contains(leader.studentID);
         }
 
+
+        /// <summary>
+        /// Pause all jobs assigned to task when task is dropped
+        /// </summary>
+        /// <param name="taskID">Int</param>
+        public static void Task_Drop_Setup(int taskID)
+        {
+            JobDetailsBLL jobDetailsBLL = new JobDetailsBLL();
+            List<QRTZ_JOB_DETAILS> jobs = jobDetailsBLL.GetJobDetailsByTaskID(taskID);
+
+            if (jobs.Count > 0)
+            {
+                jobs.ForEach(async x => await JobScheduler.PauseJob(x.JOB_NAME, x.JOB_GROUP));
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"\nNo Jobs Found (Pause Job)\n");
+            }
+        }
+
+
+        /// <summary>
+        /// Resume all jobs assigned to task when task is restored
+        /// </summary>
+        /// <param name="taskID"></param>
+        internal static void Task_Restore_Setup(int taskID)
+        {
+            JobDetailsBLL jobDetailsBLL = new JobDetailsBLL();
+            List<QRTZ_JOB_DETAILS> jobs = jobDetailsBLL.GetJobDetailsByTaskID(taskID);
+
+            if (jobs.Count > 0)
+            {
+                jobs.ForEach(async x => await JobScheduler.ResumeJob(x.JOB_NAME, x.JOB_GROUP));
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"\nNo Jobs Found (Resume Job)\n");
+            }
+        }
+
+
         /// <summary>
         /// Send Status Reminders (Completed / Verification / Due Dates) based on Task ID
         /// </summary>
         /// <param name="taskID">int</param>
-        public static void Default_AddTask_Notification_Setup(int taskID)
+        public static void Default_AddTask_Setup(int taskID)
         {
             // Get Task
             TaskBLL taskBLL = new TaskBLL();
@@ -78,6 +119,7 @@ namespace ProjectFlow.Utils
 
         }
 
+
         /// <summary>
         /// Send Email Reminder Based on Task Details (Allocated Students / Leader)
         /// </summary>
@@ -110,70 +152,82 @@ namespace ProjectFlow.Utils
                 if (!LeaderInAllocation(allocatedStudents, leader))
                 {
                     // Leader Not in Allocation
-                    Email_TaskReminder(type, task, allocated_names, email_recivers);
+                    Schedule_Email_TaskReminder(type, task, allocated_names, email_recivers, leader_email);
                 }
                 else
                 {
                     // Leader in Allocation
-                    Email_TaskReminder(type, task, allocated_names, email_recivers, leader_email);
+                    Schedule_Email_TaskReminder(type, task, allocated_names, email_recivers);
                 }
             }
             else
             {
                 // Send Leader
-                Email_TaskReminder(type, task, null, new List<string> { leader_email });
+                Schedule_Email_TaskReminder(type, task, null, new List<string> { leader_email });
             }
         }
 
+
         /// <summary>
-        /// Create an Email Task Reminder Job
+        /// Schedule an Email Task Reminder Job
         /// </summary>
         /// <param name="type">Reminder Type</param>
         /// <param name="task">Task to notify</param>
         /// <param name="allocatedNames">Names of allocated team members</param>
         /// <param name="reciversEmail">Email of allocated team members</param>
         /// <param name="cc"></param>
-        private static void Email_TaskReminder(REMINDER_TYPE type, Task task, List<string> allocatedNames, List<string> reciversEmail, string cc = null)
+        private static void Schedule_Email_TaskReminder(REMINDER_TYPE type, Task task, List<string> allocatedNames, List<string> reciversEmail, string cc = null)
         {
-            string jobName = task.taskID.ToString();
+            // Task Details
+            string taskID = task.taskID.ToString();
+            string taskName = task.taskName;
+
+            //Job  Details
+            string jobName = null;
+            string jobNamePrefix = "_EMAIL_REMINDER";
+            string jobGroup = $"{taskID}_EMAIL_REMINDER";
+
+            //Trigger Details
+            DateTime triggerDate = new DateTime();
+
+            //Email Details
             string subject = null;
             string emailBody = null;
-            DateTime triggerDate = new DateTime();
 
             // Setup Email Based on Type
             switch (type)
             {
                 case REMINDER_TYPE.DAY_7:
-                    jobName += "_EMAIL_REMINDER_7DAYS";
-                    subject = $"{task.taskName} is Due in 7 Days";
+                    jobName += $"{taskID}_7DAYS{jobNamePrefix}";
+                    subject = $"{taskName} is Due in 7 Days";
                     emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
                     triggerDate = task.endDate.AddDays(-7);
                     break;
                 case REMINDER_TYPE.DAY_1:
-                    jobName += "_EMAIL_REMINDER_1DAYS";
-                    subject = $"{task.taskName} is Due Tomorrow";
+                    jobName += $"{taskID}_1DAY{jobNamePrefix}";
+                    subject = $"{taskName} is Due Tomorrow";
                     emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
                     triggerDate = task.endDate.AddDays(1);
                     break;
                 case REMINDER_TYPE.DAY_0:
-                    jobName += "_EMAIL_REMINDER_0DAYS";
-                    subject = $"{task.taskName} is Due Today";
+                    jobName += $"{taskID}_0DAY{jobNamePrefix}";
+                    subject = $"{taskName} is Due Today";
                     emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
                     triggerDate = task.endDate;
                     break;
                 case REMINDER_TYPE.OVERDUE:
-                    jobName += "_EMAIL_REMINDER_OVERDUE";
-                    subject = $"{task.taskName} is Overdue";
+                    jobName += $"{taskID}_OVERDUE{jobNamePrefix}";
+                    subject = $"{taskName} is Overdue";
                     emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
                     triggerDate = task.endDate.AddDays(1);
                     break;
             }
 
             // Check if setup successful
-            if (subject != null && emailBody != null && triggerDate != DateTime.MinValue)
+            if (jobName != null && subject != null && emailBody != null && triggerDate != DateTime.MinValue)
             {
                 // Schedule Email Job
-                IJobDetail job = JobScheduler.CreateEmailJob(jobName, reciversEmail, subject, emailBody, cc);
+                IJobDetail job = JobScheduler.CreateEmailJob(jobName, jobGroup, reciversEmail, subject, emailBody, cc);
                 ISimpleTrigger trigger = JobScheduler.CreateSimpleTrigger(job, triggerDate);
                 JobScheduler.AddEmailJobAsync(job, trigger);
             }
