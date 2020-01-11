@@ -15,15 +15,7 @@ namespace ProjectFlow.BLL
 
             return milestoneList;
         }
-
-        public Milestone GetMilestoneByID(int? id)
-        {
-            MilestoneDAO milestoneDAO = new MilestoneDAO();
-            var milestone = milestoneDAO.GetMilestoneByID(id);
-
-            return milestone;
-        }
-
+     
         public List<string> ValidateCreateMilestone(string Name, string ProjectID, int TeamID, string StartDate, string EndDate)
         {
             List<string> errorList = new List<string> { };
@@ -130,6 +122,59 @@ namespace ProjectFlow.BLL
             }
 
             return errorList;
+        }
+
+        public List<Milestone> GetMilestonesByTeamID(int id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id).ToList();
+
+                return teamMilestone;
+            }
+        }
+
+        public Milestone GetMilestoneByID(int? id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                Milestone milestone = dbContext.Milestones.First(x => x.milestoneID == id);
+
+                return milestone;
+            }
+        }
+
+        public void CreateMilestone(string Name, string ProjectID, int TeamID, DateTime StartDate, DateTime EndDate)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = new Milestone
+                {
+                    milestoneName = Name,
+                    startDate = StartDate,
+                    endDate = EndDate,
+                    projectID = ProjectID,
+                    teamID = TeamID
+                };
+                dbContext.Milestones.Add(milestone);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void UpdateMilestone(int MilestoneID, string Name, DateTime StartDate, DateTime EndDate)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = dbContext.Milestones.Single(x => x.milestoneID == MilestoneID);
+
+                if (milestone != null)
+                {
+                    milestone.milestoneName = Name;
+                    milestone.startDate = StartDate;
+                    milestone.endDate = EndDate;
+                    dbContext.SaveChanges();
+                }
+            }
         }
     }
 }
