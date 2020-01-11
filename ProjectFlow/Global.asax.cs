@@ -1,7 +1,9 @@
 ﻿using ProjectFlow.App_Start;
-using ProjectFlow.DAO;
 using ProjectFlow.Login;
 using StackExchange.Redis;
+using ProjectFlow.Scheduler;
+using Quartz;
+using Quartz.Impl;
 using System;
 using System.Security.Principal;
 using System.Web;
@@ -9,6 +11,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.UI;
+using ProjectFlow.BLL;
 
 namespace ProjectFlow
 {
@@ -22,6 +25,8 @@ namespace ProjectFlow
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            JobScheduler.StartAsync();
+
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
             {
                 Path = "~/Scripts/jquery-3.4.1.min.js",
@@ -59,6 +64,12 @@ namespace ProjectFlow
             //Create redis connection
             Redis = ConnectionMultiplexer.Connect("192.168.99.100");
 
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap-datetimepicker", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.js",
+                DebugPath = "~/Scripts/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.js"
+            });
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
@@ -89,8 +100,8 @@ namespace ProjectFlow
 
                         if (role.Equals("Student"))
                         {
-                            StudentDAO dao = new StudentDAO();
-                            Student student = dao.FindStudentByUsername(username);
+                            StudentBLL bll = new StudentBLL();
+                            Student student = bll.FindStudentByUsername(username);
 
                             var projectFlowIdentity = new ProjectFlowIdentity(student, id);
                             var principal = new GenericPrincipal(projectFlowIdentity, roles);
@@ -99,8 +110,8 @@ namespace ProjectFlow
                         }
                         else if(role.Equals("Tutor"))
                         {
-                            TutorDAO dao = new TutorDAO();
-                            Tutor tutor = dao.FindTutorByUsername(username);
+                            TutorBLL bll = new TutorBLL();
+                            Tutor tutor = bll.FindTutorByUsername(username);
 
                             var projectFlowIdentity = new ProjectFlowIdentity(tutor, id);
                             var principal = new GenericPrincipal(projectFlowIdentity, roles);
@@ -132,6 +143,10 @@ namespace ProjectFlow
         {
             //Close redis connection
             Redis.Close();
+            // Shutdown Scheduler
+            IScheduler scheduler = (IScheduler)StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.Clear();
+            scheduler.Shutdown();
         }
     }
 }
