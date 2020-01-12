@@ -57,5 +57,17 @@ namespace ProjectFlow.DashBoard
             FileGV.DataSource = fileList;
             FileGV.DataBind();
         }
+
+        protected void FileGV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = FileGV.SelectedRow;          
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+            string fileName = row.Cells[0].Text;
+            Response.Clear();
+            Response.ContentType = "application/octect-stream";
+            Response.AddHeader("Content-Disposition", "filename=" + fileName);
+            Response.TransmitFile(path + fileName);
+            Response.End();
+        }
     }
 }
