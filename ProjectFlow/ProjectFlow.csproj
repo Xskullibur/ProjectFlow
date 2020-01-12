@@ -448,6 +448,7 @@
     <Compile Include="DashBoard\StudentProject.aspx.designer.cs">
       <DependentUpon>StudentProject.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FileManagement\Decryption.cs" />
     <Compile Include="FileManagement\Encryption.cs" />
     <Compile Include="FileManagement\FileDetails.cs" />
     <Compile Include="FileManagement\Info.cs" />
