@@ -15,8 +15,11 @@ namespace ProjectFlow.DashBoard
         {
             if(Session["StudentTeamID"] != null)
             {
-                CheckFolderExist();
-                DisplayFile();
+                if (!IsPostBack)
+                {
+                    CheckFolderExist();
+                    DisplayFile();
+                }               
             }
             else
             {
@@ -44,9 +47,20 @@ namespace ProjectFlow.DashBoard
             {
                 CheckFolderExist();
                 string filename = Path.GetFileName(FileUploadControl.FileName);
-                string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
-                FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                DisplayFile();
+                if(OptionDP.SelectedIndex == 2)
+                {
+                    Encryption encryption = new Encryption();
+                    string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)";
+                    FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                    encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);
+                }
+                else
+                {
+                    string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+                    FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                }
+                
+                Response.Redirect("FileUpload.aspx");
             }
         }  
         
@@ -68,6 +82,25 @@ namespace ProjectFlow.DashBoard
             Response.AddHeader("Content-Disposition", "filename=" + fileName);
             Response.TransmitFile(path + fileName);
             Response.End();
+        }
+
+        protected void OptionDP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(OptionDP.SelectedIndex == 0)
+            {
+                KeyTB.Visible = false;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            }
+            else if(OptionDP.SelectedIndex == 1)
+            {
+                KeyTB.Visible = false;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            }
+            else if(OptionDP.SelectedIndex == 2)
+            {
+                KeyTB.Visible = true;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            }
         }
     }
 }

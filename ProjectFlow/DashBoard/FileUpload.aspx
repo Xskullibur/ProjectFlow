@@ -4,12 +4,6 @@
         .auto-style6 {
             width: 186px;
         }
-        .auto-style7 {
-            width: 122px;
-        }
-        .auto-style8 {
-            margin-right: 13px;
-        }
         </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -23,33 +17,35 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="auto-style1">
-                        <tr>
-                            <td class="auto-style6">
-                                <asp:FileUpload ID="FileUploadControl" runat="server" />
-                                <br />
-                            </td>
-                            <td class="auto-style7">&nbsp;
-
-                                &nbsp;&nbsp;<br />
-                                <br />
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="auto-style6">
-                                
-                                <br />
-                            </td>
-                            <td class="auto-style7">&nbsp;
-
-                                &nbsp;&nbsp;<br />
-                                <asp:Button ID="UploadBtn" runat="server" OnClick="UploadBtn_Click" Text="Upload" />
-                                <br />
-
-                            </td>
-                        </tr>
-                    </table>
+                     <div class="container">        
+                        <div class="row">            
+                            <div class="col">
+                                 <asp:FileUpload ID="FileUploadControl" runat="server" />
+                            </div>
+                            <div class="col">
+                                 <asp:DropDownList ID="OptionDP" runat="server" CssClass="form-control border border-dark" AutoPostBack="True" OnSelectedIndexChanged="OptionDP_SelectedIndexChanged">
+                                    <asp:ListItem>Normal</asp:ListItem>
+                                    <asp:ListItem>Encryption</asp:ListItem>
+                                    <asp:ListItem>Custom Key</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col">
+                                <asp:TextBox ID="KeyTB" CssClass="form-control" runat="server" Visible="False"></asp:TextBox>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                                <asp:Button ID="Button1" CssClass="btn btn-success" runat="server" OnClick="UploadBtn_Click" Text="Upload" />
+                            </div>                           
+                        </div>
+                    </div>                   
                 </div>
                 <div class="modal-footer">
                     <asp:Label ID="errorLabel" runat="server" ForeColor="Red"></asp:Label>
