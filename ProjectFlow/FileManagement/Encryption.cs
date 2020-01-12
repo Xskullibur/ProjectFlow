@@ -31,5 +31,20 @@ namespace ProjectFlow.FileManagement
                 }
             }
         }
+        public string GenerateKey(int iKeySize)
+        {
+            RijndaelManaged aesEncryption = new RijndaelManaged();
+            aesEncryption.KeySize = iKeySize;
+            aesEncryption.BlockSize = 128;
+            aesEncryption.Mode = CipherMode.CBC;
+            aesEncryption.Padding = PaddingMode.PKCS7;
+            aesEncryption.GenerateIV();
+            string ivStr = Convert.ToBase64String(aesEncryption.IV);
+            aesEncryption.GenerateKey();
+            string keyStr = Convert.ToBase64String(aesEncryption.Key);
+            string completeKey = ivStr + "," + keyStr;
+
+            return Convert.ToBase64String(ASCIIEncoding.UTF8.GetBytes(completeKey));
+        }
     }
 }

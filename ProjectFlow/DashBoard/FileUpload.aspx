@@ -32,7 +32,9 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col"></div>
+                            <div class="col">
+                                <asp:Button ID="GenKeyBtn" CssClass="btn btn-primary" runat="server" Text="Generate Key" OnClick="GenKeyBtn_Click" Visible="False"/>
+                            </div>
                             <div class="col">
                                 <asp:TextBox ID="KeyTB" CssClass="form-control" runat="server" Visible="False"></asp:TextBox>
                             </div>

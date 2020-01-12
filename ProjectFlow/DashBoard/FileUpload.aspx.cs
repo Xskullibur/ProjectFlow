@@ -89,18 +89,28 @@ namespace ProjectFlow.DashBoard
             if(OptionDP.SelectedIndex == 0)
             {
                 KeyTB.Visible = false;
+                GenKeyBtn.Visible = false;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
             }
             else if(OptionDP.SelectedIndex == 1)
             {
                 KeyTB.Visible = false;
+                GenKeyBtn.Visible = false;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
             }
             else if(OptionDP.SelectedIndex == 2)
             {
                 KeyTB.Visible = true;
+                GenKeyBtn.Visible = true;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
             }
+        }
+
+        protected void GenKeyBtn_Click(object sender, EventArgs e)
+        {
+            Encryption encryption = new Encryption();
+            KeyTB.Text = encryption.GenerateKey(256).Substring(0, 32);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
         }
     }
 }
