@@ -15,7 +15,8 @@ namespace ProjectFlow.DashBoard
         {
             if(Session["StudentTeamID"] != null)
             {
-
+                CheckFolderExist();
+                DisplayFile();
             }
             else
             {
@@ -45,8 +46,16 @@ namespace ProjectFlow.DashBoard
                 string filename = Path.GetFileName(FileUploadControl.FileName);
                 string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
                 FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                DisplayFile();
             }
+        }  
+        
+        public void DisplayFile()
+        {
+            Info infomation = new Info();
+            List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+            FileGV.DataSource = fileList;
+            FileGV.DataBind();
         }
-       
     }
 }

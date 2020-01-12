@@ -7,6 +7,9 @@
         .auto-style7 {
             width: 122px;
         }
+        .auto-style8 {
+            margin-right: 13px;
+        }
         </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -66,8 +69,24 @@
         <br>
         <div class="row">
             <div class="col">
-                <div style="overflow-x: auto;">
-                    
+                <div style="overflow-x: auto;">                   
+                    <asp:GridView ID="FileGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" width ="1056px" AllowPaging="True" PageSize="4">
+                        <HeaderStyle CssClass="thead-light" />
+                        <Columns>
+                            <asp:BoundField DataField="Name" HeaderText="File" />
+                            <asp:CommandField ButtonType="Button" SelectText="Download" ShowSelectButton="True">
+                                <ControlStyle CssClass="btn btn-primary" />
+                            </asp:CommandField>
+                        </Columns>
+                        <EmptyDataTemplate>
+                           <div class="jumbotron jumbotron-fluid">
+                                <div class="container">
+                                    <h1 class="display-4">Storage is Empty</h1>                                          
+                                    <p>Files not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                </div>
+                           </div>
+                       </EmptyDataTemplate>
+                    </asp:GridView>                   
                 </div>
             </div>
         </div> 

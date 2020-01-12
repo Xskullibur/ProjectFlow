@@ -448,7 +448,8 @@
     <Compile Include="DashBoard\StudentProject.aspx.designer.cs">
       <DependentUpon>StudentProject.aspx</DependentUpon>
     </Compile>
-    <Compile Include="FileManagement\Upload.cs" />
+    <Compile Include="FileManagement\FileDetails.cs" />
+    <Compile Include="FileManagement\Info.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
