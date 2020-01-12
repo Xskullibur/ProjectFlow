@@ -12,12 +12,15 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["StudentTeamID"] = null;
             ShowProject();
         }
 
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            GridViewRow row = ProjectGV.SelectedRow;
+            Session["StudentTeamID"] = row.Cells[0].Text;
+            Response.Redirect("FileUpload.aspx");
         }
 
         protected void ProjectGV_PageIndexChanged(object sender, EventArgs e)

@@ -171,9 +171,10 @@
     <Content Include="Content\ProjectFlow\CSS\content-nav.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="DashBoard\AddMilestone.aspx" />
+    <Content Include="DashBoard\FileUpload.aspx" />
     <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="DashBoard\ProjectTeamMenu.aspx" />
-    <Content Include="DashBoard\studentProject.aspx" />
+    <Content Include="DashBoard\StudentProject.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="Login.aspx" />
@@ -419,6 +420,13 @@
     <Compile Include="DashBoard\AddMilestone.aspx.designer.cs">
       <DependentUpon>AddMilestone.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DashBoard\FileUpload.aspx.cs">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashBoard\FileUpload.aspx.designer.cs">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DashBoard\ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -433,13 +441,14 @@
     <Compile Include="DashBoard\ProjectTeamMenu.aspx.designer.cs">
       <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DashBoard\studentProject.aspx.cs">
-      <DependentUpon>studentProject.aspx</DependentUpon>
+    <Compile Include="DashBoard\StudentProject.aspx.cs">
+      <DependentUpon>StudentProject.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DashBoard\studentProject.aspx.designer.cs">
-      <DependentUpon>studentProject.aspx</DependentUpon>
+    <Compile Include="DashBoard\StudentProject.aspx.designer.cs">
+      <DependentUpon>StudentProject.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FileManagement\Upload.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -620,6 +629,7 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="FileManagement\FileStorage\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
