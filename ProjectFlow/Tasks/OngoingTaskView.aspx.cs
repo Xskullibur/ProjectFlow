@@ -102,7 +102,7 @@ namespace ProjectFlow.Tasks
                      **/
 
                     TextBox editEndTxt = (TextBox)e.Row.FindControl("editEndDate");
-                    DateTime endDate = Convert.ToDateTime(DataBinder.Eval(rowItems, "Start"));
+                    DateTime endDate = Convert.ToDateTime(DataBinder.Eval(rowItems, "End"));
                     editEndTxt.Text = endDate.Date.ToString("yyyy-MM-dd");
 
                     /**
@@ -244,11 +244,12 @@ namespace ProjectFlow.Tasks
             // Get Values
             GridViewRow row = taskGrid.Rows[e.RowIndex];
 
-            // Verify Task ID
+            // Get Task
             TaskBLL taskBLL = new TaskBLL();
             int id = Convert.ToInt32(row.Cells[0].Text);
-
             Task updated_task = taskBLL.GetTaskByID(id);
+
+            // Verify TaskID
             if (updated_task == null)
             {
                 this.Master.Master.ShowAlert("Task Not Found!", BootstrapAlertTypes.DANGER);
@@ -263,6 +264,7 @@ namespace ProjectFlow.Tasks
                 TextBox endTxt = (TextBox)row.FindControl("editEndDate");
                 DropDownList statusDDL = (DropDownList)row.FindControl("editStatusDDL");
 
+                // Get Error Labels
                 Label tNameErrorLbl = (Label)row.FindControl("tNameErrorLbl");
                 Label tDescErrorLbl = (Label)row.FindControl("tDescErrorLbl");
                 Label tMilestoneErrorLbl = (Label)row.FindControl("tMilestoneErrorLbl");
@@ -301,11 +303,11 @@ namespace ProjectFlow.Tasks
                 statusErrorLbl.Text = string.Empty;
                 statusErrorLbl.Visible = false;
 
-                // Verify
+                // Verify Edited Task
                 TaskHelper taskVerification = new TaskHelper();
                 bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
 
-                // Show Errors
+                // Cherk Verified
                 if (!verified)
                 {
                     // Name
@@ -356,6 +358,8 @@ namespace ProjectFlow.Tasks
                         statusErrorLbl.Visible = true;
                         statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
                     }
+
+                    this.Master.Master.ShowAlert("Failed to Update Task!", BootstrapAlertTypes.DANGER);
                 }
                 else
                 {
@@ -368,10 +372,13 @@ namespace ProjectFlow.Tasks
                     int statusID = Convert.ToInt32((statusDDL).SelectedValue);
 
                     // Update Task
+                    updated_task.Status = null;
+
                     updated_task.taskName = name;
                     updated_task.taskDescription = desc;
                     updated_task.startDate = Convert.ToDateTime(startDate);
                     updated_task.endDate = Convert.ToDateTime(endDate);
+                    updated_task.statusID = statusID;
 
                     if (milestoneID != -1)
                     {
@@ -381,8 +388,6 @@ namespace ProjectFlow.Tasks
                     {
                         updated_task.milestoneID = null;
                     }
-
-                    updated_task.statusID = statusID;
 
                     // Get Edit Allocation List Control
                     ListBox editAllocationList = (ListBox)row.FindControl("editAllocationList");
@@ -403,6 +408,7 @@ namespace ProjectFlow.Tasks
                     // Update Task and Allocations
                     if (taskBLL.Update(updated_task, updated_Allocations))
                     {
+                        NotificationHelper.Default_TaskUpdate_Setup(id);
                         this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
                     }
                     else

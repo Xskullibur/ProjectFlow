@@ -26,6 +26,16 @@ namespace ProjectFlow.Scheduler
             }
         }
 
+
+        public static async System.Threading.Tasks.Task DeleteJobs(string jobName, string jobGrp)
+        {
+            // Get Scheduler
+            IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
+            await scheduler.Start();
+
+            await scheduler.DeleteJob(new JobKey(jobName, jobGrp));
+        }
+
         /// <summary>
         /// Update job details based on Job Name and Job Group
         /// </summary>
@@ -36,11 +46,14 @@ namespace ProjectFlow.Scheduler
         /// <param name="emailRecivers"></param>
         /// <param name="cc"></param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task UpdateJobDataMap_Email(IJobDetail jobDetail, string emailSubject, string emailBody, List<string> emailRecivers, string cc = null)
+        public static async System.Threading.Tasks.Task UpdateJobDataMap_Email(string jobName, string jobGrp, string emailSubject, string emailBody, List<string> emailRecivers, string cc = null)
         {
             // Get Scheduler
             IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
             await scheduler.Start();
+
+            // Get Job Details
+            IJobDetail jobDetail = await scheduler.GetJobDetail(new JobKey(jobName, jobGrp));
 
             // Update Datamap
             jobDetail.JobDataMap.Put("Subject", emailSubject);
@@ -57,7 +70,7 @@ namespace ProjectFlow.Scheduler
         /// <param name="oldTrigger"></param>
         /// <param name="newTrigger"></param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task UpdateTriggerAsync(ISimpleTrigger oldTrigger, ISimpleTrigger newTrigger)
+        public static async System.Threading.Tasks.Task UpdateTrigger(ISimpleTrigger oldTrigger, ISimpleTrigger newTrigger)
         {
             IScheduler scheduler = await new StdSchedulerFactory().GetScheduler();
             await scheduler.Start();

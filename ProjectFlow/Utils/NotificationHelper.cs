@@ -25,11 +25,26 @@ namespace ProjectFlow.Utils
         }
 
 
-
         // Task Updated
-        public static void Task_Update_Setup(int taskID)
-        {
 
+        /// <summary>
+        /// Remove all existing jobs related to the task and recreate
+        /// </summary>
+        /// <param name="taskID"></param>
+        public static void Default_TaskUpdate_Setup(int taskID)
+        {
+            TaskBLL taskBLL = new TaskBLL();
+            Task updated_task = taskBLL.GetTaskByID(taskID);
+
+            JobDetailsBLL jobDetailsBLL = new JobDetailsBLL();
+            List<QRTZ_JOB_DETAILS> jobDetails = jobDetailsBLL.GetJobDetailsByTaskID(taskID);
+
+            // Remove all jobs related to task
+            jobDetails.ForEach(async job => 
+                await JobScheduler.DeleteJobs(job.JOB_NAME, job.JOB_GROUP)
+            );
+
+            Default_AddTask_Setup(taskID);
         }
 
 

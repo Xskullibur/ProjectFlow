@@ -55,6 +55,8 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
+                    dbContext.Tasks.Attach(task);
+
                     // Update Task
                     dbContext.Entry(task).State = System.Data.Entity.EntityState.Modified;
 
