@@ -139,17 +139,25 @@ namespace ProjectFlow.DAO
         /// </summary>
         /// <param name="issue"></param>
         /// <returns>Boolean</returns>
-        public bool drop(Issue issue)
+        public bool drop(Issue issue, int UserId)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 try
                 {
-                    issue.active = false;
-                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
-                    dbContext.SaveChanges();
+                    if (issue.createdBy == UserId)
+                    {
+                        issue.active = false;
+                        dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+                        dbContext.SaveChanges();
 
-                    return true;
+                        return true;
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"wrong user droppping task");
+                        return false;
+                    }
                 }
                 catch (Exception e)
                 {

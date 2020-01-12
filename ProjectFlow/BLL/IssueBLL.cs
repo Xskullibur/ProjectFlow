@@ -28,12 +28,12 @@ namespace ProjectFlow.BLL
             return issue;
         }
 
-        public bool Drop(int id)
+        public bool Drop(int id, int UserId)
         {
             IssueDAO issueDAO = new IssueDAO();
             Issue deleted_task = issueDAO.GetIssueByID(id);
 
-            return issueDAO.drop(deleted_task);
+            return issueDAO.drop(deleted_task, UserId);
         }
     }
 }

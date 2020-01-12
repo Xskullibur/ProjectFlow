@@ -61,7 +61,7 @@ namespace ProjectFlow.Issues
 
             // Delete Task
             IssueBLL issueBLL = new IssueBLL();
-            bool result = issueBLL.Drop(id);
+            bool result = issueBLL.Drop(id, TEST_TEAM_ID);
 
             refreshData(TEST_TEAM_ID);
 
