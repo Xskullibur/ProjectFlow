@@ -72,6 +72,11 @@
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="File" />
+                            <asp:TemplateField HeaderText="Key">
+                                <ItemTemplate>
+                                    <asp:TextBox ID="tableKeyTB" CssClass="form-control" runat="server" Visible="True"></asp:TextBox>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:CommandField ButtonType="Button" SelectText="Download" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-primary" />
                             </asp:CommandField>
