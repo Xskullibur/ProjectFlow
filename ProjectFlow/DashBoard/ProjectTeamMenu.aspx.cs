@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,8 +56,10 @@ namespace ProjectFlow.DashBoard
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateTeam').modal('show');", true);
             }
             else
-            {               
-                Response.Redirect("ProjectTeamMenu.aspx");
+            {
+                Master.ShowAlert("Successfully Created Team", BootstrapAlertTypes.SUCCESS);
+                ClearModel();
+                ShowTeam();
             }
             
         }
@@ -87,6 +91,7 @@ namespace ProjectFlow.DashBoard
                     
             List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text);
             TeamGV.EditIndex = -1;
+            Master.ShowAlert("Successfully Updated Team", BootstrapAlertTypes.SUCCESS);
             ShowTeam();
         }
 
@@ -108,6 +113,13 @@ namespace ProjectFlow.DashBoard
         {
             TeamGV.PageIndex = e.NewPageIndex;
             ShowTeam();
+        }
+
+        private void ClearModel()
+        {
+            NameTB.Text = "";
+            DescTB.Text = "";
+            errorLabel.Text = "";
         }
     }
 }
