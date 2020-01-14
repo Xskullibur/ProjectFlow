@@ -1,5 +1,4 @@
-﻿using ProjectFlow.DAO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +9,7 @@ namespace ProjectFlow.BLL
     {
         public List<Milestone> GetMilestoneByTeamID(int id)
         {
-            MilestoneDAO milestoneDAO = new MilestoneDAO();
-            var milestoneList = milestoneDAO.GetMilestonesByTeamID(id);
+            var milestoneList = GetMilestonesByTeamID(id);
 
             return milestoneList;
         }
@@ -20,7 +18,6 @@ namespace ProjectFlow.BLL
         {
             List<string> errorList = new List<string> { };
             DateTime validateValue;
-            MilestoneDAO dao = new MilestoneDAO();
 
             if (Name.Equals(""))
             {
@@ -74,7 +71,7 @@ namespace ProjectFlow.BLL
 
             if(errorList.Count == 0)
             {
-                dao.CreateMilestone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+                CreateMilestone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
             }
 
             return errorList;
@@ -84,7 +81,6 @@ namespace ProjectFlow.BLL
         {
             List<string> errorList = new List<string> { };
             DateTime validateValue;
-            MilestoneDAO dao = new MilestoneDAO();
 
             if (Name.Equals(""))
             {
@@ -118,7 +114,7 @@ namespace ProjectFlow.BLL
 
             if(errorList.Count == 0)
             {
-                dao.UpdateMilestone(MilestoneID, Name, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+                UpdateMilestone(MilestoneID, Name, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
             }
 
             return errorList;

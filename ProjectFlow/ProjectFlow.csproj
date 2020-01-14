@@ -411,8 +411,6 @@
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAO\MilestoneDAO.cs" />
-    <Compile Include="DAO\ProjectDAO.cs" />
     <Compile Include="DashBoard\AddMilestone.aspx.cs">
       <DependentUpon>AddMilestone.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

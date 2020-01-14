@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +64,9 @@ namespace ProjectFlow
             }
             else
             {
-                Response.Redirect("ProjectMainPage.aspx");
+                ClearModel();
+                ShowMember();
+                Master.ShowAlert("Successfully Added Member", BootstrapAlertTypes.SUCCESS);
             }
         }
 
@@ -77,6 +81,7 @@ namespace ProjectFlow
             List<string> errorList = projectBLL.ValidateUpdateMember(memberID, int.Parse(editRole.Text));
                      
             MemberGV.EditIndex = -1;
+            Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
             ShowMember();
         }
 
@@ -109,6 +114,13 @@ namespace ProjectFlow
             {
                 Response.Redirect("addMilestone.aspx");
             }
+        }
+
+        private void ClearModel()
+        {
+            studentIDTB.Text = "";
+            RoleIDTB.Text = "";
+            errorLabel.Text = "";
         }
     }
 }

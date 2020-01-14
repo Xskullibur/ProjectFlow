@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using ProjectFlow.DAO;
 
 namespace ProjectFlow.BLL
 {
@@ -16,13 +15,11 @@ namespace ProjectFlow.BLL
                  
         public List<ProjectTeam> GetProjectTeam(string ProjectID)
         {
-            ProjectDAO projectDAO = new ProjectDAO();
-            return projectDAO.GetTeam(ProjectID);
+            return GetTeam(ProjectID);
         }
 
         public List<string> InsertProjectTeam(string TeamName, string Desc, string ProjectID)
         {
-            ProjectDAO projectDAO = new ProjectDAO();
             List<string> errorList = new List<string> { };
 
             if (TeamName.Equals(""))
@@ -42,15 +39,14 @@ namespace ProjectFlow.BLL
 
             if (errorList.Count == 0)
             {
-                projectDAO.InsertTeam(TeamName, Desc, ProjectID);
+                InsertTeam(TeamName, Desc, ProjectID);
             }
 
             return errorList;          
         }
 
         public List<string> ValidateProject(string ProjectID, string Name, string Desc, Guid TutorID)
-        {
-            ProjectDAO projectDAO = new ProjectDAO();
+        {           
             ProjectID = RemoveWhiteSpace(ProjectID);
             Name = Name.Trim();
             Desc = Desc.Trim();
@@ -87,14 +83,14 @@ namespace ProjectFlow.BLL
                 errorList.Add("Description cannot be longer than 6<br>");
             }
 
-            if (projectDAO.CheckUniqueProjectID(ProjectID) == false)
+            if (CheckUniqueProjectID(ProjectID) == false)
             {
                 errorList.Add("Project ID is taken");
             }
 
             if (errorList.Count == 0)
             {
-                projectDAO.InsertProject(ProjectID, Name, Desc, TutorID);
+                InsertProject(ProjectID, Name, Desc, TutorID);
             }
 
             return errorList;
@@ -102,7 +98,6 @@ namespace ProjectFlow.BLL
 
         public List<string> ValidateUpdate(string ProjectID, string Name, string Desc, Guid TutorID)
         {
-            ProjectDAO projectDAO = new ProjectDAO();
             ProjectID = RemoveWhiteSpace(ProjectID);
             Name = Name.Trim();
             Desc = Desc.Trim();
@@ -134,14 +129,14 @@ namespace ProjectFlow.BLL
                 errorList.Add("Description cannot be longer than 6<br>");
             }
 
-            if(projectDAO.CheckOwnership(ProjectID, TutorID) == false)
+            if(CheckOwnership(ProjectID, TutorID) == false)
             {
                 errorList.Add("Project is does not belong to you");
             }
            
             if (errorList.Count == 0)
             {
-                projectDAO.UpdateProject(ProjectID, Name, Desc);
+                UpdateProject(ProjectID, Name, Desc);
             }
 
             return errorList;
@@ -149,7 +144,6 @@ namespace ProjectFlow.BLL
 
         public List<string> UpdateProjectTeam(int TeamID, string TeamName, string Desc)
         {
-            ProjectDAO projectDAO = new ProjectDAO();
             List<string> errorList = new List<string> { };
             
             if (TeamName.Equals(""))
@@ -169,7 +163,7 @@ namespace ProjectFlow.BLL
 
             if (errorList.Count == 0)
             {
-                projectDAO.UpdateTeam(TeamID, TeamName, Desc);
+                UpdateTeam(TeamID, TeamName, Desc);
             }
 
             return errorList;
@@ -177,26 +171,24 @@ namespace ProjectFlow.BLL
       
         public List<TeamMember> GetTeamMember(int TeamID)
         {
-            ProjectDAO dao = new ProjectDAO();
-            return dao.GetMember(TeamID);
+            return GetMember(TeamID);
         }
 
         public List<string> ValidateInsertMember(string StudentID, int TeamID, int RoleID)
         {
             List<string> errorList = new List<string> { };
-            ProjectDAO dao = new ProjectDAO();
 
             if (StudentID.Equals(""))
             {
                 errorList.Add("student ID is empty<br>");
             }
 
-            if(dao.CheckStudentExist(StudentID) == false)
+            if(CheckStudentExist(StudentID) == false)
             {
                 errorList.Add("student ID does not exist<br>");
             }
 
-            if(dao.CheckStudentAlreadyExist(StudentID, TeamID))
+            if(CheckStudentAlreadyExist(StudentID, TeamID))
             {
                 errorList.Add("student already is a member<br>");
             }
@@ -223,7 +215,7 @@ namespace ProjectFlow.BLL
 
             if(errorList.Count == 0)
             {
-                dao.InsertMember(StudentID, TeamID, RoleID);
+                InsertMember(StudentID, TeamID, RoleID);
             }
 
             return errorList;
@@ -232,7 +224,6 @@ namespace ProjectFlow.BLL
         public List<string> ValidateUpdateMember(int MemberID, int RoleID)
         {
             List<string> errorList = new List<string> { };
-            ProjectDAO dao = new ProjectDAO();
 
             if (RoleID.ToString().Length > 4)
             {
@@ -251,7 +242,7 @@ namespace ProjectFlow.BLL
 
             if (errorList.Count == 0)
             {
-                dao.UpdateMember(MemberID, RoleID);
+                UpdateMember(MemberID, RoleID);
             }
             return errorList;
         }
@@ -476,6 +467,6 @@ namespace ProjectFlow.BLL
                     return false;
                 }
             }
-        }
+        }     
     }  
 }
