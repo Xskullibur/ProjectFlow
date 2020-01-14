@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.FileManagement;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,15 +69,15 @@ namespace ProjectFlow.DashBoard
                         Encryption encryption = new Encryption();
                         string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                        encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);
+                        encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);                       
                         Response.Redirect("FileUpload.aspx");
+                        Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
                     }
                     else
                     {
                         ShowError(errorList);
                     }
-                }
-                   
+                }                  
                 else
                 {
                     if (errorList.Count == 0)
@@ -83,6 +85,7 @@ namespace ProjectFlow.DashBoard
                         string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
                         Response.Redirect("FileUpload.aspx");
+                        Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
                     }
                     else
                     {
@@ -150,7 +153,7 @@ namespace ProjectFlow.DashBoard
                 }
                 else
                 {
-
+                    Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
                 }               
             }
             else
