@@ -70,7 +70,7 @@
                         </li>
                     </ul>
                      <div class="mdc-card content-profile" id="profile-popper">
-                           <div class="mdc-card__primary-action" tabindex="0" style="width: 100%;display: flex;flex-direction: row;">
+                           <div id="profile-info" class="mdc-card__primary-action" tabindex="0" style="width: 100%;display: flex;flex-direction: row;">
                                 <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg&quot;);"></div>
                                 
                                <div style="padding: 1rem;">
@@ -173,6 +173,11 @@
                 popper.hide();
             }
             
+        });
+
+        //Click on profile 
+        $('#profile-info').on('click', function () {
+            window.location.href = "/Profile/Profile.aspx";
         });
 
         //Initialize side bar
