@@ -440,9 +440,8 @@ namespace ProjectFlow.BLL
         public bool CheckStudentExist(string StudentID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
-            {
-                var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
-                if (dbContext.Students.Any(x => x.UserId.Equals(student.UserId)))
+            {               
+                if (dbContext.Students.Any(x => x.studentID.Equals(StudentID)))
                 {
                     return true;
                 }
@@ -457,7 +456,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
+                var student = dbContext.Students.Single(x => x.studentID.Equals(StudentID));                
                 if (dbContext.TeamMembers.Any(x => x.UserId.Equals(student.UserId) && x.teamID == TeamID))
                 {
                     return true;
