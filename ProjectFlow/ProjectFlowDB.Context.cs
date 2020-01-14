@@ -45,7 +45,6 @@ namespace ProjectFlow
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<TaskAllocation> TaskAllocations { get; set; }
         public virtual DbSet<TeamMember> TeamMembers { get; set; }

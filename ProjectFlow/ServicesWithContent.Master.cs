@@ -80,7 +80,8 @@ namespace ProjectFlow
                         ProjectID.Value = project.projectID;
 
                     }
-                }else if (projectFlowIdentity.IsTutor)
+                }
+                else if (projectFlowIdentity.IsTutor)
                 {
                     throw new NotImplementedException("tutor cannot access all project for now");
                 }
@@ -91,7 +92,8 @@ namespace ProjectFlow
         /// <summary>
         /// Return the current selected project
         /// </summary>
-        public Project CurrentProject {
+        public Project CurrentProject
+        {
             get => Session["CurrentProject"] as Project;
         }
 

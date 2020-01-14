@@ -333,6 +333,8 @@
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="DashBoard\Web.config" />
+    <Content Include="Issues\Web.config" />
+    <Content Include="Issues\IssueNested.master" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
@@ -340,7 +342,6 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Issues\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -399,6 +400,8 @@
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\aspnet_UsersBLL.cs" />
+    <Compile Include="BLL\CommentForIssueBLL.cs" />
+    <Compile Include="BLL\IssueBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
@@ -409,10 +412,10 @@
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
     <Compile Include="BLL\PollingBLL.cs" />
+    <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="DashBoard\ProjectMenu.aspx.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -420,16 +423,6 @@
     <Compile Include="DashBoard\ProjectMenu.aspx.designer.cs">
       <DependentUpon>ProjectMenu.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DAO\AllocationDAO.cs" />
-    <Compile Include="DAO\CommentForIssueDAO.cs" />
-    <Compile Include="DAO\IssueDAO.cs" />
-    <Compile Include="DAO\MilestoneDAO.cs" />
-    <Compile Include="DAO\ProjectDAO.cs" />
-    <Compile Include="DAO\StatusDAO.cs" />
-    <Compile Include="DAO\StudentDAO.cs" />
-    <Compile Include="DAO\TaskDAO.cs" />
-    <Compile Include="DAO\TeamMemberDAO.cs" />
-    <Compile Include="DAO\PollingDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -486,13 +479,6 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login\ProjectFlowIdentity.cs" />
-    <Compile Include="Logon.Master.cs">
-      <DependentUpon>Logon.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Logon.Master.designer.cs">
-      <DependentUpon>Logon.Master</DependentUpon>
-    </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -565,9 +551,6 @@
     <Compile Include="Student.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Task.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -596,13 +579,6 @@
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskVerification.cs" />
-    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
-      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
-      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Tasks\EmailTest.aspx.cs">
       <DependentUpon>EmailTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -621,12 +597,12 @@
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
-    <Compile Include="VoiceRecording.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\NotificationHelper.cs" />
+    <Compile Include="VoiceRecording.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
