@@ -44,7 +44,7 @@ namespace ProjectFlow.BLL
         /// </summary>
         /// <param name="tutor"></param>
         /// <param name="project"></param>
-        /// <returns>only true if the student have this project in his/her project's list</returns>
+        /// <returns>only true if the tutor have this project in his/her list of created projects</returns>
         public bool ContainsProject(Tutor tutor, Project project)
         {
             return tutor.UserId.Equals(project.UserId);
