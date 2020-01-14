@@ -47,10 +47,7 @@ namespace ProjectFlow.BLL
         /// <returns>only true if the student have this project in his/her project's list</returns>
         public bool ContainsProject(Tutor tutor, Project project)
         {
-            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
-            {
-                return dbContext.Projects.Find(project.).FirstOrDefault(project => project.UserId.Equals(tutor.UserId)).Contains(project.projectID);
-            }
+            return tutor.UserId.Equals(project.UserId);
         }
 
 

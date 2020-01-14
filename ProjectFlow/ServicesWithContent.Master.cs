@@ -84,8 +84,8 @@ namespace ProjectFlow
                 else if (projectFlowIdentity.IsTutor)
                 {
                     var tutor = projectFlowIdentity.Tutor;
-
-                    if (tutor.UserId.Equals(project.UserId))
+                    TutorBLL tutorBLL = new TutorBLL();
+                    if (tutorBLL.ContainsProject(tutor, project))
                     {
                         //Set the session of the current projects
                         Session["CurrentProject"] = project;
