@@ -38,7 +38,6 @@
                 <asp:ScriptReference Name="bootstrap-datetimepicker" />
             </Scripts>
         </asp:ScriptManager>
-        <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
         <script>
             $(function() {
                 $('.datetimepicker').datetimepicker();

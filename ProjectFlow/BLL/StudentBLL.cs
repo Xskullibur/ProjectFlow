@@ -165,7 +165,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.Students.Find(student.UserId).TeamMembers.Select(tm => tm.ProjectTeam.Project.projectID).Contains(project.projectID);
+                return dbContext.Entry(student).Entity.TeamMembers.Select(tm => tm.ProjectTeam.Project.projectID).Contains(project.projectID);
             }
         }
 
@@ -181,7 +181,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var teamMembers = dbContext.Students.Find(student.UserId).TeamMembers;
+                var teamMembers = dbContext.Entry(student).Entity.TeamMembers;
                 return teamMembers.Select(tm => tm.ProjectTeam.projectID).Contains(projectTeam.projectID);
             }
         }

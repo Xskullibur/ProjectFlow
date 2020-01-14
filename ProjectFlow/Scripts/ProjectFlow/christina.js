@@ -66,6 +66,12 @@ const drawWidth = 1000;
 let speakers_circles = [];
 
 function init_display(bound_window, display_canvas) {
+    let testImg = new Image();
+    testImg.src = 'https://image.flaticon.com/icons/png/512/123/123172.png';
+    let testImg2 = new Image();
+    testImg2.src = 'https://www.jodilogik.com/wordpress/wp-content/uploads/2016/05/people.png';
+    speakers_circles = [create_speaker('Peh Zi Heng', testImg), create_speaker('Peh Zi Heng2', testImg2)];
+
     animate();
 
     function animate() {

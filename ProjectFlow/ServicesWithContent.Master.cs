@@ -13,7 +13,7 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
-        protected void Page_Init(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
             var user = HttpContext.Current.User;
             if (user.Identity.IsAuthenticated)
@@ -32,13 +32,7 @@ namespace ProjectFlow
                     this.LoginEmailProfileLbl.Text = projectFlowIdentity.Tutor.aspnet_Users.aspnet_Membership.Email;
                 }
             }
-
-#if SELECTEDPROJECT
-            ProjectBLL projectBLL = new ProjectBLL();
-            //Set Current Project
-            SetCurrentProject(projectBLL.GetProjectByProjectId("ITP213"));
-
-#endif
+            
         }
 
         protected void LogoutEvent(object sender, EventArgs e)
@@ -74,11 +68,6 @@ namespace ProjectFlow
                     {
                         //Set the session of the current projects
                         Session["CurrentProject"] = project;
-
-
-                        //Inject html for project
-                        ProjectID.Value = project.projectID;
-
                     }
                 }else if (projectFlowIdentity.IsTutor)
                 {
@@ -87,14 +76,6 @@ namespace ProjectFlow
             }
 
         }
-
-        /// <summary>
-        /// Return the current selected project
-        /// </summary>
-        public Project CurrentProject {
-            get => Session["CurrentProject"] as Project;
-        }
-
 
     }
 }
