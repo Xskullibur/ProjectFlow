@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +50,10 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
-                ClearField();               
-                Response.Redirect("ProjectMenu.aspx");
+                ClearField();
+                ShowProject();
+                Master.ShowAlert("Project Successfully Created", BootstrapAlertTypes.SUCCESS);
+                //Response.Redirect("ProjectMenu.aspx");
             }
         }
 
@@ -109,7 +113,7 @@ namespace ProjectFlow.DashBoard
             List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
             projectGV.EditIndex = -1;
             ShowProject();
-
+            Master.ShowAlert("Project Updated Successfully", BootstrapAlertTypes.SUCCESS);
         }
 
         protected void projectGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
