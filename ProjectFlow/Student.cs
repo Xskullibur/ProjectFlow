@@ -23,12 +23,13 @@ namespace ProjectFlow
         }
     
         public string studentID { get; set; }
-        public string username { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
+        public System.Guid UserId { get; set; }
     
+        public virtual aspnet_Users aspnet_Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Room> Rooms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

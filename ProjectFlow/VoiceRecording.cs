@@ -14,7 +14,7 @@ namespace ProjectFlow
     
     public partial class VoiceRecording
     {
-        public string studentID { get; set; }
+        public System.Guid UserId { get; set; }
         public string recordingName { get; set; }
     
         public virtual Student Student { get; set; }

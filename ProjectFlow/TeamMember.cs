@@ -24,9 +24,9 @@ namespace ProjectFlow
         }
     
         public int memberID { get; set; }
-        public string studentID { get; set; }
         public int teamID { get; set; }
         public int roleID { get; set; }
+        public System.Guid UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentForIssue> CommentForIssues { get; set; }

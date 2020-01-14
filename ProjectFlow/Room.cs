@@ -15,7 +15,7 @@ namespace ProjectFlow
     public partial class Room
     {
         public int roomID { get; set; }
-        public string createdBy { get; set; }
+        public System.Guid createdBy { get; set; }
         public System.DateTime creationDate { get; set; }
         public int teamID { get; set; }
         public byte[] accessToken { get; set; }
