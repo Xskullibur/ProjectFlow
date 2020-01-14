@@ -13,20 +13,22 @@
         <div class="row pb-2">
             <div class="col">
 
-                <div>
+                <div style="overflow-x: auto;">
 
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered table-responsive" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
                                     <%--ID--%>
                                     <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
 
-                                    <%--Task--%>
+                                    <%--Due Date--%>
                                     <asp:BoundField HeaderText="Due" ReadOnly="True" />
+
+                                    <%--Task--%>
                                     <asp:TemplateField HeaderText="Task">
                                         <EditItemTemplate>
                                             <asp:TextBox ID="editTaskTxt" CssClass="form-control" runat="server" Text='<%# Bind("Task") %>'></asp:TextBox>
