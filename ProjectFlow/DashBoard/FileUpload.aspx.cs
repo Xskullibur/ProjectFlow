@@ -16,11 +16,11 @@ namespace ProjectFlow.DashBoard
         protected void Page_Load(object sender, EventArgs e)
         {
             if(Session["StudentTeamID"] != null)
-            {
+            {                
                 if (!IsPostBack)
                 {
                     CheckFolderExist();
-                    DisplayFile();
+                    DisplayFile();                                   
                 }               
             }
             else
@@ -69,9 +69,10 @@ namespace ProjectFlow.DashBoard
                         Encryption encryption = new Encryption();
                         string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                        encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);                       
-                        Response.Redirect("FileUpload.aspx");
+                        encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);                     
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
+                        DisplayFile();
+                        ClearModel();
                     }
                     else
                     {
@@ -84,8 +85,9 @@ namespace ProjectFlow.DashBoard
                     {
                         string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                        Response.Redirect("FileUpload.aspx");
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
+                        DisplayFile();
+                        ClearModel();
                     }
                     else
                     {
@@ -149,7 +151,6 @@ namespace ProjectFlow.DashBoard
                     File.Copy(theFile, destinationFolder + fileName);
                     decryption.DecryptFileWithKey(destinationFolder + fileName, key.Text);
                     DownloadFile(fileName, destinationFolder);
-                    //delete destination
                 }
                 else
                 {
@@ -198,6 +199,15 @@ namespace ProjectFlow.DashBoard
             Response.AddHeader("Content-Disposition", "filename=" + FileName);
             Response.TransmitFile(Path + FileName);
             Response.End();
+        }
+
+        private void ClearModel()
+        {
+            KeyTB.Text = "";
+            KeyTB.Visible = false;
+            GenKeyBtn.Visible = false;
+            OptionDP.SelectedIndex = 0;
+            errorLabel.Text = "";
         }
     }
 }
