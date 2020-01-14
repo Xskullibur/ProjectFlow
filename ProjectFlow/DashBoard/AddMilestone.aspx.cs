@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +80,7 @@ namespace ProjectFlow.DashBoard
 
             List<string> errorList = milestoneBLL.ValidateUpdateMilestone(milestoneID, editName.Text, editStartDate.Text, editEndDate.Text);           
             MilestoneGV.EditIndex = -1;
+            Master.ShowAlert("Milestone successfully updated", BootstrapAlertTypes.SUCCESS);
             ShowMilestone();
         }
 
@@ -113,7 +116,8 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
-                Response.Redirect("AddMilestone.aspx");
+                Master.ShowAlert("Milestone successfully created", BootstrapAlertTypes.SUCCESS);
+                ShowMilestone();
             }
         }
     }
