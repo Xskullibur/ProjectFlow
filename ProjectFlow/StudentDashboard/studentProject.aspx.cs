@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,13 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["StudentTeamID"] = null;
-            ShowProject();
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            if (identity.IsStudent)
+            {
+                Session["StudentID"] = identity.Student.UserId.ToString();
+                Session["StudentTeamID"] = null;
+                ShowProject();
+            }            
         }
 
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -31,7 +37,7 @@ namespace ProjectFlow.DashBoard
         public void ShowProject()
         {
             StudentBLL studentBLL = new StudentBLL();
-            IEnumerable<ProjectTeam> teamList = studentBLL.GetStudentProject(Guid.Parse("E227DC5B-EBF4-43F6-8081-5EC2E58037EA"));
+            IEnumerable<ProjectTeam> teamList = studentBLL.GetStudentProject(Guid.Parse(Session["StudentID"].ToString()));
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
         }

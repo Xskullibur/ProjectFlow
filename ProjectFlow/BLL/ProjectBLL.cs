@@ -191,7 +191,14 @@ namespace ProjectFlow.BLL
 
             if(CheckStudentAlreadyExist(StudentID, TeamID))
             {
-                errorList.Add("student already is a member<br>");
+                StudentBLL studentbll = new StudentBLL();
+                ProjectTeamBLL projectteambll = new ProjectTeamBLL();
+                var student = studentbll.FindStudentByAdminNo(StudentID);
+                var project = projectteambll.GetProjectTeamByTeamID(TeamID);
+                if(studentbll.HaveProjectTeam(student, project))
+                {
+                    errorList.Add("student already is a member<br>");
+                }               
             }
 
             if(TeamID.ToString().Length > 4)

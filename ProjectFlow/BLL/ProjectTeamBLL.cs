@@ -53,5 +53,13 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public ProjectTeam GetProjectTeamByTeamID(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Find(TeamID);
+            }
+        }
+
     }
 }

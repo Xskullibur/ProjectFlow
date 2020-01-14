@@ -5,19 +5,20 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 
 namespace ProjectFlow.FileManagement
 {
     public class Decryption
     {
-        string IV = "WTVqdWZnTHpxTnl1";
+        string IV = HostingEnvironment.MapPath("~/_KEYS/IV.bin");
         public void DecryptFileWithKey(string path, string key)
         {
             byte[] fileToByte = File.ReadAllBytes(path);
             using (var AES = new AesCryptoServiceProvider())
             {
                 AES.IV = Encoding.UTF8.GetBytes(IV);
-                AES.Key = Encoding.UTF8.GetBytes(key);
+                AES.Key = Encoding.UTF8.GetBytes(key); ;
                 AES.Mode = CipherMode.CBC;
                 AES.Padding = PaddingMode.PKCS7;
 

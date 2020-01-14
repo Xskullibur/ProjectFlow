@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -11,17 +12,22 @@ using System.Web.UI.WebControls;
 namespace ProjectFlow.DashBoard
 {
     public partial class ProjectMenu : System.Web.UI.Page
-    {
+    {      
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            if (identity.IsTutor)
             {
-                Session["PassProjectID"] = null;
-                Session["PassProjectName"] = null;
-                Session["PassTeamID"] = null;
-                Session["PassTeamName"] = null;
-                ShowProject();                        
-            }                   
+                if (!IsPostBack)
+                {
+                    Session["TutorID"] = identity.Tutor.UserId.ToString();
+                    Session["PassProjectID"] = null;
+                    Session["PassProjectName"] = null;
+                    Session["PassTeamID"] = null;
+                    Session["PassTeamName"] = null;
+                    ShowProject();
+                }
+            }                                
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -31,7 +37,7 @@ namespace ProjectFlow.DashBoard
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
-            Guid tutorID = Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3");  //currently hardcoded
+            Guid tutorID = Guid.Parse(Session["TutorID"].ToString());  
 
             List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
 
@@ -62,7 +68,7 @@ namespace ProjectFlow.DashBoard
             ProjectBLL projectBLL = new ProjectBLL();
 
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.GetProjectTutor(Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+            projectList = projectBLL.GetProjectTutor(Guid.Parse(Session["TutorID"].ToString()));
             projectGV.DataSource = projectList;
             projectGV.DataBind();
         }
@@ -110,7 +116,7 @@ namespace ProjectFlow.DashBoard
 
             string projectID = row.Cells[0].Text;
 
-            List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, Guid.Parse("5863511C-849B-443D-AA95-CFCE7DDAEBE3"));
+            List<string> error = projectBLL.ValidateUpdate(projectID, editName.Text, editDesc.Text, Guid.Parse(Session["TutorID"].ToString()));
             projectGV.EditIndex = -1;
             ShowProject();
             Master.ShowAlert("Project Updated Successfully", BootstrapAlertTypes.SUCCESS);
