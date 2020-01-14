@@ -149,8 +149,15 @@ namespace ProjectFlow.DashBoard
 
                     Directory.CreateDirectory(destinationFolder);
                     File.Copy(theFile, destinationFolder + fileName);
-                    decryption.DecryptFileWithKey(destinationFolder + fileName, key.Text);
-                    DownloadFile(fileName, destinationFolder);
+                    try
+                    {
+                        decryption.DecryptFileWithKey(destinationFolder + fileName, key.Text);
+                        DownloadFile(fileName, destinationFolder);
+                    }
+                    catch (System.Security.Cryptography.CryptographicException exception)
+                    {
+                        Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
+                    }                   
                 }
                 else
                 {
