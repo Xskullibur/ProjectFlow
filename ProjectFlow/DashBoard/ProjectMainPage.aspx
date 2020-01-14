@@ -105,7 +105,16 @@
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
-                            <asp:BoundField DataField="UserID" HeaderText="Student ID" ReadOnly="True" />
+                            <asp:TemplateField HeaderText="Student ID">
+                                <ItemTemplate>
+                                    <asp:Label ID="idLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.studentID") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Name">
+                                <ItemTemplate>
+                                    <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Role ID">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editRoleTB" CssClass="form-control" runat="server" Text='<%# Bind("roleID") %>'></asp:TextBox>

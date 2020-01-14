@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.BLL
 {
@@ -328,7 +329,8 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.TeamMembers.Where(x => x.teamID == TeamID).ToList();
+                
+                return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.teamID == TeamID).ToList();
             }
         }
 
