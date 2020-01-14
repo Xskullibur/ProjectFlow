@@ -14,7 +14,11 @@ namespace ProjectFlow.Tasks
 {
     public partial class DroppedTaskView : System.Web.UI.Page
     {
-        private const int TEST_TEAM_ID = 2;
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,11 +31,30 @@ namespace ProjectFlow.Tasks
 
         private void refreshData()
         {
-            TaskBLL taskBLL = new TaskBLL();
-            var dropped_tasks = taskBLL.GetDroppedTasksByTeamId(TEST_TEAM_ID);
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            taskGrid.DataSource = dropped_tasks;
-            taskGrid.DataBind();
+            TaskBLL taskBLL = new TaskBLL();
+
+            if (!Master.PersonalTaskSelected)
+            {
+                taskGrid.DataSource = taskBLL.GetDroppedTasksByTeamId(currentTeam.teamID);
+                taskGrid.DataBind();
+            }
+            else
+            {
+                // Get Current User
+                Student currentUser = Master.GetCurrentUser();
+
+                taskGrid.DataSource = taskBLL.GetDroppedTaskByTeamIdWithStudent(currentTeam.teamID, currentUser);
+                taskGrid.DataBind();
+            }
+            
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData();
         }
 
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)

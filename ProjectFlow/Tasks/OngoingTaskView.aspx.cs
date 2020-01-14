@@ -16,8 +16,6 @@ namespace ProjectFlow.Tasks
     public partial class tDetailedView : System.Web.UI.Page
     {
 
-        private const int TEST_TEAM_ID = 2;
-
         protected void Page_PreInit(object sender, EventArgs e)
         {
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
@@ -36,13 +34,21 @@ namespace ProjectFlow.Tasks
         {
             TaskBLL taskBLL = new TaskBLL();
 
-            taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamId(TEST_TEAM_ID);
-            taskGrid.DataBind();
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            if (taskGrid.Rows.Count > 0)
+            // Check Personal Task Filter
+            if (!Master.PersonalTaskSelected)
             {
-                taskGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
-                taskGrid.UseAccessibleHeader = true;
+                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
+                taskGrid.DataBind();
+            }
+            else
+            {
+                Student currentUser = Master.GetCurrentUser();
+
+                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamIdWithStudent(currentTeam.teamID, currentUser);
+                taskGrid.DataBind();
             }
         }
 
@@ -71,8 +77,10 @@ namespace ProjectFlow.Tasks
 
                 if ((e.Row.RowState & DataControlRowState.Edit) > 0)
                 {
-                    // Setup Edit Mode
 
+                    ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
+
+                    // Setup Edit Mode
                     object rowItems = e.Row.DataItem;
 
                     /**
@@ -137,7 +145,7 @@ namespace ProjectFlow.Tasks
 
                     //Set ListBox Datasource
                     TeamMemberBLL memberBLL = new TeamMemberBLL();
-                    Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
+                    Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(currentTeam.teamID);
 
                     editAllocationList.DataSource = memberList;
                     editAllocationList.DataTextField = "Value";
@@ -171,7 +179,7 @@ namespace ProjectFlow.Tasks
 
                     //Set Dropdownlist Datasource
                     MilestoneBLL milestoneBLL = new MilestoneBLL();
-                    var teamMilestone = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
+                    var teamMilestone = milestoneBLL.GetMilestoneByTeamID(currentTeam.teamID);
 
                     editMilestoneDDL.DataSource = teamMilestone;
                     editMilestoneDDL.DataValueField = "milestoneID";

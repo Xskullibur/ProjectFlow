@@ -10,7 +10,7 @@
 
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
                             <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4"> 
