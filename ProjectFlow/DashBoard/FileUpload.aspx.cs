@@ -47,20 +47,49 @@ namespace ProjectFlow.DashBoard
             {
                 CheckFolderExist();
                 string filename = Path.GetFileName(FileUploadControl.FileName);
-                
+                List<string> errorList = new List<string> { };
+
+                if (filename.Contains("(ENCRYPTED_WITH_KEY)"))
+                {
+                    errorList.Add("Cannot contain (ENCRYPTED_WITH_KEY)<br>");
+                }
+
+                if (!IsKeyValid(KeyTB.Text) && OptionDP.SelectedIndex == 2)
+                {
+                    errorList.Add("Key must be 32 character<br>");
+                }
+
                 if (OptionDP.SelectedIndex == 2)
                 {
-                    Encryption encryption = new Encryption();
-                    string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
-                    FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                    encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);
+                    
+                    if(errorList.Count == 0)
+                    {
+                        Encryption encryption = new Encryption();
+                        string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
+                        FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                        encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);
+                        Response.Redirect("FileUpload.aspx");
+                    }
+                    else
+                    {
+                        ShowError(errorList);
+                    }
                 }
+                   
                 else
                 {
-                    string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
-                    FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                    if (errorList.Count == 0)
+                    {
+                        string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+                        FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                        Response.Redirect("FileUpload.aspx");
+                    }
+                    else
+                    {
+                        ShowError(errorList);
+                    }                       
                 }
-                Response.Redirect("FileUpload.aspx");
+                
             }
         }  
         
@@ -71,7 +100,30 @@ namespace ProjectFlow.DashBoard
             FileGV.DataSource = fileList;
             FileGV.DataBind();
         }
+      
+        private bool IsKeyValid(string key)
+        {
+            if(key.Length == 32)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
+        private void ShowError(List<string> errorList)
+        {
+            string total = "";
+            foreach(string error in errorList)
+            {
+                total += error;
+            }
+            errorLabel.Text = total;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+        }
+         
         protected void FileGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = FileGV.SelectedRow;
@@ -81,18 +133,25 @@ namespace ProjectFlow.DashBoard
 
             if (fileName.Contains("(ENCRYPTED_WITH_KEY)"))
             {
-                 
-                string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
-                Encryption encryption = new Encryption();
-                Decryption decryption = new Decryption();
+                if(key.Text.Length == 32)
+                {
+                    string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
+                    Encryption encryption = new Encryption();
+                    Decryption decryption = new Decryption();
 
-                string theFile = storagePath + fileName;
-                string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";    
-                
-                Directory.CreateDirectory(destinationFolder);
-                File.Copy(theFile, destinationFolder + fileName);
-                decryption.DecryptFileWithKey(destinationFolder + fileName, key.Text);
-                DownloadFile(fileName, destinationFolder);
+                    string theFile = storagePath + fileName;
+                    string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
+
+                    Directory.CreateDirectory(destinationFolder);
+                    File.Copy(theFile, destinationFolder + fileName);
+                    decryption.DecryptFileWithKey(destinationFolder + fileName, key.Text);
+                    DownloadFile(fileName, destinationFolder);
+                    //delete destination
+                }
+                else
+                {
+
+                }               
             }
             else
             {           
