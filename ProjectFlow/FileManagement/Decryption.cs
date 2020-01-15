@@ -11,13 +11,13 @@ namespace ProjectFlow.FileManagement
 {
     public class Decryption
     {
-        string IV = HostingEnvironment.MapPath("~/_KEYS/IV.bin");
+        string IV = HostingEnvironment.MapPath("~/FileManagement/_KEYS/IV.bin");
         public void DecryptFileWithKey(string path, string key)
         {
             byte[] fileToByte = File.ReadAllBytes(path);
             using (var AES = new AesCryptoServiceProvider())
             {
-                AES.IV = Encoding.UTF8.GetBytes(IV);
+                AES.IV = File.ReadAllBytes(IV);
                 AES.Key = Encoding.UTF8.GetBytes(key); ;
                 AES.Mode = CipherMode.CBC;
                 AES.Padding = PaddingMode.PKCS7;
