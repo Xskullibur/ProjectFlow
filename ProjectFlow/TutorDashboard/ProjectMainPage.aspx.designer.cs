@@ -67,31 +67,13 @@ namespace ProjectFlow {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// RoleIDTB control.
+        /// RoleDP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RoleIDTB;
-        
-        /// <summary>
-        /// roleRequiredValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator roleRequiredValidator;
-        
-        /// <summary>
-        /// roleRegexValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator roleRegexValidator;
+        protected global::System.Web.UI.WebControls.DropDownList RoleDP;
         
         /// <summary>
         /// CreateBtn control.

@@ -43,15 +43,16 @@
                                 <br />
                             </td>
                             <td class="auto-style14">
-                                <asp:TextBox ID="RoleIDTB" CssClass="form-control" runat="server" Width="222px"></asp:TextBox>
+                                <asp:DropDownList ID="RoleDP" runat="server">
+                                    <asp:ListItem>Member</asp:ListItem>
+                                    <asp:ListItem>Leader</asp:ListItem>
+                                </asp:DropDownList>
                                 <br />
                             </td>
                             <td class="auto-style12">
                                 &nbsp;
 
-                                <asp:RequiredFieldValidator ID="roleRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="RoleIDTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="roleRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^[0-9]{1,4}$" ControlToValidate="RoleIDTB" ErrorMessage="max 4 numbers!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
-                                <br />
+                                &nbsp;<br />
                                 <br />
 
                             </td>

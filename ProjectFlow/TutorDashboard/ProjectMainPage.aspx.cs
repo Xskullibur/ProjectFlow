@@ -49,7 +49,16 @@ namespace ProjectFlow
             List<string> errorList = new List<string> { };
             string studentID = studentIDTB.Text;
             int teamID = int.Parse(Session["PassTeamID"].ToString());
-            int roleID = int.Parse(RoleIDTB.Text);
+            int roleID = 0;
+
+            if(RoleDP.SelectedIndex == 0)
+            {
+                roleID = 2;
+            }
+            else
+            {
+                roleID = 1;
+            }
 
             errorList = bll.ValidateInsertMember(studentID, teamID, roleID);
             if(errorList.Count > 0)
@@ -119,7 +128,7 @@ namespace ProjectFlow
         private void ClearModel()
         {
             studentIDTB.Text = "";
-            RoleIDTB.Text = "";
+            RoleDP.SelectedIndex = 0;
             errorLabel.Text = "";
         }
     }
