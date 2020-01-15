@@ -334,6 +334,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
     <Content Include="FileManagement\_KEYS\IV.bin" />
+    <Content Include="FileManagement\_KEYS\KEY.bin" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
