@@ -18,6 +18,7 @@ namespace ProjectFlow.Issues
             {
                 lbMember.Text = (string)Session["SSName"];
                 lbIssue.Text = (string)Session["SSDesc"];
+                idIssue = int.Parse((string)Session["SSIId"]);
                 check(idIssue, idVoter);
                 refreshCommentData(idIssue);
             }

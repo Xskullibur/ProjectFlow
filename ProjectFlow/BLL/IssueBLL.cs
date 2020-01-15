@@ -90,7 +90,7 @@ namespace ProjectFlow.BLL
                     var list = dbContext.Issues.Include("TeamMembers.Student")
                         .Include("Task")
                         .Where(x => x.Task.teamID == id)
-                        .Where(x => x.active != false)
+                        .Where(x => x.active == false)
                         .Select(y => new
                         {
                             ID = y.issueID,
