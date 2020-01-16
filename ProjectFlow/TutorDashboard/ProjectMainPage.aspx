@@ -43,7 +43,7 @@
                                 <br />
                             </td>
                             <td class="auto-style14">
-                                <asp:DropDownList ID="RoleDP" runat="server">
+                                <asp:DropDownList ID="RoleDP" CssClass="form-control border border-dark" runat="server">
                                     <asp:ListItem>Member</asp:ListItem>
                                     <asp:ListItem>Leader</asp:ListItem>
                                 </asp:DropDownList>
