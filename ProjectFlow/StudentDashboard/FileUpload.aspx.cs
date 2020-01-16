@@ -48,7 +48,10 @@ namespace ProjectFlow.DashBoard
             if (FileUploadControl.HasFile)
             {
                 CheckFolderExist();
+                Encryption encryption = new Encryption();
                 string filename = Path.GetFileName(FileUploadControl.FileName);
+                string path = "";
+                string savedLocation = "";
                 List<string> errorList = new List<string> { };
 
                 if (filename.Contains("(ENCRYPTED_WITH_KEY)"))
@@ -65,36 +68,40 @@ namespace ProjectFlow.DashBoard
                 {
                     
                     if(errorList.Count == 0)
-                    {
-                        Encryption encryption = new Encryption();
-                        string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
-                        FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                        encryption.EncryptFileWithKey(AppDomain.CurrentDomain.BaseDirectory + path + filename, KeyTB.Text);                     
-                        Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
-                        DisplayFile();
-                        ClearModel();
+                    {                  
+                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
+                        savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
+                        FileUploadControl.SaveAs(savedLocation);
+                        encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);                     
+                        Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                        
                     }
                     else
                     {
                         ShowError(errorList);
                     }
+                }
+                else if(OptionDP.SelectedIndex == 1)
+                {
+                    path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)";
+                    savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
+                    FileUploadControl.SaveAs(savedLocation);
+                    encryption.EncryptFile(savedLocation);                    
                 }                  
                 else
                 {
                     if (errorList.Count == 0)
                     {
-                        string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                        Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
-                        DisplayFile();
-                        ClearModel();
+                        Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                      
                     }
                     else
                     {
                         ShowError(errorList);
                     }                       
                 }
-                
+                DisplayFile();
+                ClearModel();
             }
         }  
         
@@ -134,6 +141,8 @@ namespace ProjectFlow.DashBoard
             GridViewRow row = FileGV.SelectedRow;
             string fileName = row.Cells[0].Text;
             TextBox key = (TextBox)row.FindControl("tableKeyTB");
+            Encryption encryption = new Encryption();
+            Decryption decryption = new Decryption();
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
 
             if (fileName.Contains("(ENCRYPTED_WITH_KEY)"))
@@ -141,9 +150,7 @@ namespace ProjectFlow.DashBoard
                 if(key.Text.Length == 32)
                 {
                     string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
-                    Encryption encryption = new Encryption();
-                    Decryption decryption = new Decryption();
-
+                    
                     string theFile = storagePath + fileName;
                     string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
 
@@ -158,6 +165,18 @@ namespace ProjectFlow.DashBoard
                     {
                         Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
                     }                   
+                }
+                else if (fileName.Contains("(ENCRYPTED)")){
+                    string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
+
+                    string theFile = storagePath + fileName;
+                    string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
+
+                    Directory.CreateDirectory(destinationFolder);
+                    File.Copy(theFile, destinationFolder + fileName);
+
+                    decryption.DecryptFile(destinationFolder + fileName);
+                    DownloadFile(fileName, destinationFolder);
                 }
                 else
                 {
