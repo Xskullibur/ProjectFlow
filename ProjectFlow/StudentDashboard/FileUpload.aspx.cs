@@ -69,7 +69,7 @@ namespace ProjectFlow.DashBoard
                     
                     if(errorList.Count == 0)
                     {                  
-                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
+                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\Tk1jT2x3azBOcWlOaHVEOWZMWjlVUT09";
                         savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                         FileUploadControl.SaveAs(savedLocation);
                         encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);                     
@@ -82,7 +82,7 @@ namespace ProjectFlow.DashBoard
                 }
                 else if(OptionDP.SelectedIndex == 1)
                 {
-                    path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)";
+                    path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\UkFJL3M5eWpxQ1lJYm9pbkpVYkRIdz09";
                     savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                     FileUploadControl.SaveAs(savedLocation);
                     encryption.EncryptFile(savedLocation);                    
@@ -145,7 +145,7 @@ namespace ProjectFlow.DashBoard
             Decryption decryption = new Decryption();
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
 
-            if (fileName.Contains("(ENCRYPTED_WITH_KEY)"))
+            if (fileName.StartsWith("Tk1jT2x3azBOcWlOaHVEOWZMWjlVUT09"))
             {
                 if(key.Text.Length == 32)
                 {
@@ -166,7 +166,7 @@ namespace ProjectFlow.DashBoard
                         Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
                     }                   
                 }
-                else if (fileName.Contains("(ENCRYPTED)")){
+                else if (fileName.StartsWith("UkFJL3M5eWpxQ1lJYm9pbkpVYkRIdz09")){
                     string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
 
                     string theFile = storagePath + fileName;
