@@ -335,9 +335,8 @@ namespace ProjectFlow.BLL
         public List<TeamMember> GetMember(int TeamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
-            {
-                
-                return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.teamID == TeamID).ToList();
+            {                
+                return dbContext.TeamMembers.Include(x => x.Student).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
             }
         }
 

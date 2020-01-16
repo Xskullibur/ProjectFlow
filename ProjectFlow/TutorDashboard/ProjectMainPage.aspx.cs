@@ -83,11 +83,20 @@ namespace ProjectFlow
         {
             GridViewRow row = MemberGV.Rows[e.RowIndex];
             ProjectBLL projectBLL = new ProjectBLL();
-
+            int role = 1;
             int memberID = int.Parse(row.Cells[0].Text);
-            TextBox editRole = (TextBox)row.FindControl("editRoleTB");
-           
-            List<string> errorList = projectBLL.ValidateUpdateMember(memberID, int.Parse(editRole.Text));
+            DropDownList editRole = (DropDownList)row.FindControl("editRoleDP");
+
+            if(editRole.SelectedIndex == 0)
+            {
+                role = 2;
+            }
+            else
+            {
+                role = 1;
+            }
+
+            List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
                      
             MemberGV.EditIndex = -1;
             Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);

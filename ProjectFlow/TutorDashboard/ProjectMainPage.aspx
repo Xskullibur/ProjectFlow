@@ -115,15 +115,16 @@
                                 <ItemTemplate>
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
                                 </ItemTemplate>
-                            </asp:TemplateField>
+                            </asp:TemplateField> 
                             <asp:TemplateField HeaderText="Role ID">
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="editRoleTB" CssClass="form-control" runat="server" Text='<%# Bind("roleID") %>'></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="editRoleRequiredValidator" runat="server" ValidationGroup="tableValidation" ControlToValidate="editRoleTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                    <asp:RegularExpressionValidator ID="editRoleRegexValidator" runat="server" ValidationGroup="tableValidation" validationexpression="^[0-9]{1,4}$" ControlToValidate="editRoleTB" ErrorMessage="max 4 numbers!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
+                                    <asp:DropDownList ID="editRoleDP" CssClass="form-control border border-dark" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>' runat="server">
+                                        <asp:ListItem>Member</asp:ListItem>
+                                        <asp:ListItem>Leader</asp:ListItem>
+                                    </asp:DropDownList>
                                 </EditItemTemplate>
                                 <ItemTemplate>
-                                    <asp:Label ID="roleLabel" runat="server" Text='<%# Bind("roleID") %>'></asp:Label>
+                                    <asp:Label ID="roleLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
