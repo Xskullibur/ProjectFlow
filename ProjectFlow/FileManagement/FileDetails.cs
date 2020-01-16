@@ -8,14 +8,16 @@ namespace ProjectFlow.FileManagement
     public class FileDetails
     {
         public string Name { get; set; }
-       
+        public string Status { get; set; }
+
         public FileDetails(){
 
         }
 
-        public FileDetails(string name)
+        public FileDetails(string name, string status)
         {
             Name = name;
+            Status = status;
         }
     }
 }

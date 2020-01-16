@@ -64,7 +64,7 @@ namespace ProjectFlow.DashBoard
                     errorList.Add("Key must be 32 character<br>");
                 }
 
-                if (OptionDP.SelectedIndex == 2)
+                if (OptionDP.SelectedIndex == 1)
                 {
                     
                     if(errorList.Count == 0)
@@ -80,7 +80,7 @@ namespace ProjectFlow.DashBoard
                         ShowError(errorList);
                     }
                 }
-                else if(OptionDP.SelectedIndex == 1)
+                else if(OptionDP.SelectedIndex == 0)
                 {
                     path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)";
                     savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
@@ -108,7 +108,7 @@ namespace ProjectFlow.DashBoard
         public void DisplayFile()
         {
             Info infomation = new Info();
-            List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+            IEnumerable<FileDetails> fileList = infomation.GetFiles(GetTeamID());
             FileGV.DataSource = fileList;
             FileGV.DataBind();
         }
@@ -145,10 +145,11 @@ namespace ProjectFlow.DashBoard
             Decryption decryption = new Decryption();
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
 
-            if (fileName.StartsWith("(ENCRYPTED_WITH_KEY)"))
+            if (row.Cells[1].Text.Equals("Encrypted With Key"))
             {
                 if(key.Text.Length == 32)
                 {
+                    fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
                     string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
                     
                     string theFile = storagePath + fileName;
@@ -173,9 +174,10 @@ namespace ProjectFlow.DashBoard
                     Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
                 }               
             }
-            else if (fileName.StartsWith("(ENCRYPTED)"))
+            else if (row.Cells[1].Text.Equals("Encrypted"))
             {
 
+                fileName = "(ENCRYPTED)" + fileName;
                 string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
 
                 string theFile = storagePath + fileName;
@@ -203,13 +205,13 @@ namespace ProjectFlow.DashBoard
                 GenKeyBtn.Visible = false;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
             }
-            else if(OptionDP.SelectedIndex == 1)
+            else if(OptionDP.SelectedIndex == 2)
             {
                 KeyTB.Visible = false;
                 GenKeyBtn.Visible = false;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
             }
-            else if(OptionDP.SelectedIndex == 2)
+            else if(OptionDP.SelectedIndex == 1)
             {
                 KeyTB.Visible = true;
                 GenKeyBtn.Visible = true;

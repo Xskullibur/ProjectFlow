@@ -24,9 +24,9 @@
                             </div>
                             <div class="col">
                                  <asp:DropDownList ID="OptionDP" runat="server" CssClass="form-control border border-dark" AutoPostBack="True" OnSelectedIndexChanged="OptionDP_SelectedIndexChanged">
-                                    <asp:ListItem>Normal</asp:ListItem>
                                     <asp:ListItem>Encryption</asp:ListItem>
                                     <asp:ListItem>Custom Key</asp:ListItem>
+                                    <asp:ListItem>No Encryption</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -72,6 +72,7 @@
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="File" />
+                            <asp:BoundField DataField="Status" HeaderText="Status" />
                             <asp:TemplateField HeaderText="Key">
                                 <ItemTemplate>
                                     <asp:TextBox ID="tableKeyTB" CssClass="form-control" runat="server" Visible="True"></asp:TextBox>
