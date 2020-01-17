@@ -22,5 +22,18 @@ namespace ProjectFlow.BLL
                 return members;
             }
         }
+
+        public void DeleteMember(int MemberID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Find(MemberID);
+                if(member != null)
+                {
+                    dbContext.TeamMembers.Remove(member);
+                    dbContext.SaveChanges();
+                }              
+            }
+        }
     }
 }

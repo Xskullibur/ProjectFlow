@@ -115,7 +115,7 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="MemberGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging" AllowPaging="True" PageSize="4">
+                    <asp:GridView ID="MemberGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging" AllowPaging="True" PageSize="4" OnRowDeleting="MemberGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
@@ -143,6 +143,11 @@
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
+                            <asp:TemplateField>
+                                <ItemTemplate>                     
+                                    <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>
                            <div class="jumbotron jumbotron-fluid">

@@ -12,6 +12,7 @@ namespace ProjectFlow
 {
     public partial class ProjectMainPage : System.Web.UI.Page
     {
+        TeamMemberBLL teamMemberBLL = new TeamMemberBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack == false)
@@ -139,6 +140,14 @@ namespace ProjectFlow
             studentIDTB.Text = "";
             RoleDP.SelectedIndex = 0;
             errorLabel.Text = "";
+        }
+
+        protected void MemberGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)MemberGV.Rows[e.RowIndex];
+            teamMemberBLL.DeleteMember(int.Parse(row.Cells[0].Text));
+            ShowMember();
+            Master.ShowAlert("Successfully deleted member", BootstrapAlertTypes.SUCCESS);
         }
     }
 }
