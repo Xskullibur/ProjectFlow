@@ -103,7 +103,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" runat="server" Font-Size="Large" Text="Team Select"></asp:Label>
+                    <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Team Select"></asp:Label>
                 </h1>
             </div>            
         </div>

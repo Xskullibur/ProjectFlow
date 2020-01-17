@@ -129,7 +129,23 @@
             </div>
         </div>
     </div>
-    <div class="container">        
+    <div class="container"> 
+        <div class="row">
+            <div class="col">
+                <h1>
+                    <asp:Label ID="Label5" class="label label-primary" runat="server" Text="Milestone"></asp:Label>
+                </h1>
+            </div>            
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <h3>
+                    <asp:Label ID="InfoLabel" runat="server" Font-Size="Medium"></asp:Label>
+                </h3>
+            </div>            
+        </div>
+        <br>
         <div class="row">
             <div class="col">                
                 <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
@@ -139,10 +155,7 @@
             </div>
             <div class="col">                                            
                 <asp:Button ID="openMilestone" runat="server" Text="Add Milestone" CssClass="btn btn-primary" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#addMilestone"/>                
-            </div>            
-            <div class="col">
-                <asp:Label ID="InfoLabel" runat="server"></asp:Label>
-            </div>
+            </div>                       
         </div>
         <br>
         <div class="row">

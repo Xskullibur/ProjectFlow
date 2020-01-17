@@ -17,8 +17,8 @@ namespace ProjectFlow
             if (Page.IsPostBack == false)
             {
                 if (Session["PassProjectID"] != null && Session["PassTeamID"] != null) {
-                    InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString()
-                                     + " -> Team ID: " + Session["PassTeamID"].ToString() + " - " + Session["PassTeamName"].ToString();
+                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
+                                     + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Team Members)";
                     ShowMember();
                     PageSelectDP.SelectedIndex = 0;
                 }

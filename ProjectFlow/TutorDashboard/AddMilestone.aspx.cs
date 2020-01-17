@@ -18,8 +18,8 @@ namespace ProjectFlow.DashBoard
             {
                 if (Session["PassProjectID"] != null && Session["PassTeamID"] != null)
                 {
-                    InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString()
-                                     + " -> Team ID: " + Session["PassTeamID"].ToString() + " - " + Session["PassTeamName"].ToString();
+                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
+                                     + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Milestones)";
                     ShowMilestone();
                     PageSelectDP.SelectedIndex = 1;
                 }

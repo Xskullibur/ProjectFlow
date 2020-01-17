@@ -5,6 +5,14 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <h1>
+                    <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Project Select"></asp:Label>
+                </h1>
+            </div>            
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
                 <div style="overflow-x: auto;">
                     <asp:GridView ID="ProjectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="ProjectGV_SelectedIndexChanged">
                         <HeaderStyle CssClass="thead-light"/>

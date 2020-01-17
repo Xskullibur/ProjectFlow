@@ -21,7 +21,7 @@ namespace ProjectFlow.DashBoard
                     Session["PassTeamID"] = null;
                     Session["PassTeamName"] = null;
                     ShowTeam();
-                    InfoLabel.Text = "Project ID: (" + Session["PassProjectID"].ToString() + ")  " + Session["PassProjectName"].ToString() + " >>> Team Select";
+                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Select)";
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace ProjectFlow.DashBoard
 
         protected void TeamGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            GridViewRow row = TeamGV.Rows[e.RowIndex];
+            GridViewRow row = TeamGV.Rows[e.RowIndex];          
             ProjectBLL projectBLL = new ProjectBLL();
 
             int teamID = int.Parse(row.Cells[0].Text);
@@ -98,8 +98,10 @@ namespace ProjectFlow.DashBoard
         protected void TeamGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = TeamGV.SelectedRow;
+            Label name = (Label)row.FindControl("nameLabel");
+
             Session["PassTeamID"] = row.Cells[0].Text;
-            Session["PassTeamName"] = row.Cells[1].Text;
+            Session["PassTeamName"] = name.Text;
             Response.Redirect("ProjectMainPage.aspx");
         }
 
