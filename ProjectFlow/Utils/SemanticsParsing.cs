@@ -161,7 +161,7 @@ namespace ProjectFlow.Utils
                     }
                     catch(Exception e)
                     {
-                        throw new ParseException($@"String should have a closing ' "" co'");
+                        throw new ParseException($@"String should have a closing ' "" '");
                     }
                 }
                 try
