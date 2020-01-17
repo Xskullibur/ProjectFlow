@@ -186,6 +186,7 @@
           <Property Name="projectDescription" Type="varchar" MaxLength="255" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="dropped" Type="bit" Nullable="false" />
+          <Property Name="createDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -1283,10 +1284,10 @@
           <Property Name="endDate" Type="DateTime" Precision="0" />
           <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Project" Relationship="Self.FK_Milestone_Project" FromRole="Milestone" ToRole="Project" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Milestone_ProjectTeam" FromRole="Milestone" ToRole="ProjectTeam" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Milestone" FromRole="Milestone" ToRole="Task" />
-          <Property Name="dropped" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Polling">
           <Key>
@@ -1307,10 +1308,11 @@
           <Property Name="projectName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="projectDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_Project" FromRole="Project" ToRole="Milestone" />
           <NavigationProperty Name="ProjectTeams" Relationship="Self.FK_ProjectTeam_Project" FromRole="Project" ToRole="ProjectTeam" />
           <NavigationProperty Name="Tutor" Relationship="Self.PK_Project_Tutor" FromRole="Project" ToRole="Tutor" />
-          <Property Name="dropped" Type="Boolean" Nullable="false" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -1320,12 +1322,12 @@
           <Property Name="teamName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="teamDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_ProjectTeam" FromRole="ProjectTeam" ToRole="Milestone" />
           <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTeam_Project" FromRole="ProjectTeam" ToRole="Project" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
-          <Property Name="dropped" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="QRTZ_BLOB_TRIGGERS">
           <Key>
@@ -1565,6 +1567,7 @@
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="roleID" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="TeamMember" ToRole="CommentForIssue" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_TeamMember" FromRole="TeamMember" ToRole="Issue" />
           <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_voter" FromRole="TeamMember" ToRole="Polling" />
@@ -1572,7 +1575,6 @@
           <NavigationProperty Name="Role" Relationship="Self.FK_TeamMember_Role" FromRole="TeamMember" ToRole="Role" />
           <NavigationProperty Name="Student" Relationship="Self.FK_TeamMember_Student" FromRole="TeamMember" ToRole="Student" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_TeamMember" FromRole="TeamMember" ToRole="TaskAllocation" />
-          <Property Name="dropped" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Tutor">
           <Key>
@@ -2399,13 +2401,13 @@
           <EntitySetMapping Name="Milestones">
             <EntityTypeMapping TypeName="ProjectFlowModel.Milestone">
               <MappingFragment StoreEntitySet="Milestone">
-                <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="milestoneID" ColumnName="milestoneID" />
                 <ScalarProperty Name="milestoneName" ColumnName="milestoneName" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="projectID" ColumnName="projectID" />
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2422,22 +2424,23 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectFlowModel.Project">
               <MappingFragment StoreEntitySet="Project">
-                <ScalarProperty Name="dropped" ColumnName="dropped" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="projectID" ColumnName="projectID" />
                 <ScalarProperty Name="projectName" ColumnName="projectName" />
                 <ScalarProperty Name="projectDescription" ColumnName="projectDescription" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProjectTeams">
             <EntityTypeMapping TypeName="ProjectFlowModel.ProjectTeam">
               <MappingFragment StoreEntitySet="ProjectTeam">
-                <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="teamName" ColumnName="teamName" />
                 <ScalarProperty Name="teamDescription" ColumnName="teamDescription" />
                 <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2651,11 +2654,11 @@
           <EntitySetMapping Name="TeamMembers">
             <EntityTypeMapping TypeName="ProjectFlowModel.TeamMember">
               <MappingFragment StoreEntitySet="TeamMember">
-                <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="memberID" ColumnName="memberID" />
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="roleID" ColumnName="roleID" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

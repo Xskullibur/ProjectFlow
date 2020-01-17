@@ -265,7 +265,8 @@ namespace ProjectFlow.BLL
                     projectID = ProjectID,
                     projectName = Name,
                     projectDescription = Desc,
-                    UserId = TutorID
+                    UserId = TutorID,
+                    createDate = DateTime.Today
                 };
                 dbContext.Projects.Add(project);
                 dbContext.SaveChanges();

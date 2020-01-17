@@ -164,6 +164,8 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                           
+                            <asp:BoundField DataField="createDate" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Created" />
+                          
                             <asp:CommandField SelectText="View Team" ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
