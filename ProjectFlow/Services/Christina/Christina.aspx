@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="Christina.aspx.cs" Inherits="ProjectFlow.Services.Christina.Christina" %>
 <%@ Register Assembly="ProjectFlow"  Namespace="ProjectFlow.Utils.MaterialIO"  TagPrefix="mio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <script type="text/javascript" src="/Scripts/jquery.signalR-2.4.1.min.js"></script>
@@ -56,6 +57,10 @@
                                        </div>
                                        <div class="col-2">
                                            <asp:Button ID="SuggestBtn" CssClass="btn btn-primary" runat="server" Text="Suggest" OnClick="SuggestEvent" />
+                                       </div>
+                                       <div>
+                                           <asp:Label ID="ErrMsg" runat="server" Text="" ForeColor="Red"></asp:Label><br>
+                                           <asp:Label ID="ErrLine" runat="server" Text="" ForeColor="Black"></asp:Label>
                                        </div>
                                    </div>
                                 </div>

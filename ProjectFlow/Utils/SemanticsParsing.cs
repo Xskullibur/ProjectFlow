@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace ProjectFlow.Utils
@@ -31,16 +32,21 @@ namespace ProjectFlow.Utils
         private string keyword;
         public int NextToken()
         {
-            LastChar = textStreamer.GetNextChar();
             SkipWhiteSpace();
 
             //Get keyword
             keyword = "";
-            while (char.IsLetterOrDigit(LastChar) || LastChar == ';' || LastChar == ':')
+
+            while (char.IsLetterOrDigit(LastChar) || LastChar == ':' || LastChar == ';')
             {
                 keyword += LastChar;
-                LastChar = textStreamer.GetNextChar();
+
+                //Termination line
+                if (LastChar != ';')
+                    LastChar = textStreamer.GetNextChar();
+                else break;
             }
+
 
             //Into token
 
@@ -67,6 +73,7 @@ namespace ProjectFlow.Utils
             {
                 LastChar = textStreamer.GetNextChar();
             }
+
         }
 
         private Speaker Run(Speaker speaker = null)
@@ -85,9 +92,11 @@ namespace ProjectFlow.Utils
                     break;
                 case Token.EOL:
                     return speaker;
+                case Token.STRING:
+                    
                 case Token.UNKNOWN:
 
-                    throw new Exception($"Unknown Token: {keyword}, at line: {textStreamer.Line}");
+                    throw new ParseException($"Unknown Token: {keyword}, at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count);
             }
             return Run(speaker);
         }
@@ -96,13 +105,20 @@ namespace ProjectFlow.Utils
         {
 
             SkipWhiteSpace();
-            return ParseString();
+            try
+            {
+                return ParseWord();
+            }catch(Exception e)
+            {
+                throw new ParseException("Statement did not closed have a closing ';'", textStreamer.Text, textStreamer.Count);
+            }
 
         }
 
         private string ParseMessage()
         {
             SkipWhiteSpace();
+
             string message = ParseString();
 
             return message;
@@ -112,13 +128,13 @@ namespace ProjectFlow.Utils
         private string ParseType()
         {
             SkipWhiteSpace();
-            string type = ParseString();
+            string type = ParseWord();
 
             return type;
 
         }
 
-        private string ParseString()
+        private string ParseWord()
         {
             string word = "";
             while (char.IsLetterOrDigit(LastChar))
@@ -126,8 +142,44 @@ namespace ProjectFlow.Utils
                 word += LastChar;
                 LastChar = textStreamer.GetNextChar();
             }
+
             return word;
         }
+
+        private string ParseString()
+        {
+            string word = "";
+            if(LastChar == '"')
+            {
+                LastChar = textStreamer.GetNextChar();
+                while (LastChar != '"')
+                {
+                    word += LastChar;
+                    try
+                    {
+                        LastChar = textStreamer.GetNextChar();
+                    }
+                    catch(Exception e)
+                    {
+                        throw new ParseException($@"String should have a closing ' "" co'");
+                    }
+                }
+                try
+                {
+                    LastChar = textStreamer.GetNextChar();
+                }
+                catch (Exception e)
+                {
+                    throw new ParseException("Statement did not closed have a closing ' ; '", textStreamer.Text, textStreamer.Count);
+                }
+                return word;
+            }
+            else
+            {
+                throw new ParseException($@"Expected: ' "" ' but got {LastChar}", textStreamer.Text, textStreamer.Count);
+            }
+        }
+
 
         public class Token
         {
@@ -136,6 +188,7 @@ namespace ProjectFlow.Utils
             public const int MESSAGE = 2;
             public const int TYPE = 3;
             public const int EOL = 4;
+            public const int STRING = 5;
         }
 
     }
@@ -153,7 +206,7 @@ namespace ProjectFlow.Utils
         public string Text { get => Lines[Line]; }
 
         public int Line = 0;
-        private int count = -1;
+        public int Count = -1;
 
         public TextStreamer(string text)
         {
@@ -167,8 +220,8 @@ namespace ProjectFlow.Utils
         {
             if (HaveNext())
             {
-                count++;
-                return Text[count];
+                Count++;
+                return Text[Count];
             }
             else if(HaveNextLine())
             {
@@ -181,17 +234,30 @@ namespace ProjectFlow.Utils
             }
 
         }
+
+        public void Back()
+        {
+            if(Count != -1)
+            {
+                Count--;
+            }
+            else
+            {
+                throw new Exception("No more characters to back!");
+            }
+        }
+
         public bool HaveNext()
         {
-            return count < Text.Length;
+            return Count < Text.Length - 1;
         }
         public bool HaveNextLine()
         {
-            return Line < Lines.Length;
+            return Line < Lines.Length - 1;
         }
         public void NextLine()
         {
-            count = -1;
+            Count = -1;
             Line++;
         }
 
@@ -199,6 +265,36 @@ namespace ProjectFlow.Utils
         {
             return !this.HaveNext() && !this.HaveNextLine();
         }
+
+        public string GetPointerLine()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(Text + Environment.NewLine);
+            stringBuilder.AppendLine("^".PadLeft(Count));
+            return stringBuilder.ToString();
+        }
+
+    }
+
+    public class ParseException : Exception
+    {
+        public string ErrorLine { get; }
+        public int At { get; } = -1;
+        public ParseException(string msg): base(msg)
+        {
+
+        }
+
+        public ParseException(string msg, string errorline): this(msg)
+        {
+            ErrorLine = errorline;
+        }
+        public ParseException(string msg, string errorline, int at) : this(msg)
+        {
+            ErrorLine = errorline;
+            this.At = at;
+        }
+
 
     }
 

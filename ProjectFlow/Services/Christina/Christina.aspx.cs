@@ -66,10 +66,31 @@ namespace ProjectFlow.Services.Christina
             string text = SuggestionTextBox.Text;
 
             SemanticsParser parser = new SemanticsParser();
-            List<Speaker> speakers = parser.Parse(text);
+
+            try
+            {
+                List<Speaker> speakers = parser.Parse(text);
+            }
+            catch(ParseException ex)
+            {
+                ErrMsg.Text = ex.Message;
+                if (!String.IsNullOrEmpty(ex.ErrorLine))
+                {
+                    ErrLine.Text += "<code>" + ErrorAt(ex.ErrorLine, ex.At) + "</code>";
+                }
+            }
 
 
             
         }
+
+        private string ErrorAt(string errorMsg, int at)
+        {
+            string msg = errorMsg.Substring(0, at - 1);
+            msg += @"<span class=""curly-underline"">" + errorMsg.Substring(at, 1) + "</span>";
+            msg += errorMsg.Substring(at+1, errorMsg.Length - at - 1);
+            return msg;
+        }
+
     }
 }
