@@ -76,8 +76,9 @@ namespace ProjectFlow.DashBoard
         protected void projectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = projectGV.SelectedRow;
+            Label name = (Label)row.FindControl("nameLabel");
             Session["PassProjectID"] = row.Cells[0].Text;
-            Session["PassProjectName"] = row.Cells[1].Text;
+            Session["PassProjectName"] = name.Text;
             Response.Redirect("ProjectTeamMenu.aspx");
         }
 

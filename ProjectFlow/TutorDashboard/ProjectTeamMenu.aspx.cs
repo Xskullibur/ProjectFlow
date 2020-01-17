@@ -21,7 +21,7 @@ namespace ProjectFlow.DashBoard
                     Session["PassTeamID"] = null;
                     Session["PassTeamName"] = null;
                     ShowTeam();
-                    InfoLabel.Text = "Project ID: " + Session["PassProjectID"].ToString() + " - " + Session["PassProjectName"].ToString();
+                    InfoLabel.Text = "Project ID: (" + Session["PassProjectID"].ToString() + ")  " + Session["PassProjectName"].ToString() + " >>> Team Select";
                 }
                 else
                 {

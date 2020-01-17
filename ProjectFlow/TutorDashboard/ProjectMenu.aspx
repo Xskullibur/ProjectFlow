@@ -124,11 +124,16 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
-            </div>
+                <h1>
+                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Project Module Select"></asp:Label>
+                </h1>
+            </div>            
+        </div>
+        <br>
+        <div class="row">
             <div class="col">
-                 <asp:Label ID="Label6" runat="server" Text="Project Select"></asp:Label>
-            </div>               
+                <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
+            </div>                        
         </div>
         <br>
         <div class="row">
@@ -159,7 +164,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                           
-                            <asp:CommandField SelectText="Open" ShowSelectButton="True" ButtonType="Button">
+                            <asp:CommandField SelectText="View Team" ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
 

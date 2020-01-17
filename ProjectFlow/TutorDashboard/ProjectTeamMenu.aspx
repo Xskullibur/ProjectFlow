@@ -99,13 +99,29 @@
             </div>
         </div>
     </div>
-    <div class="container">        
+    <div class="container"> 
+        <div class="row">
+            <div class="col">
+                <h1>
+                    <asp:Label ID="Label3" runat="server" Font-Size="Large" Text="Team Select"></asp:Label>
+                </h1>
+            </div>            
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <h3>
+                    <asp:Label ID="InfoLabel" runat="server" Font-Size="Medium"></asp:Label>
+                </h3>
+            </div>            
+        </div>
+        <br>
         <div class="row"> 
             <div class="col">
                 <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />
             </div>
             <div class="col">
-                <asp:Label ID="InfoLabel" runat="server" Font-Size="Large"></asp:Label>
+                
             </div>                                 
         </div>
         <br>
@@ -138,7 +154,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                             
-                            <asp:CommandField ButtonType="Button" SelectText="Open" ShowSelectButton="True">
+                            <asp:CommandField ButtonType="Button" SelectText="View Member" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
