@@ -194,7 +194,7 @@ namespace ProjectFlow.BLL
                 List<ProjectTeam> emptyList = new List<ProjectTeam> { };
                 if(student != null)
                 {
-                    return student.TeamMembers.Select(x => x.ProjectTeam).ToList();
+                    return student.TeamMembers.Where(x => x.dropped == false).Select(x => x.ProjectTeam).ToList();
                 }
                 else
                 {

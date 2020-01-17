@@ -61,5 +61,17 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public void DeleteTeam(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var projectTeam = dbContext.ProjectTeams.Single(x => x.teamID == TeamID);
+                if (projectTeam != null)
+                {
+                    projectTeam.dropped = true;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
     }
 }

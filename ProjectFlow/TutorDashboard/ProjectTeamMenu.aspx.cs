@@ -12,6 +12,7 @@ namespace ProjectFlow.DashBoard
 {
     public partial class ProjectTeamMenu : System.Web.UI.Page
     {
+        ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -122,6 +123,13 @@ namespace ProjectFlow.DashBoard
             NameTB.Text = "";
             DescTB.Text = "";
             errorLabel.Text = "";
+        }
+
+        protected void TeamGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)TeamGV.Rows[e.RowIndex];
+            projectTeamBLL.DeleteTeam(int.Parse(row.Cells[0].Text));
+            ShowTeam();
         }
     }
 }
