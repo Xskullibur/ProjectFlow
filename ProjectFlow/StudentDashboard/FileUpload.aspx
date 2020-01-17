@@ -68,7 +68,7 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">                   
-                    <asp:GridView ID="FileGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" width ="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged">
+                    <asp:GridView ID="FileGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" width ="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged" OnRowDeleting="FileGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="File" />
@@ -82,7 +82,12 @@
                             </asp:TemplateField>
                             <asp:CommandField ButtonType="Button" SelectText="Download" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-primary" />
-                            </asp:CommandField>
+                            </asp:CommandField>       
+                            <asp:TemplateField>
+                                <ItemTemplate>                     
+                                    <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete file?');"></asp:Button>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>
                            <div class="jumbotron jumbotron-fluid">

@@ -144,7 +144,7 @@ namespace ProjectFlow.DashBoard
             Encryption encryption = new Encryption();
             Decryption decryption = new Decryption();
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
-
+          
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {
                 if(key.Text.Length == 32)
@@ -174,7 +174,7 @@ namespace ProjectFlow.DashBoard
                     Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
                 }               
             }
-            else if (row.Cells[2].Text.Equals("Encrypted"))
+            else if (row.Cells[2].Text.StartsWith("Encrypted"))
             {
 
                 fileName = "(ENCRYPTED)" + fileName;
@@ -258,6 +258,29 @@ namespace ProjectFlow.DashBoard
             {
                 return path;
             }
+        }
+
+        protected void FileGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)FileGV.Rows[e.RowIndex];
+            string fileName = row.Cells[0].Text;
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+
+            if (row.Cells[2].Text.Equals("Encrypted With Key"))
+            {
+                fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
+                File.Delete(storagePath + fileName);
+            }
+            else if (row.Cells[2].Text.StartsWith("Encrypted"))
+            {
+                fileName = "(ENCRYPTED)" + fileName;
+                File.Delete(storagePath + fileName);
+            }
+            else
+            {
+                File.Delete(storagePath + fileName);
+            }
+            DisplayFile();
         }
     }
 }
