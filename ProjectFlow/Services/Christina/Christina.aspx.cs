@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 
 namespace ProjectFlow.Services.Christina
 {
@@ -62,7 +63,13 @@ namespace ProjectFlow.Services.Christina
 
         protected void SuggestEvent(object sender, EventArgs e)
         {
+            string text = SuggestionTextBox.Text;
 
+            SemanticsParser parser = new SemanticsParser();
+            List<Speaker> speakers = parser.Parse(text);
+
+
+            
         }
     }
 }
