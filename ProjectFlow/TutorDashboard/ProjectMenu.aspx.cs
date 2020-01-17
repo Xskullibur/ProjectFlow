@@ -134,5 +134,10 @@ namespace ProjectFlow.DashBoard
             ShowProject();
             Master.ShowAlert("Project Successfully Deleted", BootstrapAlertTypes.SUCCESS);
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProjectMenu.aspx");
+        }
     }
 }

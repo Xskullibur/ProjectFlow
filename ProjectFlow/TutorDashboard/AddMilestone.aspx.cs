@@ -126,5 +126,10 @@ namespace ProjectFlow.DashBoard
             ShowMilestone();
             Master.ShowAlert("Milestone successfully deleted", BootstrapAlertTypes.SUCCESS);
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AddMilestone.aspx");
+        }
     }
 }

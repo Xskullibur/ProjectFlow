@@ -131,5 +131,10 @@ namespace ProjectFlow.DashBoard
             projectTeamBLL.DeleteTeam(int.Parse(row.Cells[0].Text));
             ShowTeam();
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProjectTeamMenu.aspx");
+        }
     }
 }

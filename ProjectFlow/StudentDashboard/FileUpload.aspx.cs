@@ -282,5 +282,10 @@ namespace ProjectFlow.DashBoard
             }
             DisplayFile();
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("FileUpload.aspx");
+        }
     }
 }

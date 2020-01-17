@@ -155,7 +155,10 @@
             </div>
             <div class="col">                                            
                 <asp:Button ID="openMilestone" runat="server" Text="Add Milestone" CssClass="btn btn-primary" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#addMilestone"/>                
-            </div>                       
+            </div>
+            <div class="col">
+                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
+            </div>
         </div>
         <br>
         <div class="row">

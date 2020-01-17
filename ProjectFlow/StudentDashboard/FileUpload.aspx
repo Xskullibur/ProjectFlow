@@ -67,11 +67,11 @@
         </div>
         <br>
         <div class="row">            
-            <div class="col">                                            
+            <div class="col-2">                                            
                 <asp:Button ID="openUploadModal" runat="server" Text="Upload File" CssClass="btn btn-primary" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#uploadModal"/>                
             </div>            
             <div class="col">
-                <asp:Label ID="InfoLabel" runat="server"></asp:Label>
+                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
             </div>
         </div>
         <br>

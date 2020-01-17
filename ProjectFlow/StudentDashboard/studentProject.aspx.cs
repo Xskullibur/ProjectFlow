@@ -41,5 +41,10 @@ namespace ProjectFlow.DashBoard
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("studentProject.aspx");
+        }
     }
 }

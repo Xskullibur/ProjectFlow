@@ -149,5 +149,10 @@ namespace ProjectFlow
             ShowMember();
             Master.ShowAlert("Successfully deleted member", BootstrapAlertTypes.SUCCESS);
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProjectMainPage.aspx");
+        }
     }
 }

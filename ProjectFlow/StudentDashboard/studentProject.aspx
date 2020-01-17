@@ -10,6 +10,11 @@
                 </h1>
             </div>            
         </div>
+        <div class="row">
+            <div class="col">
+                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
+            </div>
+        </div>
         <br>
         <div class="row">
             <div class="col">
@@ -33,7 +38,6 @@
                            </div>
                        </EmptyDataTemplate>
                     </asp:GridView>
-
                 </div>
             </div>
         </div>
