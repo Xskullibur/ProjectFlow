@@ -12,6 +12,7 @@ namespace ProjectFlow.DashBoard
 {
     public partial class AddMilestone : System.Web.UI.Page
     {
+        MilestoneBLL milestoneBLL = new MilestoneBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack == false)
@@ -42,7 +43,6 @@ namespace ProjectFlow.DashBoard
 
         public void ShowMilestone()
         {
-            MilestoneBLL milestoneBLL = new MilestoneBLL();
             List<Milestone> milestoneList = milestoneBLL.GetMilestoneByTeamID(GetTeamID());
             MilestoneGV.DataSource = milestoneList;
             MilestoneGV.DataBind();       
@@ -71,7 +71,6 @@ namespace ProjectFlow.DashBoard
         protected void MilestoneGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = MilestoneGV.Rows[e.RowIndex];
-            MilestoneBLL milestoneBLL = new MilestoneBLL();
 
             int milestoneID = int.Parse(row.Cells[0].Text);
             TextBox editName = (TextBox)row.FindControl("editNameTB");
@@ -91,15 +90,14 @@ namespace ProjectFlow.DashBoard
         }
 
         protected void addBtn_Click(object sender, EventArgs e)
-        {
-            MilestoneBLL bll = new MilestoneBLL();
+        {           
             string name = NameTB.Text;
             string projectID = GetProjectID();
             int teamID = GetTeamID();
             string start = startTB.Text;
             string end = endTB.Text;
 
-            List<string> errorList = bll.ValidateCreateMilestone(name, projectID, teamID, start, end);
+            List<string> errorList = milestoneBLL.ValidateCreateMilestone(name, projectID, teamID, start, end);
 
             if(errorList.Count > 0)
             {
@@ -119,6 +117,14 @@ namespace ProjectFlow.DashBoard
                 Master.ShowAlert("Milestone successfully created", BootstrapAlertTypes.SUCCESS);
                 ShowMilestone();
             }
+        }
+
+        protected void MilestoneGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)MilestoneGV.Rows[e.RowIndex];
+            milestoneBLL.DeleteMilestone(int.Parse(row.Cells[0].Text));
+            ShowMilestone();
+            Master.ShowAlert("Milestone successfully deleted", BootstrapAlertTypes.SUCCESS);
         }
     }
 }

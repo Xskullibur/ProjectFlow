@@ -161,7 +161,7 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="MilestoneGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MilestoneGV_RowCancelingEdit" OnRowEditing="MilestoneGV_RowEditing" OnRowUpdating="MilestoneGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="MilestoneGV_PageIndexChanging">
+                    <asp:GridView ID="MilestoneGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MilestoneGV_RowCancelingEdit" OnRowEditing="MilestoneGV_RowEditing" OnRowUpdating="MilestoneGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="MilestoneGV_PageIndexChanging" OnRowDeleting="MilestoneGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="milestoneID" HeaderText="ID" ReadOnly="true"/>
@@ -196,6 +196,11 @@
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
+                            <asp:TemplateField>
+                                <ItemTemplate>                     
+                                    <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete milestone?');"></asp:Button>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>
                            <div class="jumbotron jumbotron-fluid">

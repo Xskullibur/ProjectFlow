@@ -124,7 +124,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id).ToList();
+                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id && x.dropped == false).ToList();
 
                 return teamMilestone;
             }
@@ -134,7 +134,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                Milestone milestone = dbContext.Milestones.First(x => x.milestoneID == id);
+                Milestone milestone = dbContext.Milestones.First(x => x.milestoneID == id && x.dropped == false);
 
                 return milestone;
             }
@@ -168,6 +168,19 @@ namespace ProjectFlow.BLL
                     milestone.milestoneName = Name;
                     milestone.startDate = StartDate;
                     milestone.endDate = EndDate;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void DeleteMilestone(int MilestoneID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = dbContext.Milestones.Find(MilestoneID);
+                if (milestone != null)
+                {
+                    milestone.dropped = true;
                     dbContext.SaveChanges();
                 }
             }
