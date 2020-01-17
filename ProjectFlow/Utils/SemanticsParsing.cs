@@ -89,7 +89,7 @@ namespace ProjectFlow.Utils
 
                     throw new Exception($"Unknown Token: {keyword}, at line: {textStreamer.Line}");
             }
-            return Run();
+            return Run(speaker);
         }
 
         private string ParseSpeakerName()
