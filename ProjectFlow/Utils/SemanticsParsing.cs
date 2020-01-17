@@ -43,7 +43,14 @@ namespace ProjectFlow.Utils
 
                 //Termination line
                 if (LastChar != ';')
-                    LastChar = textStreamer.GetNextChar();
+                    try
+                    {
+                        LastChar = textStreamer.GetNextChar();
+                    }
+                    catch (Exception e)
+                    {
+                        throw new ParseException("Invalid syntax: ", textStreamer.Text, textStreamer.Count);
+                    }
                 else break;
             }
 
@@ -91,6 +98,7 @@ namespace ProjectFlow.Utils
                     speaker.Type = ParseType();
                     break;
                 case Token.EOL:
+                    if (textStreamer.HaveNext()) LastChar = textStreamer.GetNextChar();
                     return speaker;
                 case Token.STRING:
                     
@@ -140,7 +148,14 @@ namespace ProjectFlow.Utils
             while (char.IsLetterOrDigit(LastChar))
             {
                 word += LastChar;
-                LastChar = textStreamer.GetNextChar();
+                try
+                {
+                    LastChar = textStreamer.GetNextChar();
+                }
+                catch (Exception e)
+                {
+                    throw new ParseException("Statement did not closed have a closing ' ; '", textStreamer.Text, textStreamer.Count);
+                }
             }
 
             return word;
@@ -161,7 +176,7 @@ namespace ProjectFlow.Utils
                     }
                     catch(Exception e)
                     {
-                        throw new ParseException($@"String should have a closing ' "" '");
+                        throw new ParseException($@"String should have a closing ' "" '", textStreamer.Text, textStreamer.Count);
                     }
                 }
                 try

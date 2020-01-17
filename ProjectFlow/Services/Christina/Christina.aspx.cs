@@ -70,13 +70,19 @@ namespace ProjectFlow.Services.Christina
             try
             {
                 List<Speaker> speakers = parser.Parse(text);
+                ErrMsg.Text = "";
+                ErrLine.Text = "";
             }
             catch(ParseException ex)
             {
                 ErrMsg.Text = ex.Message;
                 if (!String.IsNullOrEmpty(ex.ErrorLine))
                 {
-                    ErrLine.Text += "<code>" + ErrorAt(ex.ErrorLine, ex.At) + "</code>";
+                    ErrLine.Text = "<code>" + ErrorAt(ex.ErrorLine, ex.At) + "</code>";
+                }
+                else
+                {
+                    ErrLine.Text = "";
                 }
             }
 
@@ -86,7 +92,7 @@ namespace ProjectFlow.Services.Christina
 
         private string ErrorAt(string errorMsg, int at)
         {
-            string msg = errorMsg.Substring(0, at - 1);
+            string msg = errorMsg.Substring(0, at);
             msg += @"<span class=""curly-underline"">" + errorMsg.Substring(at, 1) + "</span>";
             msg += errorMsg.Substring(at+1, errorMsg.Length - at - 1);
             return msg;
