@@ -12,12 +12,14 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class QRTZ_CRON_TRIGGERS
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string SCHED_NAME { get; set; }
+        public string TRIGGER_NAME { get; set; }
+        public string TRIGGER_GROUP { get; set; }
+        public string CRON_EXPRESSION { get; set; }
+        public string TIME_ZONE_ID { get; set; }
+    
+        public virtual QRTZ_TRIGGERS QRTZ_TRIGGERS { get; set; }
     }
 }

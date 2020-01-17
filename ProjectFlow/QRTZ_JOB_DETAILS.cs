@@ -12,20 +12,26 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Tutor
+    public partial class QRTZ_JOB_DETAILS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tutor()
+        public QRTZ_JOB_DETAILS()
         {
-            this.Projects = new HashSet<Project>();
+            this.QRTZ_TRIGGERS = new HashSet<QRTZ_TRIGGERS>();
         }
     
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public System.Guid UserId { get; set; }
+        public string SCHED_NAME { get; set; }
+        public string JOB_NAME { get; set; }
+        public string JOB_GROUP { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string JOB_CLASS_NAME { get; set; }
+        public bool IS_DURABLE { get; set; }
+        public bool IS_NONCONCURRENT { get; set; }
+        public bool IS_UPDATE_DATA { get; set; }
+        public bool REQUESTS_RECOVERY { get; set; }
+        public byte[] JOB_DATA { get; set; }
     
-        public virtual aspnet_Users aspnet_Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<QRTZ_TRIGGERS> QRTZ_TRIGGERS { get; set; }
     }
 }

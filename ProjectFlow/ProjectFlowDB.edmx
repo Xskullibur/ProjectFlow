@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -194,6 +194,158 @@
           <Property Name="teamDescription" Type="varchar" MaxLength="255" />
           <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
         </EntityType>
+        <EntityType Name="QRTZ_BLOB_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="BLOB_DATA" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="QRTZ_CALENDARS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="CALENDAR_NAME" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="CALENDAR_NAME" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CALENDAR" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_CRON_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CRON_EXPRESSION" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TIME_ZONE_ID" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="QRTZ_FIRED_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="ENTRY_ID" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="ENTRY_ID" Type="nvarchar" MaxLength="140" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="INSTANCE_NAME" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FIRED_TIME" Type="bigint" Nullable="false" />
+          <Property Name="SCHED_TIME" Type="bigint" Nullable="false" />
+          <Property Name="PRIORITY" Type="int" Nullable="false" />
+          <Property Name="STATE" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="JOB_NAME" Type="nvarchar" MaxLength="150" />
+          <Property Name="JOB_GROUP" Type="nvarchar" MaxLength="150" />
+          <Property Name="IS_NONCONCURRENT" Type="bit" />
+          <Property Name="REQUESTS_RECOVERY" Type="bit" />
+        </EntityType>
+        <EntityType Name="QRTZ_JOB_DETAILS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="JOB_NAME" />
+            <PropertyRef Name="JOB_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="JOB_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="JOB_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="250" />
+          <Property Name="JOB_CLASS_NAME" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IS_DURABLE" Type="bit" Nullable="false" />
+          <Property Name="IS_NONCONCURRENT" Type="bit" Nullable="false" />
+          <Property Name="IS_UPDATE_DATA" Type="bit" Nullable="false" />
+          <Property Name="REQUESTS_RECOVERY" Type="bit" Nullable="false" />
+          <Property Name="JOB_DATA" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="QRTZ_LOCKS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="LOCK_NAME" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="LOCK_NAME" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_PAUSED_TRIGGER_GRPS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_SCHEDULER_STATE">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="INSTANCE_NAME" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="INSTANCE_NAME" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LAST_CHECKIN_TIME" Type="bigint" Nullable="false" />
+          <Property Name="CHECKIN_INTERVAL" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_SIMPLE_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="REPEAT_COUNT" Type="int" Nullable="false" />
+          <Property Name="REPEAT_INTERVAL" Type="bigint" Nullable="false" />
+          <Property Name="TIMES_TRIGGERED" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_SIMPROP_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="STR_PROP_1" Type="nvarchar" MaxLength="512" />
+          <Property Name="STR_PROP_2" Type="nvarchar" MaxLength="512" />
+          <Property Name="STR_PROP_3" Type="nvarchar" MaxLength="512" />
+          <Property Name="INT_PROP_1" Type="int" />
+          <Property Name="INT_PROP_2" Type="int" />
+          <Property Name="LONG_PROP_1" Type="bigint" />
+          <Property Name="LONG_PROP_2" Type="bigint" />
+          <Property Name="DEC_PROP_1" Type="numeric" Precision="13" Scale="4" />
+          <Property Name="DEC_PROP_2" Type="numeric" Precision="13" Scale="4" />
+          <Property Name="BOOL_PROP_1" Type="bit" />
+          <Property Name="BOOL_PROP_2" Type="bit" />
+          <Property Name="TIME_ZONE_ID" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="QRTZ_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="JOB_NAME" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="JOB_GROUP" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="250" />
+          <Property Name="NEXT_FIRE_TIME" Type="bigint" />
+          <Property Name="PREV_FIRE_TIME" Type="bigint" />
+          <Property Name="PRIORITY" Type="int" />
+          <Property Name="TRIGGER_STATE" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="TRIGGER_TYPE" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="START_TIME" Type="bigint" Nullable="false" />
+          <Property Name="END_TIME" Type="bigint" />
+          <Property Name="CALENDAR_NAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="MISFIRE_INSTR" Type="int" />
+          <Property Name="JOB_DATA" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="roleID" />
@@ -226,16 +378,6 @@
           <Property Name="firstName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -283,7 +425,7 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="recordingName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__Appli__6754599E">
+        <Association Name="FK__aspnet_Me__Appli__10566F31">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
           <ReferentialConstraint>
@@ -295,7 +437,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Me__UserI__68487DD7">
+        <Association Name="FK__aspnet_Me__UserI__114A936A">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -307,7 +449,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pa__Appli__18EBB532">
+        <Association Name="FK__aspnet_Pa__Appli__123EB7A3">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
           <ReferentialConstraint>
@@ -319,7 +461,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__1EA48E88">
+        <Association Name="FK__aspnet_Pe__PathI__1332DBDC">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
           <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -331,7 +473,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__22751F6C">
+        <Association Name="FK__aspnet_Pe__PathI__14270015">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -343,7 +485,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__UserI__236943A5">
+        <Association Name="FK__aspnet_Pe__UserI__151B244E">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -355,7 +497,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pr__UserI__7C4F7684">
+        <Association Name="FK__aspnet_Pr__UserI__160F4887">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -367,7 +509,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Ro__Appli__05D8E0BE">
+        <Association Name="FK__aspnet_Ro__Appli__17036CC0">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -379,7 +521,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__Appli__571DF1D5">
+        <Association Name="FK__aspnet_Us__Appli__17F790F9">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -391,7 +533,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__RoleI__0A9D95DB">
+        <Association Name="FK__aspnet_Us__RoleI__18EBB532">
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -403,7 +545,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__UserI__09A971A2">
+        <Association Name="FK__aspnet_Us__UserI__19DFD96B">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -520,6 +662,76 @@
             </Principal>
             <Dependent Role="ProjectTeam">
               <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QRTZ_CRON_TRIGGERS" Type="Self.QRTZ_CRON_TRIGGERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_CRON_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS">
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QRTZ_SIMPLE_TRIGGERS" Type="Self.QRTZ_SIMPLE_TRIGGERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_SIMPLE_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS">
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QRTZ_SIMPROP_TRIGGERS" Type="Self.QRTZ_SIMPROP_TRIGGERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_SIMPROP_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS">
+          <End Role="QRTZ_JOB_DETAILS" Type="Self.QRTZ_JOB_DETAILS" Multiplicity="1" />
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_JOB_DETAILS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="JOB_NAME" />
+              <PropertyRef Name="JOB_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="JOB_NAME" />
+              <PropertyRef Name="JOB_GROUP" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -709,57 +921,67 @@
           <EntitySet Name="Polling" EntityType="Self.Polling" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTeam" EntityType="Self.ProjectTeam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_BLOB_TRIGGERS" EntityType="Self.QRTZ_BLOB_TRIGGERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_CALENDARS" EntityType="Self.QRTZ_CALENDARS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_CRON_TRIGGERS" EntityType="Self.QRTZ_CRON_TRIGGERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_FIRED_TRIGGERS" EntityType="Self.QRTZ_FIRED_TRIGGERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_JOB_DETAILS" EntityType="Self.QRTZ_JOB_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_LOCKS" EntityType="Self.QRTZ_LOCKS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_PAUSED_TRIGGER_GRPS" EntityType="Self.QRTZ_PAUSED_TRIGGER_GRPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_SCHEDULER_STATE" EntityType="Self.QRTZ_SCHEDULER_STATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_SIMPLE_TRIGGERS" EntityType="Self.QRTZ_SIMPLE_TRIGGERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_SIMPROP_TRIGGERS" EntityType="Self.QRTZ_SIMPROP_TRIGGERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRTZ_TRIGGERS" EntityType="Self.QRTZ_TRIGGERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskAllocation" EntityType="Self.TaskAllocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamMember" EntityType="Self.TeamMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VoiceRecording" EntityType="Self.VoiceRecording" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__aspnet_Me__Appli__6754599E" Association="Self.FK__aspnet_Me__Appli__6754599E">
+          <AssociationSet Name="FK__aspnet_Me__Appli__10566F31" Association="Self.FK__aspnet_Me__Appli__10566F31">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Me__UserI__68487DD7" Association="Self.FK__aspnet_Me__UserI__68487DD7">
+          <AssociationSet Name="FK__aspnet_Me__UserI__114A936A" Association="Self.FK__aspnet_Me__UserI__114A936A">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pa__Appli__18EBB532" Association="Self.FK__aspnet_Pa__Appli__18EBB532">
+          <AssociationSet Name="FK__aspnet_Pa__Appli__123EB7A3" Association="Self.FK__aspnet_Pa__Appli__123EB7A3">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__1EA48E88" Association="Self.FK__aspnet_Pe__PathI__1EA48E88">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__1332DBDC" Association="Self.FK__aspnet_Pe__PathI__1332DBDC">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__22751F6C" Association="Self.FK__aspnet_Pe__PathI__22751F6C">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__14270015" Association="Self.FK__aspnet_Pe__PathI__14270015">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__UserI__236943A5" Association="Self.FK__aspnet_Pe__UserI__236943A5">
+          <AssociationSet Name="FK__aspnet_Pe__UserI__151B244E" Association="Self.FK__aspnet_Pe__UserI__151B244E">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pr__UserI__7C4F7684" Association="Self.FK__aspnet_Pr__UserI__7C4F7684">
+          <AssociationSet Name="FK__aspnet_Pr__UserI__160F4887" Association="Self.FK__aspnet_Pr__UserI__160F4887">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Ro__Appli__05D8E0BE" Association="Self.FK__aspnet_Ro__Appli__05D8E0BE">
+          <AssociationSet Name="FK__aspnet_Ro__Appli__17036CC0" Association="Self.FK__aspnet_Ro__Appli__17036CC0">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__Appli__571DF1D5" Association="Self.FK__aspnet_Us__Appli__571DF1D5">
+          <AssociationSet Name="FK__aspnet_Us__Appli__17F790F9" Association="Self.FK__aspnet_Us__Appli__17F790F9">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__RoleI__0A9D95DB" Association="Self.FK__aspnet_Us__RoleI__0A9D95DB">
+          <AssociationSet Name="FK__aspnet_Us__RoleI__18EBB532" Association="Self.FK__aspnet_Us__RoleI__18EBB532">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__UserI__09A971A2" Association="Self.FK__aspnet_Us__UserI__09A971A2">
+          <AssociationSet Name="FK__aspnet_Us__UserI__19DFD96B" Association="Self.FK__aspnet_Us__UserI__19DFD96B">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
           </AssociationSet>
@@ -798,6 +1020,22 @@
           <AssociationSet Name="FK_ProjectTeam_Project" Association="Self.FK_ProjectTeam_Project">
             <End Role="Project" EntitySet="Project" />
             <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+            <End Role="QRTZ_CRON_TRIGGERS" EntitySet="QRTZ_CRON_TRIGGERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS">
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+            <End Role="QRTZ_SIMPLE_TRIGGERS" EntitySet="QRTZ_SIMPLE_TRIGGERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS">
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+            <End Role="QRTZ_SIMPROP_TRIGGERS" EntitySet="QRTZ_SIMPROP_TRIGGERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS" Association="Self.FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS">
+            <End Role="QRTZ_JOB_DETAILS" EntitySet="QRTZ_JOB_DETAILS" />
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
           </AssociationSet>
           <AssociationSet Name="FK_Room_ProjectTeam" Association="Self.FK_Room_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeam" />
@@ -856,7 +1094,8 @@
             <End Role="Project" EntitySet="Project" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -868,10 +1107,10 @@
           <Property Name="LoweredApplicationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ApplicationId" Type="Guid" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__Appli__6754599E" FromRole="aspnet_Applications" ToRole="aspnet_Membership" />
-          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pa__Appli__18EBB532" FromRole="aspnet_Applications" ToRole="aspnet_Paths" />
-          <NavigationProperty Name="aspnet_Roles" Relationship="Self.FK__aspnet_Ro__Appli__05D8E0BE" FromRole="aspnet_Applications" ToRole="aspnet_Roles" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Us__Appli__571DF1D5" FromRole="aspnet_Applications" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__Appli__10566F31" FromRole="aspnet_Applications" ToRole="aspnet_Membership" />
+          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pa__Appli__123EB7A3" FromRole="aspnet_Applications" ToRole="aspnet_Paths" />
+          <NavigationProperty Name="aspnet_Roles" Relationship="Self.FK__aspnet_Ro__Appli__17036CC0" FromRole="aspnet_Applications" ToRole="aspnet_Roles" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Us__Appli__17F790F9" FromRole="aspnet_Applications" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Membership">
           <Key>
@@ -898,8 +1137,8 @@
           <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
           <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Me__Appli__6754599E" FromRole="aspnet_Membership" ToRole="aspnet_Applications" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Me__UserI__68487DD7" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Me__Appli__10566F31" FromRole="aspnet_Membership" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Me__UserI__114A936A" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Paths">
           <Key>
@@ -909,9 +1148,9 @@
           <Property Name="PathId" Type="Guid" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Pa__Appli__18EBB532" FromRole="aspnet_Paths" ToRole="aspnet_Applications" />
-          <NavigationProperty Name="aspnet_PersonalizationAllUsers" Relationship="Self.FK__aspnet_Pe__PathI__1EA48E88" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationAllUsers" />
-          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__PathI__22751F6C" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationPerUser" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Pa__Appli__123EB7A3" FromRole="aspnet_Paths" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_PersonalizationAllUsers" Relationship="Self.FK__aspnet_Pe__PathI__1332DBDC" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationAllUsers" />
+          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__PathI__14270015" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationPerUser" />
         </EntityType>
         <EntityType Name="aspnet_PersonalizationAllUsers">
           <Key>
@@ -920,7 +1159,7 @@
           <Property Name="PathId" Type="Guid" Nullable="false" />
           <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__1EA48E88" FromRole="aspnet_PersonalizationAllUsers" ToRole="aspnet_Paths" />
+          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__1332DBDC" FromRole="aspnet_PersonalizationAllUsers" ToRole="aspnet_Paths" />
         </EntityType>
         <EntityType Name="aspnet_PersonalizationPerUser">
           <Key>
@@ -931,8 +1170,8 @@
           <Property Name="UserId" Type="Guid" />
           <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__22751F6C" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pe__UserI__236943A5" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__14270015" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pe__UserI__151B244E" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Profile">
           <Key>
@@ -943,7 +1182,7 @@
           <Property Name="PropertyValuesString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PropertyValuesBinary" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pr__UserI__7C4F7684" FromRole="aspnet_Profile" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pr__UserI__160F4887" FromRole="aspnet_Profile" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Roles">
           <Key>
@@ -954,7 +1193,7 @@
           <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredRoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Ro__Appli__05D8E0BE" FromRole="aspnet_Roles" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Ro__Appli__17036CC0" FromRole="aspnet_Roles" ToRole="aspnet_Applications" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Roles" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_SchemaVersions">
@@ -977,13 +1216,13 @@
           <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
           <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Us__Appli__571DF1D5" FromRole="aspnet_Users" ToRole="aspnet_Applications" />
-          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__UserI__68487DD7" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
-          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__UserI__236943A5" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
-          <NavigationProperty Name="aspnet_Profile" Relationship="Self.FK__aspnet_Pr__UserI__7C4F7684" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Us__Appli__17F790F9" FromRole="aspnet_Users" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__UserI__114A936A" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
+          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__UserI__151B244E" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
+          <NavigationProperty Name="aspnet_Profile" Relationship="Self.FK__aspnet_Pr__UserI__160F4887" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_aspnet_Users" FromRole="aspnet_Users" ToRole="Student" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK_Tutor_aspnet_Users" FromRole="aspnet_Users" ToRole="Tutor" />
           <NavigationProperty Name="aspnet_Roles" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Users" ToRole="aspnet_Roles" />
-          <NavigationProperty Name="Tutor" Relationship="ProjectFlowModel.FK_Tutor_aspnet_Users" FromRole="aspnet_Users" ToRole="Tutor" />
         </EntityType>
         <EntityType Name="aspnet_WebEvent_Events">
           <Key>
@@ -1082,6 +1321,166 @@
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
         </EntityType>
+        <EntityType Name="QRTZ_BLOB_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BLOB_DATA" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_CALENDARS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="CALENDAR_NAME" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CALENDAR_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CALENDAR" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_CRON_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CRON_EXPRESSION" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TIME_ZONE_ID" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QRTZ_TRIGGERS" Relationship="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" FromRole="QRTZ_CRON_TRIGGERS" ToRole="QRTZ_TRIGGERS" />
+        </EntityType>
+        <EntityType Name="QRTZ_FIRED_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="ENTRY_ID" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ENTRY_ID" Type="String" MaxLength="140" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="INSTANCE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FIRED_TIME" Type="Int64" Nullable="false" />
+          <Property Name="SCHED_TIME" Type="Int64" Nullable="false" />
+          <Property Name="PRIORITY" Type="Int32" Nullable="false" />
+          <Property Name="STATE" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JOB_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="JOB_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IS_NONCONCURRENT" Type="Boolean" />
+          <Property Name="REQUESTS_RECOVERY" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="QRTZ_JOB_DETAILS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="JOB_NAME" />
+            <PropertyRef Name="JOB_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JOB_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JOB_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="JOB_CLASS_NAME" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IS_DURABLE" Type="Boolean" Nullable="false" />
+          <Property Name="IS_NONCONCURRENT" Type="Boolean" Nullable="false" />
+          <Property Name="IS_UPDATE_DATA" Type="Boolean" Nullable="false" />
+          <Property Name="REQUESTS_RECOVERY" Type="Boolean" Nullable="false" />
+          <Property Name="JOB_DATA" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="QRTZ_TRIGGERS" Relationship="Self.FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS" FromRole="QRTZ_JOB_DETAILS" ToRole="QRTZ_TRIGGERS" />
+        </EntityType>
+        <EntityType Name="QRTZ_LOCKS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="LOCK_NAME" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LOCK_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_PAUSED_TRIGGER_GRPS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_SCHEDULER_STATE">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="INSTANCE_NAME" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="INSTANCE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LAST_CHECKIN_TIME" Type="Int64" Nullable="false" />
+          <Property Name="CHECKIN_INTERVAL" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QRTZ_SIMPLE_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="REPEAT_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="REPEAT_INTERVAL" Type="Int64" Nullable="false" />
+          <Property Name="TIMES_TRIGGERED" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QRTZ_TRIGGERS" Relationship="Self.FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS" FromRole="QRTZ_SIMPLE_TRIGGERS" ToRole="QRTZ_TRIGGERS" />
+        </EntityType>
+        <EntityType Name="QRTZ_SIMPROP_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="STR_PROP_1" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="STR_PROP_2" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="STR_PROP_3" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="INT_PROP_1" Type="Int32" />
+          <Property Name="INT_PROP_2" Type="Int32" />
+          <Property Name="LONG_PROP_1" Type="Int64" />
+          <Property Name="LONG_PROP_2" Type="Int64" />
+          <Property Name="DEC_PROP_1" Type="Decimal" Precision="13" Scale="4" />
+          <Property Name="DEC_PROP_2" Type="Decimal" Precision="13" Scale="4" />
+          <Property Name="BOOL_PROP_1" Type="Boolean" />
+          <Property Name="BOOL_PROP_2" Type="Boolean" />
+          <Property Name="TIME_ZONE_ID" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QRTZ_TRIGGERS" Relationship="Self.FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS" FromRole="QRTZ_SIMPROP_TRIGGERS" ToRole="QRTZ_TRIGGERS" />
+        </EntityType>
+        <EntityType Name="QRTZ_TRIGGERS">
+          <Key>
+            <PropertyRef Name="SCHED_NAME" />
+            <PropertyRef Name="TRIGGER_NAME" />
+            <PropertyRef Name="TRIGGER_GROUP" />
+          </Key>
+          <Property Name="SCHED_NAME" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JOB_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JOB_GROUP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NEXT_FIRE_TIME" Type="Int64" />
+          <Property Name="PREV_FIRE_TIME" Type="Int64" />
+          <Property Name="PRIORITY" Type="Int32" />
+          <Property Name="TRIGGER_STATE" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRIGGER_TYPE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="START_TIME" Type="Int64" Nullable="false" />
+          <Property Name="END_TIME" Type="Int64" />
+          <Property Name="CALENDAR_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MISFIRE_INSTR" Type="Int32" />
+          <Property Name="JOB_DATA" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="QRTZ_CRON_TRIGGERS" Relationship="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" FromRole="QRTZ_TRIGGERS" ToRole="QRTZ_CRON_TRIGGERS" />
+          <NavigationProperty Name="QRTZ_JOB_DETAILS" Relationship="Self.FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS" FromRole="QRTZ_TRIGGERS" ToRole="QRTZ_JOB_DETAILS" />
+          <NavigationProperty Name="QRTZ_SIMPLE_TRIGGERS" Relationship="Self.FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS" FromRole="QRTZ_TRIGGERS" ToRole="QRTZ_SIMPLE_TRIGGERS" />
+          <NavigationProperty Name="QRTZ_SIMPROP_TRIGGERS" Relationship="Self.FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS" FromRole="QRTZ_TRIGGERS" ToRole="QRTZ_SIMPROP_TRIGGERS" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="roleID" />
@@ -1122,16 +1521,6 @@
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_Student" FromRole="Student" ToRole="Room" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Student" FromRole="Student" ToRole="TeamMember" />
           <NavigationProperty Name="VoiceRecordings" Relationship="Self.FK_VoiceRecording_Student" FromRole="Student" ToRole="VoiceRecording" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -1185,8 +1574,8 @@
           <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Tutor_aspnet_Users" FromRole="Tutor" ToRole="aspnet_Users" />
           <NavigationProperty Name="Projects" Relationship="Self.PK_Project_Tutor" FromRole="Tutor" ToRole="Project" />
-          <NavigationProperty Name="aspnet_Users" Relationship="ProjectFlowModel.FK_Tutor_aspnet_Users" FromRole="Tutor" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="VoiceRecording">
           <Key>
@@ -1196,7 +1585,7 @@
           <Property Name="recordingName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_VoiceRecording_Student" FromRole="VoiceRecording" ToRole="Student" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__Appli__6754599E">
+        <Association Name="FK__aspnet_Me__Appli__10566F31">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1208,7 +1597,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pa__Appli__18EBB532">
+        <Association Name="FK__aspnet_Pa__Appli__123EB7A3">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1220,7 +1609,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Ro__Appli__05D8E0BE">
+        <Association Name="FK__aspnet_Ro__Appli__17036CC0">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1232,7 +1621,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__Appli__571DF1D5">
+        <Association Name="FK__aspnet_Us__Appli__17F790F9">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1244,7 +1633,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Me__UserI__68487DD7">
+        <Association Name="FK__aspnet_Me__UserI__114A936A">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1256,7 +1645,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__1EA48E88">
+        <Association Name="FK__aspnet_Pe__PathI__1332DBDC">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
           <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1268,7 +1657,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__22751F6C">
+        <Association Name="FK__aspnet_Pe__PathI__14270015">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1280,7 +1669,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__UserI__236943A5">
+        <Association Name="FK__aspnet_Pe__UserI__151B244E">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1292,7 +1681,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pr__UserI__7C4F7684">
+        <Association Name="FK__aspnet_Pr__UserI__160F4887">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1312,6 +1701,18 @@
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="Student">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tutor_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tutor">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1484,6 +1885,76 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QRTZ_CRON_TRIGGERS" Type="Self.QRTZ_CRON_TRIGGERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_CRON_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS">
+          <End Role="QRTZ_JOB_DETAILS" Type="Self.QRTZ_JOB_DETAILS" Multiplicity="1" />
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_JOB_DETAILS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="JOB_NAME" />
+              <PropertyRef Name="JOB_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="JOB_NAME" />
+              <PropertyRef Name="JOB_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS">
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QRTZ_SIMPLE_TRIGGERS" Type="Self.QRTZ_SIMPLE_TRIGGERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_SIMPLE_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS">
+          <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QRTZ_SIMPROP_TRIGGERS" Type="Self.QRTZ_SIMPROP_TRIGGERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="QRTZ_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Principal>
+            <Dependent Role="QRTZ_SIMPROP_TRIGGERS">
+              <PropertyRef Name="SCHED_NAME" />
+              <PropertyRef Name="TRIGGER_NAME" />
+              <PropertyRef Name="TRIGGER_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeamMember_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="*" />
@@ -1589,55 +2060,69 @@
           <EntitySet Name="Pollings" EntityType="Self.Polling" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectTeams" EntityType="Self.ProjectTeam" />
+          <EntitySet Name="QRTZ_BLOB_TRIGGERS" EntityType="Self.QRTZ_BLOB_TRIGGERS" />
+          <EntitySet Name="QRTZ_CALENDARS" EntityType="Self.QRTZ_CALENDARS" />
+          <EntitySet Name="QRTZ_CRON_TRIGGERS" EntityType="Self.QRTZ_CRON_TRIGGERS" />
+          <EntitySet Name="QRTZ_FIRED_TRIGGERS" EntityType="Self.QRTZ_FIRED_TRIGGERS" />
+          <EntitySet Name="QRTZ_JOB_DETAILS" EntityType="Self.QRTZ_JOB_DETAILS" />
+          <EntitySet Name="QRTZ_LOCKS" EntityType="Self.QRTZ_LOCKS" />
+          <EntitySet Name="QRTZ_PAUSED_TRIGGER_GRPS" EntityType="Self.QRTZ_PAUSED_TRIGGER_GRPS" />
+          <EntitySet Name="QRTZ_SCHEDULER_STATE" EntityType="Self.QRTZ_SCHEDULER_STATE" />
+          <EntitySet Name="QRTZ_SIMPLE_TRIGGERS" EntityType="Self.QRTZ_SIMPLE_TRIGGERS" />
+          <EntitySet Name="QRTZ_SIMPROP_TRIGGERS" EntityType="Self.QRTZ_SIMPROP_TRIGGERS" />
+          <EntitySet Name="QRTZ_TRIGGERS" EntityType="Self.QRTZ_TRIGGERS" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Students" EntityType="Self.Student" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
           <EntitySet Name="TaskAllocations" EntityType="Self.TaskAllocation" />
           <EntitySet Name="TeamMembers" EntityType="Self.TeamMember" />
           <EntitySet Name="Tutors" EntityType="Self.Tutor" />
           <EntitySet Name="VoiceRecordings" EntityType="Self.VoiceRecording" />
-          <AssociationSet Name="FK__aspnet_Me__Appli__6754599E" Association="Self.FK__aspnet_Me__Appli__6754599E">
+          <AssociationSet Name="FK__aspnet_Me__Appli__10566F31" Association="Self.FK__aspnet_Me__Appli__10566F31">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pa__Appli__18EBB532" Association="Self.FK__aspnet_Pa__Appli__18EBB532">
+          <AssociationSet Name="FK__aspnet_Pa__Appli__123EB7A3" Association="Self.FK__aspnet_Pa__Appli__123EB7A3">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Ro__Appli__05D8E0BE" Association="Self.FK__aspnet_Ro__Appli__05D8E0BE">
+          <AssociationSet Name="FK__aspnet_Ro__Appli__17036CC0" Association="Self.FK__aspnet_Ro__Appli__17036CC0">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__Appli__571DF1D5" Association="Self.FK__aspnet_Us__Appli__571DF1D5">
+          <AssociationSet Name="FK__aspnet_Us__Appli__17F790F9" Association="Self.FK__aspnet_Us__Appli__17F790F9">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Me__UserI__68487DD7" Association="Self.FK__aspnet_Me__UserI__68487DD7">
+          <AssociationSet Name="FK__aspnet_Me__UserI__114A936A" Association="Self.FK__aspnet_Me__UserI__114A936A">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__1EA48E88" Association="Self.FK__aspnet_Pe__PathI__1EA48E88">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__1332DBDC" Association="Self.FK__aspnet_Pe__PathI__1332DBDC">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__22751F6C" Association="Self.FK__aspnet_Pe__PathI__22751F6C">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__14270015" Association="Self.FK__aspnet_Pe__PathI__14270015">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__UserI__236943A5" Association="Self.FK__aspnet_Pe__UserI__236943A5">
+          <AssociationSet Name="FK__aspnet_Pe__UserI__151B244E" Association="Self.FK__aspnet_Pe__UserI__151B244E">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pr__UserI__7C4F7684" Association="Self.FK__aspnet_Pr__UserI__7C4F7684">
+          <AssociationSet Name="FK__aspnet_Pr__UserI__160F4887" Association="Self.FK__aspnet_Pr__UserI__160F4887">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_aspnet_Users" Association="Self.FK_Student_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tutor_aspnet_Users" Association="Self.FK_Tutor_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Tutor" EntitySet="Tutors" />
           </AssociationSet>
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issues" />
@@ -1695,6 +2180,22 @@
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
           </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+            <End Role="QRTZ_CRON_TRIGGERS" EntitySet="QRTZ_CRON_TRIGGERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS" Association="Self.FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS">
+            <End Role="QRTZ_JOB_DETAILS" EntitySet="QRTZ_JOB_DETAILS" />
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS">
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+            <End Role="QRTZ_SIMPLE_TRIGGERS" EntitySet="QRTZ_SIMPLE_TRIGGERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS">
+            <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
+            <End Role="QRTZ_SIMPROP_TRIGGERS" EntitySet="QRTZ_SIMPROP_TRIGGERS" />
+          </AssociationSet>
           <AssociationSet Name="FK_TeamMember_Role" Association="Self.FK_TeamMember_Role">
             <End Role="Role" EntitySet="Roles" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
@@ -1727,23 +2228,7 @@
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tutor_aspnet_Users" Association="ProjectFlowModel.FK_Tutor_aspnet_Users">
-            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
-            <End Role="Tutor" EntitySet="Tutors" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Tutor_aspnet_Users">
-          <End Type="ProjectFlowModel.aspnet_Users" Role="aspnet_Users" Multiplicity="1" />
-          <End Type="ProjectFlowModel.Tutor" Role="Tutor" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="aspnet_Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Tutor">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1946,6 +2431,152 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_BLOB_TRIGGERS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_BLOB_TRIGGERS">
+              <MappingFragment StoreEntitySet="QRTZ_BLOB_TRIGGERS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="TRIGGER_NAME" ColumnName="TRIGGER_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+                <ScalarProperty Name="BLOB_DATA" ColumnName="BLOB_DATA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_CALENDARS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_CALENDARS">
+              <MappingFragment StoreEntitySet="QRTZ_CALENDARS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="CALENDAR_NAME" ColumnName="CALENDAR_NAME" />
+                <ScalarProperty Name="CALENDAR" ColumnName="CALENDAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_CRON_TRIGGERS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_CRON_TRIGGERS">
+              <MappingFragment StoreEntitySet="QRTZ_CRON_TRIGGERS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="TRIGGER_NAME" ColumnName="TRIGGER_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+                <ScalarProperty Name="CRON_EXPRESSION" ColumnName="CRON_EXPRESSION" />
+                <ScalarProperty Name="TIME_ZONE_ID" ColumnName="TIME_ZONE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_FIRED_TRIGGERS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_FIRED_TRIGGERS">
+              <MappingFragment StoreEntitySet="QRTZ_FIRED_TRIGGERS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="ENTRY_ID" ColumnName="ENTRY_ID" />
+                <ScalarProperty Name="TRIGGER_NAME" ColumnName="TRIGGER_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+                <ScalarProperty Name="INSTANCE_NAME" ColumnName="INSTANCE_NAME" />
+                <ScalarProperty Name="FIRED_TIME" ColumnName="FIRED_TIME" />
+                <ScalarProperty Name="SCHED_TIME" ColumnName="SCHED_TIME" />
+                <ScalarProperty Name="PRIORITY" ColumnName="PRIORITY" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="JOB_NAME" ColumnName="JOB_NAME" />
+                <ScalarProperty Name="JOB_GROUP" ColumnName="JOB_GROUP" />
+                <ScalarProperty Name="IS_NONCONCURRENT" ColumnName="IS_NONCONCURRENT" />
+                <ScalarProperty Name="REQUESTS_RECOVERY" ColumnName="REQUESTS_RECOVERY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_JOB_DETAILS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_JOB_DETAILS">
+              <MappingFragment StoreEntitySet="QRTZ_JOB_DETAILS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="JOB_NAME" ColumnName="JOB_NAME" />
+                <ScalarProperty Name="JOB_GROUP" ColumnName="JOB_GROUP" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="JOB_CLASS_NAME" ColumnName="JOB_CLASS_NAME" />
+                <ScalarProperty Name="IS_DURABLE" ColumnName="IS_DURABLE" />
+                <ScalarProperty Name="IS_NONCONCURRENT" ColumnName="IS_NONCONCURRENT" />
+                <ScalarProperty Name="IS_UPDATE_DATA" ColumnName="IS_UPDATE_DATA" />
+                <ScalarProperty Name="REQUESTS_RECOVERY" ColumnName="REQUESTS_RECOVERY" />
+                <ScalarProperty Name="JOB_DATA" ColumnName="JOB_DATA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_LOCKS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_LOCKS">
+              <MappingFragment StoreEntitySet="QRTZ_LOCKS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="LOCK_NAME" ColumnName="LOCK_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_PAUSED_TRIGGER_GRPS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_PAUSED_TRIGGER_GRPS">
+              <MappingFragment StoreEntitySet="QRTZ_PAUSED_TRIGGER_GRPS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_SCHEDULER_STATE">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_SCHEDULER_STATE">
+              <MappingFragment StoreEntitySet="QRTZ_SCHEDULER_STATE">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="INSTANCE_NAME" ColumnName="INSTANCE_NAME" />
+                <ScalarProperty Name="LAST_CHECKIN_TIME" ColumnName="LAST_CHECKIN_TIME" />
+                <ScalarProperty Name="CHECKIN_INTERVAL" ColumnName="CHECKIN_INTERVAL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_SIMPLE_TRIGGERS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_SIMPLE_TRIGGERS">
+              <MappingFragment StoreEntitySet="QRTZ_SIMPLE_TRIGGERS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="TRIGGER_NAME" ColumnName="TRIGGER_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+                <ScalarProperty Name="REPEAT_COUNT" ColumnName="REPEAT_COUNT" />
+                <ScalarProperty Name="REPEAT_INTERVAL" ColumnName="REPEAT_INTERVAL" />
+                <ScalarProperty Name="TIMES_TRIGGERED" ColumnName="TIMES_TRIGGERED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_SIMPROP_TRIGGERS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_SIMPROP_TRIGGERS">
+              <MappingFragment StoreEntitySet="QRTZ_SIMPROP_TRIGGERS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="TRIGGER_NAME" ColumnName="TRIGGER_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+                <ScalarProperty Name="STR_PROP_1" ColumnName="STR_PROP_1" />
+                <ScalarProperty Name="STR_PROP_2" ColumnName="STR_PROP_2" />
+                <ScalarProperty Name="STR_PROP_3" ColumnName="STR_PROP_3" />
+                <ScalarProperty Name="INT_PROP_1" ColumnName="INT_PROP_1" />
+                <ScalarProperty Name="INT_PROP_2" ColumnName="INT_PROP_2" />
+                <ScalarProperty Name="LONG_PROP_1" ColumnName="LONG_PROP_1" />
+                <ScalarProperty Name="LONG_PROP_2" ColumnName="LONG_PROP_2" />
+                <ScalarProperty Name="DEC_PROP_1" ColumnName="DEC_PROP_1" />
+                <ScalarProperty Name="DEC_PROP_2" ColumnName="DEC_PROP_2" />
+                <ScalarProperty Name="BOOL_PROP_1" ColumnName="BOOL_PROP_1" />
+                <ScalarProperty Name="BOOL_PROP_2" ColumnName="BOOL_PROP_2" />
+                <ScalarProperty Name="TIME_ZONE_ID" ColumnName="TIME_ZONE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRTZ_TRIGGERS">
+            <EntityTypeMapping TypeName="ProjectFlowModel.QRTZ_TRIGGERS">
+              <MappingFragment StoreEntitySet="QRTZ_TRIGGERS">
+                <ScalarProperty Name="SCHED_NAME" ColumnName="SCHED_NAME" />
+                <ScalarProperty Name="TRIGGER_NAME" ColumnName="TRIGGER_NAME" />
+                <ScalarProperty Name="TRIGGER_GROUP" ColumnName="TRIGGER_GROUP" />
+                <ScalarProperty Name="JOB_NAME" ColumnName="JOB_NAME" />
+                <ScalarProperty Name="JOB_GROUP" ColumnName="JOB_GROUP" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="NEXT_FIRE_TIME" ColumnName="NEXT_FIRE_TIME" />
+                <ScalarProperty Name="PREV_FIRE_TIME" ColumnName="PREV_FIRE_TIME" />
+                <ScalarProperty Name="PRIORITY" ColumnName="PRIORITY" />
+                <ScalarProperty Name="TRIGGER_STATE" ColumnName="TRIGGER_STATE" />
+                <ScalarProperty Name="TRIGGER_TYPE" ColumnName="TRIGGER_TYPE" />
+                <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+                <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+                <ScalarProperty Name="CALENDAR_NAME" ColumnName="CALENDAR_NAME" />
+                <ScalarProperty Name="MISFIRE_INSTR" ColumnName="MISFIRE_INSTR" />
+                <ScalarProperty Name="JOB_DATA" ColumnName="JOB_DATA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="ProjectFlowModel.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -1980,17 +2611,6 @@
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ProjectFlowModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
