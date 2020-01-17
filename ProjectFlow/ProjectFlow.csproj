@@ -565,6 +565,7 @@
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
+    <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>

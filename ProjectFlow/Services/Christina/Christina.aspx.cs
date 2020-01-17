@@ -60,5 +60,9 @@ namespace ProjectFlow.Services.Christina
             Page.ClientScript.RegisterStartupScript(this.GetType(), "create_speakers", createSpeakers, false);
         }
 
+        protected void SuggestEvent(object sender, EventArgs e)
+        {
+
+        }
     }
 }
