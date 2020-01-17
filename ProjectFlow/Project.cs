@@ -25,6 +25,7 @@ namespace ProjectFlow
         public string projectName { get; set; }
         public string projectDescription { get; set; }
         public System.Guid UserId { get; set; }
+        public bool dropped { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Milestone> Milestones { get; set; }

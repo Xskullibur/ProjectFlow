@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2cf4dd1c368144c5ac6215ee4c25138d" Name="Diagram1">
+      <Diagram DiagramId="2cf4dd1c368144c5ac6215ee4c25138d" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Applications" Width="1.5" PointX="0.75" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Membership" Width="1.5" PointX="6" PointY="21.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Paths" Width="1.5" PointX="3" PointY="18.375" IsExpanded="true" />
