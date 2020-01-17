@@ -287,12 +287,24 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public void DeleteProject(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var project = dbContext.Projects.Single(x => x.projectID.Equals(ProjectID));
+                if (project != null)
+                {
+                    project.dropped = true;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
         public List<Project> GetProjectTutor(Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 Tutor tutor = dbContext.Tutors.First(x => x.UserId == TutorID);
-                return tutor.Projects.ToList();
+                return tutor.Projects.Where(x => x.dropped == false).ToList();
             }
         }
 

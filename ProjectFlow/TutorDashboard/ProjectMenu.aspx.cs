@@ -12,7 +12,8 @@ using System.Web.UI.WebControls;
 namespace ProjectFlow.DashBoard
 {
     public partial class ProjectMenu : System.Web.UI.Page
-    {      
+    {
+        ProjectBLL projectBLL = new ProjectBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             var identity = this.User.Identity as ProjectFlowIdentity;
@@ -33,7 +34,6 @@ namespace ProjectFlow.DashBoard
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             errorLabel.Text = "";
-            ProjectBLL projectBLL = new ProjectBLL();
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
@@ -59,7 +59,6 @@ namespace ProjectFlow.DashBoard
                 ClearField();
                 ShowProject();
                 Master.ShowAlert("Project Successfully Created", BootstrapAlertTypes.SUCCESS);
-                //Response.Redirect("ProjectMenu.aspx");
             }
         }
 
@@ -110,8 +109,7 @@ namespace ProjectFlow.DashBoard
         protected void projectGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = projectGV.Rows[e.RowIndex];
-            ProjectBLL projectBLL = new ProjectBLL();
-
+            
             TextBox editName = (TextBox)row.FindControl("editNameTB");
             TextBox editDesc = (TextBox)row.FindControl("editDescTB");           
 
@@ -127,6 +125,14 @@ namespace ProjectFlow.DashBoard
         {
             projectGV.PageIndex = e.NewPageIndex;
             ShowProject();
+        }
+
+        protected void projectGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)projectGV.Rows[e.RowIndex];
+            projectBLL.DeleteProject(row.Cells[0].Text);
+            ShowProject();
+            Master.ShowAlert("Project Successfully Deleted", BootstrapAlertTypes.SUCCESS);
         }
     }
 }

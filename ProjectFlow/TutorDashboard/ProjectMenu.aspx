@@ -139,7 +139,7 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="projectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging">
+                    <asp:GridView ID="projectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging" OnRowDeleting="projectGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
                             <asp:BoundField DataField="projectID" HeaderText="Project ID" ReadOnly="true"/>    
@@ -164,7 +164,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                           
-                            <asp:BoundField DataField="createDate" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Created" />
+                            <asp:BoundField DataField="createDate" DataFormatString="{0:dd/MM/yyyy}" ReadOnly="true" HeaderText="Date Created" />
                           
                             <asp:CommandField SelectText="View Team" ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success" />
@@ -173,6 +173,12 @@
                             <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
                                 <ControlStyle CssClass="btn btn-warning" />
                             </asp:CommandField>
+
+                            <asp:TemplateField>
+                                <ItemTemplate>                     
+                                    <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete project?');"></asp:Button>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>
                            <div class="jumbotron jumbotron-fluid">
