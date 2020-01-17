@@ -55,7 +55,15 @@
             </div>
         </div>
     </div>
-    <div class="container">        
+    <div class="container"> 
+        <div class="row">
+            <div class="col">
+                <h1>
+                    <asp:Label ID="Label5" class="label label-primary" runat="server" Text="File Sharing"></asp:Label>
+                </h1>
+            </div>
+        </div>
+        <br>
         <div class="row">            
             <div class="col">                                            
                 <asp:Button ID="openUploadModal" runat="server" Text="Upload File" CssClass="btn btn-primary" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#uploadModal"/>                
