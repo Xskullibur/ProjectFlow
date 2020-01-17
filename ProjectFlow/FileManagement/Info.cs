@@ -17,8 +17,11 @@ namespace ProjectFlow.FileManagement
             {
                 string status = "";
                 string name = Path.GetFileName(file);
+                FileInfo myFile = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\" + name);
+                long sizeInByte = (myFile.Length);
+                string date = File.GetCreationTime(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\" + name).ToString("MM/dd/yyyy hh:mm tt");
 
-                if (name.Substring(0, 20).Equals("(ENCRYPTED_WITH_KEY)"))
+                if (name.StartsWith("(ENCRYPTED_WITH_KEY)"))
                 {
                     status = "Encrypted With Key";
                     name = name.Substring(20);
@@ -33,7 +36,7 @@ namespace ProjectFlow.FileManagement
                     status = "Not Encrypted";
                 }
 
-                FileDetails details = new FileDetails(name, status);
+                FileDetails details = new FileDetails(name, status, sizeInByte.ToString(), date);
                 fileList.Add(details);
             }
             

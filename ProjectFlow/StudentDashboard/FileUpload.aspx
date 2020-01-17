@@ -72,7 +72,9 @@
                         <HeaderStyle CssClass="thead-light" />
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="File" />
+                            <asp:BoundField DataField="Size" HeaderText="Size" />
                             <asp:BoundField DataField="Status" HeaderText="Status" />
+                            <asp:BoundField DataField="Date" HeaderText="Date" />
                             <asp:TemplateField HeaderText="Key">
                                 <ItemTemplate>
                                     <asp:TextBox ID="tableKeyTB" CssClass="form-control" runat="server" Visible="True"></asp:TextBox>

@@ -145,7 +145,7 @@ namespace ProjectFlow.DashBoard
             Decryption decryption = new Decryption();
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
 
-            if (row.Cells[1].Text.Equals("Encrypted With Key"))
+            if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {
                 if(key.Text.Length == 32)
                 {
@@ -174,7 +174,7 @@ namespace ProjectFlow.DashBoard
                     Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
                 }               
             }
-            else if (row.Cells[1].Text.Equals("Encrypted"))
+            else if (row.Cells[2].Text.Equals("Encrypted"))
             {
 
                 fileName = "(ENCRYPTED)" + fileName;
