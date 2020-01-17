@@ -18,7 +18,7 @@ namespace ProjectFlow.FileManagement
                 string status = "";
                 string name = Path.GetFileName(file);
                 FileInfo myFile = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\" + name);
-                long sizeInByte = (myFile.Length);
+                double sizeInByte = (myFile.Length)/1024;
                 string date = File.GetCreationTime(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\" + name).ToString("MM/dd/yyyy hh:mm tt");
 
                 if (name.StartsWith("(ENCRYPTED_WITH_KEY)"))
@@ -36,7 +36,7 @@ namespace ProjectFlow.FileManagement
                     status = "Not Encrypted";
                 }
 
-                FileDetails details = new FileDetails(name, status, sizeInByte.ToString(), date);
+                FileDetails details = new FileDetails(name, status, sizeInByte.ToString() + " KB", date);
                 fileList.Add(details);
             }
             
