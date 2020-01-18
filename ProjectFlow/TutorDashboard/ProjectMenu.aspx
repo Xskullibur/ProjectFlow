@@ -133,7 +133,13 @@
         <div class="row">
             <div class="col-2">
                 <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
-            </div>               
+            </div>
+            <div class="col-3">
+                <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
+                    <asp:ListItem Value="0">Avaliable</asp:ListItem>
+                    <asp:ListItem Value="1">Deleted</asp:ListItem>
+                </asp:DropDownList>
+            </div>
         </div>
         <br>
         <div class="row">

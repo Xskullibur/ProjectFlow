@@ -70,6 +70,7 @@ namespace ProjectFlow.DashBoard
             projectList = projectBLL.GetProjectTutor(Guid.Parse(Session["TutorID"].ToString()));
             projectGV.DataSource = projectList;
             projectGV.DataBind();
+            PageSelectDP.SelectedIndex = 0;
         }
 
         protected void projectGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -138,6 +139,14 @@ namespace ProjectFlow.DashBoard
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProjectMenu.aspx");
+        }
+
+        protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PageSelectDP.SelectedIndex == 1)
+            {
+                Response.Redirect("RestoreDashboard/ProjectMenuRestore.aspx");
+            }
         }
     }
 }
