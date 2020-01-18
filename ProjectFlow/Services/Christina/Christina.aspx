@@ -12,6 +12,18 @@
 
     <div class="container">
         <div class="row">
+            <div class="card w-100 m-3">
+                <div class="card-body">
+                    <h5 class="card-title">Meeting Minutes</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Room Info:</h6>
+                    <div class="col-12 col-md-6"><label>Meeting Date: </label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
+                    <div class="col-12 col-md-6"><label>Meeting Time: </label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
+                    <div class="col-12 col-md-6"><label>Attendees: </label><asp:Label ID="Label1" runat="server" Text=""></asp:Label></div>
+                    <div class="col-12 col-md-6"><label>Meeting made by: </label><asp:Label ID="Label2" runat="server" Text=""></asp:Label></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -21,7 +33,10 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-meeting-logger-table" role="tabpanel" aria-labelledby="nav-meeting-logger-table-tab">
-                        <div class="row pt-2">
+                        <div class="row py-2 px-3">
+                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
+                        </div>
+                        <div class="row pd-2">
                             <div class="col-12">
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
@@ -38,11 +53,11 @@
                                 <div class="container">
                                    <div class="row py-3 mx-auto">
                                        <div class="col-10 px-0">
-                                           <asp:TextBox ID="SuggestionTextBox" CssClass="form-control" runat="server"></asp:TextBox>
+                                           <asp:TextBox ID="ExecuteTextBox" CssClass="form-control" runat="server"></asp:TextBox>
                                        </div>
                                        <div class="col-2">
-                                           <asp:Button ID="SuggestBtn" CssClass="btn btn-primary" runat="server" Text="Execute" OnClick="ExecuteEvent" />
-                                           <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
+                                           <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary" runat="server" Text="Execute" OnClick="ExecuteEvent" />
+                                           
                                        </div>
                                        <div>
                                            <asp:Label ID="ErrMsg" runat="server" Text="" ForeColor="Red"></asp:Label><br>
@@ -95,7 +110,8 @@
               </div>
               <div class="modal-footer">
                 <div class="highlight w-100">
-                    <code id="generated_code_speaker"></code>
+                    <code id="generated_code"></code>
+                    <asp:HiddenField ID="GeneratedCodeLbl" runat="server"></asp:HiddenField>
                 </div>
                 <asp:Button CssClass="btn btn-primary" ID="createActionItemBtn" runat="server" Text="Create Action Item" OnClick="CreateActionItemEvent" />
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -119,7 +135,10 @@
             
         });
         function updateCode() {
-            $('#generated_code_speaker').text("person: " + $('#ContentPlaceHolder_personNameTxtBox').val() + ' topic: "' + $('#ContentPlaceHolder_topicTxtBox').val() + '"' + " type: " + $('#ContentPlaceHolder_typeTxtBox').val());
+            let code = "person: " + $('#ContentPlaceHolder_personNameTxtBox').val() + ' topic: "' + $('#ContentPlaceHolder_topicTxtBox').val() + '"' + " type: " + $('#ContentPlaceHolder_typeTxtBox').val() + ';';
+
+            $('#ContentPlaceHolder_GeneratedCodeLbl').val(code);
+            $('#generated_code').text(code);
         }
     </script>
 </asp:Content>

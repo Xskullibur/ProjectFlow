@@ -66,8 +66,14 @@ namespace ProjectFlow.Services.Christina
 
         protected void ExecuteEvent(object sender, EventArgs e)
         {
-            string text = SuggestionTextBox.Text;
+            string text = ExecuteTextBox.Text;
 
+            InsertActionItems(text);
+
+        }
+
+        private void InsertActionItems(string text)
+        {
             SemanticsParser parser = new SemanticsParser();
 
             try
@@ -76,7 +82,7 @@ namespace ProjectFlow.Services.Christina
                 ErrMsg.Text = "";
                 ErrLine.Text = "";
 
-                foreach(var speaker in actionItems)
+                foreach (var speaker in actionItems)
                 {
                     materialTable.AddRow(new string[] {
                         speaker.Type,
@@ -87,7 +93,7 @@ namespace ProjectFlow.Services.Christina
                 }
 
             }
-            catch(ParseException ex)
+            catch (ParseException ex)
             {
                 ErrMsg.Text = ex.Message;
                 if (!String.IsNullOrEmpty(ex.ErrorLine))
@@ -99,9 +105,6 @@ namespace ProjectFlow.Services.Christina
                     ErrLine.Text = "";
                 }
             }
-
-
-            
         }
 
         private string ErrorAt(string errorMsg, int at)
@@ -114,12 +117,28 @@ namespace ProjectFlow.Services.Christina
 
         protected void ShowCreateActionItemModalEvent(object sender, EventArgs e)
         {
+            ShowModal();
+        }
+
+        private void ShowModal()
+        {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('show');", true);
+        }
+
+        private void HideModal()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('hide');", true);
         }
 
         protected void CreateActionItemEvent(object sender, EventArgs e)
         {
+            string text = GeneratedCodeLbl.Value;
+            typeTxtBox.Text = "";
+            personNameTxtBox.Text = "";
+            topicTxtBox.Text = "";
 
+            InsertActionItems(text);
+            HideModal();
         }
     }
 }

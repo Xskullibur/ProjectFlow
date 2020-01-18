@@ -15,6 +15,51 @@ namespace ProjectFlow.Services.Christina
     {
 
         /// <summary>
+        /// MeetingDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MeetingDate;
+
+        /// <summary>
+        /// MeetingTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MeetingTime;
+
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+
+        /// <summary>
+        /// CreateNewBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateNewBtn;
+
+        /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
@@ -33,31 +78,22 @@ namespace ProjectFlow.Services.Christina
         protected global::ProjectFlow.Utils.MaterialIO.MaterialIOTableControl materialTable;
 
         /// <summary>
-        /// SuggestionTextBox control.
+        /// ExecuteTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SuggestionTextBox;
+        protected global::System.Web.UI.WebControls.TextBox ExecuteTextBox;
 
         /// <summary>
-        /// SuggestBtn control.
+        /// ExecuteBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SuggestBtn;
-
-        /// <summary>
-        /// CreateNewBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateNewBtn;
+        protected global::System.Web.UI.WebControls.Button ExecuteBtn;
 
         /// <summary>
         /// ErrMsg control.
@@ -112,6 +148,15 @@ namespace ProjectFlow.Services.Christina
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox topicTxtBox;
+
+        /// <summary>
+        /// GeneratedCodeLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField GeneratedCodeLbl;
 
         /// <summary>
         /// createActionItemBtn control.
