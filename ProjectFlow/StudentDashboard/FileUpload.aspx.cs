@@ -72,7 +72,8 @@ namespace ProjectFlow.DashBoard
                         path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
                         savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                         FileUploadControl.SaveAs(savedLocation);
-                        encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);                     
+                        encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                        
                     }
                     else
@@ -85,7 +86,9 @@ namespace ProjectFlow.DashBoard
                     path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)";
                     savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                     FileUploadControl.SaveAs(savedLocation);
-                    encryption.EncryptFile(savedLocation);                    
+                    encryption.EncryptFile(savedLocation);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
+                    Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
                 }                  
                 else
                 {
@@ -93,6 +96,7 @@ namespace ProjectFlow.DashBoard
                     {
                         path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                      
                     }
                     else

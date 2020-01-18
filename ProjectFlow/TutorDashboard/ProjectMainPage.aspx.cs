@@ -140,6 +140,7 @@ namespace ProjectFlow
             studentIDTB.Text = "";
             RoleDP.SelectedIndex = 0;
             errorLabel.Text = "";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);
         }
 
         protected void MemberGV_RowDeleting(object sender, GridViewDeleteEventArgs e)

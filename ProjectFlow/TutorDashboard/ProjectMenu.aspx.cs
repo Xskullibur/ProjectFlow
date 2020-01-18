@@ -88,6 +88,7 @@ namespace ProjectFlow.DashBoard
             NameTB.Text = "";
             DescTB.Text = "";
             errorLabel.Text = "";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
         }
 
         protected void newProjectBtn_Click(object sender, EventArgs e)

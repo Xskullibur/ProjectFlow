@@ -124,6 +124,7 @@ namespace ProjectFlow.DashBoard
             NameTB.Text = "";
             DescTB.Text = "";
             errorLabel.Text = "";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateTeam').modal('hide')", true);
         }
 
         protected void TeamGV_RowDeleting(object sender, GridViewDeleteEventArgs e)

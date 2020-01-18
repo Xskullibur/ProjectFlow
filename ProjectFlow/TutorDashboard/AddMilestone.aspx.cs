@@ -114,6 +114,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);
                 Master.ShowAlert("Milestone successfully created", BootstrapAlertTypes.SUCCESS);
                 ShowMilestone();
             }
