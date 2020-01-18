@@ -127,9 +127,21 @@
                                         <ControlStyle CssClass="btn btn-primary mb-2" />
                                     </asp:CommandField>
 
-                                    <asp:CommandField ShowDeleteButton="True" ButtonType="Button" >
+                                    <asp:TemplateField ShowHeader="False">
+                                        <ItemTemplate>
+                                            <asp:Button ID="DeleteButton" Text="Delete" runat="server" 
+                                                CssClass="btn btn-danger"
+                                                data-toggle="confirmation"
+                                                data-btn-ok-icon-class="fa fa-check"
+                                                data-btn-cancel-icon-class="fa fa-close"
+                                                data-popout="true"
+                                                CommandName="Delete" />               
+                                        </ItemTemplate>
+                                    </asp:TemplateField> 
+
+<%--                                    <asp:CommandField ShowDeleteButton="True" ButtonType="Button" >
                                         <ControlStyle CssClass="btn btn-danger" />
-                                    </asp:CommandField>
+                                    </asp:CommandField>--%>
 
                                 </Columns>
 

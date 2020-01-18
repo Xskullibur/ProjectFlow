@@ -185,6 +185,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

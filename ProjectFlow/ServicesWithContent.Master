@@ -36,6 +36,7 @@
                 <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="bootstrap-select" />
                 <asp:ScriptReference Name="bootstrap-datetimepicker" />
+                <asp:ScriptReference Name="bootstrap-confirmation" />
             </Scripts>
         </asp:ScriptManager>
         <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>

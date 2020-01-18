@@ -29,6 +29,8 @@ namespace ProjectFlow.Tasks
                 refreshData();
             }
             taskGrid.Font.Size = 11;
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         private void refreshData()
@@ -57,6 +59,13 @@ namespace ProjectFlow.Tasks
         {
             refreshData();
         }
+
+
+        /**
+         * SCRIPT SETUP
+         **/
+
+
 
         /**
          * EDITING FUNCTIONS
@@ -438,6 +447,7 @@ namespace ProjectFlow.Tasks
         // Deleting
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+
             // Selected Task ID
             int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
 
