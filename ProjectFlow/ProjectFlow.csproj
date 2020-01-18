@@ -332,7 +332,8 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="DashBoard\Web.config" />
+    <Content Include="FileManagement\_KEYS\IV.bin" />
+    <Content Include="FileManagement\_KEYS\KEY.bin" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
@@ -363,6 +364,14 @@
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Tasks\EmailTest.aspx" />
+    <Content Include="TutorDashboard\AddMilestone.aspx" />
+    <Content Include="StudentDashboard\FileUpload.aspx" />
+    <Content Include="TutorDashboard\ProjectMainPage.aspx" />
+    <Content Include="TutorDashboard\ProjectMenu.aspx" />
+    <Content Include="TutorDashboard\ProjectTeamMenu.aspx" />
+    <Content Include="StudentDashboard\studentProject.aspx" />
+    <Content Include="TutorDashboard\RestoreDashboard\ProjectMenuRestore.aspx" />
+    <Content Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx" />
     <Content Include="Utils\EmailTemplates\TaskNotification.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -408,17 +417,14 @@
     <Compile Include="BLL\StudentBLL.cs" />
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
+    <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\TutorBLL.cs" />
-    <Compile Include="DashBoard\ProjectMenu.aspx.cs">
-      <DependentUpon>ProjectMenu.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DashBoard\ProjectMenu.aspx.designer.cs">
-      <DependentUpon>ProjectMenu.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="FileManagement\Decryption.cs" />
+    <Compile Include="FileManagement\Encryption.cs" />
+    <Compile Include="FileManagement\FileDetails.cs" />
+    <Compile Include="FileManagement\Info.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -453,13 +459,6 @@
     </Compile>
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
-    </Compile>
-    <Compile Include="DashBoard\ProjectMainPage.aspx.cs">
-      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DashBoard\ProjectMainPage.aspx.designer.cs">
-      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Milestone.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -496,6 +495,39 @@
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QRTZ_BLOB_TRIGGERS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_CALENDARS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_CRON_TRIGGERS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_FIRED_TRIGGERS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_JOB_DETAILS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_LOCKS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_PAUSED_TRIGGER_GRPS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_SCHEDULER_STATE.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_SIMPLE_TRIGGERS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_SIMPROP_TRIGGERS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QRTZ_TRIGGERS.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -524,9 +556,6 @@
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Student.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Task.cs">
@@ -570,19 +599,75 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="TutorDashboard\AddMilestone.aspx.cs">
+      <DependentUpon>AddMilestone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\AddMilestone.aspx.designer.cs">
+      <DependentUpon>AddMilestone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentDashboard\FileUpload.aspx.cs">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard\FileUpload.aspx.designer.cs">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\ProjectMainPage.aspx.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\ProjectMainPage.aspx.designer.cs">
+      <DependentUpon>ProjectMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\ProjectMenu.aspx.cs">
+      <DependentUpon>ProjectMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\ProjectMenu.aspx.designer.cs">
+      <DependentUpon>ProjectMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\ProjectTeamMenu.aspx.cs">
+      <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\ProjectTeamMenu.aspx.designer.cs">
+      <DependentUpon>ProjectTeamMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentDashboard\studentProject.aspx.cs">
+      <DependentUpon>studentProject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard\StudentProject.aspx.designer.cs">
+      <DependentUpon>studentProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\RestoreDashboard\ProjectMenuRestore.aspx.cs">
+      <DependentUpon>ProjectMenuRestore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\RestoreDashboard\ProjectMenuRestore.aspx.designer.cs">
+      <DependentUpon>ProjectMenuRestore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx.cs">
+      <DependentUpon>ProjectTeamRestore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx.designer.cs">
+      <DependentUpon>ProjectTeamRestore.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AlertPageExtension.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
+    <Compile Include="Utils\DateFormatter.cs" />
+    <Compile Include="Utils\EmailHelper.cs" />
+    <Compile Include="Utils\NotificationHelper.cs" />
     <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="Utils\SemanticsParsing.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utils\DateFormatter.cs" />
-    <Compile Include="Utils\EmailHelper.cs" />
-    <Compile Include="Utils\NotificationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -605,6 +690,8 @@
     <Content Include="Services\Christina\_Keys\key.bin" />
     <None Include="Services\Christina\_Keys\salt.bin" />
     <Content Include="Services\Web.config" />
+    <Content Include="TutorDashboard\Web.config" />
+    <Content Include="StudentDashboard\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -615,6 +702,8 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="FileManagement\FileStorage\" />
+    <Folder Include="FileManagement\Temp\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
@@ -626,16 +715,6 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SELECTPROJECT_Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SELECTEDPROJECT</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

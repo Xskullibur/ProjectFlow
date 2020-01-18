@@ -12,25 +12,26 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Milestone
+    public partial class QRTZ_JOB_DETAILS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Milestone()
+        public QRTZ_JOB_DETAILS()
         {
-            this.Tasks = new HashSet<Task>();
+            this.QRTZ_TRIGGERS = new HashSet<QRTZ_TRIGGERS>();
         }
     
-        public int milestoneID { get; set; }
-        public string milestoneName { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
-        public string projectID { get; set; }
-        public int teamID { get; set; }
-        public bool dropped { get; set; }
+        public string SCHED_NAME { get; set; }
+        public string JOB_NAME { get; set; }
+        public string JOB_GROUP { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string JOB_CLASS_NAME { get; set; }
+        public bool IS_DURABLE { get; set; }
+        public bool IS_NONCONCURRENT { get; set; }
+        public bool IS_UPDATE_DATA { get; set; }
+        public bool REQUESTS_RECOVERY { get; set; }
+        public byte[] JOB_DATA { get; set; }
     
-        public virtual Project Project { get; set; }
-        public virtual ProjectTeam ProjectTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<QRTZ_TRIGGERS> QRTZ_TRIGGERS { get; set; }
     }
 }

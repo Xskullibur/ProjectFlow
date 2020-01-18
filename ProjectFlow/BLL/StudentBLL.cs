@@ -201,6 +201,23 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public IEnumerable<ProjectTeam> GetStudentProject(Guid UserID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var student = dbContext.Students.Find(UserID);
+                var projectteam = dbContext.ProjectTeams.Where(x => x.dropped == false);
+                List<ProjectTeam> emptyList = new List<ProjectTeam> { };
+                if(student != null)
+                {
+                    return student.TeamMembers.Select(x => x.ProjectTeam).Where(x => x.dropped == false).ToList();
+                }
+                else
+                {
+                    return emptyList;
+                }                              
+            }
+        }
 
     }
 }

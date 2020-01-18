@@ -10,7 +10,7 @@
 namespace ProjectFlow.DashBoard {
     
     
-    public partial class ProjectMenu {
+    public partial class FileUpload {
         
         /// <summary>
         /// Label4 control.
@@ -22,40 +22,58 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// Label1 control.
+        /// FileUploadControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.FileUpload FileUploadControl;
         
         /// <summary>
-        /// NameTB control.
+        /// OptionDP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NameTB;
+        protected global::System.Web.UI.WebControls.DropDownList OptionDP;
         
         /// <summary>
-        /// Label2 control.
+        /// GenKeyBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Button GenKeyBtn;
         
         /// <summary>
-        /// DescTB control.
+        /// KeyTB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescTB;
+        protected global::System.Web.UI.WebControls.TextBox KeyTB;
+        
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// errorLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorLabel;
         
         /// <summary>
         /// Label5 control.
@@ -67,30 +85,30 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// ProjectIdTB control.
+        /// openUploadModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProjectIdTB;
+        protected global::System.Web.UI.WebControls.Button openUploadModal;
         
         /// <summary>
-        /// CreateBtn control.
+        /// FileGV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateBtn;
+        protected global::System.Web.UI.WebControls.GridView FileGV;
         
         /// <summary>
-        /// projectGV control.
+        /// refreshBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView projectGV;
+        protected global::System.Web.UI.WebControls.Button refreshBtn;
     }
 }
