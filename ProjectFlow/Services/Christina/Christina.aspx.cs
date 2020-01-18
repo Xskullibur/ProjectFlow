@@ -120,7 +120,7 @@ namespace ProjectFlow.Services.Christina
                 ErrMsg.Text = ex.Message;
                 if (!String.IsNullOrEmpty(ex.ErrorLine))
                 {
-                    ErrLine.Text = "<code>" + ErrorAt(ex.ErrorLine, ex.At) + "</code>";
+                    ErrLine.Text = "<code>" + ErrorAt(ex.ErrorLine, ex.At, ex.Length) + "</code>";
                 }
                 else
                 {
@@ -129,11 +129,11 @@ namespace ProjectFlow.Services.Christina
             }
         }
 
-        private string ErrorAt(string errorMsg, int at)
+        private string ErrorAt(string errorMsg, int at, int length = 1)
         {
             string msg = errorMsg.Substring(0, at);
-            msg += @"<span class=""curly-underline"">" + errorMsg.Substring(at, 1) + "</span>";
-            msg += errorMsg.Substring(at+1, errorMsg.Length - at - 1);
+            msg += @"<span class=""curly-underline"">" + errorMsg.Substring(at, length) + "</span>";
+            msg += errorMsg.Substring(at + length, errorMsg.Length - (at + length));
             return msg;
         }
 

@@ -109,6 +109,10 @@ namespace ProjectFlow
                         TeamID.Value = projectTeam.teamID.ToString();
 
                     }
+                    else
+                    {
+                        Response.Redirect("InvalidRequest.aspx");
+                    }
                 }
                 else if (projectFlowIdentity.IsTutor)
                 {
@@ -123,6 +127,10 @@ namespace ProjectFlow
                         //Inject html for project
                         ProjectID.Value = project.projectID;
 
+                    }
+                    else
+                    {
+                        Response.Redirect("InvalidRequest.aspx");
                     }
                 }
             }

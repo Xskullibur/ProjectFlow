@@ -536,6 +536,16 @@ namespace ProjectFlow.BLL
                     return false;
                 }
             }
-        }     
-    }  
+        }
+
+        public Project GetProjectByProjectId(string projectId)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Projects.Find(projectId);
+            }
+        }
+
+
+    }
 }

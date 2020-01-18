@@ -39,19 +39,21 @@ namespace ProjectFlow.Utils
 
             while (char.IsLetterOrDigit(LastChar) || LastChar == ':' || LastChar == ';')
             {
+
                 keyword += LastChar;
 
                 //Termination line
-                if (LastChar != ';')
-                    try
-                    {
-                        LastChar = textStreamer.GetNextChar();
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ParseException("Invalid syntax: ", textStreamer.Text, textStreamer.Count);
-                    }
-                else break;
+                if (LastChar == ';')
+                    break;
+
+                try
+                {
+                    LastChar = textStreamer.GetNextChar();
+                }
+                catch (Exception e)
+                {
+                    throw new ParseException("Invalid syntax: ", textStreamer.Text, textStreamer.Count);
+                }
             }
 
 
@@ -78,7 +80,24 @@ namespace ProjectFlow.Utils
             //Skip whitespace
             while (LastChar == ' ')
             {
-                LastChar = textStreamer.GetNextChar();
+                if (textStreamer.HaveNext())
+                {
+                    
+                    LastChar = textStreamer.GetNextChar();
+
+                }
+                else
+                {
+                    if (textStreamer.HaveNextLine())
+                    {
+                        textStreamer.NextLine();
+                        SkipWhiteSpace();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
             }
 
         }
@@ -103,8 +122,14 @@ namespace ProjectFlow.Utils
                 case Token.DUE:
                     
                 case Token.UNKNOWN:
-
-                    throw new ParseException($"Unknown Token: ' {keyword} ', at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count);
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        throw new ParseException($"Unknown Token: ' {keyword} ', at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count - keyword.Length, keyword.Length);
+                    }
+                    else
+                    {
+                        throw new ParseException($"Unknown Token: ' {LastChar} ', at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count);
+                    }
             }
             return Run(speaker);
         }
@@ -228,7 +253,13 @@ namespace ProjectFlow.Utils
             this.Lines = text.Split(
             new[] { "\r\n", "\r", "\n" },
             StringSplitOptions.None
-        );
+            );
+
+            for(int i = 0; i < this.Lines.Length - 1; i++)
+            {
+                this.Lines[i] += " ";//Append one space
+            }
+
         }
 
         public char GetNextChar()
@@ -295,6 +326,7 @@ namespace ProjectFlow.Utils
     {
         public string ErrorLine { get; }
         public int At { get; } = -1;
+        public int Length { get; } = 1;
         public ParseException(string msg): base(msg)
         {
 
@@ -304,10 +336,11 @@ namespace ProjectFlow.Utils
         {
             ErrorLine = errorline;
         }
-        public ParseException(string msg, string errorline, int at) : this(msg)
+        public ParseException(string msg, string errorline, int at, int length = 1) : this(msg)
         {
             ErrorLine = errorline;
             this.At = at;
+            this.Length = length;
         }
 
 

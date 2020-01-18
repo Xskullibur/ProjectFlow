@@ -4,12 +4,12 @@
     <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+
     <script type="text/javascript" src="/Scripts/jquery.signalR-2.4.1.min.js"></script>
     <script type="text/javascript" src="/signalr/hubs"></script>
     <script type="text/javascript" src="/Scripts/ProjectFlow/christina.js"></script>
 
     <script type="text/javascript" src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
-           
 
 
     <%-- Current selected room id --%>
@@ -64,7 +64,7 @@
                                 <div class="container">
                                    <div class="row py-3 mx-auto">
                                        <div class="col-10 px-0">
-                                           <asp:TextBox ID="ExecuteTextBox" CssClass="form-control" runat="server"></asp:TextBox>
+                                           <asp:TextBox  ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                        </div>
                                        <div class="col-2">
                                            <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary" runat="server" Text="Execute" OnClick="ExecuteEvent" />
@@ -135,6 +135,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
             canvas = $('#speaker_display');
             canvas_window = $('#canvas_window');
             init_display(canvas_window, canvas);
@@ -146,7 +147,7 @@
             
         });
         function updateCode() {
-            let code = "person: " + $('<%=personNameTxtBox.ClientID %>').val() + ' topic: "' + $('<%=topicTxtBox.ClientID %>').val() + '"' + " type: " + $('<%=typeTxtBox.ClientID %>').val() + ';';
+            let code = "person: " + $('#<%=personNameTxtBox.ClientID %>').val() + ' topic: "' + $('#<%=topicTxtBox.ClientID %>').val() + '"' + " type: " + $('#<%=typeTxtBox.ClientID %>').val() + ';';
 
             $('<%=GeneratedCodeLbl.ClientID %>').val(code);
             $('#generated_code').text(code);
