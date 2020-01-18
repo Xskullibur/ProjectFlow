@@ -221,7 +221,7 @@ namespace ProjectFlow.Tasks
 
             // Verify Attributes
             TaskHelper taskVerification = new TaskHelper();
-            bool verified = taskVerification.Verify(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
+            bool verified = taskVerification.VerifyAddTask(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
 
             if (!verified)
             {

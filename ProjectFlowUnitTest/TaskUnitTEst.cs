@@ -13,7 +13,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify(null,
+            bool result = taskHelper.VerifyAddTask(null,
                 "Verify that task name is null is checked",
                 -1,
                 "21/12/2019",
@@ -29,7 +29,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 ",
+            bool result = taskHelper.VerifyAddTask("Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 ",
                 "Test is task name checks if the number of character limit is 255",
                 -1,
                 "21/11/2019",
@@ -45,7 +45,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Verify Task Desc",
+            bool result = taskHelper.VerifyAddTask("Verify Task Desc",
                 null,
                 -1,
                 "21/11/2019",
@@ -61,7 +61,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Verify Task Desc",
+            bool result = taskHelper.VerifyAddTask("Verify Task Desc",
                 "Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 ",
                 -1,
                 "21/11/2019",
@@ -77,7 +77,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Verify Milestone null",
+            bool result = taskHelper.VerifyAddTask("Verify Milestone null",
                 "Check that verification catches milesone errors",
                 -2,
                 "21/11/2019",
@@ -93,7 +93,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Verify StartDate null",
+            bool result = taskHelper.VerifyAddTask("Verify StartDate null",
                 "Check that verification catches milesone errors",
                 1,
                 "12/12/2019",
@@ -109,7 +109,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Check invalid startDate format",
+            bool result = taskHelper.VerifyAddTask("Check invalid startDate format",
                 "check that verification catches invalid start date",
                 1,
                 "13/1231/5216",
@@ -125,7 +125,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Check null endDate",
+            bool result = taskHelper.VerifyAddTask("Check null endDate",
                 "check that verification catches null end date",
                 1,
                 "12/12/2019",
@@ -141,7 +141,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Check invalid endDate format",
+            bool result = taskHelper.VerifyAddTask("Check invalid endDate format",
                 "check that verification catches invalid end date",
                 1,
                 "12/12/2019",
@@ -157,7 +157,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Check if endDate can be eariler that start date",
+            bool result = taskHelper.VerifyAddTask("Check if endDate can be eariler that start date",
                 "Check that verification catches error when end date is eariler that start date",
                 1,
                 "20/1/2020",
@@ -173,7 +173,7 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.Verify("Verify StatusId is Invalid",
+            bool result = taskHelper.VerifyAddTask("Verify StatusId is Invalid",
                 "Check that verification catches invalid status index",
                 1,
                 "20/1/2020",

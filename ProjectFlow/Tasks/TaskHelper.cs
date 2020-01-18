@@ -29,7 +29,7 @@ namespace ProjectFlow.Tasks
         }
 
         // Verify Add Task
-        public bool Verify(string taskName, 
+        public bool VerifyAddTask(string taskName, 
             string taskDesc, 
             int milestoneIndex, 
             string startDate, 
@@ -122,6 +122,20 @@ namespace ProjectFlow.Tasks
             }
 
             return verified;
+        }
+
+        // Verify Update Status
+        public bool VerifyUpdateStatus(string currentStatus, Student leader, Student currentUser)
+        {
+            if (currentStatus == StatusBLL.VERIFICATON)
+            {
+                if (leader != currentUser)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
 

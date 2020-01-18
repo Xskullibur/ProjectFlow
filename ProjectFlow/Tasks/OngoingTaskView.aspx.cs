@@ -321,7 +321,7 @@ namespace ProjectFlow.Tasks
 
                 // Verify Edited Task
                 TaskHelper taskVerification = new TaskHelper();
-                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
+                bool verified = taskVerification.VerifyAddTask(name, desc, milestoneIndex, startDate, endDate, statusIndex);
 
                 // Cherk Verified
                 if (!verified)
@@ -467,10 +467,62 @@ namespace ProjectFlow.Tasks
 
         }
 
+        //Pagination
         protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             taskGrid.PageIndex = e.NewPageIndex;
             refreshData();
+        }
+
+        // Row Command (Update Status)
+        protected void taskGrid_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            switch (e.CommandName)
+            {
+
+                case "UpdateStatus":
+
+                    GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+
+                    int id = Convert.ToInt32(row.Cells[0].Text);
+                    string currentStatus = ((Label)row.FindControl("gridStatus")).Text;
+
+                    // Get Leader
+                    StudentBLL studentBLL = new StudentBLL();
+                    Student leader = studentBLL.GetLeaderByTaskID(id);
+
+                    // Get Current User
+                    Student currentUser = Master.GetCurrentUser();
+
+                    TaskHelper taskHelper = new TaskHelper();
+                    bool verified = taskHelper.VerifyUpdateStatus(currentStatus, leader, currentUser);
+
+                    if (verified)
+                    {
+                        StatusBLL statusBLL = new StatusBLL();
+                        bool result = statusBLL.UpdateStatusByTaskID(id);
+
+                        if (result)
+                        {
+                            Master.Master.ShowAlert("Successfully Updated Status", BootstrapAlertTypes.SUCCESS);
+                            refreshData();
+                        }
+                        else
+                        {
+                            Master.Master.ShowAlert("Error While Updating Status (Note: Only Leaders can update from VERIFICATION to COMPLETED!)", BootstrapAlertTypes.DANGER);
+                        }
+
+                    }
+                    else
+                    {
+                        Master.Master.ShowAlert("Error While Updating Status (Note: Only Leaders can update from VERIFICATION to COMPLETED!)", BootstrapAlertTypes.DANGER);
+                    }
+
+                    break;
+                    
+            }
+
         }
     }
 }

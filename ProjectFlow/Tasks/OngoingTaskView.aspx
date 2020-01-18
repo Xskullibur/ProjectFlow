@@ -17,7 +17,7 @@
                     <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" OnRowCommand="taskGrid_RowCommand" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
@@ -123,10 +123,7 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-<%--                                <asp:CommandField ShowEditButton="True" ButtonType="Button" ValidationGroup="EditTask">
-                                        <ControlStyle CssClass="btn btn-primary mb-2" />
-                                    </asp:CommandField>--%>
-
+                                    <%--Action Settings--%>
                                     <asp:TemplateField ShowHeader="false">
                                         <ItemTemplate>
                                             <div class="dropdown mb-2">
@@ -136,7 +133,7 @@
 
                                                 <div class="dropdown-menu">
                                                     <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
-                                                    <asp:Button Text="Update Status" CssClass="dropdown-item" runat="server" />
+                                                    <asp:Button Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
                                                 </div>
 
 
