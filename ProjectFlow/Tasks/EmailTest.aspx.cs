@@ -22,20 +22,24 @@ namespace ProjectFlow.Tasks
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            NotificationHelper.Default_AddTask_Setup(1033);
-            Response.Write("Jobs Created");
+
+            SmsHelper smsHelper = new SmsHelper();
+            smsHelper.SendSMS("90843083", ".");
+
+            //NotificationHelper.Default_AddTask_Setup(1033);
+            //Response.Write("Jobs Created");
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            NotificationHelper.Task_Drop_Setup(1033);
-            Response.Write("Jobs Paused");
+            //NotificationHelper.Task_Drop_Setup(1033);
+            //Response.Write("Jobs Paused");
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            NotificationHelper.Task_Restore_Setup(1033);
-            Response.Write("Jobs Resumed");
+            //NotificationHelper.Task_Restore_Setup(1033);
+            //Response.Write("Jobs Resumed");
         }
     }
 }
