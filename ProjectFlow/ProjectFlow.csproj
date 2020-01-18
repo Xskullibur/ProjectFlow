@@ -364,6 +364,7 @@
     <Content Include="TutorDashboard\ProjectTeamMenu.aspx" />
     <Content Include="StudentDashboard\studentProject.aspx" />
     <Content Include="TutorDashboard\RestoreDashboard\ProjectMenuRestore.aspx" />
+    <Content Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx" />
     <Content Include="Utils\EmailTemplates\TaskNotification.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -625,6 +626,13 @@
     </Compile>
     <Compile Include="TutorDashboard\RestoreDashboard\ProjectMenuRestore.aspx.designer.cs">
       <DependentUpon>ProjectMenuRestore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx.cs">
+      <DependentUpon>ProjectTeamRestore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx.designer.cs">
+      <DependentUpon>ProjectTeamRestore.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\AlertPageExtension.cs">
       <SubType>ASPXCodeBehind</SubType>

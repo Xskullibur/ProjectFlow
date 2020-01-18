@@ -67,8 +67,9 @@ namespace ProjectFlow.DashBoard
 
         public void ShowTeam()
         {
+            PageSelectDP.SelectedIndex = 0;
             ProjectBLL projectBLL = new ProjectBLL();
-            
+           
             List<ProjectTeam> teamList = new List<ProjectTeam> { };
             teamList = projectBLL.GetProjectTeam(GetProjectID());
             TeamGV.DataSource = teamList;
@@ -135,6 +136,14 @@ namespace ProjectFlow.DashBoard
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProjectTeamMenu.aspx");
+        }
+
+        protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PageSelectDP.SelectedIndex == 1)
+            {
+                Response.Redirect("RestoreDashboard/ProjectTeamRestore.aspx");
+            }
         }
     }
 }

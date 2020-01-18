@@ -386,6 +386,14 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public List<ProjectTeam> GetDeletedTeam(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == true).ToList();
+            }
+        }
+
         public List<TeamMember> GetMember(int TeamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
