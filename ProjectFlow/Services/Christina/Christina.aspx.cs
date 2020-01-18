@@ -30,7 +30,29 @@ namespace ProjectFlow.Services.Christina
                 //Create all the speakers in client side
                 Student[] students = projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(tm => tm.Student).ToArray();
                 InjectSpeaker(students);
+
             }
+        }
+
+        /// <summary>
+        /// Display room informations
+        /// </summary>
+        private void DisplayRoomInfo(Room room)
+        {
+            MeetingDate.Text = room.creationDate.ToShortDateString();
+            MeetingTime.Text = room.creationDate.ToShortTimeString();
+
+            Project project = (Master as ServicesWithContent).CurrentProject;
+            Student student = (User.Identity as ProjectFlowIdentity).Student;
+
+
+            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, project);
+            StudentBLL studentBLL = new StudentBLL();
+
+            AttendeesLbl.Text = String.Join(",", projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(x => studentBLL.GetStudentByTeamMember(x).lastName));
+
+            MadeByLbl.Text = student.aspnet_Users.UserName;
         }
 
         /// <summary>
@@ -139,6 +161,23 @@ namespace ProjectFlow.Services.Christina
 
             InsertActionItems(text);
             HideModal();
+        }
+
+        protected void UpdateRoomDetailEvent(object sender, EventArgs e)
+        {
+            RoomBLL roomBLL = new RoomBLL();
+
+            int roomID;
+
+            if (int.TryParse(RoomID.Value, out roomID))
+            {
+                Room room = roomBLL.GetRoomByRoomID(roomID);
+                DisplayRoomInfo(room);
+            }
+            else
+            {
+                Response.Redirect("~/InvalidRequest.aspx");
+            }
         }
     }
 }

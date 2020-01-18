@@ -56,6 +56,21 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
+        /// Returns the Student by the TeamMember
+        /// </summary>
+        /// <param name="teamMember"></param>
+        /// <returns>the Student object which is referencing from TeamMember</returns>
+        public Student GetStudentByTeamMember(TeamMember teamMember)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Include(x => x.Student.aspnet_Users)
+                    .Select(x => x.Student)
+                    .FirstOrDefault(x => x.UserId == teamMember.UserId);
+            }
+        }
+
+        /// <summary>
         /// Find the Student using student id
         /// </summary>
         /// <param name="id">student id of the Studennt</param>

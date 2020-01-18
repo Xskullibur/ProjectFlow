@@ -39,6 +39,7 @@
             </Scripts>
         </asp:ScriptManager>
         <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
+        <asp:HiddenField ID="TeamID" runat="server"></asp:HiddenField>
         <script>
             $(function() {
                 $('.datetimepicker').datetimepicker();

@@ -48,8 +48,13 @@ namespace ProjectFlow.Services.Christina
                     createdBy = (Context.User.Identity as ProjectFlowIdentity).Student.UserId,
                     
                 };
+                
+
                 RoomBLL bll = new RoomBLL();
                 bll.CreateRoom(room);
+
+                //Send room id to client
+                Clients.Caller.SendRoomID(room.roomID);
 
                 //Store the project id and hashed password in redis 
                 Global.Redis.GetDatabase().StringSet(Convert.ToBase64String(room.accessToken), $@"{{

@@ -15,6 +15,24 @@ namespace ProjectFlow.Services.Christina
     {
 
         /// <summary>
+        /// RoomUpdateEventLinkBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton RoomUpdateEventLinkBtn;
+
+        /// <summary>
+        /// RoomID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField RoomID;
+
+        /// <summary>
         /// MeetingDate control.
         /// </summary>
         /// <remarks>
@@ -33,22 +51,22 @@ namespace ProjectFlow.Services.Christina
         protected global::System.Web.UI.WebControls.Label MeetingTime;
 
         /// <summary>
-        /// Label1 control.
+        /// AttendeesLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label AttendeesLbl;
 
         /// <summary>
-        /// Label2 control.
+        /// MadeByLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label MadeByLbl;
 
         /// <summary>
         /// CreateNewBtn control.

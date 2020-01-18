@@ -39,6 +39,10 @@ namespace ProjectFlow
             SetCurrentProject(projectBLL.GetProjectByProjectId("ITP213"));
 
 #endif
+
+            //Check if project is selected if not redirect to project selection screen
+            if (CurrentProject == null) Response.Redirect("/Dashboard/ProjectMenu.aspx");
+
         }
 
         protected void LogoutEvent(object sender, EventArgs e)
@@ -72,12 +76,18 @@ namespace ProjectFlow
                     StudentBLL studentBLL = new StudentBLL();
                     if (studentBLL.ContainsProject(student, project))
                     {
+                        ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+                        //Get project team
+                        ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, project);
+                        Session["CurrentProjectTeam"] = projectTeam;
+
                         //Set the session of the current projects
                         Session["CurrentProject"] = project;
 
 
                         //Inject html for project
                         ProjectID.Value = project.projectID;
+                        TeamID.Value = projectTeam.teamID.ToString();
 
                     }
                 }
@@ -105,6 +115,32 @@ namespace ProjectFlow
         /// </summary>
         public Project CurrentProject {
             get => Session["CurrentProject"] as Project;
+        }
+
+        /// <summary>
+        /// Return the current selected project team
+        /// </summary>
+        public ProjectTeam CurrentProjectTeam
+        {
+            get {
+                var user = HttpContext.Current.User;
+                if (user.Identity.IsAuthenticated)
+                {
+                    var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                    if (projectFlowIdentity.IsStudent)
+                    {
+                        return Session["CurrentProjectTeam"] as ProjectTeam;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Trying to access Project Team as a Tutor is not allowed");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("Not Authenticated");
+                }
+            }
         }
 
 

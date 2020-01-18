@@ -7,8 +7,9 @@ let recorder = null;
 $(document).ready(function () {
     var christinaHub = $.connection.christina;
 
-
+    let createdRoom = false;
     christinaHub.client.sendPassword = function (password) {
+        createdRoom = true;
         websocket_worker.postMessage({
             hostname: window.location.hostname,
             password: password
@@ -28,15 +29,20 @@ $(document).ready(function () {
             }
 
             
-        });
+        });s
 
         startRecording();
 
-    };
+    }
+
+    christinaHub.client.sendRoomID = function (roomID) {
+        $('#ContentPlaceHolder_RoomID').val(roomID);
+        document.getElementById('ContentPlaceHolder_RoomUpdateEventLinkBtn').click();
+    }
 
     $.connection.hub.start().done(function () {
 
-        christinaHub.server.createRoom(2);
+        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val()));
     });
     
 });
@@ -82,7 +88,7 @@ const drawWidth = 1000;
 let speakers_circles = [];
 
 function init_display(bound_window, display_canvas) {
-    animate();
+    //animate();
 
     function animate() {
         let ctx = display_canvas[0].getContext('2d');

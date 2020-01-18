@@ -175,6 +175,7 @@
     <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
+    <Content Include="InvalidRequest.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="DashBoard\ProjectMainPage.aspx" />
     <Content Include="Profile\Profile.aspx" />
@@ -427,6 +428,13 @@
     </Compile>
     <Compile Include="identity.aspx.designer.cs">
       <DependentUpon>identity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvalidRequest.aspx.cs">
+      <DependentUpon>InvalidRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvalidRequest.aspx.designer.cs">
+      <DependentUpon>InvalidRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
