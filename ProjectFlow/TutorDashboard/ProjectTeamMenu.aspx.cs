@@ -35,6 +35,16 @@ namespace ProjectFlow.DashBoard
             return Session["PassProjectID"].ToString();
         }
 
+        private void OpenModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateTeam').modal('show');", true);
+        }
+
+        private void CloseModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateTeam').modal('hide')", true);
+        }
+
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
@@ -54,12 +64,13 @@ namespace ProjectFlow.DashBoard
                 errorLabel.Text = total;
                 NameTB.Text = teamName;
                 DescTB.Text = desc;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateTeam').modal('show');", true);
+                OpenModel();
             }
             else
             {
                 Master.ShowAlert("Successfully Created Team", BootstrapAlertTypes.SUCCESS);
                 ClearModel();
+                CloseModel();
                 ShowTeam();
             }
             
@@ -124,7 +135,6 @@ namespace ProjectFlow.DashBoard
             NameTB.Text = "";
             DescTB.Text = "";
             errorLabel.Text = "";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateTeam').modal('hide')", true);
         }
 
         protected void TeamGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -145,6 +155,35 @@ namespace ProjectFlow.DashBoard
             {
                 Response.Redirect("RestoreDashboard/ProjectTeamRestore.aspx");
             }
+        }
+
+        protected void createAnotherBtn_Click(object sender, EventArgs e)
+        {
+            ProjectBLL bll = new ProjectBLL();
+            string teamName = NameTB.Text;
+            string desc = DescTB.Text;
+            List<string> errorList = new List<string> { };
+
+            errorList = bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
+
+            if (errorList.Count > 0)
+            {
+                string total = "";
+                foreach (string errorItem in errorList)
+                {
+                    total += errorItem;
+                }
+                errorLabel.Text = total;
+                NameTB.Text = teamName;
+                DescTB.Text = desc;                
+            }
+            else
+            {
+                Master.ShowAlert("Successfully Created Team", BootstrapAlertTypes.SUCCESS);
+                ClearModel();
+            }
+            ShowTeam();
+            OpenModel();
         }
     }
 }

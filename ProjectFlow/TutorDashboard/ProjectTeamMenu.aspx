@@ -16,10 +16,10 @@
             height: 42px;
         }
         .auto-style13 {
-            width: 231px;
+            width: 371px;
         }
         .auto-style14 {
-            width: 231px;
+            width: 371px;
             height: 42px;
         }
     </style>
@@ -81,6 +81,8 @@
                             </td>
                             <td class="auto-style13">
                                 <asp:Button ID="CreateBtn" ValidationGroup="modelValidation" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <asp:Button ID="createAnotherBtn" runat="server" CssClass="btn btn-success" OnClick="createAnotherBtn_Click" Text="Create Another" ValidationGroup="modelValidation" Width="160px" />
                                 <br />
                             </td>
                             <td class="auto-style8">
