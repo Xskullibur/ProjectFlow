@@ -13,18 +13,18 @@ namespace ProjectFlow.Utils
     {
 
         TextStreamer textStreamer;
-        public List<Speaker> Parse(string text)
+        public List<ActionItem> Parse(string text)
         {
             textStreamer = new TextStreamer(text);
 
-            List<Speaker> speakers = new List<Speaker>();
+            List<ActionItem> actionItems = new List<ActionItem>();
 
             while (!textStreamer.NoMoreChar())
             {
-                Speaker speaker = Run(new Speaker());
-                speakers.Add(speaker);
+                ActionItem actionItem = Run(new ActionItem());
+                actionItems.Add(actionItem);
             }
-            return speakers;
+            return actionItems;
 
         }
 
@@ -59,10 +59,10 @@ namespace ProjectFlow.Utils
 
             switch (keyword)
             {
-                case "sp:":
-                    return Token.SPEAKER;
-                case "msg:":
-                    return Token.MESSAGE;
+                case "person:":
+                    return Token.PERSONNAME;
+                case "topic:":
+                    return Token.TOPIC;
                 case "type:":
                     return Token.TYPE;
                 case ";":
@@ -83,16 +83,16 @@ namespace ProjectFlow.Utils
 
         }
 
-        private Speaker Run(Speaker speaker = null)
+        private ActionItem Run(ActionItem speaker = null)
         {
             int token = NextToken();
             switch (token)
             {
-                case Token.SPEAKER:
-                    speaker.SpeakerName = ParseSpeakerName();
+                case Token.PERSONNAME:
+                    speaker.PersonName = ParsePersonName();
                     break;
-                case Token.MESSAGE:
-                    speaker.Message = ParseMessage();
+                case Token.TOPIC:
+                    speaker.Topic = ParseTopic();
                     break;
                 case Token.TYPE:
                     speaker.Type = ParseType();
@@ -100,16 +100,16 @@ namespace ProjectFlow.Utils
                 case Token.EOL:
                     if (textStreamer.HaveNext()) LastChar = textStreamer.GetNextChar();
                     return speaker;
-                case Token.STRING:
+                case Token.DUE:
                     
                 case Token.UNKNOWN:
 
-                    throw new ParseException($"Unknown Token: {keyword}, at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count);
+                    throw new ParseException($"Unknown Token: ' {keyword} ', at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count);
             }
             return Run(speaker);
         }
 
-        private string ParseSpeakerName()
+        private string ParsePersonName()
         {
 
             SkipWhiteSpace();
@@ -123,7 +123,7 @@ namespace ProjectFlow.Utils
 
         }
 
-        private string ParseMessage()
+        private string ParseTopic()
         {
             SkipWhiteSpace();
 
@@ -199,20 +199,20 @@ namespace ProjectFlow.Utils
         public class Token
         {
             public const int UNKNOWN = -1;
-            public const int SPEAKER = 1;
-            public const int MESSAGE = 2;
+            public const int PERSONNAME = 1;
+            public const int TOPIC = 2;
             public const int TYPE = 3;
             public const int EOL = 4;
-            public const int STRING = 5;
+            public const int DUE = 5;
         }
 
     }
 
-    public class Speaker
+    public class ActionItem
     {
-        public string SpeakerName { get; set; }
-        public string Message { get; set; }
-        public string Type { get; set; } = "Hello";
+        public string PersonName { get; set; }
+        public string Topic { get; set; }
+        public string Type { get; set; } = "Suggestion";
     }
 
     public class TextStreamer

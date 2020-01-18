@@ -15,6 +15,15 @@ namespace ProjectFlow.Services.Christina
     {
 
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
         /// materialTable control.
         /// </summary>
         /// <remarks>
@@ -42,6 +51,15 @@ namespace ProjectFlow.Services.Christina
         protected global::System.Web.UI.WebControls.Button SuggestBtn;
 
         /// <summary>
+        /// CreateNewBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateNewBtn;
+
+        /// <summary>
         /// ErrMsg control.
         /// </summary>
         /// <remarks>
@@ -58,5 +76,50 @@ namespace ProjectFlow.Services.Christina
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ErrLine;
+
+        /// <summary>
+        /// modalUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel modalUpdatePanel;
+
+        /// <summary>
+        /// typeTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox typeTxtBox;
+
+        /// <summary>
+        /// personNameTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox personNameTxtBox;
+
+        /// <summary>
+        /// topicTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox topicTxtBox;
+
+        /// <summary>
+        /// createActionItemBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button createActionItemBtn;
     }
 }

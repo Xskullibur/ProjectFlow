@@ -13,32 +13,94 @@ namespace ProjectFlow.Utils.MaterialIO
     public class MaterialIOTableControl: WebControl
     {
 
-        List<MaterialIOTableRowHeaderData> _headers = new List<MaterialIOTableRowHeaderData>();
+        private List<MaterialIOTableRowHeaderData> _headers
+        {
+            get { return ViewState["Headers"] as List<MaterialIOTableRowHeaderData>; }
+            set
+            {
+                ViewState["Headers"] = value;
+            }
+        }
+
         [PersistenceMode(PersistenceMode.InnerProperty)]
         public List<MaterialIOTableRowHeaderData> Headers
         {
-            get { return _headers; }
+            get => _headers;
+            set
+            {
+                _headers = value;
+            }
         }
-        List<MaterialIOTableRow> _rows = new List<MaterialIOTableRow>();
+
+        private List<MaterialIOTableRow> _rows
+        {
+            get { return ViewState["Rows"] as List<MaterialIOTableRow>; }
+            set
+            {
+                ViewState["Rows"] = value;
+            }
+        }
+
         [PersistenceMode(PersistenceMode.InnerProperty)]
         public List<MaterialIOTableRow> Rows
         {
-            get { return _rows; }
+            get => _rows;
+            set
+            {
+                if (_rows == null)
+                {
+                    _rows = new List<MaterialIOTableRow>();
+                }
+                _rows.AddRange(value);
+            }
         }
         public MaterialIOTable Table = new MaterialIOTable();
+
+
+        public void SetHeaders(MaterialIOTableRowHeaderData[] headers)
+        {
+            this.Headers = new List<MaterialIOTableRowHeaderData>(headers);
+        }
+
+        public void AddRow(string[] values)
+        {
+
+            if (_rows == null)
+            {
+                _rows = new List<MaterialIOTableRow>();
+            }
+
+            var row = new MaterialIOTableRow();
+
+            var datas = new MaterialIOTableRowData[values.Length];
+
+            for (int i = 0; i < datas.Length; i++)
+            {
+                string value = values[i];
+                datas[i] = new MaterialIOTableRowData();
+                datas[i].Value = value;
+            }
+            
+            row.SetDatas(datas);
+            this._rows.Add(row);
+            ViewState["Rows"] = this._rows;
+        }
+
 
         protected override void RenderContents(HtmlTextWriter output)
         {
 
             Table.Head.ClearHeaders();
 
-            foreach(var header in Headers)
+            if (Headers != null)
+            foreach (var header in Headers)
             {
                 Table.Head.AddHeader(header);
             }
 
             Table.Body.ClearRows();
 
+            if(Rows != null)
             foreach (var row in Rows)
             {
                 Table.Body.AddRow(row);
@@ -156,6 +218,8 @@ namespace ProjectFlow.Utils.MaterialIO
         }
 
     }
+
+    [Serializable]
     [ParseChildren(true)]
     public class MaterialIOTableRow : DOMElement, Renderer
     {
@@ -190,7 +254,7 @@ namespace ProjectFlow.Utils.MaterialIO
             stringBuilder.Append(GetHTML());
         }
     }
-
+    [Serializable]
     public class MaterialIOTableRowData : DOMElement, Renderer
     {
         
@@ -284,6 +348,7 @@ namespace ProjectFlow.Utils.MaterialIO
             dOMElements.Clear();
         }
     }
+    [Serializable]
     public abstract class DOMElement
     {
         public List<string> ClassDescriptor = new List<string>();
@@ -344,6 +409,7 @@ namespace ProjectFlow.Utils.MaterialIO
             return stringBuilder.ToString();
         }
 
+        [Serializable]
         public class CustomAttribute
         {
             public string Name { get; }

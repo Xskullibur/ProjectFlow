@@ -14,20 +14,23 @@ namespace ProjectFlow.Services.Christina
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Get speakers belong to the current project team
-            ServicesWithContent servicesWithContent = this.Master as ServicesWithContent;
+            if (!IsPostBack)
+            {
+                //Get speakers belong to the current project team
+                ServicesWithContent servicesWithContent = this.Master as ServicesWithContent;
 
-            Project selectedProject = servicesWithContent.CurrentProject;
-            var projectFlowIdentity = this.User.Identity as ProjectFlowIdentity;
-            Student student = projectFlowIdentity.Student;
+                Project selectedProject = servicesWithContent.CurrentProject;
+                var projectFlowIdentity = this.User.Identity as ProjectFlowIdentity;
+                Student student = projectFlowIdentity.Student;
 
-            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+                ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
 
-            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, selectedProject);
+                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, selectedProject);
 
-            //Create all the speakers in client side
-            Student[] students = projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(tm => tm.Student).ToArray();
-            InjectSpeaker(students);
+                //Create all the speakers in client side
+                Student[] students = projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(tm => tm.Student).ToArray();
+                InjectSpeaker(students);
+            }
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace ProjectFlow.Services.Christina
             Page.ClientScript.RegisterStartupScript(this.GetType(), "create_speakers", createSpeakers, false);
         }
 
-        protected void SuggestEvent(object sender, EventArgs e)
+        protected void ExecuteEvent(object sender, EventArgs e)
         {
             string text = SuggestionTextBox.Text;
 
@@ -69,9 +72,20 @@ namespace ProjectFlow.Services.Christina
 
             try
             {
-                List<Speaker> speakers = parser.Parse(text);
+                List<ActionItem> actionItems = parser.Parse(text);
                 ErrMsg.Text = "";
                 ErrLine.Text = "";
+
+                foreach(var speaker in actionItems)
+                {
+                    materialTable.AddRow(new string[] {
+                        speaker.Type,
+                        speaker.PersonName,
+                        speaker.Topic
+                    });
+
+                }
+
             }
             catch(ParseException ex)
             {
@@ -98,5 +112,14 @@ namespace ProjectFlow.Services.Christina
             return msg;
         }
 
+        protected void ShowCreateActionItemModalEvent(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('show');", true);
+        }
+
+        protected void CreateActionItemEvent(object sender, EventArgs e)
+        {
+
+        }
     }
 }
