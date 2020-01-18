@@ -9,24 +9,29 @@
     <script type="text/javascript" src="/Scripts/ProjectFlow/christina.js"></script>
 
     <script type="text/javascript" src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+           
 
-    <%-- Fire event to update meeting details --%>
-    <asp:LinkButton ID="RoomUpdateEventLinkBtn" CssClass="d-none" runat="server" OnClick="UpdateRoomDetailEvent">
-    </asp:LinkButton>
 
     <%-- Current selected room id --%>
     <asp:HiddenField ID="RoomID" runat="server" />
     <div class="container">
         <div class="row">
             <div class="card w-100 m-3">
-                <div class="card-body">
-                    <h5 class="card-title">Meeting Minutes</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Room Info:</h6>
-                    <div class="col-12 col-md-6"><label>Meeting Date: </label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
-                    <div class="col-12 col-md-6"><label>Meeting Time: </label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
-                    <div class="col-12 col-md-6"><label>Attendees: </label><asp:Label ID="AttendeesLbl" runat="server" Text=""></asp:Label></div>
-                    <div class="col-12 col-md-6"><label>Meeting made by: </label><asp:Label ID="MadeByLbl" runat="server" Text=""></asp:Label></div>
-                </div>
+                <%-- Fire event to update meeting details --%>
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <asp:LinkButton ID="RoomUpdateEventLinkBtn" CssClass="d-none" runat="server" OnClick="UpdateRoomDetailEvent">
+                        </asp:LinkButton>
+                        <div class="card-body">
+                            <h5 class="card-title">Meeting Minutes</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Room Info:</h6>
+                            <div class="col-12 col-md-6"><i class="fa fa-calendar" aria-hidden="true">&nbsp;</i><label>Meeting Date:&nbsp;</label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;</i><label>Meeting Time:&nbsp;</label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fa fa-user" aria-hidden="true">&nbsp;</i><label>Attendees:&nbsp;</label><asp:Label ID="AttendeesLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fa fa-smile-o" aria-hidden="true">&nbsp;</i><label>Meeting made by:&nbsp;</label><asp:Label ID="MadeByLbl" runat="server" Text=""></asp:Label></div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
         <div class="row">

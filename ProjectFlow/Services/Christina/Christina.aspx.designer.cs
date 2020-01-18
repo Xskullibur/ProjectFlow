@@ -15,15 +15,6 @@ namespace ProjectFlow.Services.Christina
     {
 
         /// <summary>
-        /// RoomUpdateEventLinkBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton RoomUpdateEventLinkBtn;
-
-        /// <summary>
         /// RoomID control.
         /// </summary>
         /// <remarks>
@@ -31,6 +22,15 @@ namespace ProjectFlow.Services.Christina
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField RoomID;
+
+        /// <summary>
+        /// RoomUpdateEventLinkBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton RoomUpdateEventLinkBtn;
 
         /// <summary>
         /// MeetingDate control.

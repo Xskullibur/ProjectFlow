@@ -29,7 +29,7 @@ $(document).ready(function () {
             }
 
             
-        });s
+        });
 
         startRecording();
 
@@ -88,7 +88,7 @@ const drawWidth = 1000;
 let speakers_circles = [];
 
 function init_display(bound_window, display_canvas) {
-    //animate();
+    animate();
 
     function animate() {
         let ctx = display_canvas[0].getContext('2d');
