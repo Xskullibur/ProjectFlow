@@ -29,7 +29,12 @@ namespace ProjectFlow.Tasks
         }
 
         // Verify Add Task
-        public bool Verify(string taskName, string taskDesc, int milestoneIndex, string startDate, string endDate, int statusIndex)
+        public bool Verify(string taskName, 
+            string taskDesc, 
+            int milestoneIndex, 
+            string startDate, 
+            string endDate, 
+            int statusIndex)
         {
             bool verified = true;
             TNameErrors.Clear();
@@ -69,7 +74,7 @@ namespace ProjectFlow.Tasks
             }
 
             // Milestone
-            if (milestoneIndex == -1)
+            if (milestoneIndex < 0)
             {
                 TMilestoneErrors.Add("Milestone Field is Required!");
                 verified = false;
@@ -120,7 +125,7 @@ namespace ProjectFlow.Tasks
         }
 
 
-        public static int VerifyDaysLeft(DateTime endDate)
+        public static int GetDaysLeft(DateTime endDate)
         {
             return (endDate - DateTime.Now.Date).Days;
         }

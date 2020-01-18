@@ -208,7 +208,7 @@ namespace ProjectFlow.Tasks
 
                     // Task End Date
                     DateTime EndDate = DateTime.Parse(((Label)e.Row.FindControl("gridEnd")).Text);
-                    int DaysLeft = TaskHelper.VerifyDaysLeft(EndDate);
+                    int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
 
                     if (DaysLeft > 0)
                     {

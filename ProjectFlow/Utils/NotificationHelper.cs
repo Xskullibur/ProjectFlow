@@ -117,7 +117,7 @@ namespace ProjectFlow.Utils
             else
             {
                 // Task Reminder Job
-                int days_remaining = TaskHelper.VerifyDaysLeft(task.endDate);
+                int days_remaining = TaskHelper.GetDaysLeft(task.endDate);
 
                 // In-progress Reminder
                 if (days_remaining >= 0)
