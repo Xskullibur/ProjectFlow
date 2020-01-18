@@ -210,8 +210,36 @@ namespace ProjectFlow.Tasks
                 }
                 else
                 {
-                    // Setup Due Date
 
+                    /**
+                     * SETUP UPDATE STATUS BTN
+                     **/
+                    int taskID = int.Parse(e.Row.Cells[0].Text);
+                    string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
+                    Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
+
+                    string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                    updateStatusBtn.Text += $" ({nextStatus})";
+
+                    if (currentStatus == StatusBLL.VERIFICATON)
+                    {
+                        StudentBLL studentBLL = new StudentBLL();
+
+                        Student leader = studentBLL.GetLeaderByTaskID(taskID);
+                        Student currentUser = Master.GetCurrentUser();
+
+                        if (currentUser != leader)
+                        {
+                            updateStatusBtn.Enabled = false;
+                        }
+                    }
+
+
+                    /**
+                     * SETUP DUE DATE
+                     **/
+
+                    // Get Due Date Cell
                     TableCell DueDateCell = e.Row.Cells[1];
 
                     // Task End Date

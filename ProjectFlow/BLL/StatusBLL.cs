@@ -14,6 +14,25 @@ namespace ProjectFlow.BLL
         public static string VERIFICATON = "Verification";
         public static string COMPLETED = "Completed";
 
+        public static string GetNextStatus(string currentStatus)
+        {
+            if (currentStatus == PENDING)
+            {
+                return WORK_IN_PROGRESS;
+            }
+            else if (currentStatus == WORK_IN_PROGRESS)
+            {
+                return VERIFICATON;
+            }
+            else if (currentStatus == VERIFICATON)
+            {
+                return COMPLETED;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         private enum STATUS
         {
@@ -79,7 +98,8 @@ namespace ProjectFlow.BLL
                 try
                 {
                     // Get Task
-                    Task task = dbContext.Tasks.First(x => x.taskID == id);
+                    Task task = dbContext.Tasks
+                        .First(x => x.taskID == id);
 
                     switch (task.statusID)
                     {

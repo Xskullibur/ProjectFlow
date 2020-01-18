@@ -133,7 +133,7 @@
 
                                                 <div class="dropdown-menu">
                                                     <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
-                                                    <asp:Button Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
+                                                    <asp:Button ID="updateStatusBtn" Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
                                                 </div>
 
 
