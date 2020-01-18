@@ -35,5 +35,19 @@ namespace ProjectFlow.BLL
                 }              
             }
         }
+
+        public Dictionary<string, string> GetAllStudent()
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var student = dbContext.Students.Select(x => new
+                {
+                    StudentID = x.studentID,
+                    Name = x.firstName + " " + x.lastName
+                }).ToDictionary(key => key.StudentID, value => value.Name);
+
+                return student;
+            }
+        }
     }
 }

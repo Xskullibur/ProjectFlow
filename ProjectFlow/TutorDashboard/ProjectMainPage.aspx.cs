@@ -42,13 +42,18 @@ namespace ProjectFlow
             memberList = projectBLL.GetTeamMember(GetTeamID());
             MemberGV.DataSource = memberList;
             MemberGV.DataBind();
+
+            Dictionary<string, string> studentlist = teamMemberBLL.GetAllStudent();
+            studentList.DataSource = studentlist;
+            studentList.DataTextField = "Value";
+            studentList.DataValueField = "Key";
+            studentList.DataBind();
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
-            List<string> errorList = new List<string> { };
-            string studentID = studentIDTB.Text;
+            List<string> errorList = new List<string> { };           
             int teamID = int.Parse(Session["PassTeamID"].ToString());
             int roleID = 0;
 
@@ -60,8 +65,20 @@ namespace ProjectFlow
             {
                 roleID = 1;
             }
+           
+            if(studentList.SelectedIndex == -1)
+            {
+                errorList.Add("Must Select a student");
+            }
+            else
+            {
+                foreach(ListItem item in studentList.Items.Cast<ListItem>().Where(x => x.Selected))
+                {
+                    errorList = bll.ValidateInsertMember(item.Value.ToString(), teamID, roleID);
+                }
+                
+            }
 
-            errorList = bll.ValidateInsertMember(studentID, teamID, roleID);
             if(errorList.Count > 0)
             {
                 string total = "";
@@ -73,7 +90,7 @@ namespace ProjectFlow
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateMember').modal('show');", true);
             }
             else
-            {
+            {                              
                 ClearModel();
                 ShowMember();
                 Master.ShowAlert("Successfully Added Member", BootstrapAlertTypes.SUCCESS);
@@ -137,7 +154,6 @@ namespace ProjectFlow
 
         private void ClearModel()
         {
-            studentIDTB.Text = "";
             RoleDP.SelectedIndex = 0;
             errorLabel.Text = "";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);

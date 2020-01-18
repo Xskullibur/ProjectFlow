@@ -17,25 +17,22 @@
                     </button>
                 </div>
                 <div class="modal-body">                    
-                    <table class="auto-style1">
+                    <table class="auto-style1">                        
                         <tr>
                             <td class="auto-style9">
-                                <asp:Label ID="Label1" runat="server" Text="Student ID"></asp:Label>
+                                <asp:Label ID="Label5" runat="server" Text="Student"></asp:Label>
                                 &nbsp;<br />
                                 <br />
                             </td>
                             <td class="auto-style13">
-                                <asp:TextBox ID="studentIDTB" CssClass="form-control" runat="server" Width="223px"></asp:TextBox>
-                                <br />
+                                <asp:ListBox ID="studentList" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                <br>
+                                <br>
                             </td>
-                            <td class="auto-style8">
-                                &nbsp;
-                                <asp:RequiredFieldValidator ID="studentRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="studentIDTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
-                                &nbsp;<asp:RegularExpressionValidator ID="studentRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^[a-zA-Z0-9]{7}$" ControlToValidate="studentIDTB" ErrorMessage="7 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
-                                <br />
-                                <br />
+                            <td class="auto-style8">                               
+                                <br />                                
                             </td>
-                        </tr>                        
+                        </tr>             
                         <tr>
                             <td class="auto-style10">
                                 <asp:Label ID="Label2" runat="server" Text="Role ID"></asp:Label>
