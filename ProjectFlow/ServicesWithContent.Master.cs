@@ -33,6 +33,8 @@ namespace ProjectFlow
                 }
             }
 
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
+
 #if SELECTEDPROJECT
             ProjectBLL projectBLL = new ProjectBLL();
             //Set Current Project

@@ -139,10 +139,6 @@
                                         </ItemTemplate>
                                     </asp:TemplateField> 
 
-<%--                                    <asp:CommandField ShowDeleteButton="True" ButtonType="Button" >
-                                        <ControlStyle CssClass="btn btn-danger" />
-                                    </asp:CommandField>--%>
-
                                 </Columns>
 
                                 <EmptyDataTemplate>

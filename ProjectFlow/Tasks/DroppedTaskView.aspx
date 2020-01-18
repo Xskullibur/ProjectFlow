@@ -16,9 +16,19 @@
                             <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4"> 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
-                                    <asp:CommandField DeleteText="Restore" ShowDeleteButton="True" ButtonType="Button" >
-                                    <ControlStyle CssClass="btn btn-primary" />
-                                    </asp:CommandField>
+
+                                    <asp:TemplateField ShowHeader="False">
+                                        <ItemTemplate>
+                                            <asp:Button ID="DeleteButton" Text="Restore" runat="server" 
+                                                CssClass="btn btn-primary"
+                                                data-toggle="confirmation"
+                                                data-btn-ok-icon-class="fa fa-check"
+                                                data-btn-cancel-icon-class="fa fa-close"
+                                                data-popout="true"
+                                                CommandName="Delete" />               
+                                        </ItemTemplate>
+                                    </asp:TemplateField> 
+
                                 </Columns>
 
                                 <EmptyDataTemplate>
