@@ -15,6 +15,14 @@ namespace ProjectFlow
 
         protected void Page_Init(object sender, EventArgs e)
         {
+
+#if SELECTEDPROJECT
+            ProjectBLL projectBLL = new ProjectBLL();
+            //Set Current Project
+            SetCurrentProject(projectBLL.GetProjectByProjectId("ITP213"));
+
+#endif
+
             var user = HttpContext.Current.User;
             if (user.Identity.IsAuthenticated)
             {
@@ -24,24 +32,35 @@ namespace ProjectFlow
                     this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Student.aspnet_Users.UserName;
                     this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Student.aspnet_Users.UserName;
                     this.LoginEmailProfileLbl.Text = projectFlowIdentity.Student.aspnet_Users.aspnet_Membership.Email;
+
+                    //Check if project is selected if not redirect to project selection screen
+                    string studentDashboardPath = "/StudentDashboard/studentProject.aspx";
+                    if (CurrentProject == null && !HttpContext.Current.Request.Url.AbsolutePath.Equals(studentDashboardPath))
+                    {
+                        Response.Redirect(studentDashboardPath);
+                    }
                 }
                 else if (projectFlowIdentity.IsTutor)
                 {
                     this.LoginUsernameLbl.Text = "Welcome, " + projectFlowIdentity.Tutor.aspnet_Users.UserName;
                     this.LoginUsernameProfileLbl.Text = projectFlowIdentity.Tutor.aspnet_Users.UserName;
                     this.LoginEmailProfileLbl.Text = projectFlowIdentity.Tutor.aspnet_Users.aspnet_Membership.Email;
+
+                    //Check if project is selected if not redirect to project selection screen
+                    string tutorDashboardPath = "/TutorDashboard/ProjectMenu.aspx";
+                    if (CurrentProject == null && !HttpContext.Current.Request.Url.AbsolutePath.Equals(tutorDashboardPath))
+                    {
+                        Response.Redirect(tutorDashboardPath);
+                    }
                 }
+
+
+
             }
 
-#if SELECTEDPROJECT
-            ProjectBLL projectBLL = new ProjectBLL();
-            //Set Current Project
-            SetCurrentProject(projectBLL.GetProjectByProjectId("ITP213"));
 
-#endif
 
-            //Check if project is selected if not redirect to project selection screen
-            if (CurrentProject == null) Response.Redirect("/Dashboard/ProjectMenu.aspx");
+            
 
         }
 

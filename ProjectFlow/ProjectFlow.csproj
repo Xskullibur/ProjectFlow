@@ -172,12 +172,10 @@
     <Content Include="Content\ProjectFlow\CSS\content-nav.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
-    <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="InvalidRequest.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="DashBoard\ProjectMainPage.aspx" />
     <Content Include="Profile\Profile.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
