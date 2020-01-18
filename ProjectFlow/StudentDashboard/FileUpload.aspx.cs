@@ -59,7 +59,7 @@ namespace ProjectFlow.DashBoard
                     errorList.Add("Cannot contain (ENCRYPTED_WITH_KEY)<br>");
                 }
 
-                if (!IsKeyValid(KeyTB.Text) && OptionDP.SelectedIndex == 2)
+                if (!IsKeyValid(KeyTB.Text) && OptionDP.SelectedIndex == 0)
                 {
                     errorList.Add("Key must be 32 character<br>");
                 }

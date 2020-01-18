@@ -26,7 +26,7 @@ namespace ProjectFlow.FileManagement
                     status = "Encrypted With Key";
                     name = name.Substring(20);
                 }
-                else if(name.Substring(0, 11).Equals("(ENCRYPTED)"))
+                else if(name.StartsWith("(ENCRYPTED)"))
                 {
                     status = "Encrypted";
                     name = name.Substring(11);
