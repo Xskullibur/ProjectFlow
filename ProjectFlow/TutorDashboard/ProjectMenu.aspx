@@ -109,9 +109,12 @@
                         <tr>
                             <td class="auto-style2">&nbsp;</td>
                             <td class="auto-style8">
-                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" ValidationGroup="modelValidation"/>
                             &nbsp;&nbsp;&nbsp;
+                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" ValidationGroup="modelValidation"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <asp:Button ID="createAnotherBtn" runat="server" CssClass="btn btn-success" OnClick="createAnotherBtn_Click" Text="Create And Add Another" ValidationGroup="modelValidation" />
                                 </td>
+                            <td class="auto-style2">&nbsp;</td>
                         </tr>
                     </table>                   
                 </div>

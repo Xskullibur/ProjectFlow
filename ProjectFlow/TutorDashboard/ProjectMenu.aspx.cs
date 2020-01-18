@@ -52,7 +52,7 @@ namespace ProjectFlow.DashBoard
                 ProjectIdTB.Text = projectID;
                 NameTB.Text = projectName;
                 DescTB.Text = projectDesc;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateProject').modal('show');", true);                
+                ShowModel();                
             }
             else
             {
@@ -87,10 +87,18 @@ namespace ProjectFlow.DashBoard
             ProjectIdTB.Text = "";
             NameTB.Text = "";
             DescTB.Text = "";
-            errorLabel.Text = "";
+            errorLabel.Text = "";           
+        }
+
+        public void HideModel()
+        {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
         }
 
+        public void ShowModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateProject').modal('show');", true);
+        }
         protected void newProjectBtn_Click(object sender, EventArgs e)
         {
             
@@ -148,6 +156,36 @@ namespace ProjectFlow.DashBoard
             {
                 Response.Redirect("RestoreDashboard/ProjectMenuRestore.aspx");
             }
+        }
+
+        protected void createAnotherBtn_Click(object sender, EventArgs e)
+        {
+            errorLabel.Text = "";
+            string projectID = ProjectIdTB.Text;
+            string projectName = NameTB.Text;
+            string projectDesc = DescTB.Text;
+            Guid tutorID = Guid.Parse(Session["TutorID"].ToString());
+
+            List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
+
+            if (error.Count > 0)
+            {
+                string total = "";
+                foreach (string errorItem in error)
+                {
+                    total += errorItem;
+                }
+                errorLabel.Text = total;
+                ProjectIdTB.Text = projectID;
+                NameTB.Text = projectName;
+                DescTB.Text = projectDesc;               
+            }
+            else
+            {
+                ClearField();
+                ShowProject();
+            }
+            ShowModel();
         }
     }
 }
