@@ -13,9 +13,18 @@
                     <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4"> 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" AutoGenerateColumns="False"> 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
+
+                                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                                    <asp:BoundField DataField="Task" HeaderText="Task" />
+                                    <asp:BoundField DataField="Description" HeaderText="Description" />
+                                    <asp:BoundField DataField="MileStone" HeaderText="Milestone" />
+                                    <asp:BoundField DataField="Start" HeaderText="Start" />
+                                    <asp:BoundField DataField="End" HeaderText="End" />
+                                    <asp:BoundField DataField="Allocation" HeaderText="Allocation" />
+                                    <asp:BoundField DataField="Status" HeaderText="Status" />
 
                                     <asp:TemplateField ShowHeader="False">
                                         <ItemTemplate>

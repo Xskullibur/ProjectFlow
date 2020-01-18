@@ -123,21 +123,39 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:CommandField ShowEditButton="True" ButtonType="Button" ValidationGroup="EditTask">
+<%--                                <asp:CommandField ShowEditButton="True" ButtonType="Button" ValidationGroup="EditTask">
                                         <ControlStyle CssClass="btn btn-primary mb-2" />
-                                    </asp:CommandField>
+                                    </asp:CommandField>--%>
 
-                                    <asp:TemplateField ShowHeader="False">
+                                    <asp:TemplateField ShowHeader="false">
                                         <ItemTemplate>
+                                            <div class="dropdown mb-2">
+                                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    Edit
+                                                </button>
+
+                                                <div class="dropdown-menu">
+                                                    <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
+                                                    <asp:Button Text="Update Status" CssClass="dropdown-item" runat="server" />
+                                                </div>
+
+
+                                            </div>
                                             <asp:Button ID="DeleteButton" Text="Delete" runat="server" 
-                                                CssClass="btn btn-danger"
+                                                CssClass="btn btn-sm btn-danger"
                                                 data-toggle="confirmation"
                                                 data-btn-ok-icon-class="fa fa-check"
                                                 data-btn-cancel-icon-class="fa fa-close"
                                                 data-popout="true"
-                                                CommandName="Delete" />               
+                                                CommandName="Delete" /> 
                                         </ItemTemplate>
-                                    </asp:TemplateField> 
+
+                                        <edititemtemplate>
+					                        <asp:Button id="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" commandname="Update" text="Update" />
+					                        <asp:Button id="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" commandname="Cancel" text="Cancel" />
+				                        </edititemtemplate>
+
+                                    </asp:TemplateField>
 
                                 </Columns>
 

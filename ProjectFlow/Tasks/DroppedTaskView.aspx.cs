@@ -27,6 +27,7 @@ namespace ProjectFlow.Tasks
                 Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }
+            taskGrid.Font.Size = 11;
         }
 
         private void refreshData()
