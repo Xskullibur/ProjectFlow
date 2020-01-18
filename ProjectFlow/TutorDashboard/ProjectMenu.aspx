@@ -54,7 +54,7 @@
                                 <br />
                             </td>
                             <td class="auto-style13">
-                                <asp:TextBox ID="NameTB" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="NameTB" CssClass="form-control" placeholder="Required, max 255" runat="server"></asp:TextBox>
                                 <br />
                             </td>
                             <td class="auto-style10">
@@ -72,7 +72,7 @@
                                 <br />
                             </td>
                             <td class="auto-style13">
-                                <asp:TextBox ID="DescTB" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="DescTB" CssClass="form-control" placeholder="Optional, max 255" runat="server"></asp:TextBox>
                                 <br />
                             </td>
                             <td class="auto-style10">
@@ -92,7 +92,7 @@
                                 <br />
                             </td>
                             <td class="auto-style7">
-                                <asp:TextBox ID="ProjectIdTB" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="ProjectIdTB" placeholder="Required, exactly 6 character" CssClass="form-control" runat="server"></asp:TextBox>
                                 <br />
                             </td>
                             <td class="auto-style10">
