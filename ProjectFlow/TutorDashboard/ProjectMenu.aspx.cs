@@ -73,6 +73,18 @@ namespace ProjectFlow.DashBoard
             PageSelectDP.SelectedIndex = 0;
         }
 
+        public void SearchProject(string search)
+        {
+            ProjectBLL projectBLL = new ProjectBLL();
+
+            List<Project> projectList = new List<Project> { };
+            projectList = projectBLL.SearchProject(Guid.Parse(Session["TutorID"].ToString()), search);
+            projectGV.DataSource = projectList;
+            projectGV.DataBind();
+            PageSelectDP.SelectedIndex = 0;
+
+        }
+
         protected void projectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = projectGV.SelectedRow;
@@ -186,6 +198,16 @@ namespace ProjectFlow.DashBoard
                 ShowProject();
             }
             ShowModel();
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchProject(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowProject();
         }
     }
 }

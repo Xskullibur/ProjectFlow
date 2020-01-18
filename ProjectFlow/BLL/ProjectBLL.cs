@@ -340,6 +340,15 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public List<Project> SearchProject(Guid TutorID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                Tutor tutor = dbContext.Tutors.First(x => x.UserId == TutorID);
+                return tutor.Projects.Where(x => x.dropped == false && x.projectID.ToLower().Contains(search.ToLower())).ToList();
+            }
+        }
+
         public List<Project> GetDeletedProjectTutor(Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
