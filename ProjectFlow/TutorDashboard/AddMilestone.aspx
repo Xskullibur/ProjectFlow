@@ -1,9 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="AddMilestone.aspx.cs" Inherits="ProjectFlow.DashBoard.AddMilestone" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
-        .auto-style6 {
-            width: 16px;
-        }
         .auto-style7 {
             width: 156px;
         }
@@ -14,9 +11,6 @@
             width: 96px;
             height: 41px;
         }
-        .auto-style10 {
-            height: 41px;
-        }
         .auto-style11 {
             width: 156px;
             height: 41px;
@@ -25,12 +19,20 @@
             width: 96px;
             height: 42px;
         }
-        .auto-style13 {
-            height: 42px;
-        }
         .auto-style14 {
             width: 156px;
             height: 42px;
+        }
+        .auto-style15 {
+            width: 332px;
+            height: 41px;
+        }
+        .auto-style16 {
+            width: 332px;
+            height: 42px;
+        }
+        .auto-style17 {
+            width: 332px;
         }
     </style>
 </asp:Content>
@@ -52,7 +54,7 @@
                                 &nbsp;<br />
                                 <br />
                             </td>
-                            <td class="auto-style10">
+                            <td class="auto-style15">
                                 <asp:TextBox ID="NameTB" CssClass="form-control" runat="server" placeholder="Required, max 255" Width="223px"></asp:TextBox>
                                 <br />
                             </td>
@@ -69,7 +71,7 @@
                                 <br />
                                 <br />
                             </td>
-                            <td class="auto-style13">
+                            <td class="auto-style16">
                                 <asp:TextBox ID="startTB" CssClass="form-control" runat="server" TextMode="Date" Width="222px"></asp:TextBox>
                                 <br />
                             </td>
@@ -89,7 +91,7 @@
                                 <br />
                                 <br />
                             </td>
-                            <td class="auto-style14">
+                            <td class="auto-style16">
                                 <asp:TextBox ID="endTB" CssClass="form-control" runat="server" TextMode="Date" Width="222px"></asp:TextBox>
                                 <br />
                             </td>
@@ -109,9 +111,11 @@
                                 <br />
                                 <br />
                             </td>
-                            <td class="auto-style6">
+                            <td class="auto-style17">
                                 <br />
                                 <asp:Button ID="addBtn" CssClass="btn btn-success" runat="server" Text="Add" OnClick="addBtn_Click" ValidationGroup="modelValidation" />
+                            &nbsp;&nbsp;&nbsp;
+                                <asp:Button ID="addAnotherBtn" runat="server" CssClass="btn btn-success" OnClick="addAnotherBtn_Click" Text="Add Another" ValidationGroup="modelValidation" />
                             </td>
                             <td class="auto-style7">
                                 &nbsp;

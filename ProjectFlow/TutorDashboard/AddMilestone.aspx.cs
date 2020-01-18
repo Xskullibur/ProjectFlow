@@ -41,6 +41,16 @@ namespace ProjectFlow.DashBoard
             return int.Parse(Session["PassTeamID"].ToString());
         }
 
+        public void OpenModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#addMilestone').modal('show');", true);
+        }
+
+        public void CloseModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);
+        }
+
         public void ShowMilestone()
         {
             List<Milestone> milestoneList = milestoneBLL.GetMilestoneByTeamID(GetTeamID());
@@ -110,11 +120,11 @@ namespace ProjectFlow.DashBoard
                 NameTB.Text = name;
                 startTB.Text = start.ToString();
                 endTB.Text = end.ToString();
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#addMilestone').modal('show');", true);
+                OpenModel();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);
+                CloseModel();
                 Master.ShowAlert("Milestone successfully created", BootstrapAlertTypes.SUCCESS);
                 ShowMilestone();
             }
@@ -131,6 +141,44 @@ namespace ProjectFlow.DashBoard
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("AddMilestone.aspx");
+        }
+        private void ClearModel()
+        {
+            NameTB.Text = "";
+            startTB.Text = "";
+            endTB.Text = "";
+        }
+        protected void addAnotherBtn_Click(object sender, EventArgs e)
+        {
+            string name = NameTB.Text;
+            string projectID = GetProjectID();
+            int teamID = GetTeamID();
+            string start = startTB.Text;
+            string end = endTB.Text;
+
+            List<string> errorList = milestoneBLL.ValidateCreateMilestone(name, projectID, teamID, start, end);
+
+            if (errorList.Count > 0)
+            {
+                string total = "";
+                foreach (string error in errorList)
+                {
+                    total += error;
+                }
+                errorLabel.Text = total;
+                NameTB.Text = name;
+                startTB.Text = start.ToString();
+                endTB.Text = end.ToString();
+            }
+            else
+            {
+                
+
+                Master.ShowAlert("Milestone successfully created", BootstrapAlertTypes.SUCCESS);
+                ShowMilestone();
+            }
+            ClearModel();
+            OpenModel();
         }
     }
 }
