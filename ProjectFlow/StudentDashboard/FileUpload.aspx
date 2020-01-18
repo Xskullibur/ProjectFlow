@@ -67,12 +67,9 @@
         </div>
         <br>
         <div class="row">            
-            <div class="col-2">                                            
+            <div class="col">                                            
                 <asp:Button ID="openUploadModal" runat="server" Text="Upload File" CssClass="btn btn-primary" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#uploadModal"/>                
-            </div>            
-            <div class="col">
-                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
-            </div>
+            </div>                        
         </div>
         <br>
         <div class="row">
@@ -110,6 +107,12 @@
                     </asp:GridView>                   
                 </div>
             </div>
-        </div> 
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
+            </div>
+        </div>
      </div>
 </asp:Content>

@@ -289,6 +289,7 @@ namespace ProjectFlow.BLL
 
         public void DeleteProject(string ProjectID)
         {
+            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var project = dbContext.Projects.Single(x => x.projectID.Equals(ProjectID));
@@ -297,8 +298,39 @@ namespace ProjectFlow.BLL
                     project.dropped = true;
                     dbContext.SaveChanges();
                 }
+                var team = dbContext.ProjectTeams.Where(x => x.projectID == ProjectID);
+                if(team != null)
+                {
+                    foreach(ProjectTeam projectTeam in team)
+                    {
+                        projectTeamBLL.DeleteTeam(projectTeam.teamID);
+                    }
+                }
             }
         }
+
+        public void RestoreProject(string ProjectID)
+        {
+            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var project = dbContext.Projects.Single(x => x.projectID.Equals(ProjectID));
+                if (project != null)
+                {
+                    project.dropped = false;
+                    dbContext.SaveChanges();
+                }
+                var team = dbContext.ProjectTeams.Where(x => x.projectID == ProjectID);
+                if (team != null)
+                {
+                    foreach (ProjectTeam projectTeam in team)
+                    {
+                        projectTeamBLL.RestoreTeam(projectTeam.teamID);
+                    }
+                }
+            }
+        }
+
         public List<Project> GetProjectTutor(Guid TutorID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

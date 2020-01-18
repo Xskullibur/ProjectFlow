@@ -71,6 +71,37 @@ namespace ProjectFlow.BLL
                     projectTeam.dropped = true;
                     dbContext.SaveChanges();
                 }
+                var milestone = dbContext.Milestones.Where(x => x.teamID == TeamID);
+                if(milestone != null)
+                {
+                    foreach(Milestone mile in milestone)
+                    {
+                        mile.dropped = true;
+                    }
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void RestoreTeam(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var projectTeam = dbContext.ProjectTeams.Single(x => x.teamID == TeamID);
+                if (projectTeam != null)
+                {
+                    projectTeam.dropped = false;
+                    dbContext.SaveChanges();
+                }
+                var milestone = dbContext.Milestones.Where(x => x.teamID == TeamID);
+                if (milestone != null)
+                {
+                    foreach (Milestone mile in milestone)
+                    {
+                        mile.dropped = false;
+                    }
+                    dbContext.SaveChanges();
+                }
             }
         }
     }
