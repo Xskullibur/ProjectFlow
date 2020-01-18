@@ -22,15 +22,6 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// refreshBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button refreshBtn;
-        
-        /// <summary>
         /// ProjectGV control.
         /// </summary>
         /// <remarks>
@@ -38,5 +29,14 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView ProjectGV;
+        
+        /// <summary>
+        /// refreshBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button refreshBtn;
     }
 }

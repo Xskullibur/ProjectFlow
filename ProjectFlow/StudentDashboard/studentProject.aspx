@@ -9,12 +9,7 @@
                     <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Project Select"></asp:Label>
                 </h1>
             </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
-            </div>
-        </div>
+        </div>        
         <br>
         <div class="row">
             <div class="col">
@@ -39,6 +34,12 @@
                        </EmptyDataTemplate>
                     </asp:GridView>
                 </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
             </div>
         </div>
     </div>

@@ -133,10 +133,7 @@
         <div class="row">
             <div class="col-2">
                 <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
-            </div>   
-            <div class="col">
-                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
-            </div>
+            </div>               
         </div>
         <br>
         <div class="row">
@@ -193,6 +190,12 @@
                        </EmptyDataTemplate>
                     </asp:GridView>
                    </div>
+                </div>
+            </div>
+             <br>
+            <div class="row">
+                <div class="col">
+                    <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
                 </div>
             </div>
         </div>
