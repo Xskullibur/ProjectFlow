@@ -25,7 +25,10 @@
                                     <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
 
                                     <%--Due Date--%>
-                                    <asp:BoundField HeaderText="Due" ReadOnly="True" />
+                                    <asp:BoundField HeaderText="Due" ReadOnly="True" >
+                                    <ItemStyle Font-Bold="True" />
+
+                                    </asp:BoundField>
 
                                     <%--Task--%>
                                     <asp:TemplateField HeaderText="Task">
@@ -77,7 +80,7 @@
                                             <asp:RequiredFieldValidator ID="startDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start-Date Field is Required!" ControlToValidate="editStartDate" Display="Dynamic" ValidationGroup="EditTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                         </EditItemTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="gridStart" runat="server" Text='<%# Bind("Start") %>'></asp:Label>
+                                            <asp:Label ID="gridStart" runat="server" Text='<%# Bind("Start", "{0: dd/MM/yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -93,7 +96,7 @@
                                             <asp:RequiredFieldValidator ID="endDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="End-Date Field is Required!" ControlToValidate="editEndDate" Display="Dynamic" ValidationGroup="EditTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                         </EditItemTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="gridEnd" runat="server" Text='<%# Bind("End") %>'></asp:Label>
+                                            <asp:Label ID="gridEnd" runat="server" Text='<%# Bind("End", "{0: dd/MM/yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
