@@ -94,7 +94,7 @@ namespace ProjectFlow.DashBoard
                 {
                     if (errorList.Count == 0)
                     {
-                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(PLAIN)";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
                         ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                      
@@ -116,7 +116,15 @@ namespace ProjectFlow.DashBoard
             FileGV.DataSource = fileList;
             FileGV.DataBind();
         }
-      
+
+        public void SearchFile(string search)
+        {
+            Info infomation = new Info();
+            IEnumerable<FileDetails> fileList = infomation.SearchFiles(GetTeamID(), search);
+            FileGV.DataSource = fileList;
+            FileGV.DataBind();
+        }
+
         private bool IsKeyValid(string key)
         {
             if(key.Length == 32)
@@ -197,7 +205,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {           
-                DownloadFile(fileName, storagePath);
+                DownloadFile("(PLAIN)" + fileName, storagePath);
             }            
         }
 
@@ -290,6 +298,16 @@ namespace ProjectFlow.DashBoard
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("FileUpload.aspx");
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchFile(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            DisplayFile();
         }
     }
 }
