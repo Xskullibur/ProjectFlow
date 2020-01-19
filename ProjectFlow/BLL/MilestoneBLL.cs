@@ -134,7 +134,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id && x.dropped == false && x.milestoneName.Contains(name)).ToList();
+                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id && x.dropped == false && x.milestoneName.ToLower().Contains(name.ToLower())).ToList();
 
                 return teamMilestone;
             }

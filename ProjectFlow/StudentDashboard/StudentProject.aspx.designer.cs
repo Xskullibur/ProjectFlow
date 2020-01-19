@@ -22,6 +22,33 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
+        /// SearchTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchTB;
+        
+        /// <summary>
+        /// searchBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchBtn;
+        
+        /// <summary>
+        /// showAllBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button showAllBtn;
+        
+        /// <summary>
         /// ProjectGV control.
         /// </summary>
         /// <remarks>

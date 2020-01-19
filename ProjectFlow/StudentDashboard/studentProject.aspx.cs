@@ -42,9 +42,27 @@ namespace ProjectFlow.DashBoard
             ProjectGV.DataBind();
         }
 
+        public void SearchProject(string search)
+        {
+            StudentBLL studentBLL = new StudentBLL();
+            IEnumerable<ProjectTeam> teamList = studentBLL.SearchStudentProject(Guid.Parse(Session["StudentID"].ToString()), search);
+            ProjectGV.DataSource = teamList;
+            ProjectGV.DataBind();
+        }
+
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("studentProject.aspx");
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchProject(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowProject();
         }
     }
 }

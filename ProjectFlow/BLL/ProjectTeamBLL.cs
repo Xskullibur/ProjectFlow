@@ -65,7 +65,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == false && x.teamName.Contains(search)).ToList();
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == false && x.teamName.ToLower().Contains(search.ToLower())).ToList();
             }
         }
 
@@ -73,7 +73,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == true && x.teamName.Contains(search)).ToList();
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == true && x.teamName.ToLower().Contains(search.ToLower())).ToList();
             }
         }
 

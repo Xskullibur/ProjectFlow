@@ -55,7 +55,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.Student.firstName.Contains(search)).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
+                return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.Student.firstName.ToLower().Contains(search.ToLower())).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
             }
         }
     }
