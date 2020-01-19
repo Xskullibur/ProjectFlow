@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
+﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
 
 <!DOCTYPE html>
 
@@ -44,6 +44,7 @@
                 $('.datetimepicker').datetimepicker();
             })
         </script>
+
         <div class="sticky-top">
             <nav class="navbar content-nav navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">
@@ -89,49 +90,57 @@
                 </div>
             </nav>
         </div>
-        <div class="container-fluid">
-              <div class="row" style="max-width: 100vw;">
-                  <div id="sidebar" class="position-sticky col-12 col-md-2 px-0" style="top: 4rem; height: calc(100vh - 7rem);">
-                <ul class="mdc-list mdc-list--two-line border-right content-sidenav">
-                                <li class="mdc-list-item">
-                                    <a class="nostyle" href="Login.aspx">
-                                        <span class="mdc-list-item__text">
-                                          <span class="mdc-list-item__primary-text">Home</span>
-                                            <span class="mdc-list-item__secondary-text"></span>
-                                        </span>
-                                    </a>
-                                </li>
 
-                              <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                                  <span class="mdc-list-item__primary-text">Task Management</span>
-                                    <span class="mdc-list-item__secondary-text"></span>
-                                </span>
-                              </li>
-                              <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                                  <span class="mdc-list-item__primary-text">Whiteboard</span>
-                                    <span class="mdc-list-item__secondary-text"></span>
-                                </span>
-                              </li>
-                              <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                                  <span class="mdc-list-item__primary-text">Issue Tracker</span>
-                                    <span class="mdc-list-item__secondary-text"></span>
-                                </span>
-                              </li>
-                              <li class="mdc-list-item">
-                                  <a class="nostyle" href="/Services/Christina/Christina.aspx">
+        <div class="container-fluid">
+            <div class="row" style="max-width: 100vw;">
+
+                <div id="sidebar" class="position-sticky col-12 col-md-2 px-0" style="top: 4rem; height: calc(100vh - 7rem);">
+                    <ul class="mdc-list mdc-list--two-line border-right content-sidenav">
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="Login.aspx">
+                                            <span class="mdc-list-item__text">
+                                                <span class="mdc-list-item__primary-text">Home</span>
+                                                <span class="mdc-list-item__secondary-text"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="/Tasks/OngoingTaskView.aspx">
+                                            <span class="mdc-list-item__text">
+                                                <span class="mdc-list-item__primary-text">Task Management</span>
+                                                <span class="mdc-list-item__secondary-text"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="mdc-list-item">
                                     <span class="mdc-list-item__text">
-                                      <span class="mdc-list-item__primary-text">Meeting Minutes Logger</span>
-                                      <span class="mdc-list-item__secondary-text">Christina AI</span>
+                                        <span class="mdc-list-item__primary-text">Whiteboard</span>
+                                        <span class="mdc-list-item__secondary-text"></span>
                                     </span>
-                                  </a>
-                              </li>
-                            </ul>
+                                    </li>
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="/Issues/iDetailedView.aspx">
+                                            <span class="mdc-list-item__text">
+                                                <span class="mdc-list-item__primary-text">Issue Tracker</span>
+                                                <span class="mdc-list-item__secondary-text"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="/Services/Christina/Christina.aspx">
+                                        <span class="mdc-list-item__text">
+                                            <span class="mdc-list-item__primary-text">Meeting Minutes Logger</span>
+                                            <span class="mdc-list-item__secondary-text">Christina AI</span>
+                                        </span>
+                                        </a>
+                                    </li>
+                                </ul>
                 </div>
 
-                    <div id="content" class="col-12 col-md-10">
+                <div id="content" class="col-12 col-md-10">
+                    <div class="row h-100 pt-5" style="vertical-align:top;">
+
                         <%--Alert Continer--%>
                         <div class="container" id="alert_container">
                             <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
@@ -140,18 +149,13 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
-                        <table style="width:100%;height:100vh;">
-                            <tr>
-                                <td class="h-100 pt-5" style="vertical-align:top;">
 
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                        </asp:ContentPlaceHolder>
 
-                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                                    </asp:ContentPlaceHolder>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
-              </div>
+                </div>
+            </div>
         </div>
     </form>
     <script type="text/javascript">

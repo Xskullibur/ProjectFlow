@@ -1,7 +1,4 @@
 ﻿using ProjectFlow.BLL;
-using ProjectFlow.Login;
-using ProjectFlow.Utils.Alerts;
-using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,18 +42,12 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                this.Master.Master.ShowAlertWithTiming("Successfully Restore Task!", BootstrapAlertTypes.SUCCESS, 2000);
+                // TODO: Notify Restore Successful
             }
             else
             {
-                this.Master.Master.ShowAlert("Failed to Restore Task!", BootstrapAlertTypes.DANGER);
+                // TODO: Notify Restore Failed
             }
-        }
-
-        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            taskGrid.PageIndex = e.NewPageIndex;
-            refreshData();
         }
     }
 }

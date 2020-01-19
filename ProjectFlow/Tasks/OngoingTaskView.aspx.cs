@@ -1,6 +1,4 @@
 ﻿using ProjectFlow.BLL;
-using ProjectFlow.Utils.Alerts;
-using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -211,7 +209,7 @@ namespace ProjectFlow.Tasks
             Task updated_task = taskBLL.GetTaskByID(id);
             if (updated_task == null)
             {
-                this.Master.Master.ShowAlert("Task Not Found!", BootstrapAlertTypes.DANGER);
+                // TODO: Error Message Task ID Not Found
             }
             else
             {
@@ -363,11 +361,11 @@ namespace ProjectFlow.Tasks
                     // Update Task and Allocations
                     if (taskBLL.Update(updated_task, updated_Allocations))
                     {
-                        this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
+                        // TODO: Notify Successful Update
                     }
                     else
                     {
-                        this.Master.Master.ShowAlert("Failed to Update Task!", BootstrapAlertTypes.DANGER);
+                        // TODO: Notify Failed Update
                     }
 
                     // Return to READ MODE
@@ -394,19 +392,13 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                this.Master.Master.ShowAlertWithTiming("Task Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
+                //TODO: Notify Delete Successful
             }
             else
             {
-                this.Master.Master.ShowAlert("Failed to Drop Task", BootstrapAlertTypes.DANGER);
+                //TODO: Notify Delete Failed
             }
 
-        }
-
-        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            taskGrid.PageIndex = e.NewPageIndex;
-            refreshData();
         }
     }
 }

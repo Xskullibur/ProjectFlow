@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ProjectFlow.BLL;
 
 namespace ProjectFlow.Issues
 {
@@ -12,28 +12,137 @@ namespace ProjectFlow.Issues
     {
         private const int TEST_TEAM_ID = 2;
 
+        public event EventHandler refreshGrid;
+        // Public Attributes and Methods
+        public enum IssueViews
+        {
+            iDetailedView,
+            iDroppedView
+        }
+
+        public void changeSelectedView(IssueViews selectedView)
+        {
+            switch (selectedView)
+            {
+                case IssueViews.iDetailedView:
+                    taskViewDDL.SelectedIndex = 0;
+                    break;
+                case IssueViews.iDroppedView:
+                    taskViewDDL.SelectedIndex = 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                lbMember.Text += (string)Session["SSCreatedBy"];
-                lbIssue.Text += (string)Session["SSDesc"];
-                refreshData();
+                
+
             }
         }
 
-        private void refreshData()
+        // Add Task OnClick Event
+        protected void showTaskModal_Click(object sender, EventArgs e)
         {
-            TaskBLL taskBLL = new TaskBLL();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
+        }
 
-            taskView.DataSource = taskBLL.GetTasksByTeamId(TEST_TEAM_ID);
-            taskView.DataBind();
+        private void hideModal()
+        {
+            // Clear Fields
+            tNameTxt.Text = string.Empty;
+            tDescTxt.Text = string.Empty;
 
-            if (taskView.Rows.Count > 0)
+            // Hide Modal
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('hide')", true);
+        }
+
+        // Add Task Event
+        protected void addTask_Click(object sender, EventArgs e)
+        {
+
+            if (Page.IsValid)
             {
-                taskView.HeaderRow.TableSection = TableRowSection.TableHeader;
-                taskView.UseAccessibleHeader = true;
+
+                // Create Task Object
+                Issue newIssue = new Issue();
+                newIssue.title = tNameTxt.Text;
+                newIssue.description = tDescTxt.Text;
+                newIssue.taskID = 5;                    //this is a placeholder
+                newIssue.createdBy = TEST_TEAM_ID;      //this is also a placeholder
+                newIssue.active = true;
+
+                // Submit Query
+                IssueBLL issueBLL = new IssueBLL();
+                bool result = issueBLL.Add(newIssue);
+
+                // Show Result
+                if (result)
+                {
+                    hideModal();
+                    refreshGrid?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+
+                }
             }
+
+        }
+
+        private bool verifyAddTask()
+        {
+            bool result = true;
+
+            // Task Name
+            if (string.IsNullOrEmpty(tNameTxt.Text))
+            {
+                tNameRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            if (tNameTxt.Text.Length > 255)
+            {
+                tNameRegexValidator.IsValid = false;
+                result = false;
+            }
+
+            // Description
+            if (string.IsNullOrEmpty(tDescTxt.Text))
+            {
+                tDescRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            if (tDescTxt.Text.Length > 255)
+            {
+                tDescRegexValidator.IsValid = false;
+                result = false;
+            }
+
+            return result;
+        }
+
+        protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (taskViewDDL.SelectedIndex)
+            {
+
+                case 0:
+                    Response.Redirect("iDetailedView.aspx");
+                    break;
+
+                case 1:
+                    Response.Redirect("iDroppedView.aspx");
+                    break;
+
+                default:
+                    break;
+
+            }         
         }
     }
 }
