@@ -39,6 +39,7 @@ namespace ProjectFlow.Services.Christina
         /// </summary>
         private void DisplayRoomInfo(Room room)
         {
+            Session["Room"] = room;
             MeetingDate.Text = room.creationDate.ToShortDateString();
             MeetingTime.Text = room.creationDate.ToShortTimeString();
 
@@ -104,12 +105,24 @@ namespace ProjectFlow.Services.Christina
                 ErrMsg.Text = "";
                 ErrLine.Text = "";
 
-                foreach (var speaker in actionItems)
+                foreach (var actionItem in actionItems)
                 {
                     materialTable.AddRow(new string[] {
-                        speaker.Type,
-                        speaker.PersonName,
-                        speaker.Topic
+                        actionItem.Type,
+                        actionItem.PersonName,
+                        actionItem.Topic
+                    });
+
+                    var room = Session["Room"] as Room;
+
+                    //Add action item into database
+                    ActionItemBLL actionItemBLL = new ActionItemBLL();
+                    actionItemBLL.AddActionItem(new RoomActionItem
+                    {
+                        personName = actionItem.PersonName,
+                        topic = actionItem.Topic,
+                        type = actionItem.Type,
+                        roomID = room.roomID
                     });
 
                 }

@@ -54,11 +54,13 @@ namespace ProjectFlow
         public virtual DbSet<QRTZ_TRIGGERS> QRTZ_TRIGGERS { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<RoomActionItem> RoomActionItems { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<TaskAllocation> TaskAllocations { get; set; }
         public virtual DbSet<TeamMember> TeamMembers { get; set; }
+        public virtual DbSet<Transcript> Transcripts { get; set; }
         public virtual DbSet<Tutor> Tutors { get; set; }
         public virtual DbSet<VoiceRecording> VoiceRecordings { get; set; }
     }

@@ -332,6 +332,7 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="FileManagement\_KEYS\IV.bin" />
     <Content Include="FileManagement\_KEYS\KEY.bin" />
+    <Content Include="Profile\Web.config" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
@@ -339,7 +340,6 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Profile\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -406,6 +406,7 @@
     <Compile Include="aspnet_WebEvent_Events.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\ActionItemBLL.cs" />
     <Compile Include="BLL\aspnet_UsersBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
@@ -533,6 +534,9 @@
     <Compile Include="Room.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="RoomActionItem.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Scheduler\JobScheduler.cs" />
     <Compile Include="Scheduler\ScheduledTasks\EmailJob.cs" />
     <Compile Include="ServicesWithContent.Master.cs">
@@ -600,6 +604,9 @@
       <DependentUpon>EmailTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="TeamMember.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transcript.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Tutor.cs">
