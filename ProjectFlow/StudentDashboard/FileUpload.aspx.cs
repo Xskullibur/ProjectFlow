@@ -43,6 +43,16 @@ namespace ProjectFlow.DashBoard
             }
         }
 
+        private void HideModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
+        }
+
+        private void ShowModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+        }
+
         protected void UploadBtn_Click(object sender, EventArgs e)
         {
             if (FileUploadControl.HasFile)
@@ -64,6 +74,13 @@ namespace ProjectFlow.DashBoard
                     errorList.Add("Key must be 32 character<br>");
                 }
 
+                while(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)" +  filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)" + filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(PLAIN)" + filename))               
+                {
+                    filename = "(copy)" + filename ;
+                }
+
                 if (OptionDP.SelectedIndex == 1)
                 {
                     
@@ -73,7 +90,7 @@ namespace ProjectFlow.DashBoard
                         savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                         FileUploadControl.SaveAs(savedLocation);
                         encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
+                        HideModel();
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                        
                     }
                     else
@@ -87,7 +104,7 @@ namespace ProjectFlow.DashBoard
                     savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                     FileUploadControl.SaveAs(savedLocation);
                     encryption.EncryptFile(savedLocation);
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
+                    HideModel();
                     Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
                 }                  
                 else
@@ -96,7 +113,7 @@ namespace ProjectFlow.DashBoard
                     {
                         path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(PLAIN)";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
+                        HideModel();
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                      
                     }
                     else
@@ -145,7 +162,7 @@ namespace ProjectFlow.DashBoard
                 total += error;
             }
             errorLabel.Text = total;
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            ShowModel();
         }
          
         protected void FileGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -215,19 +232,19 @@ namespace ProjectFlow.DashBoard
             {
                 KeyTB.Visible = false;
                 GenKeyBtn.Visible = false;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+                ShowModel();
             }
             else if(OptionDP.SelectedIndex == 2)
             {
                 KeyTB.Visible = false;
                 GenKeyBtn.Visible = false;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+                ShowModel();
             }
             else if(OptionDP.SelectedIndex == 1)
             {
                 KeyTB.Visible = true;
                 GenKeyBtn.Visible = true;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+                ShowModel();
             }
         }
 
@@ -235,7 +252,7 @@ namespace ProjectFlow.DashBoard
         {
             Encryption encryption = new Encryption();
             KeyTB.Text = encryption.GenerateKey(256).Substring(0, 32);
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            ShowModel();
         }      
         
         private void DownloadFile(string FileName, string Path)
