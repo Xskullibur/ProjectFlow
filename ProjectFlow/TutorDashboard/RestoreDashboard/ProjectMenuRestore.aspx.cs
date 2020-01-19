@@ -36,6 +36,14 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
             PageSelectDP.SelectedIndex = 1;
         }
 
+        private void SearchProject(string search)
+        {
+            List<Project> projectList = new List<Project> { };
+            projectList = projectBLL.SearchDeleteProject(Guid.Parse(Session["TutorID"].ToString()), search);
+            projectRestoreGV.DataSource = projectList;
+            projectRestoreGV.DataBind();
+        }
+
         protected void projectRestoreGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
 
@@ -61,6 +69,16 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
             {
                 Response.Redirect("../ProjectMenu.aspx");
             }
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchProject(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            DisplayProject();
         }
     }
 }

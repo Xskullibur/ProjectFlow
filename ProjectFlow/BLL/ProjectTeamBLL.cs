@@ -61,6 +61,22 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public List<ProjectTeam> SearchTeam(string ProjectID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == false && x.teamName.Contains(search)).ToList();
+            }
+        }
+
+        public List<ProjectTeam> SearchDeletedTeam(string ProjectID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == true && x.teamName.Contains(search)).ToList();
+            }
+        }
+
         public void DeleteTeam(int TeamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

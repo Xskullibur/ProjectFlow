@@ -87,6 +87,14 @@ namespace ProjectFlow.DashBoard
             TeamGV.DataBind();
         }
 
+        private void SearchTeam(string search)
+        {
+            List<ProjectTeam> teamList = new List<ProjectTeam> { };
+            teamList = projectTeamBLL.SearchTeam(GetProjectID(), search);
+            TeamGV.DataSource = teamList;
+            TeamGV.DataBind();
+        }
+
         protected void TeamGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             TeamGV.EditIndex = -1;
@@ -184,6 +192,16 @@ namespace ProjectFlow.DashBoard
             }
             ShowTeam();
             OpenModel();
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchTeam(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowTeam();
         }
     }
 }

@@ -146,7 +146,7 @@
                 </asp:DropDownList>
             </div>
              <div class="col-3">
-                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Project ID" runat="server"></asp:TextBox>
+                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Project Name" runat="server"></asp:TextBox>
             </div>
             <div class="col-1">
                 <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
