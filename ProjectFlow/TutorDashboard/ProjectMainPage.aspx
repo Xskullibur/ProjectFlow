@@ -106,7 +106,16 @@
             </div>
             <div class="col">                             
                 <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" AllowPaging="True" PageSize="4"/>
-            </div>             
+            </div>
+            <div class="col-3">
+                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Student Name" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-1">
+                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
+            </div> 
+            <div class="col-1">
+                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
+            </div>
         </div>
         <br>
         <div class="row">

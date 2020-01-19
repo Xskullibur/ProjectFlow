@@ -50,6 +50,14 @@ namespace ProjectFlow
             studentList.DataBind();
         }
 
+        public void SearchMember(string search)
+        {            
+            List<TeamMember> memberList = new List<TeamMember> { };
+            memberList = teamMemberBLL.SearchMember(GetTeamID(), search);
+            MemberGV.DataSource = memberList;
+            MemberGV.DataBind();           
+        }
+
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
@@ -170,6 +178,16 @@ namespace ProjectFlow
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProjectMainPage.aspx");
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchMember(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowMember();
         }
     }
 }

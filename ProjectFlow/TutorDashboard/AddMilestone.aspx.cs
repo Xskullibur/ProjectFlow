@@ -58,6 +58,13 @@ namespace ProjectFlow.DashBoard
             MilestoneGV.DataBind();       
         }
 
+        public void SearchMilestone(string search)
+        {
+            List<Milestone> milestoneList = milestoneBLL.SearchMilestone(GetTeamID(), search);
+            MilestoneGV.DataSource = milestoneList;
+            MilestoneGV.DataBind();
+        }
+
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PageSelectDP.SelectedIndex == 0)
@@ -179,6 +186,16 @@ namespace ProjectFlow.DashBoard
             }
             ClearModel();
             OpenModel();
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchMilestone(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowMilestone();
         }
     }
 }

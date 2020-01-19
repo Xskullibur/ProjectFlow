@@ -130,6 +130,16 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public List<Milestone> SearchMilestone(int id, string name)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id && x.dropped == false && x.milestoneName.Contains(name)).ToList();
+
+                return teamMilestone;
+            }
+        }
+
         public Milestone GetMilestoneByID(int? id)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

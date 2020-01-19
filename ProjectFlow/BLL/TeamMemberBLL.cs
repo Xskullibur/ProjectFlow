@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.BLL
 {
@@ -47,6 +48,14 @@ namespace ProjectFlow.BLL
                 }).ToDictionary(key => key.StudentID, value => value.Name);
 
                 return student;
+            }
+        }
+
+        public List<TeamMember> SearchMember(int TeamID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.Student.firstName.Contains(search)).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
             }
         }
     }
