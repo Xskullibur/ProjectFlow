@@ -39,7 +39,10 @@
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-meeting-logger-table-tab" data-toggle="tab" href="#nav-meeting-logger-table" role="tab" aria-controls="nav-meeting-logger-table" aria-selected="true">Meeting Logger</a>
-                    <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-christina" role="tab" aria-controls="nav-christina" aria-selected="false">Christina</a>
+                    <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-christina" role="tab" aria-controls="nav-christina" aria-selected="false">
+                        Christina
+                        <span class="badge badge-pill badge-info">Experimental</span>
+                    </a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -80,10 +83,17 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab">
-                        <div id="canvas_window" class="col-12">
+                        <div class="row">
+                            <div id="canvas_window" class="col-9">
                             <canvas id="speaker_display">
 
                             </canvas>
+                            
+                        </div>
+                        <div class="col-3">
+                            <h5>Transcript</h5>
+                            <textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 h-100 my-2"></textarea>
+                        </div>
                         </div>
                     </div>
                 </div>

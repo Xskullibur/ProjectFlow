@@ -359,6 +359,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Christina\Christina.aspx" />
+    <Content Include="Services\Christina\ListOfRooms.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Tasks\EmailTest.aspx" />
@@ -549,6 +550,13 @@
       <DependentUpon>Christina.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\Christina\ChristinaHub.cs" />
+    <Compile Include="Services\Christina\ListOfRooms.aspx.cs">
+      <DependentUpon>ListOfRooms.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Christina\ListOfRooms.aspx.designer.cs">
+      <DependentUpon>ListOfRooms.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

@@ -7,6 +7,9 @@ let recorder = null;
 $(document).ready(function () {
     var christinaHub = $.connection.christina;
 
+    //Clear textbox
+    $('#transcriptTxtBox').val('');
+
     let createdRoom = false;
     christinaHub.client.sendPassword = function (password) {
         createdRoom = true;
@@ -22,13 +25,20 @@ $(document).ready(function () {
             if (e.data.predicted_speaker) {
                 // Rerecord microphone once receive the predicted speaker from server
                 focus_speaker(e.data.predicted_speaker);
+                if (e.data.predicted_speaker != '') {
+                    let txtBox = $('#transcriptTxtBox');
+                    txtBox.val(e.data.predicted_speaker + ':' + e.data.transcript + '\n' + txtBox.val());
+                }
 
-                console.log('Resume recording');
-                recorder.startRecording();
-                startTimeoutForRecording(recorder);
+
+                
+            } else {
+                focus_speaker('');
             }
 
-            
+            console.log('Resume recording');
+            recorder.startRecording();
+            startTimeoutForRecording(recorder);
         });
 
         startRecording();
