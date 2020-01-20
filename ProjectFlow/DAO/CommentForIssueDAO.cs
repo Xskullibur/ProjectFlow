@@ -57,7 +57,7 @@ namespace ProjectFlow.DAO
                         .Select(y => new
                         {
                             Comment = y.comment,
-                            CreatedBy = y.TeamMember.Student.username,
+                            CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
 
                         }).ToList();
 

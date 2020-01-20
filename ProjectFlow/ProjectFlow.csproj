@@ -420,6 +420,8 @@
     </Compile>
     <Compile Include="BLL\ActionItemBLL.cs" />
     <Compile Include="BLL\aspnet_UsersBLL.cs" />
+    <Compile Include="BLL\CommentForIssueBLL.cs" />
+    <Compile Include="BLL\IssueBLL.cs" />
     <Compile Include="BLL\JobDetailsBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
@@ -435,15 +437,8 @@
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAO\AllocationDAO.cs" />
     <Compile Include="DAO\CommentForIssueDAO.cs" />
     <Compile Include="DAO\IssueDAO.cs" />
-    <Compile Include="DAO\MilestoneDAO.cs" />
-    <Compile Include="DAO\ProjectDAO.cs" />
-    <Compile Include="DAO\StatusDAO.cs" />
-    <Compile Include="DAO\StudentDAO.cs" />
-    <Compile Include="DAO\TaskDAO.cs" />
-    <Compile Include="DAO\TeamMemberDAO.cs" />
     <Compile Include="DAO\PollingDAO.cs" />
     <Compile Include="FileManagement\Decryption.cs" />
     <Compile Include="FileManagement\Encryption.cs" />
@@ -662,13 +657,6 @@
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskHelper.cs" />
-    <Compile Include="Tasks\OngoingTaskView.aspx.cs">
-      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
-      <DependentUpon>OngoingTaskView.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Tasks\EmailTest.aspx.cs">
       <DependentUpon>EmailTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -741,8 +729,8 @@
     <Compile Include="TutorDashboard\RestoreDashboard\ProjectTeamRestore.aspx.designer.cs">
       <DependentUpon>ProjectTeamRestore.aspx</DependentUpon>
     </Compile>
-    <Compile Include="VoiceRecording.cs">
-      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    <Compile Include="Utils\AlertPageExtension.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\LoginUtil.cs" />

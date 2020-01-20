@@ -83,7 +83,7 @@ namespace ProjectFlow.DAO
                             TaskID = y.taskID,
                             Task = y.title,
                             Description = y.description,
-                            CreatedBy = y.TeamMember.Student.username,
+                            CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
 
                         }).ToList();
 
@@ -117,7 +117,7 @@ namespace ProjectFlow.DAO
                             TaskID = y.taskID,
                             Task = y.title,
                             Description = y.description,
-                            CreatedBy = y.TeamMember.Student.username,
+                            CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
 
                         }).ToList();
 
