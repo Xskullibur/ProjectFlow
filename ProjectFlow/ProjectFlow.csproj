@@ -175,6 +175,10 @@
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
     <Content Include="InvalidRequest.aspx" />
+    <Content Include="Issues\iDetailedView.aspx" />
+    <Content Include="Issues\iDroppedView.aspx" />
+    <Content Include="Issues\IssueRes.aspx" />
+    <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
@@ -187,6 +191,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -330,6 +335,10 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="obj\Release\ProjectFlow.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\ProjectFlow.csprojAssemblyReference.cache" />
+    <Content Include="Issues\IssueNested.master" />
+    <Content Include="Logon.Master" />
     <Content Include="FileManagement\_KEYS\IV.bin" />
     <Content Include="FileManagement\_KEYS\KEY.bin" />
     <Content Include="Profile\Web.config" />
@@ -340,6 +349,10 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
+    <None Include="quartz.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Issues\Web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -408,6 +421,9 @@
     </Compile>
     <Compile Include="BLL\ActionItemBLL.cs" />
     <Compile Include="BLL\aspnet_UsersBLL.cs" />
+    <Compile Include="BLL\CommentForIssueBLL.cs" />
+    <Compile Include="BLL\IssueBLL.cs" />
+    <Compile Include="BLL\JobDetailsBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
@@ -418,9 +434,13 @@
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
     <Compile Include="BLL\TutorBLL.cs" />
+    <Compile Include="BLL\PollingBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAO\CommentForIssueDAO.cs" />
+    <Compile Include="DAO\IssueDAO.cs" />
+    <Compile Include="DAO\PollingDAO.cs" />
     <Compile Include="FileManagement\Decryption.cs" />
     <Compile Include="FileManagement\Encryption.cs" />
     <Compile Include="FileManagement\FileDetails.cs" />
@@ -445,6 +465,41 @@
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Issues\iDetailedView.aspx.cs">
+      <DependentUpon>iDetailedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\iDetailedView.aspx.designer.cs">
+      <DependentUpon>iDetailedView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\iDroppedView.aspx.cs">
+      <DependentUpon>iDroppedView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\iDroppedView.aspx.designer.cs">
+      <DependentUpon>iDroppedView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\IssueNested.master.cs">
+      <DependentUpon>IssueNested.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\IssueNested.master.designer.cs">
+      <DependentUpon>IssueNested.master</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\IssueRes.aspx.cs">
+      <DependentUpon>IssueRes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\IssueRes.aspx.designer.cs">
+      <DependentUpon>IssueRes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\IssueView.aspx.cs">
+      <DependentUpon>IssueView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\IssueView.aspx.designer.cs">
+      <DependentUpon>IssueView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -453,6 +508,13 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login\ProjectFlowIdentity.cs" />
+    <Compile Include="Logon.Master.cs">
+      <DependentUpon>Logon.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logon.Master.designer.cs">
+      <DependentUpon>Logon.Master</DependentUpon>
+    </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -581,14 +643,6 @@
     <Compile Include="Tasks\DroppedTaskView.aspx.designer.cs">
       <DependentUpon>DroppedTaskView.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tasks\TaskNested.master.cs">
-      <DependentUpon>TaskNested.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tasks\TaskNested.master.designer.cs">
-      <DependentUpon>TaskNested.master</DependentUpon>
-    </Compile>
-    <Compile Include="Tasks\TaskVerification.cs" />
     <Compile Include="Tasks\OngoingTaskView.aspx.cs">
       <DependentUpon>OngoingTaskView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -596,6 +650,14 @@
     <Compile Include="Tasks\OngoingTaskView.aspx.designer.cs">
       <DependentUpon>OngoingTaskView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\TaskNested.master.cs">
+      <DependentUpon>TaskNested.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\TaskNested.master.designer.cs">
+      <DependentUpon>TaskNested.master</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\EmailTest.aspx.cs">
       <DependentUpon>EmailTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -678,6 +740,7 @@
     <Compile Include="Utils\NotificationHelper.cs" />
     <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="Utils\SemanticsParsing.cs" />
+    <Compile Include="Utils\SmsHelper.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>

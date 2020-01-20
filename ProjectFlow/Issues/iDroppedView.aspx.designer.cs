@@ -7,28 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.Tasks {
+namespace ProjectFlow.Issues {
     
     
-    public partial class DroppedTaskView {
+    public partial class IDroppedView {
         
         /// <summary>
-        /// TaskGridUpdatePanel control.
+        /// IssueView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel TaskGridUpdatePanel;
-        
-        /// <summary>
-        /// taskGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView taskGrid;
+        protected global::System.Web.UI.WebControls.GridView IssueView;
         
         /// <summary>
         /// Master property.
@@ -36,9 +27,9 @@ namespace ProjectFlow.Tasks {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new ProjectFlow.Tasks.TaskNested Master {
+        public new ProjectFlow.Issues.IssueNested Master {
             get {
-                return ((ProjectFlow.Tasks.TaskNested)(base.Master));
+                return ((ProjectFlow.Issues.IssueNested)(base.Master));
             }
         }
     }

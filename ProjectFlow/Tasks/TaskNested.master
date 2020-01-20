@@ -10,6 +10,10 @@
 
     <%--Pagination  Style--%>
     <style>
+        .chkbxLbl label{
+            margin-bottom: 0;
+        }
+
         .pagination-ys {
             /*display: inline-block;*/
             padding-left: 0;
@@ -72,12 +76,12 @@
     <div class="container">
 
         <%--Tool Bar--%>
-        <div class="row justify-content-between">
+        <div class="row justify-content-end">
 
             <%--Change View DropDownList--%>
-            <div class="col-xl-3 col-12 align-self-end">
+            <div class="col-3">
 
-                <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged" AutoPostBack="True">
+                <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-secondary" runat="server" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged" AutoPostBack="True">
                     <asp:ListItem Value="Ongoing Tasks">Ongoing Tasks</asp:ListItem>
                     <asp:ListItem Value="Dropped Tasks">Dropped Tasks</asp:ListItem>
                     <asp:ListItem Enabled="False" Value="Calendar">Calendar</asp:ListItem>
@@ -86,8 +90,17 @@
 
             </div>
 
+            <%--Personal Task Check Box--%>
+            <div class="col-2">
+
+                <button class="btn border border-secondary">
+                    <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
+                </button>
+
+            </div>
+
             <%--Add Task Button--%>
-            <div class="col-xl-3 col-12 text-right">
+            <div class="col">
 
                 <!-- Button trigger modal -->
                 <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
