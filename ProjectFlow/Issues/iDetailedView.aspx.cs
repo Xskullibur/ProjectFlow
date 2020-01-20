@@ -50,7 +50,7 @@ namespace ProjectFlow.Issues
             GridViewRow row = IssueView.SelectedRow;
             Session["SSName"] = row.Cells[2].Text;
             Session["SSDesc"] = row.Cells[3].Text;
-            Session["SSIId"] = row.Cells[0].Text;
+            Session["SSIId"] = int.Parse(row.Cells[0].Text);
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 

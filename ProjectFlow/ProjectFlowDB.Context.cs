@@ -36,7 +36,6 @@ namespace ProjectFlow
         public virtual DbSet<aspnet_Users> aspnet_Users { get; set; }
         public virtual DbSet<aspnet_WebEvent_Events> aspnet_WebEvent_Events { get; set; }
         public virtual DbSet<CommentForIssue> CommentForIssues { get; set; }
-        public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<Milestone> Milestones { get; set; }
         public virtual DbSet<Polling> Pollings { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
@@ -50,5 +49,6 @@ namespace ProjectFlow
         public virtual DbSet<TeamMember> TeamMembers { get; set; }
         public virtual DbSet<Tutor> Tutors { get; set; }
         public virtual DbSet<VoiceRecording> VoiceRecordings { get; set; }
+        public virtual DbSet<Issue> Issues { get; set; }
     }
 }

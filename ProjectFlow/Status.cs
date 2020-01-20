@@ -18,6 +18,7 @@ namespace ProjectFlow
         public Status()
         {
             this.Tasks = new HashSet<Task>();
+            this.Issues = new HashSet<Issue>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,7 @@ namespace ProjectFlow
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Issue> Issues { get; set; }
     }
 }

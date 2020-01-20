@@ -18,7 +18,7 @@ namespace ProjectFlow.Issues
             {
                 lbMember.Text = (string)Session["SSName"];
                 lbIssue.Text = (string)Session["SSDesc"];
-                idIssue = int.Parse((string)Session["SSIId"]);
+                idIssue = (int)Session["SSIId"];
                 check(idIssue, idVoter);
                 refreshCommentData(idIssue);
             }
@@ -26,6 +26,7 @@ namespace ProjectFlow.Issues
 
         protected void btnYes_Click(object sender, EventArgs e)
         {
+            idIssue = (int)Session["SSIId"];
             Label1.Text = "Yes";
             vote(true);
             check(idIssue, idVoter);
@@ -33,6 +34,7 @@ namespace ProjectFlow.Issues
 
         protected void btnNo_Click(object sender, EventArgs e)
         {
+            idIssue = (int)Session["SSIId"];
             Label1.Text = "No";
             vote(false);
             check(idIssue, idVoter);

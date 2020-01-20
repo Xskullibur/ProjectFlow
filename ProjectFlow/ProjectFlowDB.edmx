@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -155,6 +155,8 @@
           <Property Name="createdBy" Type="int" Nullable="false" />
           <Property Name="taskID" Type="int" Nullable="false" />
           <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="statusID" Type="int" />
+          <Property Name="votePublic" Type="bit" />
         </EntityType>
         <EntityType Name="Milestone">
           <Key>
@@ -273,7 +275,7 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="recordingName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__Appli__7B5B524B">
+        <Association Name="FK__aspnet_Me__Appli__10566F31">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
           <ReferentialConstraint>
@@ -285,7 +287,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Me__UserI__7C4F7684">
+        <Association Name="FK__aspnet_Me__UserI__114A936A">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -297,7 +299,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pa__Appli__7D439ABD">
+        <Association Name="FK__aspnet_Pa__Appli__123EB7A3">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
           <ReferentialConstraint>
@@ -309,7 +311,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__7E37BEF6">
+        <Association Name="FK__aspnet_Pe__PathI__1332DBDC">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
           <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -321,7 +323,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__7F2BE32F">
+        <Association Name="FK__aspnet_Pe__PathI__14270015">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -333,7 +335,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__UserI__00200768">
+        <Association Name="FK__aspnet_Pe__UserI__151B244E">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -345,7 +347,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pr__UserI__01142BA1">
+        <Association Name="FK__aspnet_Pr__UserI__160F4887">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -357,7 +359,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Ro__Appli__02084FDA">
+        <Association Name="FK__aspnet_Ro__Appli__17036CC0">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -369,7 +371,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__Appli__02FC7413">
+        <Association Name="FK__aspnet_Us__Appli__17F790F9">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -381,7 +383,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__RoleI__03F0984C">
+        <Association Name="FK__aspnet_Us__RoleI__18EBB532">
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -393,7 +395,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__UserI__04E4BC85">
+        <Association Name="FK__aspnet_Us__UserI__19DFD96B">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -426,6 +428,18 @@
             </Principal>
             <Dependent Role="CommentForIssue">
               <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="statusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -708,47 +722,47 @@
           <EntitySet Name="TeamMember" EntityType="Self.TeamMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VoiceRecording" EntityType="Self.VoiceRecording" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__aspnet_Me__Appli__7B5B524B" Association="Self.FK__aspnet_Me__Appli__7B5B524B">
+          <AssociationSet Name="FK__aspnet_Me__Appli__10566F31" Association="Self.FK__aspnet_Me__Appli__10566F31">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Me__UserI__7C4F7684" Association="Self.FK__aspnet_Me__UserI__7C4F7684">
+          <AssociationSet Name="FK__aspnet_Me__UserI__114A936A" Association="Self.FK__aspnet_Me__UserI__114A936A">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pa__Appli__7D439ABD" Association="Self.FK__aspnet_Pa__Appli__7D439ABD">
+          <AssociationSet Name="FK__aspnet_Pa__Appli__123EB7A3" Association="Self.FK__aspnet_Pa__Appli__123EB7A3">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__7E37BEF6" Association="Self.FK__aspnet_Pe__PathI__7E37BEF6">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__1332DBDC" Association="Self.FK__aspnet_Pe__PathI__1332DBDC">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__7F2BE32F" Association="Self.FK__aspnet_Pe__PathI__7F2BE32F">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__14270015" Association="Self.FK__aspnet_Pe__PathI__14270015">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__UserI__00200768" Association="Self.FK__aspnet_Pe__UserI__00200768">
+          <AssociationSet Name="FK__aspnet_Pe__UserI__151B244E" Association="Self.FK__aspnet_Pe__UserI__151B244E">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pr__UserI__01142BA1" Association="Self.FK__aspnet_Pr__UserI__01142BA1">
+          <AssociationSet Name="FK__aspnet_Pr__UserI__160F4887" Association="Self.FK__aspnet_Pr__UserI__160F4887">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Ro__Appli__02084FDA" Association="Self.FK__aspnet_Ro__Appli__02084FDA">
+          <AssociationSet Name="FK__aspnet_Ro__Appli__17036CC0" Association="Self.FK__aspnet_Ro__Appli__17036CC0">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__Appli__02FC7413" Association="Self.FK__aspnet_Us__Appli__02FC7413">
+          <AssociationSet Name="FK__aspnet_Us__Appli__17F790F9" Association="Self.FK__aspnet_Us__Appli__17F790F9">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__RoleI__03F0984C" Association="Self.FK__aspnet_Us__RoleI__03F0984C">
+          <AssociationSet Name="FK__aspnet_Us__RoleI__18EBB532" Association="Self.FK__aspnet_Us__RoleI__18EBB532">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__UserI__04E4BC85" Association="Self.FK__aspnet_Us__UserI__04E4BC85">
+          <AssociationSet Name="FK__aspnet_Us__UserI__19DFD96B" Association="Self.FK__aspnet_Us__UserI__19DFD96B">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
           </AssociationSet>
@@ -759,6 +773,10 @@
           <AssociationSet Name="FK_CommentForIssue_TeamMember" Association="Self.FK_CommentForIssue_TeamMember">
             <End Role="TeamMember" EntitySet="TeamMember" />
             <End Role="CommentForIssue" EntitySet="CommentForIssue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Status" Association="Self.FK_Issue_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Issue" EntitySet="Issue" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_Task" Association="Self.FK_Issue_Task">
             <End Role="Task" EntitySet="Task" />
@@ -845,8 +863,7 @@
             <End Role="Project" EntitySet="Project" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1003,23 +1020,8 @@
           <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="createdBy" Type="Int32" Nullable="false" />
           <Property Name="issueID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Issue" Relationship="Self.FK_CommentForIssue_Issue" FromRole="CommentForIssue" ToRole="Issue" />
           <NavigationProperty Name="TeamMember" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="CommentForIssue" ToRole="TeamMember" />
-        </EntityType>
-        <EntityType Name="Issue">
-          <Key>
-            <PropertyRef Name="issueID" />
-          </Key>
-          <Property Name="issueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="createdBy" Type="Int32" Nullable="false" />
-          <Property Name="taskID" Type="Int32" Nullable="false" />
-          <Property Name="active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_Issue" FromRole="Issue" ToRole="CommentForIssue" />
-          <NavigationProperty Name="Task" Relationship="Self.FK_Issue_Task" FromRole="Issue" ToRole="Task" />
-          <NavigationProperty Name="TeamMember" Relationship="Self.FK_Issue_TeamMember" FromRole="Issue" ToRole="TeamMember" />
-          <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_Issue" FromRole="Issue" ToRole="Polling" />
+          <NavigationProperty Name="Issue" Relationship="ProjectFlowModel.FK_CommentForIssue_Issue" FromRole="CommentForIssue" ToRole="Issue" />
         </EntityType>
         <EntityType Name="Milestone">
           <Key>
@@ -1043,8 +1045,8 @@
           <Property Name="issueID" Type="Int32" Nullable="false" />
           <Property Name="voterID" Type="Int32" Nullable="false" />
           <Property Name="vote" Type="Boolean" />
-          <NavigationProperty Name="Issue" Relationship="Self.FK_Polling_Issue" FromRole="Polling" ToRole="Issue" />
           <NavigationProperty Name="TeamMember" Relationship="Self.FK_Polling_voter" FromRole="Polling" ToRole="TeamMember" />
+          <NavigationProperty Name="Issue" Relationship="ProjectFlowModel.FK_Polling_Issue" FromRole="Polling" ToRole="Issue" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -1099,6 +1101,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="status1" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Status" FromRole="Status" ToRole="Task" />
+          <NavigationProperty Name="Issues" Relationship="ProjectFlowModel.FK_Issue_Status" FromRole="Status" ToRole="Issue" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -1126,11 +1129,11 @@
           <Property Name="milestoneID" Type="Int32" />
           <Property Name="statusID" Type="Int32" Nullable="false" />
           <Property Name="dropped" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_Task" FromRole="Task" ToRole="Issue" />
           <NavigationProperty Name="Milestone" Relationship="Self.FK_Task_Milestone" FromRole="Task" ToRole="Milestone" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Task_ProjectTeam" FromRole="Task" ToRole="ProjectTeam" />
           <NavigationProperty Name="Status" Relationship="Self.FK_Task_Status" FromRole="Task" ToRole="Status" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_Task" FromRole="Task" ToRole="TaskAllocation" />
+          <NavigationProperty Name="Issues" Relationship="ProjectFlowModel.FK_Issue_Task" FromRole="Task" ToRole="Issue" />
         </EntityType>
         <EntityType Name="TaskAllocation">
           <Key>
@@ -1151,12 +1154,12 @@
           <Property Name="roleID" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_TeamMember" FromRole="TeamMember" ToRole="CommentForIssue" />
-          <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_TeamMember" FromRole="TeamMember" ToRole="Issue" />
           <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_voter" FromRole="TeamMember" ToRole="Polling" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="TeamMember" ToRole="ProjectTeam" />
           <NavigationProperty Name="Role" Relationship="Self.FK_TeamMember_Role" FromRole="TeamMember" ToRole="Role" />
           <NavigationProperty Name="Student" Relationship="Self.FK_TeamMember_Student" FromRole="TeamMember" ToRole="Student" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_TeamMember" FromRole="TeamMember" ToRole="TaskAllocation" />
+          <NavigationProperty Name="Issues" Relationship="ProjectFlowModel.FK_Issue_TeamMember" FromRole="TeamMember" ToRole="Issue" />
         </EntityType>
         <EntityType Name="Tutor">
           <Key>
@@ -1308,18 +1311,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CommentForIssue_Issue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Issue">
-              <PropertyRef Name="issueID" />
-            </Principal>
-            <Dependent Role="CommentForIssue">
-              <PropertyRef Name="issueID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CommentForIssue_TeamMember">
           <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
           <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
@@ -1329,42 +1320,6 @@
             </Principal>
             <Dependent Role="CommentForIssue">
               <PropertyRef Name="createdBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Issue_Task">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="taskID" />
-            </Principal>
-            <Dependent Role="Issue">
-              <PropertyRef Name="taskID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Issue_TeamMember">
-          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TeamMember">
-              <PropertyRef Name="memberID" />
-            </Principal>
-            <Dependent Role="Issue">
-              <PropertyRef Name="createdBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Polling_Issue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="Polling" Type="Self.Polling" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Issue">
-              <PropertyRef Name="issueID" />
-            </Principal>
-            <Dependent Role="Polling">
-              <PropertyRef Name="issueID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1576,7 +1531,6 @@
           <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" />
           <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" />
           <EntitySet Name="CommentForIssues" EntityType="Self.CommentForIssue" />
-          <EntitySet Name="Issues" EntityType="Self.Issue" />
           <EntitySet Name="Milestones" EntityType="Self.Milestone" />
           <EntitySet Name="Pollings" EntityType="Self.Polling" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
@@ -1634,25 +1588,9 @@
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Tutor" EntitySet="Tutors" />
           </AssociationSet>
-          <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
-            <End Role="Issue" EntitySet="Issues" />
-            <End Role="CommentForIssue" EntitySet="CommentForIssues" />
-          </AssociationSet>
           <AssociationSet Name="FK_CommentForIssue_TeamMember" Association="Self.FK_CommentForIssue_TeamMember">
             <End Role="TeamMember" EntitySet="TeamMembers" />
             <End Role="CommentForIssue" EntitySet="CommentForIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Issue_Task" Association="Self.FK_Issue_Task">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="Issue" EntitySet="Issues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Issue_TeamMember" Association="Self.FK_Issue_TeamMember">
-            <End Role="TeamMember" EntitySet="TeamMembers" />
-            <End Role="Issue" EntitySet="Issues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Polling_Issue" Association="Self.FK_Polling_Issue">
-            <End Role="Issue" EntitySet="Issues" />
-            <End Role="Polling" EntitySet="Pollings" />
           </AssociationSet>
           <AssociationSet Name="FK_Milestone_Project" Association="Self.FK_Milestone_Project">
             <End Role="Project" EntitySet="Projects" />
@@ -1722,7 +1660,106 @@
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
+          <EntitySet Name="Issues" EntityType="ProjectFlowModel.Issue" />
+          <AssociationSet Name="FK_CommentForIssue_Issue" Association="ProjectFlowModel.FK_CommentForIssue_Issue">
+            <End Role="Issue" EntitySet="Issues" />
+            <End Role="CommentForIssue" EntitySet="CommentForIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Status" Association="ProjectFlowModel.FK_Issue_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Issue" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Task" Association="ProjectFlowModel.FK_Issue_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Issue" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_TeamMember" Association="ProjectFlowModel.FK_Issue_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+            <End Role="Issue" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Polling_Issue" Association="ProjectFlowModel.FK_Polling_Issue">
+            <End Role="Issue" EntitySet="Issues" />
+            <End Role="Polling" EntitySet="Pollings" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="issueID" />
+          </Key>
+          <Property Name="issueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="createdBy" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="statusID" Type="Int32" />
+          <Property Name="votePublic" Type="Boolean" />
+          <NavigationProperty Name="CommentForIssues" Relationship="ProjectFlowModel.FK_CommentForIssue_Issue" FromRole="Issue" ToRole="CommentForIssue" />
+          <NavigationProperty Name="Status" Relationship="ProjectFlowModel.FK_Issue_Status" FromRole="Issue" ToRole="Status" />
+          <NavigationProperty Name="Task" Relationship="ProjectFlowModel.FK_Issue_Task" FromRole="Issue" ToRole="Task" />
+          <NavigationProperty Name="TeamMember" Relationship="ProjectFlowModel.FK_Issue_TeamMember" FromRole="Issue" ToRole="TeamMember" />
+          <NavigationProperty Name="Pollings" Relationship="ProjectFlowModel.FK_Polling_Issue" FromRole="Issue" ToRole="Polling" />
+        </EntityType>
+        <Association Name="FK_CommentForIssue_Issue">
+          <End Type="ProjectFlowModel.Issue" Role="Issue" Multiplicity="1" />
+          <End Type="ProjectFlowModel.CommentForIssue" Role="CommentForIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="CommentForIssue">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Status">
+          <End Type="ProjectFlowModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="ProjectFlowModel.Issue" Role="Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="statusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Task">
+          <End Type="ProjectFlowModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="ProjectFlowModel.Issue" Role="Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_TeamMember">
+          <End Type="ProjectFlowModel.TeamMember" Role="TeamMember" Multiplicity="1" />
+          <End Type="ProjectFlowModel.Issue" Role="Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="memberID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polling_Issue">
+          <End Type="ProjectFlowModel.Issue" Role="Issue" Multiplicity="1" />
+          <End Type="ProjectFlowModel.Polling" Role="Polling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="issueID" />
+            </Principal>
+            <Dependent Role="Polling">
+              <PropertyRef Name="issueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1871,18 +1908,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Issues">
-            <EntityTypeMapping TypeName="ProjectFlowModel.Issue">
-              <MappingFragment StoreEntitySet="Issue">
-                <ScalarProperty Name="issueID" ColumnName="issueID" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="taskID" ColumnName="taskID" />
-                <ScalarProperty Name="active" ColumnName="active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Milestones">
             <EntityTypeMapping TypeName="ProjectFlowModel.Milestone">
               <MappingFragment StoreEntitySet="Milestone">
@@ -2021,6 +2046,20 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Issues">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Issue">
+              <MappingFragment StoreEntitySet="Issue">
+                <ScalarProperty Name="votePublic" ColumnName="votePublic" />
+                <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="issueID" ColumnName="issueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

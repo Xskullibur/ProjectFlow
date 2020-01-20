@@ -15,6 +15,7 @@
                             <asp:BoundField DataField="Task" HeaderText="Issue Name" />
                             <asp:BoundField DataField="Description" HeaderText="Description" />
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
+                            <asp:BoundField DataField="Active" HeaderText="Active" />
                             <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success mb-2" />
                             </asp:CommandField>

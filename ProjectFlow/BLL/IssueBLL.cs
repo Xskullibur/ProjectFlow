@@ -63,8 +63,8 @@ namespace ProjectFlow.BLL
                             TaskID = y.taskID,
                             Task = y.title,
                             Description = y.description,
-                            CreatedBy = y.TeamMember.Student.aspnet_Users.UserName
-
+                            CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
+                            Active = y.active
                         }).ToList();
 
                     return list;
