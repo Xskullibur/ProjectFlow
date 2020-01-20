@@ -17,7 +17,7 @@ namespace ProjectFlow.DashBoard
             if (identity.IsStudent)
             {
                 Session["StudentID"] = identity.Student.UserId.ToString();
-                Session["StudentTeamID"] = null;
+                Session["StudentTeamID"] = (Master as ServicesWithContent).CurrentProjectTeam.teamID;
                 ShowProject();
             }            
         }
@@ -31,7 +31,7 @@ namespace ProjectFlow.DashBoard
             {
 
                 ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
+                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(GetTeamID());
 
                 (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
 
@@ -48,6 +48,12 @@ namespace ProjectFlow.DashBoard
         {
 
         }
+
+        private int GetTeamID()
+        {
+            return int.Parse(Session["StudentTeamID"].ToString());
+        }
+
 
         public void ShowProject()
         {
