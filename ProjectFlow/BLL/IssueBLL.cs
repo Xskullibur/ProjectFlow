@@ -8,11 +8,32 @@ namespace ProjectFlow.BLL
 {
     public class IssueBLL
     {
-        public List<object> GetIssueById(int id)
+        public bool Add(Issue issue)
+        {
+            IssueDAO IssueDAO = new IssueDAO();
+            return IssueDAO.Add(issue);
+        }
+
+        public List<object> GetIssueByTeamId(int id)
         {
             IssueDAO issueDAO = new IssueDAO();
-            var issue = issueDAO.GetIssueByID2(id).ToList();
+            var issue = issueDAO.GetIssueByTeamID(id).ToList();
             return issue;
+        }
+
+        public List<object> GetDroppedIssueByTeamId(int id)
+        {
+            IssueDAO issueDAO = new IssueDAO();
+            var issue = issueDAO.GetDroppedIssueByTeamID(id).ToList();
+            return issue;
+        }
+
+        public bool Drop(int id)
+        {
+            IssueDAO issueDAO = new IssueDAO();
+            Issue deleted_task = issueDAO.GetIssueByID(id);
+
+            return issueDAO.drop(deleted_task);
         }
     }
 }

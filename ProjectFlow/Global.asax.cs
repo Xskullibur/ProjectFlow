@@ -51,6 +51,12 @@ namespace ProjectFlow
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
 
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap-confirmation", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/bootstrap-confirmation/bootstrap-confirmation.min.js",
+                DebugPath = "~/Scripts/bootstrap-confirmation/bootstrap-confirmation.min.js"
+            });
+
 
             ScriptManager.ScriptResourceMapping.AddDefinition("signalr", new ScriptResourceDefinition
             {

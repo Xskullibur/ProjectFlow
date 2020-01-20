@@ -55,6 +55,8 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
+                    dbContext.Tasks.Attach(task);
+
                     // Update Task
                     dbContext.Entry(task).State = System.Data.Entity.EntityState.Modified;
 
@@ -154,6 +156,8 @@ namespace ProjectFlow.BLL
                 }
             }
         }
+
+
         /// <summary>
         /// Gets all Ongoing Task information (incl. Task Allocations) By Team ID
         /// </summary>
@@ -201,6 +205,49 @@ namespace ProjectFlow.BLL
             }
         }
 
+
+        public IEnumerable<object> GetOngoingTasksByTeamIdWithStudent(int teamID, Student currentUser)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+
+                    var list = dbContext.Tasks.Include("TaskAllocations.TeamMember.Student")
+                        .Include("Milestone")
+                        .Include("Status")
+                        .Where(x => x.teamID == teamID)
+                        .Where(x => x.TaskAllocations.Select(allocation => allocation.TeamMember.Student.studentID).Contains(currentUser.studentID))
+                        .Where(x => x.dropped != true)
+                        .OrderBy(x => x.startDate)
+                        .ThenBy(x => x.endDate)
+                        .ToList().Select(y => new
+                        {
+                            ID = y.taskID,
+                            Task = y.taskName,
+                            Description = y.taskDescription,
+                            MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                            Start = y.startDate,
+                            End = y.endDate,
+                            Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
+                            Status = y.Status.status1
+                        });
+
+                    return list.ToList();
+
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
+
+
         /// <summary>
         /// Gets all Drropped Task information (incl. Task Allocations) By Team ID
         /// </summary>
@@ -245,6 +292,46 @@ namespace ProjectFlow.BLL
 
             }
         }
+
+
+        public  IEnumerable<object> GetDroppedTaskByTeamIdWithStudent(int teamID, Student student)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+
+                    var list = dbContext.Tasks.Include("TaskAllocations.TeamMember.Student")
+                        .Include("Milestone")
+                        .Include("Status")
+                        .Where(x => x.teamID == teamID)
+                        .Where(x => x.TaskAllocations.Select(allocated => allocated.TeamMember.Student.studentID).Contains(student.studentID))
+                        .Where(x => x.dropped == true)
+                        .ToList().Select(y => new
+                        {
+                            ID = y.taskID,
+                            Task = y.taskName,
+                            Description = y.taskDescription,
+                            MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                            Start = y.startDate,
+                            End = y.endDate,
+                            Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
+                            Status = y.Status.status1
+                        });
+
+                    return list.ToList();
+
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+            }
+        }
+
 
         /// <summary>
         /// Get ProjectTeam by Task ID

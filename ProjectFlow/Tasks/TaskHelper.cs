@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ProjectFlow.Tasks
 {
-    public class TaskVerification
+    public class TaskHelper
     {
         public List<string> TNameErrors { get; set; }
         public List<string> TDescErrors { get; set; }
@@ -17,7 +17,7 @@ namespace ProjectFlow.Tasks
         public List<string> TStatusErrors { get; set; }
         public List<string> StartEndDateErrors { get; set; }
 
-        public TaskVerification()
+        public TaskHelper()
         {
             TNameErrors = new List<string>();
             TDescErrors = new List<string>();
@@ -29,7 +29,12 @@ namespace ProjectFlow.Tasks
         }
 
         // Verify Add Task
-        public bool Verify(string taskName, string taskDesc, int milestoneIndex, string startDate, string endDate, int statusIndex)
+        public bool VerifyAddTask(string taskName, 
+            string taskDesc, 
+            int milestoneIndex, 
+            string startDate, 
+            string endDate, 
+            int statusIndex)
         {
             bool verified = true;
             TNameErrors.Clear();
@@ -69,7 +74,7 @@ namespace ProjectFlow.Tasks
             }
 
             // Milestone
-            if (milestoneIndex == -1)
+            if (milestoneIndex < 0)
             {
                 TMilestoneErrors.Add("Milestone Field is Required!");
                 verified = false;
@@ -117,6 +122,26 @@ namespace ProjectFlow.Tasks
             }
 
             return verified;
+        }
+
+        // Verify Update Status
+        public bool VerifyUpdateStatus(string currentStatus, Student leader, Student currentUser)
+        {
+            if (currentStatus == StatusBLL.VERIFICATON)
+            {
+                if (leader != currentUser)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        public static int GetDaysLeft(DateTime endDate)
+        {
+            return (endDate - DateTime.Now.Date).Days;
         }
 
     }
