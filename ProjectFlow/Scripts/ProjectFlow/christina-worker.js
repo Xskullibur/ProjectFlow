@@ -1,11 +1,13 @@
 ﻿let socket = null;
 
+
 onmessage = function (e) {
     if (e.data.password && e.data.hostname) {
         //Start websocket
         console.log("starting websocket");
         connectToWebsocket(e.data.hostname, e.data.password);
     } else if (e.data.blob) {
+        //Send Blob data 
         sendBlob(e.data.blob);
     }
 }
@@ -23,6 +25,11 @@ function connectToWebsocket(hostname, password) {
 
     socket.onmessage = function (event) {
         console.log(`[message] Data received from server: ${event.data}`);
+
+        let data = JSON.parse(event.data);
+
+        postMessage(data);
+
     };
 
     socket.onclose = function (event) {

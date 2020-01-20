@@ -25,8 +25,23 @@ namespace ProjectFlow.DashBoard
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = ProjectGV.SelectedRow;
-            Session["StudentTeamID"] = row.Cells[0].Text;
-            Response.Redirect("FileUpload.aspx");
+            int teamID;
+
+            if(int.TryParse(row.Cells[0].Text, out teamID))
+            {
+
+                ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
+
+                (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
+
+                Response.Redirect("FileUpload.aspx");
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid team ID given!");
+            }
+
         }
 
         protected void ProjectGV_PageIndexChanged(object sender, EventArgs e)

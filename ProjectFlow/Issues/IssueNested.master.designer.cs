@@ -22,31 +22,103 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
-        /// lbMember control.
+        /// taskViewDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbMember;
+        protected global::System.Web.UI.WebControls.DropDownList taskViewDDL;
         
         /// <summary>
-        /// lbIssue control.
+        /// addTaskBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbIssue;
+        protected global::System.Web.UI.WebControls.Button addTaskBtn;
         
         /// <summary>
-        /// taskView control.
+        /// tTitleLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView taskView;
+        protected global::System.Web.UI.WebControls.Label tTitleLbl;
+        
+        /// <summary>
+        /// tNameTxt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tNameTxt;
+        
+        /// <summary>
+        /// tNameRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator tNameRegexValidator;
+        
+        /// <summary>
+        /// tNameRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator tNameRequiredValidator;
+        
+        /// <summary>
+        /// tDescTxt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tDescTxt;
+        
+        /// <summary>
+        /// tDescRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator tDescRegexValidator;
+        
+        /// <summary>
+        /// tDescRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator tDescRequiredValidator;
+        
+        /// <summary>
+        /// addTaskSummaryValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary addTaskSummaryValidator;
+        
+        /// <summary>
+        /// tSaveBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button tSaveBtn;
         
         /// <summary>
         /// MainContent control.

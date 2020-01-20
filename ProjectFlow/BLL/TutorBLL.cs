@@ -33,5 +33,23 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// Check if the tutor have this project in his/her list of created projects
+        /// 
+        /// List of created projects: Each tutor will have a list of created projects which includes the current, past or even
+        /// the future projects which the tutor have created to assign to project teams.
+        /// 
+        /// This method check whether if the student have a particular project which the tutor have created
+        /// 
+        /// </summary>
+        /// <param name="tutor"></param>
+        /// <param name="project"></param>
+        /// <returns>only true if the tutor have this project in his/her list of created projects</returns>
+        public bool ContainsProject(Tutor tutor, Project project)
+        {
+            return tutor.UserId.Equals(project.UserId);
+        }
+
+
     }
 }

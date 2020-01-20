@@ -57,7 +57,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.ProjectTeams.Find(TeamID);
+                return dbContext.ProjectTeams.Include(x => x.Project).FirstOrDefault(x => x.teamID == TeamID);
             }
         }
 

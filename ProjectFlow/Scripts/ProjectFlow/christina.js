@@ -2,27 +2,64 @@
 
 let websocket_worker = new Worker('/Scripts/ProjectFlow/christina-worker.js');
 
+let recorder = null;
+
 $(document).ready(function () {
     var christinaHub = $.connection.christina;
 
+    //Clear textbox
+    $('#transcriptTxtBox').val('');
 
+    let createdRoom = false;
     christinaHub.client.sendPassword = function (password) {
-        websocket_worker.postMessage({hostname: window.location.hostname, password});
+        createdRoom = true;
+        websocket_worker.postMessage({
+            hostname: window.location.hostname,
+            password: password
+            
+        });
+
+        websocket_worker.addEventListener('message', (e) => {
+
+            //If prediction
+            if (e.data.predicted_speaker) {
+                // Rerecord microphone once receive the predicted speaker from server
+                focus_speaker(e.data.predicted_speaker);
+                if (e.data.predicted_speaker != '') {
+                    let txtBox = $('#transcriptTxtBox');
+                    txtBox.val(e.data.predicted_speaker + ':' + e.data.transcript + '\n' + txtBox.val());
+                }
+
+
+                
+            } else {
+                focus_speaker('');
+            }
+
+            console.log('Resume recording');
+            recorder.startRecording();
+            startTimeoutForRecording(recorder);
+        });
+
         startRecording();
-    };
+
+    }
+
+    christinaHub.client.sendRoomID = function (roomID) {
+        $('#ContentPlaceHolder_RoomID').val(roomID);
+        document.getElementById('ContentPlaceHolder_RoomUpdateEventLinkBtn').click();
+    }
 
     $.connection.hub.start().done(function () {
 
-        christinaHub.server.createRoom(2);
+        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val()));
     });
     
 });
 
-let recording = false;
-
 async function startRecording() {
     let stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
-    let recorder = new RecordRTCPromisesHandler(stream, {
+    recorder = new RecordRTCPromisesHandler(stream, {
         type: 'audio',
         mimeType: 'audio/wav',
         sampleRate: 16000,
@@ -30,7 +67,6 @@ async function startRecording() {
         disableLogs: false
     });
 
-    recording = true;
     recorder.startRecording();
 
     startTimeoutForRecording(recorder);
@@ -39,21 +75,17 @@ async function startRecording() {
 
 async function startTimeoutForRecording(recorder) {
     setTimeout(async function () {
-        if (recording) {
-            processAudio(recorder);
-            startTimeoutForRecording(recorder);
-        }
-        else await recorder.stopRecording();
+       processAudio(recorder);
     }, 3000);
 }
 
-async function processAudio(recorder) {
+async function processAudio(recorder, completed_cb) {
     await recorder.stopRecording();
+    console.log('Stopped recording');
     let blob = await recorder.getBlob();
-    recorder.startRecording();
 
     //Send to websocket
-    websocket_worker.postMessage({blob});
+    websocket_worker.postMessage({ blob, completed: completed_cb});
 }
 
 
@@ -107,6 +139,11 @@ function init_display(bound_window, display_canvas) {
             }
             ctx.restore();
 
+            //Draw name
+            ctx.font = "15px Verdana";
+            ctx.textAlign = "center"; 
+            ctx.fillText(speaker_circle.speaker_name, speaker_circle.x * scaleX, speaker_circle.y * scaleY);
+
         }
         
     }
@@ -124,7 +161,7 @@ function init_display(bound_window, display_canvas) {
 function focus_speaker(speaker_name) {
     for (let i = 0; i < speakers_circles.length; i++) {
         let speaker_circle = speakers_circles[i];
-        if (speaker_circle.speak_name == speaker_name) {
+        if (speaker_circle.speaker_name == speaker_name) {
             speaker_circle.grow = true;
         } else {
             speaker_circle.ungrow = true;
@@ -140,7 +177,7 @@ function create_speaker(speaker_name, speaker_image) {
 
     let x = r * Math.cos(theta) + drawWidth / 2;
     let y = r * Math.sin(theta) + drawHeight / 2;
-    return { speak_name: speaker_name, speaker_image: speaker_image, x: x, y: y, percent: 0, grow: true, ungrow: false };
+    return { speaker_name: speaker_name, speaker_image: speaker_image, x: x, y: y, percent: 0, grow: true, ungrow: false };
 }
 
 

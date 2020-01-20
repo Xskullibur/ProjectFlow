@@ -14,6 +14,13 @@ namespace ProjectFlow
     
     public partial class Room
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Room()
+        {
+            this.RoomActionItems = new HashSet<RoomActionItem>();
+            this.Transcripts = new HashSet<Transcript>();
+        }
+    
         public int roomID { get; set; }
         public System.Guid createdBy { get; set; }
         public System.DateTime creationDate { get; set; }
@@ -22,5 +29,9 @@ namespace ProjectFlow
     
         public virtual ProjectTeam ProjectTeam { get; set; }
         public virtual Student Student { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomActionItem> RoomActionItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transcript> Transcripts { get; set; }
     }
 }
