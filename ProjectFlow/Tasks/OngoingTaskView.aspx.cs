@@ -243,7 +243,7 @@ namespace ProjectFlow.Tasks
                     TableCell DueDateCell = e.Row.Cells[1];
 
                     // Task End Date
-                    DateTime EndDate = DateTime.Parse(((Label)e.Row.FindControl("gridEnd")).Text);
+                    DateTime EndDate = DateTime.ParseExact(((Label)e.Row.FindControl("gridEnd")).Text.Trim(), "dd/MM/yyyy", null);
                     int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
 
                     if (DaysLeft > 0)
