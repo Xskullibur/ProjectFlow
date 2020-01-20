@@ -9,7 +9,6 @@ namespace ProjectFlow.Utils.Bootstrap
     {
         public static string PRIMARY = "alert-primary";
         public static string SECONDARY = "alert-secondary";
-        public static string SUCCESS = "alert-success";
         public static string DANGER = "alert-danger";
         public static string WARNING = "alert-warning";
         public static string INFO = "alert-info";

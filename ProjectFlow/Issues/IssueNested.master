@@ -1,32 +1,95 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="IssueNested.master.cs" Inherits="ProjectFlow.Issues.IssueNested" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div >
-                    <div class="rounded-top p-1 bg-info text-white">
-                        <asp:Label ID="lbMember" runat="server">Issue Raised by: </asp:Label>
-                    </div>
-                    <div class="rounded-bottom p-1 bg-light">
-                        <asp:Label ID="lbIssue" runat="server" Text=""></asp:Label>
-                    </div>   
-                </div>
+
+        <%--Tool Bar--%>
+        <div class="row justify-content-between">
+
+            <%--Change View DropDownList--%>
+            <div class="col-xl-3 col-12 align-self-end">
+
+                <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged">
+                    <asp:ListItem Value="Ongoing Tasks">Ongoing Issues</asp:ListItem>
+                    <asp:ListItem Value="Dropped Tasks">Dropped Issues</asp:ListItem>
+                    
+                </asp:DropDownList>
+
             </div>
-            <div class="col-md-4">
-                <div class="mdc-data-table">  
-                    <asp:GridView ID="taskView" runat="server" >
-                    </asp:GridView>
+
+            <%--Add Task Button--%>
+            <div class="col-xl-3 col-12 text-right">
+
+                <!-- Button trigger modal -->
+                <asp:Button Text="Add Issue" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
+
+            </div>
+
+        </div>
+
+        <!-- Add Task Modal -->
+        <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+
+                <div class="modal-content">
+
+                    <%--Header--%>
+                    <div class="modal-header">
+                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <%--Body--%>
+                    <div class="modal-body">
+                            
+                        <div class="container-fluid" runat="server">
+
+                            <%--Name--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Issue Name:" AssociatedControlID="tNameTxt" runat="server" />
+                                <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Task Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Description--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
+                                <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+                            
+                            
+
+                        </div>
+
+                        <%--Error Summary--%>
+                        <asp:ValidationSummary ID="addTaskSummaryValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ValidationGroup="AddTask" ShowMessageBox="True" ShowSummary="False" />
+
+                    </div>
+
+                    <%--Footer--%>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
+                    </div>
                 </div>
+
             </div>
         </div>
 
     </div>
+
+    <%--Main Content--%>
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
 </asp:Content>
-
-
