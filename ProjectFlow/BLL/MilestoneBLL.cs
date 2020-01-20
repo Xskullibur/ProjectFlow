@@ -1,5 +1,4 @@
-﻿using ProjectFlow.DAO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +9,181 @@ namespace ProjectFlow.BLL
     {
         public List<Milestone> GetMilestoneByTeamID(int id)
         {
-            MilestoneDAO milestoneDAO = new MilestoneDAO();
-            var milestoneList = milestoneDAO.GetMilestonesByTeamID(id);
+            var milestoneList = GetMilestonesByTeamID(id);
 
             return milestoneList;
+        }
+     
+        public List<string> ValidateCreateMilestone(string Name, string ProjectID, int TeamID, string StartDate, string EndDate)
+        {
+            List<string> errorList = new List<string> { };
+            DateTime validateValue;
+
+            if (Name.Equals(""))
+            {
+                errorList.Add("Name cannot be empty<br>");
+            }
+
+            if(Name.Length > 255)
+            {
+                errorList.Add("Name cannot be more than 255 character<br>");
+            }
+
+            if (ProjectID.Equals(""))
+            {
+                errorList.Add("Project ID cannot be empty<br>");
+            }
+
+            if (ProjectID.Length != 6)
+            {
+                errorList.Add("Project ID must be 6 character<br>");
+            }
+
+            if (TeamID.ToString().Equals(""))
+            {
+                errorList.Add("Team ID cannot be empty<br>");
+            }
+
+            if (TeamID.ToString().Length > 4)
+            {
+                errorList.Add("Team ID cannot be more than 4 character<br>");
+            }
+
+            if (StartDate.Equals(""))
+            {
+                errorList.Add("Start date cannot be empty<br>");
+            }
+
+            if (EndDate.Equals(""))
+            {
+                errorList.Add("End date cannot be empty<br>");
+            }
+
+            if (!DateTime.TryParse(StartDate.ToString(), out validateValue))
+            {
+                errorList.Add("Start Date not valid<br>");
+            }
+
+            if (!DateTime.TryParse(EndDate.ToString(), out validateValue))
+            {
+                errorList.Add("End Date not valid<br>");
+            }
+
+            if(errorList.Count == 0)
+            {
+                CreateMilestone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+            }
+
+            return errorList;
+        }
+
+        public List<string> ValidateUpdateMilestone(int MilestoneID, string Name, string StartDate, string EndDate)
+        {
+            List<string> errorList = new List<string> { };
+            DateTime validateValue;
+
+            if (Name.Equals(""))
+            {
+                errorList.Add("Name cannot be empty<br>");
+            }
+
+            if (Name.Length > 255)
+            {
+                errorList.Add("Name cannot be more than 255 character<br>");
+            }
+            
+            if (StartDate.Equals(""))
+            {
+                errorList.Add("Start date cannot be empty<br>");
+            }
+
+            if (EndDate.Equals(""))
+            {
+                errorList.Add("End date cannot be empty<br>");
+            }
+
+            if (!DateTime.TryParse(StartDate.ToString(), out validateValue))
+            {
+                errorList.Add("Start Date not valid<br>");
+            }
+
+            if (!DateTime.TryParse(EndDate.ToString(), out validateValue))
+            {
+                errorList.Add("End Date not valid<br>");
+            }
+
+            if(errorList.Count == 0)
+            {
+                UpdateMilestone(MilestoneID, Name, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+            }
+
+            return errorList;
+        }
+
+        public List<Milestone> GetMilestonesByTeamID(int id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var teamMilestone = dbContext.Milestones.Where(x => x.teamID == id && x.dropped == false).ToList();
+
+                return teamMilestone;
+            }
+        }
+
+        public Milestone GetMilestoneByID(int? id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                Milestone milestone = dbContext.Milestones.First(x => x.milestoneID == id && x.dropped == false);
+
+                return milestone;
+            }
+        }
+
+        public void CreateMilestone(string Name, string ProjectID, int TeamID, DateTime StartDate, DateTime EndDate)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = new Milestone
+                {
+                    milestoneName = Name,
+                    startDate = StartDate,
+                    endDate = EndDate,
+                    projectID = ProjectID,
+                    teamID = TeamID
+                };
+                dbContext.Milestones.Add(milestone);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void UpdateMilestone(int MilestoneID, string Name, DateTime StartDate, DateTime EndDate)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = dbContext.Milestones.Single(x => x.milestoneID == MilestoneID);
+
+                if (milestone != null)
+                {
+                    milestone.milestoneName = Name;
+                    milestone.startDate = StartDate;
+                    milestone.endDate = EndDate;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void DeleteMilestone(int MilestoneID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = dbContext.Milestones.Find(MilestoneID);
+                if (milestone != null)
+                {
+                    milestone.dropped = true;
+                    dbContext.SaveChanges();
+                }
+            }
         }
     }
 }

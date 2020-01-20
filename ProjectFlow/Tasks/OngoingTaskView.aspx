@@ -18,7 +18,7 @@
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
@@ -138,6 +138,8 @@
                                         </div>
                                     </div>
                                 </EmptyDataTemplate>
+                                <PagerSettings Mode="NumericFirstLast" PageButtonCount="3" />
+                                <PagerStyle CssClass="pagination-ys table-borderless" />
                             </asp:GridView>
 
                         </ContentTemplate>
