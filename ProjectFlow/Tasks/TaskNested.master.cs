@@ -55,17 +55,7 @@ namespace ProjectFlow.Tasks
         {
             ServicesWithContent servicesWithContent = Master as ServicesWithContent;
 
-            // Current Project
-            Project selectedProject = servicesWithContent.CurrentProject;
-
-            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-            // Current User
-            Student student = GetCurrentUser();
-
-            // Project Team
-            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, selectedProject);
-
-            return projectTeam;
+            return servicesWithContent.CurrentProjectTeam;
         }
 
         // Get Current User
