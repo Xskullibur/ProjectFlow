@@ -1,5 +1,4 @@
-﻿using ProjectFlow.DAO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +8,7 @@ using System.Web.UI.WebControls;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 
 namespace ProjectFlow
 {
@@ -21,29 +21,29 @@ namespace ProjectFlow
 
         protected void LoginValidateAction(object sender, EventArgs e)
         {
-            string email = emailTextBox.Text;
+            string username = usernameTextBox.Text;
             string password = passwordTextBox.Text;
 
             LoginBLL loginService = new LoginBLL();
 
-            Student student = loginService.LoginValidate(email, password);
-
-            if(student != null)
+            if(Membership.ValidateUser(username, password))
             {
-                //Found student, login success 
+                //Found student or tutor, login success 
 
-                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, email, 
-                    DateTime.Now, DateTime.Now.AddMinutes(2880), rememberMeCheckBox.Checked, "Student", FormsAuthentication.FormsCookiePath);
+                var authenticatedUser = Membership.GetUser(username);
+
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, username, 
+                    DateTime.Now, DateTime.Now.AddMinutes(2880), rememberMeCheckBox.Checked, LoginUtil.ConvertAuthenticatedUserToRole(authenticatedUser), FormsAuthentication.FormsCookiePath);
 
                 string hash = FormsAuthentication.Encrypt(ticket);
                 HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
-
+                
                 if (ticket.IsPersistent)
                 {
                     cookie.Expires = ticket.Expiration;
                 }
                 Response.Cookies.Add(cookie);
-                string url = FormsAuthentication.GetRedirectUrl(email, rememberMeCheckBox.Checked);
+                string url = FormsAuthentication.GetRedirectUrl(username, rememberMeCheckBox.Checked);
 
                 if (url.Equals("/"))
                 {

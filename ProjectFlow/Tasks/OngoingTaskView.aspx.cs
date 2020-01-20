@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -205,11 +207,11 @@ namespace ProjectFlow.Tasks
             // Verify Task ID
             TaskBLL taskBLL = new TaskBLL();
             int id = Convert.ToInt32(row.Cells[0].Text);
-            
-            Task updated_task = taskBLL.GetTaskById(id);
+
+            Task updated_task = taskBLL.GetTaskByID(id);
             if (updated_task == null)
             {
-                // TODO: Error Message Task ID Not Found
+                this.Master.Master.ShowAlert("Task Not Found!", BootstrapAlertTypes.DANGER);
             }
             else
             {
@@ -261,7 +263,7 @@ namespace ProjectFlow.Tasks
 
                 // Verify
                 TaskVerification taskVerification = new TaskVerification();
-                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate,  statusIndex);
+                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
 
                 // Show Errors
                 if (!verified)
@@ -317,14 +319,14 @@ namespace ProjectFlow.Tasks
                 }
                 else
                 {
-                    
+
                     /**
                      * UPDATE TASK
                      **/
 
                     int milestoneID = Convert.ToInt32((milestoneDDL).SelectedValue);
                     int statusID = Convert.ToInt32((statusDDL).SelectedValue);
-                
+
                     // Update Task
                     updated_task.taskName = name;
                     updated_task.taskDescription = desc;
@@ -361,11 +363,11 @@ namespace ProjectFlow.Tasks
                     // Update Task and Allocations
                     if (taskBLL.Update(updated_task, updated_Allocations))
                     {
-                        // TODO: Notify Successful Update
+                        this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
                     }
                     else
                     {
-                        // TODO: Notify Failed Update
+                        this.Master.Master.ShowAlert("Failed to Update Task!", BootstrapAlertTypes.DANGER);
                     }
 
                     // Return to READ MODE
@@ -386,19 +388,25 @@ namespace ProjectFlow.Tasks
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
-            bool result = taskBLL.Delete(id);
+            bool result = taskBLL.Delete(taskBLL.GetTaskByID(id));
 
             refreshData();
 
             if (result)
             {
-                //TODO: Notify Delete Successful
+                this.Master.Master.ShowAlertWithTiming("Task Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
             {
-                //TODO: Notify Delete Failed
+                this.Master.Master.ShowAlert("Failed to Drop Task", BootstrapAlertTypes.DANGER);
             }
 
+        }
+
+        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            taskGrid.PageIndex = e.NewPageIndex;
+            refreshData();
         }
     }
 }

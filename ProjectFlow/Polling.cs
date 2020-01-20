@@ -16,7 +16,10 @@ namespace ProjectFlow
     {
         public int pollingID { get; set; }
         public int issueID { get; set; }
+        public int voterID { get; set; }
+        public Nullable<bool> vote { get; set; }
     
         public virtual Issue Issue { get; set; }
+        public virtual TeamMember TeamMember { get; set; }
     }
 }
