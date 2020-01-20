@@ -143,26 +143,20 @@
                 <div id="content" class="col-12 col-md-10">
                     <div class="row h-100 pt-5" style="vertical-align:top;">
 
-                        <table style="width: 100%;">
-                            <tr>
-                                <td>
-                                    <%--Alert Continer--%>
-                                    <div class="container" id="alert_container">
-                                        <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                            <ContentTemplate>
-                                                <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                                    </asp:ContentPlaceHolder>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="col-12">
+                            <%--Alert Continer--%>
+                            <div class="container" id="alert_container">
+                                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                    <ContentTemplate>
+                                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </div>
+
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                            </asp:ContentPlaceHolder>
+
+                        </div>
 
                     </div>
                 </div>
