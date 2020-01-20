@@ -108,6 +108,8 @@ namespace ProjectFlow.Tasks
 
                 milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
             }
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         // Switch Views
