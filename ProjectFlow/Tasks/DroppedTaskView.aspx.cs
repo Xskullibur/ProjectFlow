@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -13,7 +14,11 @@ namespace ProjectFlow.Tasks
 {
     public partial class DroppedTaskView : System.Web.UI.Page
     {
-        private const int TEST_TEAM_ID = 2;
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,15 +27,35 @@ namespace ProjectFlow.Tasks
                 Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }
+            taskGrid.Font.Size = 11;
         }
 
         private void refreshData()
         {
-            TaskBLL taskBLL = new TaskBLL();
-            var dropped_tasks = taskBLL.GetDroppedTasksByTeamId(TEST_TEAM_ID);
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            taskGrid.DataSource = dropped_tasks;
-            taskGrid.DataBind();
+            TaskBLL taskBLL = new TaskBLL();
+
+            if (!Master.PersonalTaskSelected)
+            {
+                taskGrid.DataSource = taskBLL.GetDroppedTasksByTeamId(currentTeam.teamID);
+                taskGrid.DataBind();
+            }
+            else
+            {
+                // Get Current User
+                Student currentUser = Master.GetCurrentUser();
+
+                taskGrid.DataSource = taskBLL.GetDroppedTaskByTeamIdWithStudent(currentTeam.teamID, currentUser);
+                taskGrid.DataBind();
+            }
+            
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData();
         }
 
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -45,7 +70,8 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                this.Master.Master.ShowAlertWithTiming("Successfully Restore Task!", BootstrapAlertTypes.SUCCESS, 2000);
+                NotificationHelper.Task_Restore_Setup(id);
+                this.Master.Master.ShowAlertWithTiming("Task Successfully Restored !", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
             {

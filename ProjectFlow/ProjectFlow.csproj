@@ -187,6 +187,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -340,6 +341,9 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
+    <None Include="quartz.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -408,6 +412,7 @@
     </Compile>
     <Compile Include="BLL\ActionItemBLL.cs" />
     <Compile Include="BLL\aspnet_UsersBLL.cs" />
+    <Compile Include="BLL\JobDetailsBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
@@ -588,7 +593,7 @@
     <Compile Include="Tasks\TaskNested.master.designer.cs">
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
-    <Compile Include="Tasks\TaskVerification.cs" />
+    <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\OngoingTaskView.aspx.cs">
       <DependentUpon>OngoingTaskView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -678,6 +683,7 @@
     <Compile Include="Utils\NotificationHelper.cs" />
     <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="Utils\SemanticsParsing.cs" />
+    <Compile Include="Utils\SmsHelper.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>

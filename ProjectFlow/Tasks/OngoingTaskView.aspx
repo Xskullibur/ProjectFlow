@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="OngoingTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.tDetailedView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="OngoingTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.tDetailedView" Async="true" %>
 <%@ MasterType VirtualPath="~/Tasks/TaskNested.master" %> 
 
 <%--TaskNested Master--%>
@@ -8,22 +8,27 @@
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container py-2 w-100 h-100">
+    <div class="container py-2">
 
         <div class="row pb-2">
             <div class="col">
 
                 <div style="overflow-x: auto;">
-
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" OnRowCommand="taskGrid_RowCommand" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
                                     <%--ID--%>
                                     <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
+
+                                    <%--Due Date--%>
+                                    <asp:BoundField HeaderText="Due" ReadOnly="True" >
+                                    <ItemStyle Font-Bold="True" />
+
+                                    </asp:BoundField>
 
                                     <%--Task--%>
                                     <asp:TemplateField HeaderText="Task">
@@ -75,7 +80,7 @@
                                             <asp:RequiredFieldValidator ID="startDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Start-Date Field is Required!" ControlToValidate="editStartDate" Display="Dynamic" ValidationGroup="EditTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                         </EditItemTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="gridStart" runat="server" Text='<%# Bind("Start") %>'></asp:Label>
+                                            <asp:Label ID="gridStart" runat="server" Text='<%# Bind("Start", "{0: dd/MM/yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -91,7 +96,7 @@
                                             <asp:RequiredFieldValidator ID="endDateRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="End-Date Field is Required!" ControlToValidate="editEndDate" Display="Dynamic" ValidationGroup="EditTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                         </EditItemTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="gridEnd" runat="server" Text='<%# Bind("End") %>'></asp:Label>
+                                            <asp:Label ID="gridEnd" runat="server" Text='<%# Bind("End", "{0: dd/MM/yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -118,13 +123,36 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:CommandField ShowEditButton="True" ButtonType="Button" ValidationGroup="EditTask">
-                                        <ControlStyle CssClass="btn btn-primary mb-2" />
-                                    </asp:CommandField>
+                                    <%--Action Settings--%>
+                                    <asp:TemplateField ShowHeader="false">
+                                        <ItemTemplate>
+                                            <div class="dropdown mb-2">
+                                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    Edit
+                                                </button>
 
-                                    <asp:CommandField ShowDeleteButton="True" ButtonType="Button" >
-                                        <ControlStyle CssClass="btn btn-danger" />
-                                    </asp:CommandField>
+                                                <div class="dropdown-menu">
+                                                    <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
+                                                    <asp:Button ID="updateStatusBtn" Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
+                                                </div>
+
+
+                                            </div>
+                                            <asp:Button ID="DeleteButton" Text="Delete" runat="server" 
+                                                CssClass="btn btn-sm btn-danger"
+                                                data-toggle="confirmation"
+                                                data-btn-ok-icon-class="fa fa-check"
+                                                data-btn-cancel-icon-class="fa fa-close"
+                                                data-popout="true"
+                                                CommandName="Delete" /> 
+                                        </ItemTemplate>
+
+                                        <edititemtemplate>
+					                        <asp:Button id="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" commandname="Update" text="Update" />
+					                        <asp:Button id="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" commandname="Cancel" text="Cancel" />
+				                        </edititemtemplate>
+
+                                    </asp:TemplateField>
 
                                 </Columns>
 

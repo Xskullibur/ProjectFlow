@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using ProjectFlow.Scheduler;
 using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
@@ -18,6 +19,7 @@ namespace ProjectFlow.Tasks
 
         // Public Attributes and Methods
         public event EventHandler refreshGrid;
+        public bool PersonalTaskSelected = false;
         public enum TaskViews
         {
             OngoingTaskView,
@@ -26,6 +28,7 @@ namespace ProjectFlow.Tasks
             Swimlane
         }
 
+        // Change Selected  Task View
         public void changeSelectedView(TaskViews selectedView)
         {
             switch (selectedView)
@@ -46,6 +49,38 @@ namespace ProjectFlow.Tasks
                     break;
             }
         }
+        
+        // Get Current Project
+        public ProjectTeam GetCurrentProjectTeam()
+        {
+            ServicesWithContent servicesWithContent = Master as ServicesWithContent;
+
+            // Current Project
+            Project selectedProject = servicesWithContent.CurrentProject;
+
+            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+            // Current User
+            Student student = GetCurrentUser();
+
+            // Project Team
+            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, selectedProject);
+
+            return projectTeam;
+        }
+
+        // Get Current User
+        public Student GetCurrentUser()
+        {
+            var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+            Student student = projectFlowIdentity.Student;
+
+            return student;
+        }
+
+
+        /**
+         * Main Program
+         **/
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -185,8 +220,8 @@ namespace ProjectFlow.Tasks
             ClearErrorMessages();
 
             // Verify Attributes
-            TaskVerification taskVerification = new TaskVerification();
-            bool verified = taskVerification.Verify(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
+            TaskHelper taskVerification = new TaskHelper();
+            bool verified = taskVerification.VerifyAddTask(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
 
             if (!verified)
             {
@@ -287,7 +322,7 @@ namespace ProjectFlow.Tasks
                 if (result)
                 {
                     // Default Notification Setup (One Day Reminder + Delay Update and Alert)
-                    NotificationHelper.Default_AddTask_Notification_Setup(newTask.taskID);
+                    NotificationHelper.Default_AddTask_Setup(newTask.taskID);
 
                     // Update Page
                     hideModal();
@@ -302,5 +337,19 @@ namespace ProjectFlow.Tasks
 
         }
 
+        // Filter Task
+        protected void personalChkBx_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((CheckBox)sender).Checked)
+            {
+                PersonalTaskSelected = true;
+            }
+            else
+            {
+                PersonalTaskSelected = false;
+            }
+
+            refreshGrid?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
