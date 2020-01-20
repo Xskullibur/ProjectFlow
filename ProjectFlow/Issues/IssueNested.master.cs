@@ -39,7 +39,15 @@ namespace ProjectFlow.Issues
         {
             if (!IsPostBack)
             {
-                
+                // Status
+                StatusBLL statusBLL = new StatusBLL();
+                Dictionary<int, string> statusDict = statusBLL.Get();
+
+                IssueStatusDLL.DataSource = statusDict;
+                IssueStatusDLL.DataTextField = "Value";
+                IssueStatusDLL.DataValueField = "Key";
+
+                IssueStatusDLL.DataBind();
 
             }
         }
@@ -66,6 +74,7 @@ namespace ProjectFlow.Issues
 
             if (Page.IsValid)
             {
+                bool IsPublic = checkCB();
 
                 // Create Task Object
                 Issue newIssue = new Issue();
@@ -74,6 +83,8 @@ namespace ProjectFlow.Issues
                 newIssue.taskID = 5;                    //this is a placeholder
                 newIssue.createdBy = TEST_TEAM_ID;      //this is also a placeholder
                 newIssue.active = true;
+                newIssue.statusID = Convert.ToInt32(IssueStatusDLL.SelectedValue);
+                newIssue.votePublic = IsPublic;
 
                 // Submit Query
                 IssueBLL issueBLL = new IssueBLL();
@@ -124,6 +135,18 @@ namespace ProjectFlow.Issues
             }
 
             return result;
+        }
+
+        protected bool checkCB()
+        {
+            if (cbPublic.Checked == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
