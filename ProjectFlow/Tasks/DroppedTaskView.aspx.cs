@@ -61,7 +61,7 @@ namespace ProjectFlow.Tasks
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             // Selected Task ID
-            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[1].Text);
+            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
