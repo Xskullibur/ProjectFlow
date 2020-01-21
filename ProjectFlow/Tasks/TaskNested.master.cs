@@ -127,6 +127,10 @@ namespace ProjectFlow.Tasks
                     Response.Redirect("DroppedTaskView.aspx");
                     break;
 
+                case 2:
+                    Response.Redirect("CalendarView.aspx");
+                    break;
+
                 default:
                     break;
 

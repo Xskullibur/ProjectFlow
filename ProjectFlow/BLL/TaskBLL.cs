@@ -8,6 +8,52 @@ namespace ProjectFlow.BLL
 {
     public class TaskBLL
     {
+
+        public List<Task> GetOngoingTasksBetween(DateTime startDate, DateTime endDate)
+        {
+
+            if (HttpContext.Current.Session["CurrentProjectTeam"] != null)
+            {
+                ProjectTeam projectTeam = HttpContext.Current.Session["CurrentProjectTeam"] as ProjectTeam;
+                int teamID = projectTeam.teamID;
+
+                using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+                {
+                    var list = dbContext.Tasks.Include("TaskAllocations.TeamMember.Student")
+                        .Where(x => x.teamID == teamID)
+                        .Where(x => x.dropped != true)
+                        .Where(x => (x.startDate >= startDate && x.startDate <= endDate))
+                        .Where(x => (x.endDate <= startDate && x.endDate <= endDate))
+                        .ToList();
+
+                    return list;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public IEnumerable<object> GetOngoingDataSource(int id)
+        {
+            var ds = GetOngoingTasksByTeamId(id)
+                .Select(y => new
+                {
+                    ID = y.taskID,
+                    Task = y.taskName,
+                    Description = y.taskDescription,
+                    MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                    Start = y.startDate,
+                    End = y.endDate,
+                    Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
+                    Status = y.Status.status1
+                }).ToList();
+
+            return ds;
+        }
+
         /// <summary>
         /// Add a new Task into DB with its Allocations
         /// </summary>
@@ -165,7 +211,7 @@ namespace ProjectFlow.BLL
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
-        public IEnumerable<object> GetOngoingTasksByTeamId(int teamID)
+        public List<Task> GetOngoingTasksByTeamId(int teamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -180,17 +226,7 @@ namespace ProjectFlow.BLL
                         .Where(x => x.dropped != true)
                         .OrderBy(x => x.startDate)
                         .ThenBy(x => x.endDate)
-                        .ToList().Select(y => new
-                        {
-                            ID = y.taskID,
-                            Task = y.taskName,
-                            Description = y.taskDescription,
-                            MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
-                            Start = y.startDate,
-                            End = y.endDate,
-                            Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
-                            Status = y.Status.status1
-                        });
+                        .ToList();
 
                     return list.ToList();
 

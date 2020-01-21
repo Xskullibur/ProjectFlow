@@ -76,7 +76,7 @@
     <div class="container">
 
         <%--Tool Bar--%>
-        <div class="row justify-content-end">
+        <div class="row justify-content-start">
 
             <%--Change View DropDownList--%>
             <div class="col-3">
@@ -84,14 +84,14 @@
                 <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-secondary" runat="server" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged" AutoPostBack="True">
                     <asp:ListItem Value="Ongoing Tasks">Ongoing Tasks</asp:ListItem>
                     <asp:ListItem Value="Dropped Tasks">Dropped Tasks</asp:ListItem>
-                    <asp:ListItem Enabled="False" Value="Calendar">Calendar</asp:ListItem>
+                    <asp:ListItem Value="Calendar">Calendar</asp:ListItem>
                     <asp:ListItem Enabled="False" Value="Swim Lanes">Swim Lanes</asp:ListItem>
                 </asp:DropDownList>
 
             </div>
 
             <%--Personal Task Check Box--%>
-            <div class="col-2">
+            <div class="col-3">
 
                 <button class="btn border border-secondary">
                     <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
@@ -100,7 +100,7 @@
             </div>
 
             <%--Add Task Button--%>
-            <div class="col">
+            <div class="col-1">
 
                 <!-- Button trigger modal -->
                 <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />

@@ -129,10 +129,14 @@ namespace ProjectFlow.Tasks
         {
             if (currentStatus == StatusBLL.VERIFICATON)
             {
-                if (leader != currentUser)
+                if (leader.studentID != currentUser.studentID)
                 {
                     return false;
                 }
+            }
+            else if (currentStatus == StatusBLL.COMPLETED)
+            {
+                return false;
             }
 
             return true;

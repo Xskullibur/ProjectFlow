@@ -41,7 +41,7 @@ namespace ProjectFlow.Tasks
             // Check Personal Task Filter
             if (!Master.PersonalTaskSelected)
             {
-                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
+                taskGrid.DataSource = taskBLL.GetOngoingDataSource(currentTeam.teamID);
                 taskGrid.DataBind();
             }
             else
@@ -218,22 +218,25 @@ namespace ProjectFlow.Tasks
                     string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
                     Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
 
-                    string nextStatus = StatusBLL.GetNextStatus(currentStatus);
-                    updateStatusBtn.Text += $" ({nextStatus})";
-
-                    if (currentStatus == StatusBLL.VERIFICATON)
+                    if (currentStatus == StatusBLL.COMPLETED)
                     {
+                        updateStatusBtn.Enabled = false;
+                    }
+                    else if (currentStatus == StatusBLL.VERIFICATON)
+                    {
+                        string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                        updateStatusBtn.Text += $" ({nextStatus})";
+
                         StudentBLL studentBLL = new StudentBLL();
 
                         Student leader = studentBLL.GetLeaderByTaskID(taskID);
                         Student currentUser = Master.GetCurrentUser();
 
-                        if (currentUser != leader)
+                        if (currentUser.studentID != leader.studentID)
                         {
                             updateStatusBtn.Enabled = false;
                         }
                     }
-
 
                     /**
                      * SETUP DUE DATE
