@@ -58,5 +58,13 @@ namespace ProjectFlow.BLL
                 return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.Student.firstName.ToLower().Contains(search.ToLower())).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
             }
         }
+
+        public bool CheckLeaderExist(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Any(x => x.roleID == 1 && x.teamID == TeamID);
+            }
+        }
     }
 }

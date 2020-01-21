@@ -40,7 +40,7 @@
                                 <br />
                             </td>
                             <td class="auto-style14">
-                                <asp:DropDownList ID="RoleDP" CssClass="form-control border border-dark" runat="server">
+                                <asp:DropDownList ID="RoleDP" CssClass="form-control border border-dark" runat="server" OnSelectedIndexChanged="RoleDP_SelectedIndexChanged">
                                     <asp:ListItem>Member</asp:ListItem>
                                     <asp:ListItem>Leader</asp:ListItem>
                                 </asp:DropDownList>
@@ -135,7 +135,7 @@
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField> 
-                            <asp:TemplateField HeaderText="Role ID">
+                            <asp:TemplateField HeaderText="Role">
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="editRoleDP" CssClass="form-control border border-dark" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>' runat="server">
                                         <asp:ListItem>Member</asp:ListItem>

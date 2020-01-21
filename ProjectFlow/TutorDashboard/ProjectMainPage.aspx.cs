@@ -64,16 +64,7 @@ namespace ProjectFlow
             List<string> errorList = new List<string> { };           
             int teamID = int.Parse(Session["PassTeamID"].ToString());
             int roleID = 0;
-
-            if(RoleDP.SelectedIndex == 0)
-            {
-                roleID = 2;
-            }
-            else
-            {
-                roleID = 1;
-            }
-           
+                    
             if(studentList.SelectedIndex == -1)
             {
                 errorList.Add("Must Select a student");
@@ -82,6 +73,21 @@ namespace ProjectFlow
             {
                 foreach(ListItem item in studentList.Items.Cast<ListItem>().Where(x => x.Selected))
                 {
+                    if (RoleDP.SelectedIndex == 0)
+                    {
+                        roleID = 2;
+                    }
+                    else
+                    {
+                        if (teamMemberBLL.CheckLeaderExist(GetTeamID()))
+                        {
+                            roleID = 2;
+                        }
+                        else
+                        {
+                            roleID = 1;
+                        }
+                    }
                     errorList = bll.ValidateInsertMember(item.Value.ToString(), teamID, roleID);
                 }
                 
@@ -116,16 +122,24 @@ namespace ProjectFlow
             if(editRole.SelectedIndex == 0)
             {
                 role = 2;
+                List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
+                Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
             }
             else
             {
-                role = 1;
+                if (teamMemberBLL.CheckLeaderExist(GetTeamID()) == false)
+                {
+                    role = 1;
+                    List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
+                    Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
+                }
+                else
+                {
+                    Master.ShowAlert("Team can't have 2 leaders", BootstrapAlertTypes.DANGER);
+                }              
             }
-
-            List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
                      
-            MemberGV.EditIndex = -1;
-            Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
+            MemberGV.EditIndex = -1;            
             ShowMember();
         }
 
@@ -164,7 +178,17 @@ namespace ProjectFlow
         {
             RoleDP.SelectedIndex = 0;
             errorLabel.Text = "";
+            CloseModel();
+        }
+
+        private void CloseModel()
+        {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);
+        }
+
+        private void OpenModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateMember').modal('show');", true);
         }
 
         protected void MemberGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -188,6 +212,11 @@ namespace ProjectFlow
         protected void showAllBtn_Click(object sender, EventArgs e)
         {
             ShowMember();
+        }
+
+        protected void RoleDP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //OpenModel();
         }
     }
 }
