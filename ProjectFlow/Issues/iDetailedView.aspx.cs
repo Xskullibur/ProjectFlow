@@ -51,6 +51,7 @@ namespace ProjectFlow.Issues
             Session["SSName"] = row.Cells[2].Text;
             Session["SSDesc"] = row.Cells[3].Text;
             Session["SSIId"] = int.Parse(row.Cells[0].Text);
+            Session["SSIsPublic"] = row.Cells[7].Text;
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 

@@ -65,7 +65,8 @@ namespace ProjectFlow.BLL
                             Description = y.description,
                             CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
                             Active = y.active,
-                            Status = y.Status.status1
+                            Status = y.Status.status1,
+                            IsPublic = y.votePublic
                         }).ToList();
 
                     return list;
@@ -106,6 +107,9 @@ namespace ProjectFlow.BLL
                             Task = y.title,
                             Description = y.description,
                             CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
+                            Active = y.active,
+                            Status = y.Status.status1,
+                            IsPublic = y.votePublic
                         }).ToList();
 
                     return list;
@@ -146,7 +150,6 @@ namespace ProjectFlow.BLL
                             Task = y.title,
                             Description = y.description,
                             CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
-
                         }).ToList();
 
                     return list;
@@ -225,6 +228,37 @@ namespace ProjectFlow.BLL
                 }
             }
 
+        }
+        
+        public bool isPublic(int iID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+                    var list = dbContext.Issues.Include("TeamMembers.Student")
+                        .Include("Task")
+                        .Where(x => x.issueID == iID)
+                        .Select(y => y.votePublic).ToString();
+
+                    if (list == "true")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return false;
+                }
+
+
+            }
         }
     }
 }

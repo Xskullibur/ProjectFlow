@@ -64,8 +64,6 @@ namespace ProjectFlow.BLL
                             y.issueID
                         ).ToList();
 
-                    //System.Diagnostics.Debug.WriteLine("hello world");
-                    //System.Diagnostics.Debug.WriteLine(list);
                     return list;
 
                 }
@@ -101,6 +99,30 @@ namespace ProjectFlow.BLL
                 {
                     Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
                     return 0;
+                }
+            }
+        }
+
+        public IEnumerable<string> GetVotersBySelection(int iID, bool selection)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    var count = dbContext.Pollings.Include("TeamMembers.Student")
+                        .Where(x => x.issueID == iID)
+                        .Where(x => x.vote == selection)
+                        .Select(y => y.TeamMember.Student.aspnet_Users.UserName
+                        ).ToList();
+
+                    System.Diagnostics.Debug.WriteLine(count);
+                    return count;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
                 }
             }
         }

@@ -45,8 +45,8 @@ namespace ProjectFlow.Issues
                 if (e.Row.Cells[5].Text == "False")//orderstatus index
                 {
                     e.Row.Enabled = false;
-                    //e.Row.Cells[7].Visible = false;
                     //e.Row.Cells[8].Visible = false;
+                    //e.Row.Cells[9].Visible = false;
                 }
 
                 else
@@ -62,6 +62,7 @@ namespace ProjectFlow.Issues
             Session["SSName"] = row.Cells[2].Text;
             Session["SSDesc"] = row.Cells[3].Text;
             Session["SSIId"] = int.Parse(row.Cells[0].Text);
+            Session["SSIsPublic"] = row.Cells[7].Text;
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 
