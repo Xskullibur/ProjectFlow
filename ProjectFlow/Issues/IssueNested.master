@@ -14,6 +14,7 @@
             <div class="col-xl-3 col-12 align-self-end">
 
                 <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged">
+                    <asp:ListItem Value="All Tasks">All Issues</asp:ListItem>
                     <asp:ListItem Value="Ongoing Tasks">Ongoing Issues</asp:ListItem>
                     <asp:ListItem Value="Dropped Tasks">Dropped Issues</asp:ListItem>
                     

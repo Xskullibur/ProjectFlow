@@ -173,10 +173,10 @@
     <Content Include="DashBoard\ProjectMenu.aspx" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
+    <Content Include="Issues\iAllView.aspx" />
     <Content Include="Issues\iDetailedView.aspx" />
     <Content Include="Issues\iDroppedView.aspx" />
     <Content Include="Issues\IssueRes.aspx" />
-    <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="DashBoard\ProjectMainPage.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
@@ -436,6 +436,13 @@
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Issues\iAllView.aspx.cs">
+      <DependentUpon>iAllView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\iAllView.aspx.designer.cs">
+      <DependentUpon>iAllView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Issues\iDetailedView.aspx.cs">
       <DependentUpon>iDetailedView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -463,13 +470,6 @@
     </Compile>
     <Compile Include="Issues\IssueRes.aspx.designer.cs">
       <DependentUpon>IssueRes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueView.aspx.cs">
-      <DependentUpon>IssueView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Issues\IssueView.aspx.designer.cs">
-      <DependentUpon>IssueView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

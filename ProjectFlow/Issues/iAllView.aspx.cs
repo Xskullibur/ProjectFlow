@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,40 +9,50 @@ using ProjectFlow.BLL;
 
 namespace ProjectFlow.Issues
 {
-    public partial class iDetailedView : System.Web.UI.Page
+    public partial class iAllView : System.Web.UI.Page
     {
         private const int TEST_TEAM_ID = 2;
-
         protected void Page_PreInit(object sender, EventArgs e)
         {
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Master.changeSelectedView(IssueNested.IssueViews.iDetailedView);
-                refreshData(TEST_TEAM_ID); 
+                Master.changeSelectedView(IssueNested.IssueViews.iAllView);
+                refreshData(TEST_TEAM_ID);
             }
         }
-
-        protected void refreshBtn_Click(object sender, EventArgs e)
-        {
-            refreshData(TEST_TEAM_ID);
-        }
-
         private void refreshData(int id)
         {
             IssueBLL issueBLL = new IssueBLL();
 
-            IssueView.DataSource = issueBLL.GetActiveIssuesByTeamId(id);
+            IssueView.DataSource = issueBLL.GetAllIssuesByTeamId(id);
             IssueView.DataBind();
 
             if (IssueView.Rows.Count > 0)
             {
                 IssueView.HeaderRow.TableSection = TableRowSection.TableHeader;
                 IssueView.UseAccessibleHeader = true;
+            }
+        }
+
+        protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.Cells[5].Text == "False")//orderstatus index
+                {
+                    e.Row.Enabled = false;
+                    //e.Row.Cells[7].Visible = false;
+                    //e.Row.Cells[8].Visible = false;
+                }
+
+                else
+                {
+                    e.Row.Enabled = true;
+                }
             }
         }
 
@@ -74,6 +85,11 @@ namespace ProjectFlow.Issues
             {
                 //TODO: Notify Delete Failed
             }
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData(TEST_TEAM_ID);
         }
     }
 }

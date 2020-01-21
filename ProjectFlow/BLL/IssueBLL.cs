@@ -40,13 +40,55 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
-        /// Gets Issues By taskID
+        /// Gets all Issues By IssueID
         /// </summary>
-        /// <param name="tID"></param>
+        /// <param name="id"></param>
         /// <returns>Anonymous Object</returns>
         /// 
-        /// (ID, Task, Description, IdTask)
-        public IEnumerable<object> GetIssueByTeamId(int id)
+        /// 
+        public IEnumerable<object> GetAllIssuesByTeamId(int id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+                    var list = dbContext.Issues.Include("TeamMembers.Student")
+                        .Include("Task")
+                        .Include("Status")
+                        .Where(x => x.Task.teamID == id)
+                        .Select(y => new
+                        {
+                            ID = y.issueID,
+                            TaskID = y.taskID,
+                            Task = y.title,
+                            Description = y.description,
+                            CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
+                            Active = y.active,
+                            Status = y.Status.status1
+                        }).ToList();
+
+                    return list;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
+
+        /// <summary>
+        /// Gets active Issues By IssueID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Anonymous Object</returns>
+        /// 
+        /// 
+        public IEnumerable<object> GetActiveIssuesByTeamId(int id)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -64,7 +106,6 @@ namespace ProjectFlow.BLL
                             Task = y.title,
                             Description = y.description,
                             CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
-                            Active = y.active
                         }).ToList();
 
                     return list;
@@ -80,6 +121,13 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// Gets droppped Issues By IssueID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Anonymous Object</returns>
+        /// 
+        /// 
         public IEnumerable<object> GetDroppedIssueByTeamId(int id)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

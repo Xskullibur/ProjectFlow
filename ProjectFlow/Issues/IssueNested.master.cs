@@ -16,6 +16,7 @@ namespace ProjectFlow.Issues
         // Public Attributes and Methods
         public enum IssueViews
         {
+            iAllView,
             iDetailedView,
             iDroppedView
         }
@@ -24,11 +25,14 @@ namespace ProjectFlow.Issues
         {
             switch (selectedView)
             {
-                case IssueViews.iDetailedView:
+                case IssueViews.iAllView:
                     taskViewDDL.SelectedIndex = 0;
                     break;
-                case IssueViews.iDroppedView:
+                case IssueViews.iDetailedView:
                     taskViewDDL.SelectedIndex = 1;
+                    break;
+                case IssueViews.iDroppedView:
+                    taskViewDDL.SelectedIndex = 2;
                     break;
                 default:
                     break;
@@ -153,12 +157,15 @@ namespace ProjectFlow.Issues
         {
             switch (taskViewDDL.SelectedIndex)
             {
-
                 case 0:
-                    Response.Redirect("iDetailedView.aspx");
+                    Response.Redirect("iAllView.aspx");
                     break;
 
                 case 1:
+                    Response.Redirect("iDetailedView.aspx");
+                    break;
+
+                case 2:
                     Response.Redirect("iDroppedView.aspx");
                     break;
 
