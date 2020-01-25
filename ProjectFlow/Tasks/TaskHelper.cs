@@ -28,15 +28,8 @@ namespace ProjectFlow.Tasks
             StartEndDateErrors = new List<string>();
         }
 
-        // Verify Add Task
-        public bool VerifyAddTask(string taskName, 
-            string taskDesc, 
-            int milestoneIndex, 
-            string startDate, 
-            string endDate, 
-            int statusIndex)
+        private void ClearErrorMsgs()
         {
-            bool verified = true;
             TNameErrors.Clear();
             TDescErrors.Clear();
             TMilestoneErrors.Clear();
@@ -44,10 +37,24 @@ namespace ProjectFlow.Tasks
             TEndDateErrors.Clear();
             TStatusErrors.Clear();
             StartEndDateErrors.Clear();
+        }
 
-            /**
-             * Check For Errors
-             **/ 
+
+        /// <summary>
+        /// Verification for valid task
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <param name="taskName"></param>
+        /// <param name="taskDesc"></param>
+        /// <param name="milestoneID"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="statusID"></param>
+        /// <returns>Booolean</returns>
+        public bool VerifyAddTask(int teamID, string taskName, string taskDesc, string milestoneID, string startDate, string endDate, string statusID)
+        {
+            bool verified = true;
+            ClearErrorMsgs();
 
             // Task Name
             if (string.IsNullOrEmpty(taskName))
@@ -73,11 +80,18 @@ namespace ProjectFlow.Tasks
                 verified = false;
             }
 
+
             // Milestone
-            if (milestoneIndex < 0)
+            MilestoneBLL milestoneBLL = new MilestoneBLL();
+            List<Milestone> teamMilestones = milestoneBLL.GetMilestonesByTeamID(teamID);
+
+            if (!int.TryParse(milestoneID, out int milestoneID_Int))
             {
-                TMilestoneErrors.Add("Milestone Field is Required!");
-                verified = false;
+                if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
+                {
+                    TMilestoneErrors.Add("Invalid Milestone Selected!");
+                    verified = false;
+                }
             }
 
             // Start Date
@@ -115,10 +129,16 @@ namespace ProjectFlow.Tasks
             }
 
             // Status
-            if (statusIndex == -1)
+            StatusBLL statusBLL = new StatusBLL();
+            Dictionary<int, string> statusDict = statusBLL.Get();
+
+            if (!int.TryParse(statusID, out int statusID_int))
             {
-                TStatusErrors.Add("Status Field is Required!");
-                verified = false;
+                if (!statusDict.Keys.Contains(statusID_int))
+                {
+                    TStatusErrors.Add("Invalid Status Selected!");
+                    verified = false;
+                } 
             }
 
             return verified;

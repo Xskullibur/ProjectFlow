@@ -7,12 +7,6 @@ namespace ProjectFlow.BLL
 {
     public class MilestoneBLL
     {
-        public List<Milestone> GetMilestoneByTeamID(int id)
-        {
-            var milestoneList = GetMilestonesByTeamID(id);
-
-            return milestoneList;
-        }
      
         public List<string> ValidateCreateMilestone(string Name, string ProjectID, int TeamID, string StartDate, string EndDate)
         {

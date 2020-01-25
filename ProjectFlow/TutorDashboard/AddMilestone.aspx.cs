@@ -43,7 +43,7 @@ namespace ProjectFlow.DashBoard
 
         public void ShowMilestone()
         {
-            List<Milestone> milestoneList = milestoneBLL.GetMilestoneByTeamID(GetTeamID());
+            List<Milestone> milestoneList = milestoneBLL.GetMilestonesByTeamID(GetTeamID());
             MilestoneGV.DataSource = milestoneList;
             MilestoneGV.DataBind();       
         }

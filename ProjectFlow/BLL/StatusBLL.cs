@@ -84,7 +84,6 @@ namespace ProjectFlow.BLL
             }
         }
 
-
         /// <summary>
         /// Update Status Accordingly (PENDING -> WIP, WIP -> VERIFICATION, VERIFICATION -> COMPLETED)
         /// </summary>

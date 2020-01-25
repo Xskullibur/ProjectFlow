@@ -15,8 +15,6 @@ namespace ProjectFlow.Tasks
 {
     public partial class TaskNested : MasterPage
     {
-        private const int TEST_TEAM_ID = 2;
-
         // Public Attributes and Methods
         public event EventHandler refreshGrid;
         public bool PersonalTaskSelected = false;
@@ -76,6 +74,10 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+                // Current Team
+                ProjectTeam currentTeam = GetCurrentProjectTeam();
+                int teamID = currentTeam.teamID;
+
                 // Status
                 StatusBLL statusBLL = new StatusBLL();
                 Dictionary<int, string> statusDict = statusBLL.Get();
@@ -88,7 +90,7 @@ namespace ProjectFlow.Tasks
 
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
-                Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
+                Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(teamID);
 
                 allocationList.DataSource = memberList;
                 allocationList.DataTextField = "Value";
@@ -98,7 +100,7 @@ namespace ProjectFlow.Tasks
 
                 // Milestone
                 MilestoneBLL milestoneBLL = new MilestoneBLL();
-                var teamMilestones = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
+                var teamMilestones = milestoneBLL.GetMilestonesByTeamID(teamID);
 
                 milestoneDDL.DataSource = teamMilestones;
                 milestoneDDL.DataTextField = "milestoneName";
@@ -203,21 +205,27 @@ namespace ProjectFlow.Tasks
         // Add Task Event
         protected void addTask_Click(object sender, EventArgs e)
         {
+            // Get CurrentTeam
+            ProjectTeam currentTeam = GetCurrentProjectTeam();
+            int teamID = currentTeam.teamID;
+
+            // Create Verification Variable
+            bool verified = true;
 
             // Get Attributes
             string taskName = tNameTxt.Text;
             string taskDesc = tDescTxt.Text;
-            int milestoneIndex = milestoneDDL.SelectedIndex;
+            string milestoneID = milestoneDDL.SelectedValue;
             string startDate = tStartTxt.Text;
             string endDate = tEndTxt.Text;
-            int statusIndex = statusDDL.SelectedIndex;
+            string statusID = statusDDL.SelectedValue;
 
             // Clear all Error Messages
             ClearErrorMessages();
 
             // Verify Attributes
             TaskHelper taskVerification = new TaskHelper();
-            bool verified = taskVerification.VerifyAddTask(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
+            verified = taskVerification.VerifyAddTask(teamID, taskName, taskDesc, milestoneID, startDate, endDate, statusID);
 
             if (!verified)
             {
@@ -281,22 +289,15 @@ namespace ProjectFlow.Tasks
                  * Add Task
                  **/
 
-                string selected_milestone = milestoneDDL.SelectedValue;
-
                 // Create Task Object
                 Task newTask = new Task();
                 newTask.taskName = taskName;
                 newTask.taskDescription = taskDesc;
                 newTask.startDate = DateTime.Parse(startDate);
                 newTask.endDate = DateTime.Parse(endDate);
-                newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
-
-                newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session
-
-                if (selected_milestone != "-1")
-                {
-                    newTask.milestoneID = Convert.ToInt32(selected_milestone);
-                }
+                newTask.statusID = Convert.ToInt32(statusID);
+                newTask.milestoneID = Convert.ToInt32(milestoneID);
+                newTask.teamID = teamID;
 
                 // Create Task Allocations
                 List<TaskAllocation> taskAllocations = new List<TaskAllocation>();

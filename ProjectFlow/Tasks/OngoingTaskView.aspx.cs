@@ -187,7 +187,7 @@ namespace ProjectFlow.Tasks
 
                     //Set Dropdownlist Datasource
                     MilestoneBLL milestoneBLL = new MilestoneBLL();
-                    var teamMilestone = milestoneBLL.GetMilestoneByTeamID(currentTeam.teamID);
+                    var teamMilestone = milestoneBLL.GetMilestonesByTeamID(currentTeam.teamID);
 
                     editMilestoneDDL.DataSource = teamMilestone;
                     editMilestoneDDL.DataValueField = "milestoneID";
@@ -288,13 +288,17 @@ namespace ProjectFlow.Tasks
         // Updating
         protected void taskGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            // Get TeamID
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
+            int teamID = currentTeam.teamID;
+            
             // Get Values
             GridViewRow row = taskGrid.Rows[e.RowIndex];
 
             // Get Task
             TaskBLL taskBLL = new TaskBLL();
-            int id = Convert.ToInt32(row.Cells[0].Text);
-            Task updated_task = taskBLL.GetTaskByID(id);
+            int taskID = Convert.ToInt32(row.Cells[0].Text);
+            Task updated_task = taskBLL.GetTaskByID(taskID);
 
             // Verify TaskID
             if (updated_task == null)
@@ -323,10 +327,10 @@ namespace ProjectFlow.Tasks
                 // Attributes
                 string name = nameTxt.Text;
                 string desc = descTxt.Text;
-                int milestoneIndex = milestoneDDL.SelectedIndex;
+                string milestoneID = milestoneDDL.SelectedValue;
                 string startDate = startTxt.Text;
                 string endDate = endTxt.Text;
-                int statusIndex = statusDDL.SelectedIndex;
+                string statusID = statusDDL.SelectedValue;
 
                 // Clear Error Messages
                 tNameErrorLbl.Text = string.Empty;
@@ -352,7 +356,7 @@ namespace ProjectFlow.Tasks
 
                 // Verify Edited Task
                 TaskHelper taskVerification = new TaskHelper();
-                bool verified = taskVerification.VerifyAddTask(name, desc, milestoneIndex, startDate, endDate, statusIndex);
+                bool verified = taskVerification.VerifyAddTask(teamID, name, desc, milestoneID, startDate, endDate,  statusID);
 
                 // Cherk Verified
                 if (!verified)
@@ -415,21 +419,20 @@ namespace ProjectFlow.Tasks
                      * UPDATE TASK
                      **/
 
-                    int milestoneID = Convert.ToInt32((milestoneDDL).SelectedValue);
-                    int statusID = Convert.ToInt32((statusDDL).SelectedValue);
-
                     // Update Task
                     updated_task.Status = null;
+
+                    int milestoneID_int = Convert.ToInt32(milestoneID);
 
                     updated_task.taskName = name;
                     updated_task.taskDescription = desc;
                     updated_task.startDate = Convert.ToDateTime(startDate);
                     updated_task.endDate = Convert.ToDateTime(endDate);
-                    updated_task.statusID = statusID;
+                    updated_task.statusID = Convert.ToInt32(statusID);
 
-                    if (milestoneID != -1)
+                    if (milestoneID_int != -1)
                     {
-                        updated_task.milestoneID = milestoneID;
+                        updated_task.milestoneID = milestoneID_int;
                     }
                     else
                     {
@@ -455,7 +458,7 @@ namespace ProjectFlow.Tasks
                     // Update Task and Allocations
                     if (taskBLL.Update(updated_task, updated_Allocations))
                     {
-                        NotificationHelper.Default_TaskUpdate_Setup(id);
+                        NotificationHelper.Default_TaskUpdate_Setup(taskID);
                         this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
                     }
                     else
