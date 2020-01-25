@@ -5,21 +5,11 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ProjectFlow.BLL;
 
-/// <summary>
-/// EventDAO class is the main class which interacts with the database. SQL Server express edition
-/// has been used.
-/// the event information is stored in a table named 'event' in the database.
-///
-/// Here is the table format:
-/// event(event_id int, title varchar(100), description varchar(200),event_start datetime, event_end datetime)
-/// event_id is the primary key
-/// </summary>
 public class EventDAO
 {
-	//change the connection string as per your database connection.
     private static string connectionString = ConfigurationManager.AppSettings["DBConnString"];
 
-	//this method retrieves all events within range start-end
+	//retrieves all events within range start-end
     public static List<CalendarEvent> getEvents(DateTime start, DateTime end)
     {
         List<CalendarEvent> events = new List<CalendarEvent>();

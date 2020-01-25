@@ -135,8 +135,6 @@
                                                     <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
                                                     <asp:Button ID="updateStatusBtn" Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
                                                 </div>
-
-
                                             </div>
                                             <asp:Button ID="DeleteButton" Text="Delete" runat="server" 
                                                 CssClass="btn btn-sm btn-danger"
