@@ -145,6 +145,29 @@ namespace ProjectFlow.Tasks
                     editStatusDDL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
 
                     /**
+                     * PRIORITY
+                     **/
+
+                    //Get Status Dropdownlist
+                    DropDownList editPriorityDDL = (DropDownList)e.Row.FindControl("editPriorityDDL");
+
+                    //Set Style
+                    editPriorityDDL.Style.Add("width", "auto");
+
+                    //Set Dropdownlist Datasource
+                    PriorityBLL priorityBLL = new PriorityBLL();
+                    var priorityDict = priorityBLL.GetDict();
+
+                    editPriorityDDL.DataSource = priorityDict;
+                    editPriorityDDL.DataTextField = "Value";
+                    editPriorityDDL.DataValueField = "Key";
+                    editPriorityDDL.DataBind();
+
+                    //Set Inital Value
+                    string priorityVal = DataBinder.Eval(rowItems, "Priority").ToString();
+                    editPriorityDDL.SelectedValue = priorityDict.First(x => x.Value == priorityVal).Key.ToString();
+
+                    /**
                      * ALLOCATIONS
                      **/
 
@@ -237,6 +260,11 @@ namespace ProjectFlow.Tasks
                             updateStatusBtn.Enabled = false;
                         }
                     }
+                    else
+                    {
+                        string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                        updateStatusBtn.Text += $" ({nextStatus})";
+                    }
 
                     /**
                      * SETUP DUE DATE
@@ -314,6 +342,7 @@ namespace ProjectFlow.Tasks
                 TextBox startTxt = (TextBox)row.FindControl("editStartDate");
                 TextBox endTxt = (TextBox)row.FindControl("editEndDate");
                 DropDownList statusDDL = (DropDownList)row.FindControl("editStatusDDL");
+                DropDownList priorityDDL = (DropDownList)row.FindControl("editPriorityDDL");
 
                 // Get Error Labels
                 Label tNameErrorLbl = (Label)row.FindControl("tNameErrorLbl");
@@ -323,6 +352,7 @@ namespace ProjectFlow.Tasks
                 Label tEndDateErrorLbl = (Label)row.FindControl("tEndDateErrorLbl");
                 Label startEndDateErrorLbl = (Label)row.FindControl("startEndDateErrorLbl");
                 Label statusErrorLbl = (Label)row.FindControl("statusErrorLbl");
+                Label priorityErrorLbl = (Label)row.FindControl("priorityErrorLbl");
 
                 // Attributes
                 string name = nameTxt.Text;
@@ -331,6 +361,7 @@ namespace ProjectFlow.Tasks
                 string startDate = startTxt.Text;
                 string endDate = endTxt.Text;
                 string statusID = statusDDL.SelectedValue;
+                string priorityID = priorityDDL.SelectedValue;
 
                 // Clear Error Messages
                 tNameErrorLbl.Text = string.Empty;
@@ -354,9 +385,12 @@ namespace ProjectFlow.Tasks
                 statusErrorLbl.Text = string.Empty;
                 statusErrorLbl.Visible = false;
 
+                priorityErrorLbl.Text = string.Empty;
+                priorityErrorLbl.Visible = false;
+
                 // Verify Edited Task
                 TaskHelper taskVerification = new TaskHelper();
-                bool verified = taskVerification.VerifyAddTask(teamID, name, desc, milestoneID, startDate, endDate,  statusID);
+                bool verified = taskVerification.VerifyAddTask(teamID, name, desc, milestoneID, startDate, endDate,  statusID, "1");
 
                 // Cherk Verified
                 if (!verified)
@@ -410,6 +444,13 @@ namespace ProjectFlow.Tasks
                         statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
                     }
 
+                    // Priority
+                    if (taskVerification.TPriorityErrors.Count > 0)
+                    {
+                        priorityErrorLbl.Visible = true;
+                        priorityErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
+                    }
+
                     this.Master.Master.ShowAlert("Failed to Update Task!", BootstrapAlertTypes.DANGER);
                 }
                 else
@@ -429,6 +470,7 @@ namespace ProjectFlow.Tasks
                     updated_task.startDate = Convert.ToDateTime(startDate);
                     updated_task.endDate = Convert.ToDateTime(endDate);
                     updated_task.statusID = Convert.ToInt32(statusID);
+                    updated_task.priorityID = Convert.ToInt32(priorityID);
 
                     if (milestoneID_int != -1)
                     {

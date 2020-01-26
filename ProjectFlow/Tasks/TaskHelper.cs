@@ -16,6 +16,7 @@ namespace ProjectFlow.Tasks
         public List<string> TEndDateErrors { get; set; }
         public List<string> TStatusErrors { get; set; }
         public List<string> StartEndDateErrors { get; set; }
+        public List<string> TPriorityErrors { get; private set; }
 
         public TaskHelper()
         {
@@ -26,6 +27,7 @@ namespace ProjectFlow.Tasks
             TEndDateErrors = new List<string>();
             TStatusErrors = new List<string>();
             StartEndDateErrors = new List<string>();
+            TPriorityErrors = new List<string>();
         }
 
         private void ClearErrorMsgs()
@@ -51,7 +53,7 @@ namespace ProjectFlow.Tasks
         /// <param name="endDate"></param>
         /// <param name="statusID"></param>
         /// <returns>Booolean</returns>
-        public bool VerifyAddTask(int teamID, string taskName, string taskDesc, string milestoneID, string startDate, string endDate, string statusID)
+        public bool VerifyAddTask(int teamID, string taskName, string taskDesc, string milestoneID, string startDate, string endDate, string statusID, string priorityID)
         {
             bool verified = true;
             ClearErrorMsgs();
@@ -87,11 +89,15 @@ namespace ProjectFlow.Tasks
 
             if (int.TryParse(milestoneID, out int milestoneID_Int))
             {
-                if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
+                if (milestoneID_Int != -1)
                 {
-                    TMilestoneErrors.Add("Invalid Milestone Selected!");
-                    verified = false;
+                    if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
+                    {
+                        TMilestoneErrors.Add("Invalid Milestone Selected!");
+                        verified = false;
+                    }
                 }
+
             }
             else
             {
@@ -126,7 +132,7 @@ namespace ProjectFlow.Tasks
             // Compare Start End Date
             if (TStartDateErrors.Count == 0 && TEndDateErrors.Count == 0)
             {
-                if (DateTime.Compare(DateTime.Parse(startDate), DateTime.Parse(endDate)) >= 0)
+                if (DateTime.Compare(DateTime.Parse(startDate).Date, DateTime.Parse(endDate).Date) > 0)
                 {
                     StartEndDateErrors.Add("Start Date cannot be later than End Date!");
                     verified = false;
@@ -148,6 +154,24 @@ namespace ProjectFlow.Tasks
             else
             {
                 TMilestoneErrors.Add("Invalid Milestone Selected!");
+                verified = false;
+            }
+
+            // Priority
+            PriorityBLL priorityBLL = new PriorityBLL();
+            List<Priority> priorities = priorityBLL.Get();
+
+            if (int.TryParse(priorityID, out int priorityID_int))
+            {
+                if (!priorities.Select(x => x.ID).Contains(priorityID_int))
+                {
+                    TPriorityErrors.Add("Invalid Priority Selected!");
+                    verified = false;
+                }
+            }
+            else
+            {
+                TPriorityErrors.Add("Invalid Priority Selected!");
                 verified = false;
             }
 

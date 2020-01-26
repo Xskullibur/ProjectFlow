@@ -18,6 +18,7 @@ namespace ProjectFlowUnitTest
                 "-1",
                 "21/12/2019",
                 "2/1/2020",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -34,6 +35,7 @@ namespace ProjectFlowUnitTest
                 "-1",
                 "21/11/2019",
                 "12/12/2019",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -50,6 +52,7 @@ namespace ProjectFlowUnitTest
                 "-1",
                 "21/11/2019",
                 "12/12/2019",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -66,6 +69,7 @@ namespace ProjectFlowUnitTest
                 "-1",
                 "21/11/2019",
                 "12/12/2019",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -82,6 +86,7 @@ namespace ProjectFlowUnitTest
                 "-2",
                 "21/11/2019",
                 "12/12/2019",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -98,6 +103,7 @@ namespace ProjectFlowUnitTest
                 "1",
                 "12/12/2019",
                 null,
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -114,6 +120,7 @@ namespace ProjectFlowUnitTest
                 "1",
                 "13/1231/5216",
                 "12/12/2019",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -130,6 +137,7 @@ namespace ProjectFlowUnitTest
                 "1",
                 "12/12/2019",
                 null,
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -146,6 +154,7 @@ namespace ProjectFlowUnitTest
                 "1",
                 "12/12/2019",
                 "13/1231/5216",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -162,6 +171,7 @@ namespace ProjectFlowUnitTest
                 "1",
                 "20/1/2020",
                 "19/12/2019",
+                "1",
                 "1");
 
             Assert.IsFalse(result);
@@ -178,7 +188,25 @@ namespace ProjectFlowUnitTest
                 "1",
                 "20/1/2020",
                 "19/12/2019",
-                "-2");
+                "-2",
+                "1");
+
+            Assert.IsFalse(result);
+
+        }
+
+        [TestMethod]
+        public void WhenPriorityIdIsInvalid_ReturnFALSE()
+        {
+
+            TaskHelper taskHelper = new TaskHelper();
+            bool result = taskHelper.VerifyAddTask(5, "Verify StatusId is Invalid",
+                "Check that verification catches invalid status index",
+                "1",
+                "20/1/2020",
+                "19/12/2019",
+                "-2",
+                "-1");
 
             Assert.IsFalse(result);
 

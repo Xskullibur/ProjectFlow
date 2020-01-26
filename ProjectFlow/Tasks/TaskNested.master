@@ -204,6 +204,15 @@
                                         <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="statusDDL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                                     </div>
 
+                                    <%--Priority--%>
+                                    <div class="form-group">
+                                        <asp:Label CssClass="control-label" Text="Priority:" AssociatedControlID="statusDDL" runat="server" />
+                                        <asp:DropDownList ID="priorityDDL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                        <asp:Label ID="priorityErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                        <asp:RequiredFieldValidator ID="priorityRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="statusDDL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                    </div>
+
                                 </div>
 
                                 <%--Error Summary--%>

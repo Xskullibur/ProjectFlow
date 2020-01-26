@@ -85,8 +85,16 @@ namespace ProjectFlow.Tasks
                 statusDDL.DataSource = statusDict;
                 statusDDL.DataTextField = "Value";
                 statusDDL.DataValueField = "Key";
-
                 statusDDL.DataBind();
+
+                // Priority
+                PriorityBLL priorityBLL = new PriorityBLL();
+                List<Priority> priorities = priorityBLL.Get();
+
+                priorityDDL.DataSource = priorities;
+                priorityDDL.DataTextField = "priority1";
+                priorityDDL.DataValueField = "ID";
+                priorityDDL.DataBind();
 
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
@@ -184,6 +192,9 @@ namespace ProjectFlow.Tasks
 
             statusErrorLbl.Text = string.Empty;
             statusErrorLbl.Visible = false;
+
+            priorityErrorLbl.Text = string.Empty;
+            priorityErrorLbl.Visible = false;
         }
 
         // Remove Add Task Panel
@@ -219,13 +230,14 @@ namespace ProjectFlow.Tasks
             string startDate = tStartTxt.Text;
             string endDate = tEndTxt.Text;
             string statusID = statusDDL.SelectedValue;
+            string priorityID = priorityDDL.SelectedValue;
 
             // Clear all Error Messages
             ClearErrorMessages();
 
             // Verify Attributes
             TaskHelper taskVerification = new TaskHelper();
-            verified = taskVerification.VerifyAddTask(teamID, taskName, taskDesc, milestoneID, startDate, endDate, statusID);
+            verified = taskVerification.VerifyAddTask(teamID, taskName, taskDesc, milestoneID, startDate, endDate, statusID, priorityID);
 
             if (!verified)
             {
@@ -282,6 +294,13 @@ namespace ProjectFlow.Tasks
                     statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
                 }
 
+                // Priority
+                if (taskVerification.TPriorityErrors.Count > 0)
+                {
+                    priorityErrorLbl.Visible = true;
+                    priorityErrorLbl.Text = string.Join("<br>", taskVerification.TPriorityErrors);
+                }
+
             }
             else
             {
@@ -296,7 +315,17 @@ namespace ProjectFlow.Tasks
                 newTask.startDate = DateTime.Parse(startDate);
                 newTask.endDate = DateTime.Parse(endDate);
                 newTask.statusID = Convert.ToInt32(statusID);
-                newTask.milestoneID = Convert.ToInt32(milestoneID);
+                newTask.priorityID = Convert.ToInt32(priorityID);
+
+                if (Convert.ToInt32(milestoneID) == -1)
+                {
+                    newTask.milestoneID = null;
+                }
+                else
+                {
+                    newTask.milestoneID = Convert.ToInt32(milestoneID);
+                }
+
                 newTask.teamID = teamID;
 
                 // Create Task Allocations

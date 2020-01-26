@@ -48,7 +48,8 @@ namespace ProjectFlow.BLL
                     Start = y.startDate,
                     End = y.endDate,
                     Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
-                    Status = y.Status.status1
+                    Status = y.Status.status1,
+                    Priority = y.Priority.priority1
                 }).ToList();
 
             return ds;
@@ -220,6 +221,7 @@ namespace ProjectFlow.BLL
                 {
 
                     var list = dbContext.Tasks.Include("TaskAllocations.TeamMember.Student")
+                        .Include("Priority")
                         .Include("Milestone")
                         .Include("Status")
                         .Where(x => x.teamID == teamID)
@@ -302,6 +304,7 @@ namespace ProjectFlow.BLL
                     var list = dbContext.Tasks.Include("TaskAllocations.TeamMember.Student")
                         .Include("Milestone")
                         .Include("Status")
+                        .Include("Priority")
                         .Where(x => x.teamID == teamID)
                         .Where(x => x.dropped == true)
                         .ToList().Select(y => new
@@ -313,7 +316,8 @@ namespace ProjectFlow.BLL
                             Start = y.startDate,
                             End = y.endDate,
                             Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
-                            Status = y.Status.status1
+                            Status = y.Status.status1,
+                            Priority = y.Priority.priority1
                         });
 
                     return list.ToList();
