@@ -181,6 +181,7 @@
     <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
+    <Content Include="ProjectDashboard.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
@@ -547,6 +548,13 @@
     </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectDashboard.aspx.cs">
+      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectDashboard.aspx.designer.cs">
+      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectFlowDB.Context.cs">
       <AutoGen>True</AutoGen>
