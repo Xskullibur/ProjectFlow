@@ -26,7 +26,7 @@ function qTipText(start, end, description) {
     if (end !== null)
         text = description + "<br/><br/>" + "<strong>Start:</strong> " + start.format("DD/MM/YYYY") + "<br/><strong>End:</strong> " + end.format("DD/MM/YYYY");
     else
-        text = description + "<br/><br/>" + "<strong>Start:</strong> " + start.format("DD/MM/YYYY") + "<br/><strong>End:</strong>";
+        text = description + "<br/><br/>" + "<strong>Start:</strong> " + start.format("DD/MM/YYYY") + "<br/><strong>End:</strong>" + start.format("DD/MM/YYYY");
 
     return text;
 }
@@ -57,10 +57,10 @@ $(document).ready(function() {
             element.qtip({
                 content: {
                     title: '<strong>' + event.title + '</strong>',
-                    text: qTipText(event.start.startOf('day'), event.end.startOf('day'), event.description)
+                    text: qTipText(event.start, event.end, event.description)
                 },
                 position: {
-                    my: 'top left',
+                    my: 'bottom left',
                     at: 'bottom center'
                 },
                 style: { classes: 'qtip-shadow qtip-rounded qtip-bootstrap' }
