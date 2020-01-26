@@ -178,7 +178,7 @@ namespace ProjectFlowUnitTest
                 "1",
                 "20/1/2020",
                 "19/12/2019",
-                "-1");
+                "-2");
 
             Assert.IsFalse(result);
 

@@ -85,13 +85,18 @@ namespace ProjectFlow.Tasks
             MilestoneBLL milestoneBLL = new MilestoneBLL();
             List<Milestone> teamMilestones = milestoneBLL.GetMilestonesByTeamID(teamID);
 
-            if (!int.TryParse(milestoneID, out int milestoneID_Int))
+            if (int.TryParse(milestoneID, out int milestoneID_Int))
             {
                 if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
                 {
                     TMilestoneErrors.Add("Invalid Milestone Selected!");
                     verified = false;
                 }
+            }
+            else
+            {
+                TMilestoneErrors.Add("Invalid Milestone Selected!");
+                verified = false;
             }
 
             // Start Date
@@ -132,13 +137,18 @@ namespace ProjectFlow.Tasks
             StatusBLL statusBLL = new StatusBLL();
             Dictionary<int, string> statusDict = statusBLL.Get();
 
-            if (!int.TryParse(statusID, out int statusID_int))
+            if (int.TryParse(statusID, out int statusID_int))
             {
                 if (!statusDict.Keys.Contains(statusID_int))
                 {
                     TStatusErrors.Add("Invalid Status Selected!");
                     verified = false;
                 } 
+            }
+            else
+            {
+                TMilestoneErrors.Add("Invalid Milestone Selected!");
+                verified = false;
             }
 
             return verified;
