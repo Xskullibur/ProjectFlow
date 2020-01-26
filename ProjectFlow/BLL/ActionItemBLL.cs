@@ -20,5 +20,14 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public void RemoveActionItem()
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                dbContext.RoomActionItems.Remove();
+                dbContext.SaveChanges();
+            }
+        }
+
     }
 }

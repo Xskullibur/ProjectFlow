@@ -367,6 +367,7 @@
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\ProjectFlow\christina-worker.js" />
     <Content Include="Scripts\ProjectFlow\christina.js" />
+    <Content Include="Scripts\ProjectFlow\materialio_selection_postback.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

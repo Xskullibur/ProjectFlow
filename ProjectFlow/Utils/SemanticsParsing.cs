@@ -13,18 +13,18 @@ namespace ProjectFlow.Utils
     {
 
         TextStreamer textStreamer;
-        public List<ActionItem> Parse(string text)
+        public List<ParseItem> Parse(string text)
         {
             textStreamer = new TextStreamer(text);
 
-            List<ActionItem> actionItems = new List<ActionItem>();
+            List<ParseItem> parseItems = new List<ParseItem>();
 
             while (!textStreamer.NoMoreChar())
             {
-                ActionItem actionItem = Run(new ActionItem());
-                actionItems.Add(actionItem);
+                ParseItem parseItem = Run(new ParseItem());
+                parseItems.Add(parseItem);
             }
-            return actionItems;
+            return parseItems;
 
         }
 
@@ -69,6 +69,12 @@ namespace ProjectFlow.Utils
                     return Token.TYPE;
                 case ";":
                     return Token.EOL;
+
+                case "create:":
+                    return Token.CREATE;
+                case "delete:":
+                    return Token.DELETE;
+
                 default:
                     return Token.UNKNOWN;
             }
@@ -102,25 +108,22 @@ namespace ProjectFlow.Utils
 
         }
 
-        private ActionItem Run(ActionItem speaker = null)
+        private ParseItem Run(ParseItem parseItem = null)
         {
             int token = NextToken();
             switch (token)
             {
-                case Token.PERSONNAME:
-                    speaker.PersonName = ParsePersonName();
+                case Token.CREATE:
+                    //create: <queryitem>
+                    parseItem.ParseItemType = ParseItemType.CREATE;
                     break;
-                case Token.TOPIC:
-                    speaker.Topic = ParseTopic();
-                    break;
-                case Token.TYPE:
-                    speaker.Type = ParseType();
+                case Token.DELETE:
+                    //delete: <queryitem>
+                    parseItem.ParseItemType = ParseItemType.DELETE;
                     break;
                 case Token.EOL:
                     if (textStreamer.HaveNext()) LastChar = textStreamer.GetNextChar();
-                    return speaker;
-                case Token.DUE:
-                    
+                    return parseItem;
                 case Token.UNKNOWN:
                     if (!string.IsNullOrEmpty(keyword))
                     {
@@ -130,8 +133,29 @@ namespace ProjectFlow.Utils
                     {
                         throw new ParseException($"Unknown Token: ' {LastChar} ', at line: {textStreamer.Line}", textStreamer.Text, textStreamer.Count);
                     }
+                default:
+                    //Parse the <queryitem>
+                    ParseQueryItem(token, parseItem.QueryActionItem);
+                    break;
             }
-            return Run(speaker);
+            return Run(parseItem);
+        }
+
+        private ActionItem ParseQueryItem(int token, ActionItem actionItem = null)
+        {
+            switch (token)
+            {
+                case Token.PERSONNAME:
+                    actionItem.PersonName = ParsePersonName();
+                    break;
+                case Token.TOPIC:
+                    actionItem.Topic = ParseTopic();
+                    break;
+                case Token.TYPE:
+                    actionItem.Type = ParseType();
+                    break;
+            }
+            return null;
         }
 
         private string ParsePersonName()
@@ -229,15 +253,36 @@ namespace ProjectFlow.Utils
             public const int TYPE = 3;
             public const int EOL = 4;
             public const int DUE = 5;
+            public const int CREATE = 6;
+            public const int DELETE = 7;
         }
 
     }
 
+    [Serializable]
     public class ActionItem
     {
         public string PersonName { get; set; }
         public string Topic { get; set; }
         public string Type { get; set; } = "Suggestion";
+    }
+
+    public class ParseItem
+    {
+
+        public ParseItemType ParseItemType { get; internal set; }
+
+        public ActionItem QueryActionItem
+        {
+            get; internal set;
+        } = new ActionItem();
+    }
+
+    public enum ParseItemType
+    {
+        CREATE,
+        DELETE,
+        MODIFY 
     }
 
     public class TextStreamer
