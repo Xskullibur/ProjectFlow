@@ -13,7 +13,10 @@ namespace ProjectFlow.Tasks
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
-		}
+            if (!IsPostBack)
+            {
+                Master.changeSelectedView(TaskNested.TaskViews.Calendar);
+            }
+        }
     }
 }

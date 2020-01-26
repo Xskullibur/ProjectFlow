@@ -23,6 +23,7 @@ namespace ProjectFlow.BLL
                         .Where(x => x.teamID == teamID)
                         .Where(x => x.dropped != true)
                         .Where(x => (x.startDate >= startDate && x.startDate <= endDate))
+                        .OrderBy(x => x.priorityID)
                         .ToList();
 
                     return list;

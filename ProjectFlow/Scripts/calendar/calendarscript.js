@@ -139,9 +139,9 @@ function qTipText(start, end, description) {
     var text;
 
     if (end !== null)
-        text =  "<strong>Start:</strong> " + start.format("MM/DD/YYYY hh:mm T") + "<br/><strong>End:</strong> " + end.format("MM/DD/YYYY hh:mm T") + "<br/><br/>" + description;
+        text = description + "<br/><br/>" + "<strong>Start:</strong> " + start.format("DD/MM/YYYY") + "<br/><strong>End:</strong> " + end.format("DD/MM/YYYY");
     else
-        text =  "<strong>Start:</strong> " + start.format("MM/DD/YYYY hh:mm T") + "<br/><strong>End:</strong><br/><br/>" + description;
+        text = description + "<br/><br/>" + "<strong>Start:</strong> " + start.format("DD/MM/YYYY") + "<br/><strong>End:</strong>";
 
     return text;
 }
@@ -225,9 +225,9 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         header: {
-            left: 'prev today',
+            left: 'today',
             center: 'title',
-            right: 'next'
+            right: 'prev next'
         },
         defaultView: 'month',
         eventClick: updateEvent,
@@ -241,14 +241,14 @@ $(document).ready(function() {
         eventRender: function(event, element) {
             element.qtip({
                 content: {
-                    text: qTipText(event.start, event.end, event.description),
-                    title: '<strong>' + event.title + '</strong>'
+                    title: '<strong>' + event.title + '</strong>',
+                    text: qTipText(event.start.startOf('day'), event.end.startOf('day'), event.description)
                 },
                 position: {
-                    my: 'bottom left',
-                    at: 'top right'
+                    my: 'top left',
+                    at: 'bottom center'
                 },
-                style: { classes: 'qtip-shadow qtip-rounded' }
+                style: { classes: 'qtip-shadow qtip-rounded qtip-bootstrap' }
             });
         }
     });

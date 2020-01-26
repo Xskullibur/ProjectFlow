@@ -11,4 +11,5 @@ public class CalendarEvent
     public DateTime start { get; set; }
     public DateTime end { get; set; }
     public bool allDay { get; set; }
+    public string color { get; set; }
 }

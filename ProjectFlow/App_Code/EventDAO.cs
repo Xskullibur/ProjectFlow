@@ -9,6 +9,10 @@ public class EventDAO
 {
     private static string connectionString = ConfigurationManager.AppSettings["DBConnString"];
 
+    const string LOW_PRIORITY_COLOR = "rgba(0, 153, 0, 0.3)";
+    const string MEDIUM_PRIORITY_COLOR = "rgba(255, 127, 0, 0.3)";
+    const string HIGH_PRIORITY_COLOR = "rgba(255, 0, 0, 0.3)";
+
 	//retrieves all events within range start-end
     public static List<CalendarEvent> getEvents(DateTime start, DateTime end)
     {
@@ -16,17 +20,42 @@ public class EventDAO
 
         TaskBLL taskBLL = new TaskBLL();
         var taskList = taskBLL.GetOngoingTasksBetween(start, end);
-        taskList.ForEach(x =>
+
+        foreach (ProjectFlow.Task task in taskList)
+        {
+            string color;
+
+            switch (task.priorityID)
+            {
+
+                case 1:
+                    color = LOW_PRIORITY_COLOR;
+                    break;
+
+                case 2:
+                    color = MEDIUM_PRIORITY_COLOR;
+                    break;
+
+                case 3:
+                    color = HIGH_PRIORITY_COLOR;
+                    break;
+
+                default:
+                    color = LOW_PRIORITY_COLOR;
+                    break;
+            }
+
             events.Add(new CalendarEvent()
             {
-                id = x.taskID,
-                title = x.taskName,
-                description = x.taskDescription,
-                start = x.startDate,
-                end = x.endDate,
-                allDay = false
-            })
-        );
+                id = task.taskID,
+                title = task.taskName,
+                description = task.taskDescription,
+                start = task.startDate,
+                end = task.endDate,
+                allDay = false,
+                color = color
+            });
+        }
 
         return events;
     }

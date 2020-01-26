@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Web.SessionState;
 
-public class JsonResponse : IHttpHandler, IRequiresSessionState 
+public class JsonResponse : IHttpHandler, IRequiresSessionState
 {
 
     public void ProcessRequest(HttpContext context)
@@ -26,9 +26,9 @@ public class JsonResponse : IHttpHandler, IRequiresSessionState
                 title = cevent.title,
                 start = String.Format("{0:s}", cevent.start),
                 end = String.Format("{0:s}", cevent.end),
-                
                 description = cevent.description,
                 allDay = cevent.allDay,
+                color = cevent.color
             });
             idList.Add(cevent.id);
         }

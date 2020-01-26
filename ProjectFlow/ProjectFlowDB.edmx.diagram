@@ -83,6 +83,8 @@
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_Task" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.aspnet_UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Priority" Width="1.5" PointX="7.375" PointY="11.875" />
+        <AssociationConnector Association="ProjectFlowModel.FK_Task_Priority" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
