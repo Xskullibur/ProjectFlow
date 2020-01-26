@@ -1,7 +1,4 @@
-﻿var currentUpdateEvent;
-var addStartDate;
-var addEndDate;
-var globalAllDay;
+﻿var globalAllDay;
 
 function checkForSpecialChars(stringToCheck) {
     var pattern = /[^A-Za-z0-9 ]/;
