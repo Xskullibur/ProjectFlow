@@ -158,13 +158,21 @@ namespace ProjectFlow.Tasks
         {
             if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
             {
+
+                string filterTaskName = fTaskNameTxt.Text;
+
+                if (Session["filterTaskName"] != null)
+                {
+                    currentFiltersPanel.Controls.Remove(currentFiltersPanel.FindControl("cancelTaskNameFilter"));
+                }
+
                 Session["filterTaskName"] = fTaskNameTxt.Text;
                 refreshGrid?.Invoke(this, EventArgs.Empty);
-
                 updateCurrentFilterPanel();
             }
         }
 
+        // Add Current Applied Filters
         private void updateCurrentFilterPanel()
         {
             if (Session["filterTaskName"] != null)
@@ -172,6 +180,7 @@ namespace ProjectFlow.Tasks
                 string taskName = Session["filterTaskName"].ToString();
 
                 LinkButton linkButton = new LinkButton();
+                linkButton.ID = "cancelTaskNameFilter";
                 linkButton.Text = $"{taskName}<i class='fa fa-close ml-2'></i>";
                 linkButton.CssClass = "btn btn-danger my-2";
                 linkButton.Click += new EventHandler(removeTaskNameFilter_Click);
@@ -180,6 +189,7 @@ namespace ProjectFlow.Tasks
             }
         }
 
+        // Remove Task Name Filter
         protected void removeTaskNameFilter_Click(object sender,EventArgs e)
         {
             LinkButton linkButton = (LinkButton)sender;

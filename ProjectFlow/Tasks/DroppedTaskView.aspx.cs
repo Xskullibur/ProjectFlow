@@ -17,6 +17,18 @@ namespace ProjectFlow.Tasks
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
+            if (Master.GetCurrentProjectTeam() == null)
+            {
+                if (Master.GetCurrentIdentiy().IsTutor)
+                {
+                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
+                }
+                else if (Master.GetCurrentIdentiy().IsStudent)
+                {
+                    Response.Redirect("/StudentDashboard/studentProject.aspx");
+                }
+            }
+
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
 
