@@ -372,6 +372,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Services\Christina\RoomDetail.aspx" />
     <Content Include="Services\Christina\Christina.aspx" />
     <Content Include="Services\Christina\ListOfRooms.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
@@ -434,6 +435,7 @@
     <Compile Include="BLL\StudentBLL.cs" />
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
+    <Compile Include="BLL\TranscriptBLL.cs" />
     <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="BLL\PollingBLL.cs" />
     <Compile Include="CommentForIssue.cs">
@@ -608,6 +610,13 @@
     </Compile>
     <Compile Include="ServicesWithContent.Master.designer.cs">
       <DependentUpon>ServicesWithContent.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Christina\RoomDetail.aspx.cs">
+      <DependentUpon>RoomDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Christina\RoomDetail.aspx.designer.cs">
+      <DependentUpon>RoomDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\Christina\Christina.aspx.cs">
       <DependentUpon>Christina.aspx</DependentUpon>

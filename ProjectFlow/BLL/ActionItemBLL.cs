@@ -34,5 +34,21 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// Return a list of RoomActionItem from a Room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        public List<RoomActionItem> GetListOfRoomActionItemsFromRoom(Room room)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var _room = dbContext.Rooms.Find(room.roomID);
+                return _room.RoomActionItems.ToList();
+            }
+
+        }
+
+
     }
 }
