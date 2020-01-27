@@ -13,7 +13,8 @@
         <%-- Controls --%>
         <div class="row">
             <div class="col-12">
-
+                <asp:LinkButton ID="LinkButton1" runat="server">Created By Me</asp:LinkButton>
+                <asp:ListBox ID="searchList" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple" AutoPostBack="true" OnSelectedIndexChanged="searchList_SelectedIndexChanged"></asp:ListBox>
             </div>
         </div>
         <div class="row">
@@ -22,7 +23,7 @@
                         <ContentTemplate>
 
                             <asp:GridView ID="roomsGridView" runat="server" CssClass="table table-bordered table-hover" 
-                                AllowPaging="True" PageSize="4" OnPageIndexChanging="roomsGridView_PageIndexChanging" 
+                                AllowPaging="True" PageSize="10" OnPageIndexChanging="roomsGridView_PageIndexChanging" 
                                 AutoGenerateColumns="False" OnSelectedIndexChanged="OnSelectedIndexChanged" OnRowDataBound="OnRowDataBound"> 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>

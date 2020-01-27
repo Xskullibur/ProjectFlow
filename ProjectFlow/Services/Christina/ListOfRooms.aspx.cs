@@ -12,7 +12,7 @@ namespace ProjectFlow.Services.Christina
 
     public enum FilterBy
     {
-        SelfCreated, Default
+        SelfCreated, Default, Students
     }
 
     /// <summary>
@@ -21,18 +21,32 @@ namespace ProjectFlow.Services.Christina
     public partial class ListOfRooms : System.Web.UI.Page
     {
 
-        private static int PAGE_SIZE = 10;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 //Display the list of room included in this project team
                 RefreshRoomsGridView();
+
+                RefreshSearchUserList();
+
             }
         }
 
-        private void RefreshRoomsGridView(FilterBy filterBy = FilterBy.Default, int pageIndex = 0)
+        private void RefreshSearchUserList()
+        {
+            var projectTeam = (Master as ServicesWithContent).CurrentProjectTeam;
+            TeamMemberBLL memberBLL = new TeamMemberBLL();
+            Dictionary<Student, string> usersList = memberBLL.GetUsersByTeamID(projectTeam.teamID);
+
+            searchList.DataSource = usersList;
+            searchList.DataTextField = "Value";
+            searchList.DataValueField = "Key";
+
+            searchList.DataBind();
+        }
+
+        private void RefreshRoomsGridView(FilterBy filterBy = FilterBy.Default, List<Student> FilterStudents = null)
         {
 
             var roomBLL = new RoomBLL();
@@ -44,10 +58,13 @@ namespace ProjectFlow.Services.Christina
             {
                 case FilterBy.SelfCreated:
                     Student student = (User.Identity as ProjectFlowIdentity).Student;
-                    listOfRooms = roomBLL.GetListOfRoomsBelongingToAProjectTeamAndCreator(projectTeam, student.aspnet_Users, pageIndex, PAGE_SIZE);
+                    listOfRooms = roomBLL.GetListOfRoomsBelongingToAProjectTeamAndCreator(projectTeam, student.aspnet_Users);
                     break;
                 case FilterBy.Default:
-                    listOfRooms = roomBLL.GetListOfRoomsBelongingToAProjectTeam(projectTeam, pageIndex, PAGE_SIZE);
+                    listOfRooms = roomBLL.GetListOfRoomsBelongingToAProjectTeam(projectTeam);
+                    break;
+                case FilterBy.Students:
+                    listOfRooms = roomBLL.GetListOfRoomsBelongingToAProjectTeamAndListOfStudent(projectTeam, FilterStudents.Select(x => x.aspnet_Users).ToList());
                     break;
                 default:
                     break;
@@ -85,7 +102,7 @@ namespace ProjectFlow.Services.Christina
         {
 
             int index = roomsGridView.SelectedRow.RowIndex;
-            var room = Rooms[index];
+            var room = Rooms[index + (roomsGridView.PageIndex * roomsGridView.PageSize)];
 
             //Go To Room aspx
             
@@ -96,7 +113,19 @@ namespace ProjectFlow.Services.Christina
         protected void roomsGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             roomsGridView.PageIndex = e.NewPageIndex;
-            RefreshRoomsGridView(FilterBy.Default, roomsGridView.PageIndex);
+            RefreshRoomsGridView(FilterBy.Default);
+        }
+
+        protected void searchList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Student> filterList = new List<Student>();
+            foreach(ListItem item in searchList.Items)
+            {
+                if (item.Selected)
+                {
+                    //filterList.Add(item.Value as Student);
+                }
+            }
         }
     }
 }

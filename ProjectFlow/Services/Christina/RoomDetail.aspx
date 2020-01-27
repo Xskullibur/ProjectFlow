@@ -4,12 +4,10 @@
     <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-
-
-
-    <%-- Current selected room id --%>
-    <asp:HiddenField ID="RoomID" runat="server" />
     <div class="container">
+        <div class="row">
+            <asp:Button ID="BackBtn" CssClass="btn btn-primary" runat="server" Text="Back" OnClick="GoBackEvent" />
+        </div>
         <div class="row">
             <div class="card w-100 m-3">
                 <asp:UpdatePanel runat="server">
@@ -57,7 +55,7 @@
                     </div>
                     <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12" style="height: 300px;">
                                 <h5>Transcript</h5>
                                 <asp:TextBox ID="transcriptTxtBox" CssClass="w-100 h-100 my-2" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
                             </div>

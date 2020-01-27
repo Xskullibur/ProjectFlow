@@ -80,7 +80,7 @@ namespace ProjectFlow.Services.Christina
 
             foreach (var transcript in transcripts)
             {
-                transcriptTxtBox.Text += transcript.aspnet_Users.UserName + ":" + transcript.transcript1 + "<br/>";
+                transcriptTxtBox.Text += transcript.aspnet_Users.UserName + ":" + transcript.transcript1 + Environment.NewLine;
             }
 
         }
@@ -95,5 +95,9 @@ namespace ProjectFlow.Services.Christina
                         });
         }
 
+        protected void GoBackEvent(object sender, EventArgs e)
+        {
+            Response.Redirect("ListOfRooms.aspx");
+        }
     }
 }

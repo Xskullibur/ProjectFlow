@@ -138,6 +138,13 @@
                                         </span>
                                         </a>
                                     </li>
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="/Services/Christina/ListOfRooms.aspx">
+                                        <span class="mdc-list-item__text">
+                                            <span class="mdc-list-item__primary-text">Past Meeting Minutes</span>
+                                        </span>
+                                        </a>
+                                    </li>
                                 </ul>
                 </div>
 
