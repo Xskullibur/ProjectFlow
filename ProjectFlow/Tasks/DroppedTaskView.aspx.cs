@@ -27,6 +27,12 @@ namespace ProjectFlow.Tasks
                 Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }
+
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                taskGrid.Columns[taskGrid.Columns.Count - 1].Visible = false;
+            }
+
             taskGrid.Font.Size = 11;
         }
 
@@ -45,7 +51,7 @@ namespace ProjectFlow.Tasks
             else
             {
                 // Get Current User
-                Student currentUser = Master.GetCurrentUser();
+                Student currentUser = Master.GetCurrentIdentiy().Student;
 
                 taskGrid.DataSource = taskBLL.GetDroppedTaskByTeamIdWithStudent(currentTeam.teamID, currentUser);
                 taskGrid.DataBind();

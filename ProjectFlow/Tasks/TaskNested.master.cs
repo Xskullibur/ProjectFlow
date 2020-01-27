@@ -57,23 +57,17 @@ namespace ProjectFlow.Tasks
         }
 
         // Get Current User
-        public Student GetCurrentUser()
+        public ProjectFlowIdentity GetCurrentIdentiy()
         {
             var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
-            Student student = projectFlowIdentity.Student;
 
-            return student;
+            return projectFlowIdentity;
         }
 
 
         /**
          * Main Program
          **/
-
-        protected void Page_PreInit(object sender, EventArgs e)
-        {
-            updateCurrentFilterPanel();
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -123,6 +117,11 @@ namespace ProjectFlow.Tasks
 
                 milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
 
+            }
+
+            if (GetCurrentIdentiy().IsTutor)
+            {
+                addTaskBtn.Visible = false;
             }
 
             updateCurrentFilterPanel();

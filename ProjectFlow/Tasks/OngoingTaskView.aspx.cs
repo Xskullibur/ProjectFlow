@@ -28,6 +28,12 @@ namespace ProjectFlow.Tasks
                 Master.changeSelectedView(TaskNested.TaskViews.OngoingTaskView);
                 refreshData();
             }
+            
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                taskGrid.Columns[taskGrid.Columns.Count - 1].Visible = false;
+            }
+
             taskGrid.Font.Size = 11;
         }
 
@@ -54,7 +60,7 @@ namespace ProjectFlow.Tasks
             else if (Master.PersonalTaskSelected)
             {
                 // Personal Task Filter
-                Student currentUser = Master.GetCurrentUser();
+                Student currentUser = Master.GetCurrentIdentiy().Student;
                 taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamIdWithStudent(currentTeam.teamID, currentUser);
                 taskGrid.DataBind();
             }
@@ -90,7 +96,7 @@ namespace ProjectFlow.Tasks
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0 && Master.GetCurrentIdentiy().IsStudent)
                 {
 
                     ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
@@ -241,36 +247,39 @@ namespace ProjectFlow.Tasks
                 else
                 {
 
-                    /**
-                     * SETUP UPDATE STATUS BTN
-                     **/
-                    int taskID = int.Parse(e.Row.Cells[0].Text);
-                    string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
-                    Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
-
-                    if (currentStatus == StatusBLL.COMPLETED)
+                    if (Master.GetCurrentIdentiy().IsStudent)
                     {
-                        updateStatusBtn.Enabled = false;
-                    }
-                    else if (currentStatus == StatusBLL.VERIFICATON)
-                    {
-                        string nextStatus = StatusBLL.GetNextStatus(currentStatus);
-                        updateStatusBtn.Text += $" ({nextStatus})";
+                        /**
+                         * SETUP UPDATE STATUS BTN
+                         **/
+                        int taskID = int.Parse(e.Row.Cells[0].Text);
+                        string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
+                        Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
 
-                        StudentBLL studentBLL = new StudentBLL();
-
-                        Student leader = studentBLL.GetLeaderByTaskID(taskID);
-                        Student currentUser = Master.GetCurrentUser();
-
-                        if (currentUser.studentID != leader.studentID)
+                        if (currentStatus == StatusBLL.COMPLETED)
                         {
                             updateStatusBtn.Enabled = false;
                         }
-                    }
-                    else
-                    {
-                        string nextStatus = StatusBLL.GetNextStatus(currentStatus);
-                        updateStatusBtn.Text += $" ({nextStatus})";
+                        else if (currentStatus == StatusBLL.VERIFICATON)
+                        {
+                            string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                            updateStatusBtn.Text += $" ({nextStatus})";
+
+                            StudentBLL studentBLL = new StudentBLL();
+
+                            Student leader = studentBLL.GetLeaderByTaskID(taskID);
+                            Student currentUser = Master.GetCurrentIdentiy().Student;
+
+                            if (currentUser.studentID != leader.studentID)
+                            {
+                                updateStatusBtn.Enabled = false;
+                            }
+                        }
+                        else
+                        {
+                            string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                            updateStatusBtn.Text += $" ({nextStatus})";
+                        }
                     }
 
                     /**
@@ -576,7 +585,7 @@ namespace ProjectFlow.Tasks
                     Student leader = studentBLL.GetLeaderByTaskID(id);
 
                     // Get Current User
-                    Student currentUser = Master.GetCurrentUser();
+                    Student currentUser = Master.GetCurrentIdentiy().Student;
 
                     TaskHelper taskHelper = new TaskHelper();
                     bool verified = taskHelper.VerifyUpdateStatus(currentStatus, leader, currentUser);
