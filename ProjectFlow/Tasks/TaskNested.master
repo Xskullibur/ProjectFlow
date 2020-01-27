@@ -75,38 +75,69 @@
 
     <div class="container">
 
+        <%--Title--%>
+        <div class="row mb-3">
+            <div class="col text-center">
+                <h2>Task Management</h2>
+            </div>
+        </div>
+
         <%--Tool Bar--%>
-        <div class="row justify-content-start">
+        <div class="row justify-content-between">
 
-            <%--Change View DropDownList--%>
-            <div class="col-3">
+            <div class="col">
 
-                <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-secondary" runat="server" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged" AutoPostBack="True">
-                    <asp:ListItem Value="Ongoing Tasks">Ongoing Tasks</asp:ListItem>
-                    <asp:ListItem Value="Dropped Tasks">Dropped Tasks</asp:ListItem>
-                    <asp:ListItem Value="Calendar">Calendar</asp:ListItem>
-                    <asp:ListItem Enabled="False" Value="Swim Lanes">Swim Lanes</asp:ListItem>
-                </asp:DropDownList>
+                <div class="row">
+                    <%--Change View DropDownList--%>
+                    <div class="col-3">
+                        <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-secondary" runat="server" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged" AutoPostBack="True">
+                            <asp:ListItem Value="Ongoing Tasks">Ongoing Tasks</asp:ListItem>
+                            <asp:ListItem Value="Dropped Tasks">Dropped Tasks</asp:ListItem>
+                            <asp:ListItem Value="Calendar">Calendar</asp:ListItem>
+                            <asp:ListItem Enabled="False" Value="Swim Lanes">Swim Lanes</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+
+                    <%--Add Task Button--%>
+                    <div class="col-1">
+                        <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
+                    </div>
+                </div>
 
             </div>
 
-            <%--Personal Task Check Box--%>
-            <div class="col-3">
-
-                <button class="btn border border-secondary">
-                    <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
-                </button>
-
-            </div>
-
-            <%--Add Task Button--%>
+            <%--Filter Button--%>
             <div class="col-1">
-
-                <!-- Button trigger modal -->
-                <asp:Button Text="Add Task" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
-
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filterDiv">
+                    <span class="fa fa-filter" />
+                </button>
             </div>
 
+        </div>
+
+        <%--Filter Panel--%>
+        <div class="row">
+            <div class="col">
+                <div class="collapse mt-3 mb-2" id="filterDiv">
+
+                    <div class="container rounded border border-dark p-4">
+
+                        <%--Title--%>
+                        <div class="row">
+                            <div class="col">
+                                <h5>Filter</h5>
+                            </div>
+                        </div>
+
+                        <%--Filter Personal--%>
+                        <button class="btn border border-secondary">
+                            <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <!-- Add Task Modal -->
