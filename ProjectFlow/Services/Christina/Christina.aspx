@@ -48,8 +48,8 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-meeting-logger-table" role="tabpanel" aria-labelledby="nav-meeting-logger-table-tab">
                         <div class="row py-2 px-3">
-                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
-                            <asp:Button ID="Button1" CssClass="btn btn-primary" runat="server" Text="Select Mode" OnClick="ToggleSelectEvent" />
+                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary mr-1" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
+                            <asp:Button ID="Button1" CssClass="btn btn-primary mr-1" runat="server" Text="Select Mode" OnClick="ToggleSelectEvent" />
                             <asp:Button ID="Button2" CssClass="btn btn-danger" runat="server" Text="Delete" OnClick="DeleteEvent" OnClientClick="delete" />
                         </div>
                         <div class="row pd-2">

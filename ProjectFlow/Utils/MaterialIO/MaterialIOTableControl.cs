@@ -95,6 +95,9 @@ namespace ProjectFlow.Utils.MaterialIO
         public void ToSelectMode()
         {
             if (IsSelectMode) return;
+
+            
+
             IsSelectMode = true;
             this.Headers.Insert(0, new MaterialIOTableRowHeaderCheckbox());
 

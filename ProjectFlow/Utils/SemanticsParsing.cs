@@ -262,6 +262,7 @@ namespace ProjectFlow.Utils
     [Serializable]
     public class ActionItem
     {
+        public int ActionItemID { get; set; }
         public string PersonName { get; set; }
         public string Topic { get; set; }
         public string Type { get; set; } = "Suggestion";

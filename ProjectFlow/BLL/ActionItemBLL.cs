@@ -20,11 +20,16 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public void RemoveActionItem()
+        /// <summary>
+        /// Remove an existing RoomActionItem from database
+        /// </summary>
+        /// <param name="roomActionItemID">roo</param>
+        public void RemoveActionItem(int roomActionItemID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                dbContext.RoomActionItems.Remove();
+                var actionItem = dbContext.RoomActionItems.Find(roomActionItemID);
+                dbContext.RoomActionItems.Remove(actionItem);
                 dbContext.SaveChanges();
             }
         }

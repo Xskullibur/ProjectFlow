@@ -100,7 +100,7 @@ namespace ProjectFlow.Services.Christina
             string text = ExecuteTextBox.Text;
 
             InsertActionItems(text);
-
+            ExecuteTextBox.Text = "";
         }
 
         private void InsertActionItems(string text)
@@ -118,19 +118,20 @@ namespace ProjectFlow.Services.Christina
                     var actionItem = parseItem.QueryActionItem;
                     if (parseItem.ParseItemType == ParseItemType.CREATE)
                     {
-                        
-
                         var room = Session["Room"] as Room;
+                        
 
                         //Add action item into database
                         ActionItemBLL actionItemBLL = new ActionItemBLL();
-                        actionItemBLL.AddActionItem(new RoomActionItem
+                        var roomActionItem = new RoomActionItem
                         {
                             personName = actionItem.PersonName,
                             topic = actionItem.Topic,
                             type = actionItem.Type,
                             roomID = room.roomID
-                        });
+                        };
+                        actionItemBLL.AddActionItem(roomActionItem);
+                        actionItem.ActionItemID = roomActionItem.actionItemID;
 
                         AddNewActionItem(actionItem);
                     }
@@ -225,14 +226,19 @@ namespace ProjectFlow.Services.Christina
                 if (value)
                 {
                     itemsToBeDeleted.Add(ActionItems[i]);
+                    materialTable.RemoveRow(i);
                 }
             }
 
+            ActionItemBLL actionItemBLL = new ActionItemBLL();
             foreach (var item in itemsToBeDeleted)
             {
                 ActionItems.Remove(item);
+                actionItemBLL.RemoveActionItem(item.ActionItemID);
             }
 
+            //material back to normal mode
+            materialTable.ToNormalMode();
             
         }
 
