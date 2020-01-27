@@ -39,7 +39,7 @@ namespace ProjectFlow.Tasks
 
             if (!Master.PersonalTaskSelected)
             {
-                taskGrid.DataSource = taskBLL.GetDroppedTasksByTeamId(currentTeam.teamID);
+                taskGrid.DataSource = taskBLL.GetDroppedTaskDataSource(currentTeam.teamID);
                 taskGrid.DataBind();
             }
             else
