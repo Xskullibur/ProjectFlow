@@ -72,13 +72,6 @@ namespace ProjectFlow.Tasks
             refreshData();
         }
 
-
-        /**
-         * SCRIPT SETUP
-         **/
-
-
-
         /**
          * EDITING FUNCTIONS
          **/

@@ -70,6 +70,11 @@ namespace ProjectFlow.Tasks
          * Main Program
          **/
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            updateCurrentFilterPanel();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -117,8 +122,10 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataBind();
 
                 milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
+
             }
 
+            updateCurrentFilterPanel();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
@@ -145,6 +152,42 @@ namespace ProjectFlow.Tasks
                     break;
 
             }
+        }
+
+        // Filter Task
+        protected void fTaskNameBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
+            {
+                Session["filterTaskName"] = fTaskNameTxt.Text;
+                refreshGrid?.Invoke(this, EventArgs.Empty);
+
+                updateCurrentFilterPanel();
+            }
+        }
+
+        private void updateCurrentFilterPanel()
+        {
+            if (Session["filterTaskName"] != null)
+            {
+                string taskName = Session["filterTaskName"].ToString();
+
+                LinkButton linkButton = new LinkButton();
+                linkButton.Text = $"{taskName}<i class='fa fa-close ml-2'></i>";
+                linkButton.CssClass = "btn btn-danger my-2";
+                linkButton.Click += new EventHandler(removeTaskNameFilter_Click);
+
+                currentFiltersPanel.Controls.Add(linkButton);
+            }
+        }
+
+        protected void removeTaskNameFilter_Click(object sender,EventArgs e)
+        {
+            LinkButton linkButton = (LinkButton)sender;
+            currentFiltersPanel.Controls.Remove(linkButton);
+
+            Session["filterTaskName"] = null;
+            refreshGrid?.Invoke(this, EventArgs.Empty);
         }
 
         /**
@@ -378,13 +421,5 @@ namespace ProjectFlow.Tasks
             refreshGrid?.Invoke(this, EventArgs.Empty);
         }
 
-        protected void fTaskNameBtn_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
-            {
-                Session["filterTaskName"] = fTaskNameTxt.Text;
-                refreshGrid?.Invoke(this, EventArgs.Empty);
-            }
-        }
     }
 }

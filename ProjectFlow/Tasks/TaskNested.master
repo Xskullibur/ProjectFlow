@@ -153,6 +153,15 @@
             </div>
         </div>
 
+        <%--Current Filter Panel--%>
+        <div class="row">
+            <div class="col">
+                <asp:Panel ID="currentFiltersPanel" CssClass="d-flex flex-wrap" runat="server">
+                </asp:Panel>
+            </div>
+        </div>
+
+
         <!-- Add Task Modal -->
         <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">

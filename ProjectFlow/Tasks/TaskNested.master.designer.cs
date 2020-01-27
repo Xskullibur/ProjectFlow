@@ -67,6 +67,15 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.CheckBox personalChkBx;
         
         /// <summary>
+        /// currentFiltersPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel currentFiltersPanel;
+        
+        /// <summary>
         /// modalUpdatePanel control.
         /// </summary>
         /// <remarks>
