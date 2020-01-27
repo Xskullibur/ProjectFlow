@@ -129,11 +129,24 @@
                             </div>
                         </div>
 
-                        <%--Filter Personal--%>
-                        <button class="btn border border-secondary">
-                            <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
-                        </button>
+                        <%--Task Name Search--%>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <asp:TextBox ID="fTaskNameTxt" CssClass="form-control" runat="server" placeholder="Task Name"></asp:TextBox>
+                            </div>
+                            <div class="col">
+                                <asp:Button ID="fTaskNameBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="fTaskNameBtn_Click" />
+                            </div>
+                        </div>
 
+                        <%--Filter Personal--%>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <button class="btn border border-secondary">
+                                    <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

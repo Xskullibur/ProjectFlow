@@ -40,6 +40,24 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.Button addTaskBtn;
         
         /// <summary>
+        /// fTaskNameTxt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox fTaskNameTxt;
+        
+        /// <summary>
+        /// fTaskNameBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button fTaskNameBtn;
+        
+        /// <summary>
         /// personalChkBx control.
         /// </summary>
         /// <remarks>

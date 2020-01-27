@@ -377,5 +377,14 @@ namespace ProjectFlow.Tasks
 
             refreshGrid?.Invoke(this, EventArgs.Empty);
         }
+
+        protected void fTaskNameBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
+            {
+                Session["filterTaskName"] = fTaskNameTxt.Text;
+                refreshGrid?.Invoke(this, EventArgs.Empty);
+            }
+        }
     }
 }

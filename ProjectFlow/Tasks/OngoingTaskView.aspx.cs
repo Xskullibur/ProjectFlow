@@ -38,19 +38,33 @@ namespace ProjectFlow.Tasks
             // Get Current Project Team
             ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            // Check Personal Task Filter
-            if (!Master.PersonalTaskSelected)
+            // Check for filters
+            if (Session["filterTaskName"] != null)
             {
-                taskGrid.DataSource = taskBLL.GetOngoingDataSource(currentTeam.teamID);
+                // Task Name Filter
+                string filterTaskName = Session["filterTaskName"].ToString();
+
+                List<Task> ongoingTasks = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
+                List<Task> filteredTasks = ongoingTasks.Where(x => x.taskName.ToLower().Contains(filterTaskName.ToLower()))
+                    .ToList();
+
+                taskGrid.DataSource = taskBLL.ConvertToDataSource(filteredTasks);
+                taskGrid.DataBind();
+            }
+            else if (Master.PersonalTaskSelected)
+            {
+                // Personal Task Filter
+                Student currentUser = Master.GetCurrentUser();
+                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamIdWithStudent(currentTeam.teamID, currentUser);
                 taskGrid.DataBind();
             }
             else
             {
-                Student currentUser = Master.GetCurrentUser();
-
-                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamIdWithStudent(currentTeam.teamID, currentUser);
+                // No Filter
+                taskGrid.DataSource = taskBLL.GetOngoingDataSource(currentTeam.teamID);
                 taskGrid.DataBind();
             }
+
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)

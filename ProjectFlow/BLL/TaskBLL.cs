@@ -197,6 +197,25 @@ namespace ProjectFlow.BLL
         }
 
 
+        public IEnumerable<object> ConvertToDataSource(List<Task> tasks)
+        {
+            var ds = tasks.Select(y => new
+            {
+                ID = y.taskID,
+                Task = y.taskName,
+                Description = y.taskDescription,
+                MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                Start = y.startDate,
+                End = y.endDate,
+                Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
+                Status = y.Status.status1,
+                Priority = y.Priority.priority1
+            }).ToList();
+
+            return ds;
+        }
+
+
         public IEnumerable<object> GetDroppedTaskByTeamIdWithStudent(int teamID, Student student)
         {
 
