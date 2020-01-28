@@ -108,6 +108,7 @@ namespace ProjectFlow
                 //Clear the session
                 Session["CurrentProjectTeam"] = null;
                 Session["CurrentProject"] = null;
+                return;
             }
 
             //Check for access right into the project
