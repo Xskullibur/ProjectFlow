@@ -1,4 +1,8 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
+using ProjectFlow.Utils;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +14,23 @@ namespace ProjectFlow.Tasks
 {
     public partial class DroppedTaskView : System.Web.UI.Page
     {
-        private const int TEST_TEAM_ID = 2;
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (Master.GetCurrentProjectTeam() == null)
+            {
+                if (Master.GetCurrentIdentiy().IsTutor)
+                {
+                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
+                }
+                else if (Master.GetCurrentIdentiy().IsStudent)
+                {
+                    Response.Redirect("/StudentDashboard/studentProject.aspx");
+                }
+            }
+
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,21 +39,47 @@ namespace ProjectFlow.Tasks
                 Master.changeSelectedView(TaskNested.TaskViews.DroppedTaskView);
                 refreshData();
             }
+
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                taskGrid.Columns[taskGrid.Columns.Count - 1].Visible = false;
+            }
+
+            taskGrid.Font.Size = 11;
         }
 
         private void refreshData()
         {
-            TaskBLL taskBLL = new TaskBLL();
-            var dropped_tasks = taskBLL.GetDroppedTasksByTeamId(TEST_TEAM_ID);
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            taskGrid.DataSource = dropped_tasks;
-            taskGrid.DataBind();
+            TaskBLL taskBLL = new TaskBLL();
+
+            if (!Master.PersonalTaskSelected)
+            {
+                taskGrid.DataSource = taskBLL.GetDroppedTaskDataSource(currentTeam.teamID);
+                taskGrid.DataBind();
+            }
+            else
+            {
+                // Get Current User
+                Student currentUser = Master.GetCurrentIdentiy().Student;
+
+                taskGrid.DataSource = taskBLL.GetDroppedTaskByTeamIdWithStudent(currentTeam.teamID, currentUser);
+                taskGrid.DataBind();
+            }
+            
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData();
         }
 
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             // Selected Task ID
-            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[1].Text);
+            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
@@ -42,12 +88,19 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                // TODO: Notify Restore Successful
+                NotificationHelper.Task_Restore_Setup(id);
+                this.Master.Master.ShowAlertWithTiming("Task Successfully Restored !", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
             {
-                // TODO: Notify Restore Failed
+                this.Master.Master.ShowAlert("Failed to Restore Task!", BootstrapAlertTypes.DANGER);
             }
+        }
+
+        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            taskGrid.PageIndex = e.NewPageIndex;
+            refreshData();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="DroppedTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.DroppedTaskView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tasks/TaskNested.master" AutoEventWireup="true" CodeBehind="DroppedTaskView.aspx.cs" Inherits="ProjectFlow.Tasks.DroppedTaskView" Async="true" %>
 <%@ MasterType VirtualPath="~/Tasks/TaskNested.master" %> 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -10,15 +10,35 @@
 
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-hover table-bordered" OnRowDeleting="taskGrid_RowDeleting" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" AutoGenerateColumns="False"> 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
-                                    <asp:CommandField DeleteText="Restore" ShowDeleteButton="True" ButtonType="Button" >
-                                    <ControlStyle CssClass="btn btn-primary" />
-                                    </asp:CommandField>
+
+                                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                                    <asp:BoundField DataField="Task" HeaderText="Task" />
+                                    <asp:BoundField DataField="Description" HeaderText="Description" />
+                                    <asp:BoundField DataField="MileStone" HeaderText="Milestone" />
+                                    <asp:BoundField DataField="Start" HeaderText="Start" />
+                                    <asp:BoundField DataField="End" HeaderText="End" />
+                                    <asp:BoundField DataField="Allocation" HeaderText="Allocation" />
+                                    <asp:BoundField DataField="Priority" HeaderText="Priority" />
+                                    <asp:BoundField DataField="Status" HeaderText="Status" />
+
+                                    <asp:TemplateField ShowHeader="False">
+                                        <ItemTemplate>
+                                            <asp:Button ID="DeleteButton" Text="Restore" runat="server" 
+                                                CssClass="btn btn-primary"
+                                                data-toggle="confirmation"
+                                                data-btn-ok-icon-class="fa fa-check"
+                                                data-btn-cancel-icon-class="fa fa-close"
+                                                data-popout="true"
+                                                CommandName="Delete" />               
+                                        </ItemTemplate>
+                                    </asp:TemplateField> 
+
                                 </Columns>
 
                                 <EmptyDataTemplate>
@@ -31,6 +51,9 @@
                                         </div>
                                     </div>
                                 </EmptyDataTemplate>
+
+                                <PagerSettings Mode="NumericFirstLast" PageButtonCount="3" />
+                                <PagerStyle CssClass="pagination-ys table-borderless" />
 
                             </asp:GridView>
 

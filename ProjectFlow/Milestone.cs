@@ -26,6 +26,7 @@ namespace ProjectFlow
         public Nullable<System.DateTime> endDate { get; set; }
         public string projectID { get; set; }
         public int teamID { get; set; }
+        public bool dropped { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ProjectTeam ProjectTeam { get; set; }

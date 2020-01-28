@@ -13,13 +13,13 @@ namespace ProjectFlow.Tasks {
     public partial class DroppedTaskView {
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// TaskGridUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel TaskGridUpdatePanel;
         
         /// <summary>
         /// taskGrid control.

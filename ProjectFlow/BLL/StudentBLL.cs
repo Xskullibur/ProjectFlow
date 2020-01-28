@@ -56,6 +56,21 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
+        /// Returns the Student by the TeamMember
+        /// </summary>
+        /// <param name="teamMember"></param>
+        /// <returns>the Student object which is referencing from TeamMember</returns>
+        public Student GetStudentByTeamMember(TeamMember teamMember)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Include(x => x.Student.aspnet_Users)
+                    .Select(x => x.Student)
+                    .FirstOrDefault(x => x.UserId == teamMember.UserId);
+            }
+        }
+
+        /// <summary>
         /// Find the Student using student id
         /// </summary>
         /// <param name="id">student id of the Studennt</param>
@@ -186,6 +201,49 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public IEnumerable<ProjectTeam> GetStudentProject(Guid UserID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var student = dbContext.Students.Find(UserID);
+                var projectteam = dbContext.ProjectTeams.Where(x => x.dropped == false);
+                List<ProjectTeam> emptyList = new List<ProjectTeam> { };
+                if(student != null)
+                {
+                    return student.TeamMembers.Select(x => x.ProjectTeam).Where(x => x.dropped == false).ToList();
+                }
+                else
+                {
+                    return emptyList;
+                }                              
+            }
+        }
+
+        public IEnumerable<ProjectTeam> SearchStudentProject(Guid UserID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var student = dbContext.Students.Find(UserID);
+                List<ProjectTeam> emptyList = new List<ProjectTeam> { };
+                if (student != null)
+                {
+                    return student.TeamMembers.Select(x => x.ProjectTeam).Where(x => x.dropped == false && x.teamName.ToLower().Contains(search.ToLower())).ToList();
+                }
+                else
+                {
+                    return emptyList;
+                }
+            }
+        }
+
+        public IEnumerable<ProjectTeam> ShowAvailbleProject()
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var team = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true).ToList();
+                return team;
+            }
+        }
 
     }
 }

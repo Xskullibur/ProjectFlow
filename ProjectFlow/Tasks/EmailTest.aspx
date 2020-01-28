@@ -9,9 +9,14 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:TextBox ID="TextBox1" runat="server" TextMode="Date"></asp:TextBox>
-            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_ClickAsync" />
+            <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Button" />
         </div>
+        <p>
+            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+        </p>
+        <p>
+            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Button" />
+        </p>
     </form>
 </body>
 </html>

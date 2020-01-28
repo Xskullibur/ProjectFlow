@@ -1,7 +1,11 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,10 +16,20 @@ namespace ProjectFlow.Tasks
     public partial class tDetailedView : System.Web.UI.Page
     {
 
-        private const int TEST_TEAM_ID = 2;
-
         protected void Page_PreInit(object sender, EventArgs e)
         {
+            if (Master.GetCurrentProjectTeam() == null)
+            {
+                if (Master.GetCurrentIdentiy().IsTutor)
+                {
+                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
+                }
+                else if (Master.GetCurrentIdentiy().IsStudent)
+                {
+                    Response.Redirect("/StudentDashboard/studentProject.aspx");
+                }
+            }
+
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
 
@@ -26,20 +40,49 @@ namespace ProjectFlow.Tasks
                 Master.changeSelectedView(TaskNested.TaskViews.OngoingTaskView);
                 refreshData();
             }
+            
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                taskGrid.Columns[taskGrid.Columns.Count - 1].Visible = false;
+            }
+
+            taskGrid.Font.Size = 11;
         }
 
         private void refreshData()
         {
             TaskBLL taskBLL = new TaskBLL();
 
-            taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamId(TEST_TEAM_ID);
-            taskGrid.DataBind();
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            if (taskGrid.Rows.Count > 0)
+            // Check for filters
+            if (Session["filterTaskName"] != null)
             {
-                taskGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
-                taskGrid.UseAccessibleHeader = true;
+                // Task Name Filter
+                string filterTaskName = Session["filterTaskName"].ToString();
+
+                List<Task> ongoingTasks = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
+                List<Task> filteredTasks = ongoingTasks.Where(x => x.taskName.ToLower().Contains(filterTaskName.ToLower()))
+                    .ToList();
+
+                taskGrid.DataSource = taskBLL.ConvertToDataSource(filteredTasks);
+                taskGrid.DataBind();
             }
+            else if (Master.PersonalTaskSelected)
+            {
+                // Personal Task Filter
+                Student currentUser = Master.GetCurrentIdentiy().Student;
+                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamIdWithStudent(currentTeam.teamID, currentUser);
+                taskGrid.DataBind();
+            }
+            else
+            {
+                // No Filter
+                taskGrid.DataSource = taskBLL.GetOngoingDataSource(currentTeam.teamID);
+                taskGrid.DataBind();
+            }
+
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)
@@ -58,14 +101,19 @@ namespace ProjectFlow.Tasks
             refreshData();
         }
 
-        //  Setup Editing Data
+        // On DataBind
         protected void taskGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0 && Master.GetCurrentIdentiy().IsStudent)
                 {
+
+                    ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
+
+                    // Setup Edit Mode
                     object rowItems = e.Row.DataItem;
 
                     /**
@@ -95,7 +143,7 @@ namespace ProjectFlow.Tasks
                      **/
 
                     TextBox editEndTxt = (TextBox)e.Row.FindControl("editEndDate");
-                    DateTime endDate = Convert.ToDateTime(DataBinder.Eval(rowItems, "Start"));
+                    DateTime endDate = Convert.ToDateTime(DataBinder.Eval(rowItems, "End"));
                     editEndTxt.Text = endDate.Date.ToString("yyyy-MM-dd");
 
                     /**
@@ -122,6 +170,29 @@ namespace ProjectFlow.Tasks
                     editStatusDDL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
 
                     /**
+                     * PRIORITY
+                     **/
+
+                    //Get Status Dropdownlist
+                    DropDownList editPriorityDDL = (DropDownList)e.Row.FindControl("editPriorityDDL");
+
+                    //Set Style
+                    editPriorityDDL.Style.Add("width", "auto");
+
+                    //Set Dropdownlist Datasource
+                    PriorityBLL priorityBLL = new PriorityBLL();
+                    var priorityDict = priorityBLL.GetDict();
+
+                    editPriorityDDL.DataSource = priorityDict;
+                    editPriorityDDL.DataTextField = "Value";
+                    editPriorityDDL.DataValueField = "Key";
+                    editPriorityDDL.DataBind();
+
+                    //Set Inital Value
+                    string priorityVal = DataBinder.Eval(rowItems, "Priority").ToString();
+                    editPriorityDDL.SelectedValue = priorityDict.First(x => x.Value == priorityVal).Key.ToString();
+
+                    /**
                      * ALLOCATIONS
                      **/
 
@@ -130,7 +201,7 @@ namespace ProjectFlow.Tasks
 
                     //Set ListBox Datasource
                     TeamMemberBLL memberBLL = new TeamMemberBLL();
-                    Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
+                    Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(currentTeam.teamID);
 
                     editAllocationList.DataSource = memberList;
                     editAllocationList.DataTextField = "Value";
@@ -164,7 +235,7 @@ namespace ProjectFlow.Tasks
 
                     //Set Dropdownlist Datasource
                     MilestoneBLL milestoneBLL = new MilestoneBLL();
-                    var teamMilestone = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
+                    var teamMilestone = milestoneBLL.GetMilestonesByTeamID(currentTeam.teamID);
 
                     editMilestoneDDL.DataSource = teamMilestone;
                     editMilestoneDDL.DataValueField = "milestoneID";
@@ -185,6 +256,80 @@ namespace ProjectFlow.Tasks
                         editMilestoneDDL.SelectedValue = teamMilestone.First(x => x.milestoneName == milestoneVal).milestoneID.ToString();
                     }
                 }
+                else
+                {
+
+                    if (Master.GetCurrentIdentiy().IsStudent)
+                    {
+                        /**
+                         * SETUP UPDATE STATUS BTN
+                         **/
+                        int taskID = int.Parse(e.Row.Cells[0].Text);
+                        string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
+                        Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
+
+                        if (currentStatus == StatusBLL.COMPLETED)
+                        {
+                            updateStatusBtn.Enabled = false;
+                        }
+                        else if (currentStatus == StatusBLL.VERIFICATON)
+                        {
+                            string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                            updateStatusBtn.Text += $" ({nextStatus})";
+
+                            StudentBLL studentBLL = new StudentBLL();
+
+                            Student leader = studentBLL.GetLeaderByTaskID(taskID);
+                            Student currentUser = Master.GetCurrentIdentiy().Student;
+
+                            if (currentUser.studentID != leader.studentID)
+                            {
+                                updateStatusBtn.Enabled = false;
+                            }
+                        }
+                        else
+                        {
+                            string nextStatus = StatusBLL.GetNextStatus(currentStatus);
+                            updateStatusBtn.Text += $" ({nextStatus})";
+                        }
+                    }
+
+                    /**
+                     * SETUP DUE DATE
+                     **/
+
+                    // Get Due Date Cell
+                    TableCell DueDateCell = e.Row.Cells[1];
+
+                    // Task End Date
+                    DateTime EndDate = DateTime.ParseExact(((Label)e.Row.FindControl("gridEnd")).Text.Trim(), "dd/MM/yyyy", null);
+                    int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
+
+                    if (DaysLeft > 0)
+                    {
+                        DueDateCell.Text = $"{DaysLeft} Days";
+
+                        if (DaysLeft > 5)
+                        {
+                            DueDateCell.CssClass = "text-success";
+                        }
+                        else
+                        {
+                            DueDateCell.CssClass = "text-warning";
+                        }
+
+                    }
+                    else if (DaysLeft == 0)
+                    {
+                        DueDateCell.Text = "Today";
+                        DueDateCell.CssClass = "text-danger";
+                    }
+                    else
+                    {
+                        DueDateCell.Text = $"Overdue {Math.Abs(DaysLeft)} Days!";
+                        DueDateCell.CssClass = "text-danger";
+                    }
+                }
             }
 
         }
@@ -199,17 +344,22 @@ namespace ProjectFlow.Tasks
         // Updating
         protected void taskGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            // Get TeamID
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
+            int teamID = currentTeam.teamID;
+            
             // Get Values
             GridViewRow row = taskGrid.Rows[e.RowIndex];
 
-            // Verify Task ID
+            // Get Task
             TaskBLL taskBLL = new TaskBLL();
-            int id = Convert.ToInt32(row.Cells[0].Text);
+            int taskID = Convert.ToInt32(row.Cells[0].Text);
+            Task updated_task = taskBLL.GetTaskByID(taskID);
 
-            Task updated_task = taskBLL.GetTaskByID(id);
+            // Verify TaskID
             if (updated_task == null)
             {
-                // TODO: Error Message Task ID Not Found
+                this.Master.Master.ShowAlert("Task Not Found!", BootstrapAlertTypes.DANGER);
             }
             else
             {
@@ -220,7 +370,9 @@ namespace ProjectFlow.Tasks
                 TextBox startTxt = (TextBox)row.FindControl("editStartDate");
                 TextBox endTxt = (TextBox)row.FindControl("editEndDate");
                 DropDownList statusDDL = (DropDownList)row.FindControl("editStatusDDL");
+                DropDownList priorityDDL = (DropDownList)row.FindControl("editPriorityDDL");
 
+                // Get Error Labels
                 Label tNameErrorLbl = (Label)row.FindControl("tNameErrorLbl");
                 Label tDescErrorLbl = (Label)row.FindControl("tDescErrorLbl");
                 Label tMilestoneErrorLbl = (Label)row.FindControl("tMilestoneErrorLbl");
@@ -228,14 +380,16 @@ namespace ProjectFlow.Tasks
                 Label tEndDateErrorLbl = (Label)row.FindControl("tEndDateErrorLbl");
                 Label startEndDateErrorLbl = (Label)row.FindControl("startEndDateErrorLbl");
                 Label statusErrorLbl = (Label)row.FindControl("statusErrorLbl");
+                Label priorityErrorLbl = (Label)row.FindControl("priorityErrorLbl");
 
                 // Attributes
                 string name = nameTxt.Text;
                 string desc = descTxt.Text;
-                int milestoneIndex = milestoneDDL.SelectedIndex;
+                string milestoneID = milestoneDDL.SelectedValue;
                 string startDate = startTxt.Text;
                 string endDate = endTxt.Text;
-                int statusIndex = statusDDL.SelectedIndex;
+                string statusID = statusDDL.SelectedValue;
+                string priorityID = priorityDDL.SelectedValue;
 
                 // Clear Error Messages
                 tNameErrorLbl.Text = string.Empty;
@@ -259,11 +413,14 @@ namespace ProjectFlow.Tasks
                 statusErrorLbl.Text = string.Empty;
                 statusErrorLbl.Visible = false;
 
-                // Verify
-                TaskVerification taskVerification = new TaskVerification();
-                bool verified = taskVerification.Verify(name, desc, milestoneIndex, startDate, endDate, statusIndex);
+                priorityErrorLbl.Text = string.Empty;
+                priorityErrorLbl.Visible = false;
 
-                // Show Errors
+                // Verify Edited Task
+                TaskHelper taskVerification = new TaskHelper();
+                bool verified = taskVerification.VerifyAddTask(teamID, name, desc, milestoneID, startDate, endDate,  statusID, "1");
+
+                // Cherk Verified
                 if (!verified)
                 {
                     // Name
@@ -314,6 +471,15 @@ namespace ProjectFlow.Tasks
                         statusErrorLbl.Visible = true;
                         statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
                     }
+
+                    // Priority
+                    if (taskVerification.TPriorityErrors.Count > 0)
+                    {
+                        priorityErrorLbl.Visible = true;
+                        priorityErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
+                    }
+
+                    this.Master.Master.ShowAlert("Failed to Update Task!", BootstrapAlertTypes.DANGER);
                 }
                 else
                 {
@@ -322,25 +488,26 @@ namespace ProjectFlow.Tasks
                      * UPDATE TASK
                      **/
 
-                    int milestoneID = Convert.ToInt32((milestoneDDL).SelectedValue);
-                    int statusID = Convert.ToInt32((statusDDL).SelectedValue);
-
                     // Update Task
+                    updated_task.Status = null;
+
+                    int milestoneID_int = Convert.ToInt32(milestoneID);
+
                     updated_task.taskName = name;
                     updated_task.taskDescription = desc;
                     updated_task.startDate = Convert.ToDateTime(startDate);
                     updated_task.endDate = Convert.ToDateTime(endDate);
+                    updated_task.statusID = Convert.ToInt32(statusID);
+                    updated_task.priorityID = Convert.ToInt32(priorityID);
 
-                    if (milestoneID != -1)
+                    if (milestoneID_int != -1)
                     {
-                        updated_task.milestoneID = milestoneID;
+                        updated_task.milestoneID = milestoneID_int;
                     }
                     else
                     {
                         updated_task.milestoneID = null;
                     }
-
-                    updated_task.statusID = statusID;
 
                     // Get Edit Allocation List Control
                     ListBox editAllocationList = (ListBox)row.FindControl("editAllocationList");
@@ -361,11 +528,12 @@ namespace ProjectFlow.Tasks
                     // Update Task and Allocations
                     if (taskBLL.Update(updated_task, updated_Allocations))
                     {
-                        // TODO: Notify Successful Update
+                        NotificationHelper.Default_TaskUpdate_Setup(taskID);
+                        this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
                     }
                     else
                     {
-                        // TODO: Notify Failed Update
+                        this.Master.Master.ShowAlert("Failed to Update Task!", BootstrapAlertTypes.DANGER);
                     }
 
                     // Return to READ MODE
@@ -381,6 +549,7 @@ namespace ProjectFlow.Tasks
         // Deleting
         protected void taskGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+
             // Selected Task ID
             int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
 
@@ -392,11 +561,70 @@ namespace ProjectFlow.Tasks
 
             if (result)
             {
-                //TODO: Notify Delete Successful
+                NotificationHelper.Task_Drop_Setup(id);
+                this.Master.Master.ShowAlertWithTiming("Task Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
             {
-                //TODO: Notify Delete Failed
+                this.Master.Master.ShowAlert("Failed to Drop Task", BootstrapAlertTypes.DANGER);
+            }
+
+        }
+
+        //Pagination
+        protected void taskGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            taskGrid.PageIndex = e.NewPageIndex;
+            refreshData();
+        }
+
+        // Row Command (Update Status)
+        protected void taskGrid_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            switch (e.CommandName)
+            {
+
+                case "UpdateStatus":
+
+                    GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+
+                    int id = Convert.ToInt32(row.Cells[0].Text);
+                    string currentStatus = ((Label)row.FindControl("gridStatus")).Text;
+
+                    // Get Leader
+                    StudentBLL studentBLL = new StudentBLL();
+                    Student leader = studentBLL.GetLeaderByTaskID(id);
+
+                    // Get Current User
+                    Student currentUser = Master.GetCurrentIdentiy().Student;
+
+                    TaskHelper taskHelper = new TaskHelper();
+                    bool verified = taskHelper.VerifyUpdateStatus(currentStatus, leader, currentUser);
+
+                    if (verified)
+                    {
+                        StatusBLL statusBLL = new StatusBLL();
+                        bool result = statusBLL.UpdateStatusByTaskID(id);
+
+                        if (result)
+                        {
+                            Master.Master.ShowAlert("Successfully Updated Status", BootstrapAlertTypes.SUCCESS);
+                            refreshData();
+                        }
+                        else
+                        {
+                            Master.Master.ShowAlert("Error While Updating Status (Note: Only Leaders can update from VERIFICATION to COMPLETED!)", BootstrapAlertTypes.DANGER);
+                        }
+
+                    }
+                    else
+                    {
+                        Master.Master.ShowAlert("Error While Updating Status (Note: Only Leaders can update from VERIFICATION to COMPLETED!)", BootstrapAlertTypes.DANGER);
+                    }
+
+                    break;
+                    
             }
 
         }

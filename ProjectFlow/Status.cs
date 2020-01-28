@@ -17,16 +17,16 @@ namespace ProjectFlow
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Status()
         {
-            this.Tasks = new HashSet<Task>();
             this.Issues = new HashSet<Issue>();
+            this.Tasks = new HashSet<Task>();
         }
     
         public int ID { get; set; }
         public string status1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

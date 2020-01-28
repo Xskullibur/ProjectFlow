@@ -7,90 +7,72 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.DashBoard {
+namespace ProjectFlow.TutorDashboard.RestoreDashboard {
     
     
-    public partial class ProjectMenu {
+    public partial class ProjectMenuRestore {
         
         /// <summary>
-        /// Label4 control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// Label1 control.
+        /// PageSelectDP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.DropDownList PageSelectDP;
         
         /// <summary>
-        /// NameTB control.
+        /// SearchTB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NameTB;
+        protected global::System.Web.UI.WebControls.TextBox SearchTB;
         
         /// <summary>
-        /// Label2 control.
+        /// searchBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Button searchBtn;
         
         /// <summary>
-        /// DescTB control.
+        /// showAllBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescTB;
+        protected global::System.Web.UI.WebControls.Button showAllBtn;
         
         /// <summary>
-        /// Label5 control.
+        /// projectRestoreGV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.GridView projectRestoreGV;
         
         /// <summary>
-        /// ProjectIdTB control.
+        /// refreshBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProjectIdTB;
-        
-        /// <summary>
-        /// CreateBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateBtn;
-        
-        /// <summary>
-        /// projectGV control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView projectGV;
+        protected global::System.Web.UI.WebControls.Button refreshBtn;
     }
 }

@@ -10,13 +10,12 @@ namespace ProjectFlow
 {
     public partial class Main : ProjectFlowMasterPage
     {
+
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
         protected void Page_Load(object sender, EventArgs e)
         {
         }
-
-        
 
     }
 

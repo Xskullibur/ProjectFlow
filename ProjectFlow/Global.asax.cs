@@ -51,11 +51,41 @@ namespace ProjectFlow
                 DebugPath = "~/Scripts/bootstrap-select.js"
             });
 
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap-confirmation", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/bootstrap-confirmation/bootstrap-confirmation.min.js",
+                DebugPath = "~/Scripts/bootstrap-confirmation/bootstrap-confirmation.min.js"
+            });
+
 
             ScriptManager.ScriptResourceMapping.AddDefinition("signalr", new ScriptResourceDefinition
             {
                 Path = "~/Scripts/jquery.signalR-2.4.1.min.js",
                 DebugPath = "~/Scripts/jquery.signalR-2.4.1.js"
+            });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("calendarscript", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/calendar/calendarscript.js",
+                DebugPath = "~/Scripts/calendar/calendarscript.js"
+            });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("jquery-ui", new ScriptResourceDefinition
+            {
+                Path = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
+                DebugPath = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("jquery-qtip", new ScriptResourceDefinition
+            {
+                Path = "//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js",
+                DebugPath = "//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"
+            });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("full-calendar", new ScriptResourceDefinition
+            {
+                Path = "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js",
+                DebugPath = "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"
             });
 
 

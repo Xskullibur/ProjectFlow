@@ -53,5 +53,95 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public ProjectTeam GetProjectTeamByTeamID(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Include(x => x.Project).FirstOrDefault(x => x.teamID == TeamID);
+            }
+        }
+
+        public List<ProjectTeam> SearchGroup(string ProjectID, int Group)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == false && x.group == Group).ToList();
+            }
+        }
+
+        public List<ProjectTeam> SearchDeletedTeam(string ProjectID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == true && x.teamName.ToLower().Contains(search.ToLower())).ToList();
+            }
+        }
+
+        public void DeleteTeam(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var projectTeam = dbContext.ProjectTeams.Single(x => x.teamID == TeamID);
+                if (projectTeam != null)
+                {
+                    projectTeam.dropped = true;
+                    dbContext.SaveChanges();
+                }
+                var milestone = dbContext.Milestones.Where(x => x.teamID == TeamID);
+                if(milestone != null)
+                {
+                    foreach(Milestone mile in milestone)
+                    {
+                        mile.dropped = true;
+                    }
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void RestoreTeam(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var projectTeam = dbContext.ProjectTeams.Single(x => x.teamID == TeamID);
+                if (projectTeam != null)
+                {
+                    projectTeam.dropped = false;
+                    dbContext.SaveChanges();
+                }
+                var milestone = dbContext.Milestones.Where(x => x.teamID == TeamID);
+                if (milestone != null)
+                {
+                    foreach (Milestone mile in milestone)
+                    {
+                        mile.dropped = false;
+                    }
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+        public void lockTeam(string ProjectID, bool status, int Group)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                var projectTeam = dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.group == Group && x.dropped == false).ToList();
+                if (projectTeam != null)
+                {
+                    foreach(var item in projectTeam)
+                    {
+                        if (status)
+                        {
+                            item.open = false;
+                        }
+                        else
+                        {
+                            item.open = true;
+                        }
+                    }                  
+                    dbContext.SaveChanges();
+                }
+            }
+        }
     }
 }
