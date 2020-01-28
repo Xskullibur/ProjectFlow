@@ -110,7 +110,7 @@ function init_display(bound_window, display_canvas) {
 
         let scaleX = width / drawWidth;
         let scaleY = height / drawHeight;
-        let scale = (width * height) / (drawWidth * drawHeight)
+        let scale = Math.abs((width * height) / (drawWidth * drawHeight));
 
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, width, height);

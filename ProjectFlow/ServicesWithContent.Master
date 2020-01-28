@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <title></title>
-
+        
     <asp:PlaceHolder runat="server">
         <%: Styles.Render("~/Content/css") %>
         <%: Styles.Render("~/Content/bootstrap-select.css") %>
@@ -17,7 +17,14 @@
         <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>    </asp:PlaceHolder>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>    
+        <script src="/Scripts/jquery-3.4.1.min.js"></script>
+
+        <%-- Alson pls do not put your script here --%>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
+
+    </asp:PlaceHolder>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style type="text/css">
@@ -28,17 +35,20 @@
 </head>
 <body>
     <form id="form1" runat="server">
-
         <asp:ScriptManager EnablePartialRendering="true" runat="server">
             <Scripts>
-                <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="popper" />
                 <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="bootstrap-select" />
                 <asp:ScriptReference Name="bootstrap-datetimepicker" />
                 <asp:ScriptReference Name="bootstrap-confirmation" />
+                <asp:ScriptReference Name="jquery-ui" />
+                <asp:ScriptReference Name="jquery-qtip" />
+                <asp:ScriptReference Name="full-calendar" />
+                <asp:ScriptReference Name="calendarscript" />
             </Scripts>
         </asp:ScriptManager>
+
         <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="TeamID" runat="server"></asp:HiddenField>
         <script>
@@ -74,7 +84,7 @@
                     </ul>
                      <div class="mdc-card content-profile" id="profile-popper">
                            <div id="profile-info" class="mdc-card__primary-action" tabindex="0" style="width: 100%;display: flex;flex-direction: row;">
-                                <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg&quot;);"></div>
+                                <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;<%= this.ProfileUrl %>&quot;);"></div>
                                 
                                <div style="padding: 1rem;">
                                    <asp:Label Class="mdc-typography mdc-typography--headline6" ID="LoginUsernameProfileLbl" runat="server"></asp:Label>
@@ -137,32 +147,33 @@
                                         </span>
                                         </a>
                                     </li>
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="/Services/Christina/ListOfRooms.aspx">
+                                        <span class="mdc-list-item__text">
+                                            <span class="mdc-list-item__primary-text">Past Meeting Minutes</span>
+                                        </span>
+                                        </a>
+                                    </li>
                                 </ul>
                 </div>
 
                 <div id="content" class="col-12 col-md-10">
                     <div class="row h-100 pt-5" style="vertical-align:top;">
 
-                        <table style="width: 100%;">
-                            <tr>
-                                <td>
-                                    <%--Alert Continer--%>
-                                    <div class="container" id="alert_container">
-                                        <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                            <ContentTemplate>
-                                                <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                                    </asp:ContentPlaceHolder>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="col-12">
+                            <%--Alert Continer--%>
+                            <div class="container" id="alert_container">
+                                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                    <ContentTemplate>
+                                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </div>
+
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                            </asp:ContentPlaceHolder>
+
+                        </div>
 
                     </div>
                 </div>

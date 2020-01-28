@@ -13,6 +13,24 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
+        public string ProfileUrl
+        {
+            get
+            {
+                var user = HttpContext.Current.User;
+                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                if(projectFlowIdentity.aspnet_Users.ProfileImagePath != null)
+                {
+                    return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+                }
+                else
+                {
+                    return "/Profile/ProfileImages/default-picture.png";
+                }
+                
+            }
+        }
+
         protected void Page_Init(object sender, EventArgs e)
         {
 
@@ -153,15 +171,7 @@ namespace ProjectFlow
                 var user = HttpContext.Current.User;
                 if (user.Identity.IsAuthenticated)
                 {
-                    var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
-                    if (projectFlowIdentity.IsStudent)
-                    {
-                        return Session["CurrentProjectTeam"] as ProjectTeam;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Trying to access Project Team as a Tutor is not allowed");
-                    }
+                    return Session["CurrentProjectTeam"] as ProjectTeam;
                 }
                 else
                 {

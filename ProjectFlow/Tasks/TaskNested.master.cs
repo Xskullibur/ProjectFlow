@@ -15,8 +15,6 @@ namespace ProjectFlow.Tasks
 {
     public partial class TaskNested : MasterPage
     {
-        private const int TEST_TEAM_ID = 2;
-
         // Public Attributes and Methods
         public event EventHandler refreshGrid;
         public bool PersonalTaskSelected = false;
@@ -59,12 +57,11 @@ namespace ProjectFlow.Tasks
         }
 
         // Get Current User
-        public Student GetCurrentUser()
+        public ProjectFlowIdentity GetCurrentIdentiy()
         {
             var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
-            Student student = projectFlowIdentity.Student;
 
-            return student;
+            return projectFlowIdentity;
         }
 
 
@@ -76,6 +73,10 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+                // Current Team
+                ProjectTeam currentTeam = GetCurrentProjectTeam();
+                int teamID = currentTeam.teamID;
+
                 // Status
                 StatusBLL statusBLL = new StatusBLL();
                 Dictionary<int, string> statusDict = statusBLL.Get();
@@ -83,12 +84,20 @@ namespace ProjectFlow.Tasks
                 statusDDL.DataSource = statusDict;
                 statusDDL.DataTextField = "Value";
                 statusDDL.DataValueField = "Key";
-
                 statusDDL.DataBind();
+
+                // Priority
+                PriorityBLL priorityBLL = new PriorityBLL();
+                List<Priority> priorities = priorityBLL.Get();
+
+                priorityDDL.DataSource = priorities;
+                priorityDDL.DataTextField = "priority1";
+                priorityDDL.DataValueField = "ID";
+                priorityDDL.DataBind();
 
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
-                Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(TEST_TEAM_ID);
+                Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(teamID);
 
                 allocationList.DataSource = memberList;
                 allocationList.DataTextField = "Value";
@@ -98,7 +107,7 @@ namespace ProjectFlow.Tasks
 
                 // Milestone
                 MilestoneBLL milestoneBLL = new MilestoneBLL();
-                var teamMilestones = milestoneBLL.GetMilestoneByTeamID(TEST_TEAM_ID);
+                var teamMilestones = milestoneBLL.GetMilestonesByTeamID(teamID);
 
                 milestoneDDL.DataSource = teamMilestones;
                 milestoneDDL.DataTextField = "milestoneName";
@@ -107,7 +116,16 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataBind();
 
                 milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
+
             }
+
+            if (GetCurrentIdentiy().IsTutor)
+            {
+                addTaskBtn.Visible = false;
+            }
+
+            updateCurrentFilterPanel();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         // Switch Views
@@ -125,10 +143,60 @@ namespace ProjectFlow.Tasks
                     Response.Redirect("DroppedTaskView.aspx");
                     break;
 
+                case 2:
+                    Response.Redirect("CalendarView.aspx");
+                    break;
+
                 default:
                     break;
 
             }
+        }
+
+        // Filter Task
+        protected void fTaskNameBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
+            {
+
+                string filterTaskName = fTaskNameTxt.Text;
+
+                if (Session["filterTaskName"] != null)
+                {
+                    currentFiltersPanel.Controls.Remove(currentFiltersPanel.FindControl("cancelTaskNameFilter"));
+                }
+
+                Session["filterTaskName"] = fTaskNameTxt.Text;
+                refreshGrid?.Invoke(this, EventArgs.Empty);
+                updateCurrentFilterPanel();
+            }
+        }
+
+        // Add Current Applied Filters
+        private void updateCurrentFilterPanel()
+        {
+            if (Session["filterTaskName"] != null)
+            {
+                string taskName = Session["filterTaskName"].ToString();
+
+                LinkButton linkButton = new LinkButton();
+                linkButton.ID = "cancelTaskNameFilter";
+                linkButton.Text = $"{taskName}<i class='fa fa-close ml-2'></i>";
+                linkButton.CssClass = "btn btn-danger my-2";
+                linkButton.Click += new EventHandler(removeTaskNameFilter_Click);
+
+                currentFiltersPanel.Controls.Add(linkButton);
+            }
+        }
+
+        // Remove Task Name Filter
+        protected void removeTaskNameFilter_Click(object sender,EventArgs e)
+        {
+            LinkButton linkButton = (LinkButton)sender;
+            currentFiltersPanel.Controls.Remove(linkButton);
+
+            Session["filterTaskName"] = null;
+            refreshGrid?.Invoke(this, EventArgs.Empty);
         }
 
         /**
@@ -176,6 +244,9 @@ namespace ProjectFlow.Tasks
 
             statusErrorLbl.Text = string.Empty;
             statusErrorLbl.Visible = false;
+
+            priorityErrorLbl.Text = string.Empty;
+            priorityErrorLbl.Visible = false;
         }
 
         // Remove Add Task Panel
@@ -197,21 +268,28 @@ namespace ProjectFlow.Tasks
         // Add Task Event
         protected void addTask_Click(object sender, EventArgs e)
         {
+            // Get CurrentTeam
+            ProjectTeam currentTeam = GetCurrentProjectTeam();
+            int teamID = currentTeam.teamID;
+
+            // Create Verification Variable
+            bool verified = true;
 
             // Get Attributes
             string taskName = tNameTxt.Text;
             string taskDesc = tDescTxt.Text;
-            int milestoneIndex = milestoneDDL.SelectedIndex;
+            string milestoneID = milestoneDDL.SelectedValue;
             string startDate = tStartTxt.Text;
             string endDate = tEndTxt.Text;
-            int statusIndex = statusDDL.SelectedIndex;
+            string statusID = statusDDL.SelectedValue;
+            string priorityID = priorityDDL.SelectedValue;
 
             // Clear all Error Messages
             ClearErrorMessages();
 
             // Verify Attributes
             TaskHelper taskVerification = new TaskHelper();
-            bool verified = taskVerification.VerifyAddTask(taskName, taskDesc, milestoneIndex, startDate, endDate, statusIndex);
+            verified = taskVerification.VerifyAddTask(teamID, taskName, taskDesc, milestoneID, startDate, endDate, statusID, priorityID);
 
             if (!verified)
             {
@@ -268,6 +346,13 @@ namespace ProjectFlow.Tasks
                     statusErrorLbl.Text = string.Join("<br>", taskVerification.TStatusErrors);
                 }
 
+                // Priority
+                if (taskVerification.TPriorityErrors.Count > 0)
+                {
+                    priorityErrorLbl.Visible = true;
+                    priorityErrorLbl.Text = string.Join("<br>", taskVerification.TPriorityErrors);
+                }
+
             }
             else
             {
@@ -275,22 +360,25 @@ namespace ProjectFlow.Tasks
                  * Add Task
                  **/
 
-                string selected_milestone = milestoneDDL.SelectedValue;
-
                 // Create Task Object
                 Task newTask = new Task();
                 newTask.taskName = taskName;
                 newTask.taskDescription = taskDesc;
                 newTask.startDate = DateTime.Parse(startDate);
                 newTask.endDate = DateTime.Parse(endDate);
-                newTask.statusID = Convert.ToInt32(statusDDL.SelectedValue);
+                newTask.statusID = Convert.ToInt32(statusID);
+                newTask.priorityID = Convert.ToInt32(priorityID);
 
-                newTask.teamID = TEST_TEAM_ID; // TODO: Change to TeamID Session
-
-                if (selected_milestone != "-1")
+                if (Convert.ToInt32(milestoneID) == -1)
                 {
-                    newTask.milestoneID = Convert.ToInt32(selected_milestone);
+                    newTask.milestoneID = null;
                 }
+                else
+                {
+                    newTask.milestoneID = Convert.ToInt32(milestoneID);
+                }
+
+                newTask.teamID = teamID;
 
                 // Create Task Allocations
                 List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
@@ -341,5 +429,6 @@ namespace ProjectFlow.Tasks
 
             refreshGrid?.Invoke(this, EventArgs.Empty);
         }
+
     }
 }
