@@ -84,7 +84,7 @@
                     </ul>
                      <div class="mdc-card content-profile" id="profile-popper">
                            <div id="profile-info" class="mdc-card__primary-action" tabindex="0" style="width: 100%;display: flex;flex-direction: row;">
-                                <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg&quot;);"></div>
+                                <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;<%= this.ProfileUrl %>&quot;);"></div>
                                 
                                <div style="padding: 1rem;">
                                    <asp:Label Class="mdc-typography mdc-typography--headline6" ID="LoginUsernameProfileLbl" runat="server"></asp:Label>

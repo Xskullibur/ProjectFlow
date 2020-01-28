@@ -13,6 +13,16 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
+        public string ProfileUrl
+        {
+            get
+            {
+                var user = HttpContext.Current.User;
+                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+            }
+        }
+
         protected void Page_Init(object sender, EventArgs e)
         {
 
