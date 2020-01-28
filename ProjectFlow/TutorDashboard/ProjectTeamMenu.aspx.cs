@@ -50,10 +50,11 @@ namespace ProjectFlow.DashBoard
             ProjectBLL bll = new ProjectBLL();
             string teamName = NameTB.Text;
             string desc = DescTB.Text;
+            int group = int.Parse(GroupDP.SelectedValue);
             List<string> errorList = new List<string> { };
 
 
-            errorList = bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
+            errorList = bll.InsertProjectTeam(teamName, desc, group, Session["PassProjectID"].ToString());
             if (errorList.Count > 0)
             {
                 string total = "";
@@ -109,8 +110,9 @@ namespace ProjectFlow.DashBoard
             int teamID = int.Parse(row.Cells[0].Text);
             TextBox editName = (TextBox)row.FindControl("editNameTB");
             TextBox editDesc = (TextBox)row.FindControl("editDescTB");
+            DropDownList editGroup = (DropDownList)row.FindControl("editGroupDP");
                     
-            List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text);
+            List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text, int.Parse(editGroup.SelectedValue));
             TeamGV.EditIndex = -1;
             Master.ShowAlert("Successfully Updated Team", BootstrapAlertTypes.SUCCESS);
             ShowTeam();
@@ -170,9 +172,10 @@ namespace ProjectFlow.DashBoard
             ProjectBLL bll = new ProjectBLL();
             string teamName = NameTB.Text;
             string desc = DescTB.Text;
+            int group = int.Parse(GroupDP.SelectedValue);
             List<string> errorList = new List<string> { };
 
-            errorList = bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
+            errorList = bll.InsertProjectTeam(teamName, desc, group, Session["PassProjectID"].ToString());
 
             if (errorList.Count > 0)
             {

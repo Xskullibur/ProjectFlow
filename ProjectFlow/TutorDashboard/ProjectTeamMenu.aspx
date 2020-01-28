@@ -73,6 +73,31 @@
 
                             </td>
                         </tr>
+                        <tr>
+                            <td class="auto-style10">
+                                <asp:Label ID="Label5" runat="server" Text="Description"></asp:Label>
+                                <br />
+                                <br />
+                            </td>
+                            <td class="auto-style14">
+                                <asp:DropDownList ID="GroupDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="False">
+                                        <asp:ListItem Value="1">1</asp:ListItem>
+                                        <asp:ListItem Value="2">2</asp:ListItem>
+                                        <asp:ListItem Value="3">3</asp:ListItem>
+                                        <asp:ListItem Value="4">4</asp:ListItem>
+                                        <asp:ListItem Value="5">5</asp:ListItem>
+                                        <asp:ListItem Value="6">6</asp:ListItem>
+                                        <asp:ListItem Value="7">7</asp:ListItem>
+                                        <asp:ListItem Value="8">8</asp:ListItem>
+                                        <asp:ListItem Value="9">9</asp:ListItem>
+                                        <asp:ListItem Value="10">10</asp:ListItem>
+                                    </asp:DropDownList> 
+                                <br />
+                            </td>
+                            <td class="auto-style12">
+                              
+                            </td>
+                        </tr>
 
                         <tr>
                             <td class="auto-style9">
@@ -165,6 +190,26 @@
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="descLabel" runat="server" Text='<%# Bind("teamDescription") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Group">
+                                <EditItemTemplate>
+                                    <asp:DropDownList ID="editGroupDP" CssClass="form-control border border-dark" Text='<%# Bind("group") %>' runat="server" AutoPostBack="False">
+                                        <asp:ListItem Value="1">1</asp:ListItem>
+                                        <asp:ListItem Value="2">2</asp:ListItem>
+                                        <asp:ListItem Value="3">3</asp:ListItem>
+                                        <asp:ListItem Value="4">4</asp:ListItem>
+                                        <asp:ListItem Value="5">5</asp:ListItem>
+                                        <asp:ListItem Value="6">6</asp:ListItem>
+                                        <asp:ListItem Value="7">7</asp:ListItem>
+                                        <asp:ListItem Value="8">8</asp:ListItem>
+                                        <asp:ListItem Value="9">9</asp:ListItem>
+                                        <asp:ListItem Value="10">10</asp:ListItem>
+                                    </asp:DropDownList> 
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="descLabel" runat="server" Text='<%# Bind("group") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             

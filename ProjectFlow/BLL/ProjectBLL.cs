@@ -19,7 +19,7 @@ namespace ProjectFlow.BLL
             return GetTeam(ProjectID);
         }
 
-        public List<string> InsertProjectTeam(string TeamName, string Desc, string ProjectID)
+        public List<string> InsertProjectTeam(string TeamName, string Desc, int Group, string ProjectID)
         {
             List<string> errorList = new List<string> { };
 
@@ -40,7 +40,7 @@ namespace ProjectFlow.BLL
 
             if (errorList.Count == 0)
             {
-                InsertTeam(TeamName, Desc, ProjectID);
+                InsertTeam(TeamName, Desc, Group, ProjectID);
             }
 
             return errorList;          
@@ -143,7 +143,7 @@ namespace ProjectFlow.BLL
             return errorList;
         }
 
-        public List<string> UpdateProjectTeam(int TeamID, string TeamName, string Desc)
+        public List<string> UpdateProjectTeam(int TeamID, string TeamName, string Desc, int Group)
         {
             List<string> errorList = new List<string> { };
             
@@ -164,7 +164,7 @@ namespace ProjectFlow.BLL
 
             if (errorList.Count == 0)
             {
-                UpdateTeam(TeamID, TeamName, Desc);
+                UpdateTeam(TeamID, TeamName, Desc, Group);
             }
 
             return errorList;
@@ -367,7 +367,7 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public void InsertTeam(string TeamName, string Desc, string ProjectID)
+        public void InsertTeam(string TeamName, string Desc, int Group, string ProjectID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -375,6 +375,7 @@ namespace ProjectFlow.BLL
                 {
                     teamName = TeamName,
                     teamDescription = Desc,
+                    group = Group,
                     projectID = ProjectID
                 };
                 dbContext.ProjectTeams.Add(projectTeam);
@@ -382,7 +383,7 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public void UpdateTeam(int TeamID, string TeamName, string Desc)
+        public void UpdateTeam(int TeamID, string TeamName, string Desc, int Group)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -391,6 +392,7 @@ namespace ProjectFlow.BLL
                 {
                     projectTeam.teamName = TeamName;
                     projectTeam.teamDescription = Desc;
+                    projectTeam.group = Group;
                     dbContext.SaveChanges();
                 }
             }
