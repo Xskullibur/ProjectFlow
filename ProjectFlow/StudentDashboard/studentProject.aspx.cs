@@ -43,7 +43,7 @@ namespace ProjectFlow.DashBoard
 
                 (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
 
-                Response.Redirect("FileUpload.aspx");
+                Response.Redirect("/Tasks/OngoingTaskView.aspx");
             }
             else
             {
