@@ -153,7 +153,6 @@ namespace ProjectFlow
                 var user = HttpContext.Current.User;
                 if (user.Identity.IsAuthenticated)
                 {
-                    var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
                     return Session["CurrentProjectTeam"] as ProjectTeam;
                 }
                 else

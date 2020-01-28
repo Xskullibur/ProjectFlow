@@ -51,6 +51,8 @@ namespace ProjectFlow.Profile
             UsernameLbl.Text = student.aspnet_Users.UserName;
             EmailLbl.Text = student.aspnet_Users.aspnet_Membership.Email;
             AdminNoLbl.Text = student.studentID;
+
+            DisplayProfileImage(student.aspnet_Users);
         }
 
         /// <summary>
@@ -63,10 +65,23 @@ namespace ProjectFlow.Profile
             EmailLbl.Text = tutor.aspnet_Users.aspnet_Membership.Email;
             AdminNoLbl.Text = "--not applicable--";
 
-            //tutor.aspnet_Users.Pro
+            DisplayProfileImage(tutor.aspnet_Users);
 
-            ProfileImg.ImageUrl = "";
-
+        }
+        /// <summary>
+        /// Display a image of the user from aspnet_Users
+        /// </summary>
+        /// <param name="user"></param>
+        private void DisplayProfileImage(aspnet_Users user)
+        {
+            if(user.ProfileImagePath != null)
+            {
+                ProfileImg.ImageUrl = "ProfileImages/" + user.ProfileImagePath;
+            }
+            else
+            {
+                ProfileImg.ImageUrl = "ProfileImages/default-picture.png";
+            }
         }
 
         protected void UpdatePasswordEvent(object sender, EventArgs e)
@@ -119,17 +134,25 @@ namespace ProjectFlow.Profile
             PasswordPanelChange.Visible = false;
         }
 
-        protected void ChangeProfileEvent(object sender, ImageClickEventArgs e)
+        protected void ChangeProfileImageEvent(object sender, EventArgs e)
         {
+
             if (ImageFileUploadControl.HasFile)
             {
                 try
                 {
-                    string filename = Path.GetFileName(ImageFileUploadControl.FileName);
-                    ImageFileUploadControl.SaveAs(Server.MapPath("~/ProfileImages") + filename);
+                    if(ImageFileUploadControl.PostedFile.ContentType == "image/jpeg" || ImageFileUploadControl.PostedFile.ContentType == "image/png")
+                    {
+                        string filename = Path.GetFileName(ImageFileUploadControl.FileName);
+                        ImageFileUploadControl.SaveAs(Server.MapPath("ProfileImages/") + filename);
 
-                    //Successfully uploaded the file
-                    this.ShowAlertWithTiming("Profile is successfully uploaded", BootstrapAlertTypes.SUCCESS, 3000);
+                        //Successfully uploaded the file
+                        this.ShowAlertWithTiming("Profile is successfully uploaded", BootstrapAlertTypes.SUCCESS, 3000);
+                    }
+                    else
+                    {
+                        this.ShowAlertWithTiming("Supported files type are only; JPG, PNG", BootstrapAlertTypes.DANGER, 3000);
+                    }
                 }
                 catch (Exception ex)
                 {
