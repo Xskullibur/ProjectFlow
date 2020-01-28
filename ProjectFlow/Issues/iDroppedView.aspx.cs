@@ -10,22 +10,42 @@ namespace ProjectFlow.Issues
 {
     public partial class IDroppedView : System.Web.UI.Page
     {
-        private const int TEST_TEAM_ID = 2;
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (Master.GetCurrentProjectTeam() == null)
+            {
+                if (Master.GetCurrentIdentiy().IsTutor)
+                {
+                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
+                }
+                else if (Master.GetCurrentIdentiy().IsStudent)
+                {
+                    Response.Redirect("/StudentDashboard/studentProject.aspx");
+                }
+            }
+
+            //Master.refreshGrid += new EventHandler(refreshBtn_Click);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 Master.changeSelectedView(IssueNested.IssueViews.iDroppedView);
-                refreshData(TEST_TEAM_ID);
+                refreshData();
             }
+
+            IssueView.Font.Size = 11;
         }
 
-        private void refreshData(int id)
+        private void refreshData()
         {
             IssueBLL issueBLL = new IssueBLL();
 
-            IssueView.DataSource = issueBLL.GetDroppedIssueByTeamId(id);
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
+
+            IssueView.DataSource = issueBLL.GetDroppedIssueByTeamId(currentTeam.teamID);
             IssueView.DataBind();
 
             if (IssueView.Rows.Count > 0)

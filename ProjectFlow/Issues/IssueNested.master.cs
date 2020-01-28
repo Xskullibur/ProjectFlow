@@ -1,16 +1,19 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using ProjectFlow.Utils;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System.Web.UI.WebControls;
 
 namespace ProjectFlow.Issues
 {
     public partial class IssueNested : System.Web.UI.MasterPage
     {
-        private const int TEST_TEAM_ID = 2;
 
         public event EventHandler refreshGrid;
         // Public Attributes and Methods
@@ -39,10 +42,40 @@ namespace ProjectFlow.Issues
             }
         }
 
+        // Get Current Project
+        public ProjectTeam GetCurrentProjectTeam()
+        {
+            ServicesWithContent servicesWithContent = Master as ServicesWithContent;
+
+            return servicesWithContent.CurrentProjectTeam;
+        }
+
+        // Get Current User
+        public ProjectFlowIdentity GetCurrentIdentiy()
+        {
+            var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+
+            return projectFlowIdentity;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                // Task ID
+                TaskBLL taskBLL = new TaskBLL();
+                ProjectTeam currentTeam = GetCurrentProjectTeam();
+                List<Task> ongoingTasks = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
+                List<int> taskIdList = new List<int>();
+
+                foreach (Task i in ongoingTasks)
+                {
+                    taskIdList.Add(i.taskID);
+                }
+
+                TaskIdDLL.DataSource = taskIdList;
+                TaskIdDLL.DataBind();
+
                 // Status
                 StatusBLL statusBLL = new StatusBLL();
                 Dictionary<int, string> statusDict = statusBLL.Get();
@@ -79,13 +112,15 @@ namespace ProjectFlow.Issues
             if (Page.IsValid)
             {
                 bool IsPublic = checkCB();
+                ProjectTeam currentTeam = GetCurrentProjectTeam();
+                int teamID = currentTeam.teamID;
 
                 // Create Task Object
                 Issue newIssue = new Issue();
                 newIssue.title = tNameTxt.Text;
                 newIssue.description = tDescTxt.Text;
-                newIssue.taskID = 5;                    //this is a placeholder
-                newIssue.createdBy = TEST_TEAM_ID;      //this is also a placeholder
+                newIssue.taskID = Convert.ToInt32(TaskIdDLL.Text);             
+                newIssue.createdBy = teamID;      
                 newIssue.active = true;
                 newIssue.statusID = Convert.ToInt32(IssueStatusDLL.SelectedValue);
                 newIssue.votePublic = IsPublic;
@@ -99,10 +134,11 @@ namespace ProjectFlow.Issues
                 {
                     hideModal();
                     refreshGrid?.Invoke(this, EventArgs.Empty);
+                    this.Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
                 }
                 else
                 {
-
+                    this.Master.ShowAlert("Failed to Add Task!", BootstrapAlertTypes.DANGER);
                 }
             }
 

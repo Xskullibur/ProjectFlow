@@ -7,6 +7,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="container">
 
+        <%--Title--%>
+        <div class="row mb-3">
+            <div class="col">
+                <h1>Issue Tracker</h1>
+            </div>
+        </div>
+
         <%--Status--%>
         <div class="row justify-content-between">
 
@@ -67,6 +74,15 @@
 
                                 <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Task--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Task Id:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:DropDownList ID="TaskIdDLL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:Label ID="taskIdErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="TaskIdDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
                             
                             <%--Status--%>
