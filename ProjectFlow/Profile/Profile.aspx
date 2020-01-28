@@ -10,7 +10,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 border-right mx-auto text-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" class="card-img-top" alt="Profile-Image">
+                                <asp:FileUpload id="ImageFileUploadControl" runat="server" />
+                                <asp:ImageButton ID="ProfileImg" runat="server" CssClass="card-img-top" OnClick="ChangeProfileEvent"/>
+                                <%--<img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" class="card-img-top" alt="Profile-Image">--%>
                                 <asp:Label ID="UsernameLbl" CssClass="card-title" runat="server" Text=""></asp:Label>
                             </div>
                             <div class="col-10">

@@ -181,6 +181,7 @@
     <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
+    <Content Include="Profile\ProfileImages\default-picture.png" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
