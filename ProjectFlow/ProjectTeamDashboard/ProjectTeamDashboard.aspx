@@ -3,7 +3,46 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    
+
+    <script>
+        $(function () {
+            var ctx1 = document.getElementById('chart1').getContext('2d');
+            var ctx2 = document.getElementById('chart2').getContext('2d');
+            var ctx3 = document.getElementById('chart3').getContext('2d');
+
+            var fetch_url = './ProjectTeamDashboard.aspx/LoadDoughnutChart';
+            return $.ajax({
+                url: fetch_url,
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (res, textStatus) {
+
+                    var parsedJson = JSON.parse(res.d);
+                    var chartData = parsedJson;
+                    var chartOptions = {
+                        responsive: false,
+                        maintainAspectRatio: true,
+                        tooltips: {
+                            enabled: false
+                        },
+                        legend: {
+                            onClick: (e) => e.stopPropagation()
+                        }
+                    };
+
+                    var myChart = new Chart(ctx1, { type: 'doughnut', data: chartData, options: chartOptions }); 
+                    var myChart2 = new Chart(ctx2, { type: 'doughnut', data: chartData, options: chartOptions }); 
+                    var myChart3 = new Chart(ctx3, { type: 'doughnut', data: chartData, options: chartOptions }); 
+                },
+                error: function (res, textStatus) {
+
+                }
+            });
+
+        });
+    </script>
+
     <div class="container">
 
         <%--Title--%>
@@ -14,41 +53,6 @@
                 </h1>
             </div>
         </div>
-
-        <script>
-            $(function () {
-                var ctx2 = document.getElementById('" + priorityName + @"_chart').getContext('2d');
-
-                var fetch_url = './ProjectTeamDashboard.aspx/LoadDoughnutChart';
-                return $.ajax({
-                    url: fetch_url,
-                    type: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (res, textStatus) {
-
-                        var parsedJson = JSON.parse(res.d);
-                        var chartData = parsedJson;
-                        var chartOptions = {
-                            responsive: false,
-                            maintainAspectRatio: true,
-                            tooltips: {
-                                enabled: false
-                            },
-                            legend: {
-                                onClick: (e) => e.stopPropagation()
-                            }
-                        };
-
-                        var myChart = new Chart(ctx2, { type: 'doughnut', data: chartData, options: chartOptions }); 
-                    },
-                    error: function (res, textStatus) {
-
-                    }
-                });
-
-            });
-        </script>
 
         <%--Topbar--%>
         <div class="row mb-3">

@@ -31,8 +31,11 @@ namespace ProjectFlow.ProjectTeamDashboard
             PriorityBLL priorityBLL = new PriorityBLL();
             List<Priority> priorities = priorityBLL.Get();
 
+            int count = 0;
+
             foreach (Priority priority in priorities)
             {
+                count++;
                 string priorityName = priority.priority1;
                 var priorityTasks = tasks.Where(x => x.priorityID == priority.ID).ToList();
                 double completedTasks = priorityTasks.Count(x => x.Status.status1 == "Completed");
@@ -50,6 +53,7 @@ namespace ProjectFlow.ProjectTeamDashboard
                                         </div>
                                         <div class='row'>
                                             <div class='col'>
+                                                <canvas id='chart{count}'></canvas>
                                                 {completedTasks}/{totalTasks}
                                             </div>
                                         </div>";
