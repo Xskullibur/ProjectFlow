@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
-using System.Web.UI.DataVisualization.Charting;
 using System.Web.UI.WebControls;
 
 namespace ProjectFlow.ProjectTeamDashboard
