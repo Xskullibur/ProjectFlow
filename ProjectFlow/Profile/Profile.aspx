@@ -12,7 +12,7 @@
                             <div class="col-2 border-right mx-auto text-center">
                                 <%-- Profile image --%>
                                 <asp:FileUpload ID="ImageFileUploadControl" CssClass="d-none" runat="server"/>
-                                <asp:Image ID="ProfileImg" runat="server" CssClass="card-img-top pointer" />
+                                <asp:Image ID="ProfileImg" runat="server" CssClass="card-img-top content-profile-image pointer" />
                                 <asp:Button ID="ImageChangeBtn" runat="server" CssClass="d-none" OnClick="ChangeProfileImageEvent"></asp:Button>
                                 <asp:Label ID="UsernameLbl" CssClass="card-title" runat="server" Text=""></asp:Label>
                             </div>
