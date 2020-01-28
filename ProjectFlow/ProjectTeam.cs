@@ -28,6 +28,8 @@ namespace ProjectFlow
         public string teamDescription { get; set; }
         public string projectID { get; set; }
         public bool dropped { get; set; }
+        public bool open { get; set; }
+        public int group { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Milestone> Milestones { get; set; }
