@@ -1,5 +1,7 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +13,22 @@ namespace ProjectFlow.DashBoard
 {
     public partial class studentProject : System.Web.UI.Page
     {
+        ProjectBLL projectBLL = new ProjectBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             var identity = this.User.Identity as ProjectFlowIdentity;
             if (identity.IsStudent)
             {
                 Session["StudentID"] = identity.Student.UserId.ToString();
+                Session["Student"] = identity.Student.studentID.ToString();
                 Session["StudentTeamID"] = (Master as ServicesWithContent).CurrentProjectTeam.teamID;
                 ShowProject();
             }            
+        }
+
+        private string getStudentID()
+        {
+            return Session["Student"].ToString();
         }
 
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -61,6 +70,10 @@ namespace ProjectFlow.DashBoard
             IEnumerable<ProjectTeam> teamList = studentBLL.GetStudentProject(Guid.Parse(Session["StudentID"].ToString()));
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
+
+            IEnumerable<ProjectTeam> avaliableList = studentBLL.ShowAvailbleProject();
+            availableGV.DataSource = avaliableList;
+            availableGV.DataBind();
         }
 
         public void SearchProject(string search)
@@ -83,6 +96,14 @@ namespace ProjectFlow.DashBoard
 
         protected void showAllBtn_Click(object sender, EventArgs e)
         {
+            ShowProject();
+        }
+
+        protected void availableGV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = availableGV.SelectedRow;
+            projectBLL.InsertMember(getStudentID(), int.Parse(row.Cells[0].Text), 2);
+            Master.ShowAlert("Joined Team", BootstrapAlertTypes.SUCCESS);
             ShowProject();
         }
     }

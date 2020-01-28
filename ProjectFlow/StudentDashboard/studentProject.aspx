@@ -54,6 +54,25 @@
                 <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <div style="overflow-x: auto;">
+                    <asp:GridView ID="availableGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged">
+                        <HeaderStyle CssClass="thead-light"/>
+                        <Columns>
+                            <asp:BoundField DataField="teamID" HeaderText="ID" />
+                            <asp:BoundField DataField="teamName" HeaderText="Name" />
+                            <asp:BoundField DataField="teamDescription" HeaderText="Description" />
+                            <asp:CommandField ButtonType="Button" SelectText="Join" ShowSelectButton="True">
+                                <ControlStyle CssClass="btn btn-success" />
+                            </asp:CommandField>
+                        </Columns>                        
+                    </asp:GridView>
+                </div>
+            </div>
+        </div>
+        <br>
     </div>
     <script>
         $(document).ready(function () {
