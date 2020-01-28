@@ -218,5 +218,24 @@ namespace ProjectFlow.DashBoard
                 SearchGroup(int.Parse(sortGroupDP.SelectedValue));
             }
         }
+
+        protected void bulkCreateBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void bulkAddBtn_Click(object sender, EventArgs e)
+        {
+            int total = int.Parse(amountDP.SelectedValue);
+            int group = int.Parse(bulkGroupDP.SelectedValue);
+            ProjectBLL bll = new ProjectBLL();
+
+            for(int i = 1; i <= total; i++)
+            {
+                List<string> errorList = bll.InsertProjectTeam("team" + i.ToString(), "", group, Session["PassProjectID"].ToString());
+            }
+            ShowTeam();
+            Master.ShowAlert(total + " team add for group "  + group, BootstrapAlertTypes.SUCCESS);
+        }
     }
 }

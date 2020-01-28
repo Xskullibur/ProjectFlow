@@ -75,7 +75,7 @@
                         </tr>
                         <tr>
                             <td class="auto-style10">
-                                <asp:Label ID="Label5" runat="server" Text="Description"></asp:Label>
+                                <asp:Label ID="Label5" runat="server" Text="Group"></asp:Label>
                                 <br />
                                 <br />
                             </td>
@@ -126,6 +126,99 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="BulkCreateTeam" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <asp:Label ID="Label6" runat="server" Text="Create Team"></asp:Label>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">                    
+                    <table class="auto-style1">
+                             
+                        <tr>
+                            <td class="auto-style10">
+                                <asp:Label ID="Label8" runat="server" Text="Amount"></asp:Label>
+                                <br />
+                                <br />
+                            </td>
+                            <td class="auto-style14">
+                                <asp:DropDownList ID="amountDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="False">
+                                        <asp:ListItem Value="1">1</asp:ListItem>
+                                        <asp:ListItem Value="2">2</asp:ListItem>
+                                        <asp:ListItem Value="3">3</asp:ListItem>
+                                        <asp:ListItem Value="4">4</asp:ListItem>
+                                        <asp:ListItem Value="5">5</asp:ListItem>
+                                        <asp:ListItem Value="6">6</asp:ListItem>
+                                        <asp:ListItem Value="7">7</asp:ListItem>
+                                        <asp:ListItem Value="8">8</asp:ListItem>
+                                        <asp:ListItem Value="9">9</asp:ListItem>
+                                        <asp:ListItem Value="10">10</asp:ListItem>
+                                    </asp:DropDownList> 
+                                <br />
+                            </td>
+                            <td class="auto-style12">
+                                &nbsp;
+
+                                &nbsp;<br />
+                                <br />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style10">
+                                <asp:Label ID="Label9" runat="server" Text="Group"></asp:Label>
+                                <br />
+                                <br />
+                            </td>
+                            <td class="auto-style14">
+                                <asp:DropDownList ID="bulkGroupDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="False">
+                                        <asp:ListItem Value="1">1</asp:ListItem>
+                                        <asp:ListItem Value="2">2</asp:ListItem>
+                                        <asp:ListItem Value="3">3</asp:ListItem>
+                                        <asp:ListItem Value="4">4</asp:ListItem>
+                                        <asp:ListItem Value="5">5</asp:ListItem>
+                                        <asp:ListItem Value="6">6</asp:ListItem>
+                                        <asp:ListItem Value="7">7</asp:ListItem>
+                                        <asp:ListItem Value="8">8</asp:ListItem>
+                                        <asp:ListItem Value="9">9</asp:ListItem>
+                                        <asp:ListItem Value="10">10</asp:ListItem>
+                                    </asp:DropDownList> 
+                                <br />
+                            </td>
+                            <td class="auto-style12">
+                              
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="auto-style9">
+                                <br />
+                                <br />
+                            </td>
+                            <td class="auto-style13">
+                                <asp:Button ID="bulkAddBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="bulkAddBtn_Click" />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <br />
+                            </td>
+                            <td class="auto-style8">
+                                &nbsp;
+
+                                &nbsp;&nbsp;<br />
+                                <br />
+
+                            </td>
+                        </tr>                       
+                    </table>                   
+                </div>
+                <div class="modal-footer">
+                                <asp:Label ID="Label10" runat="server" ForeColor="Red"></asp:Label>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container"> 
         <div class="row">
             <div class="col">
@@ -143,7 +236,10 @@
             </div>            
         </div>
         <br>
-        <div class="row"> 
+        <div class="row">
+            <div class="col-2">
+                <asp:Button ID="bulkCreateBtn" CssClass="btn btn-primary" runat="server" OnClick="bulkCreateBtn_Click" Text="Bulk Create" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#BulkCreateTeam"/>
+            </div> 
             <div class="col-2">
                 <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />
             </div>           
@@ -153,7 +249,7 @@
                     <asp:ListItem Value="1">Deleted</asp:ListItem>
                 </asp:DropDownList>
             </div>
-            <div class="col-3">
+            <div class="col-1">
             </div>           
             <div class="col-2">
                 <asp:DropDownList ID="sortGroupDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="sortGroupDP_SelectedIndexChanged">
@@ -217,9 +313,11 @@
                                     </asp:DropDownList> 
                                 </EditItemTemplate>
                                 <ItemTemplate>
-                                    <asp:Label ID="descLabel" runat="server" Text='<%# Bind("group") %>'></asp:Label>
+                                    <asp:Label ID="groupLabel" runat="server" Text='<%# Bind("group") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            
+                            <asp:BoundField DataField="open" HeaderText="UnLocked" />
                             
                             <asp:CommandField ButtonType="Button" SelectText="View Member" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-success" />

@@ -128,7 +128,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Project Module Select"></asp:Label>
+                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Module Select"></asp:Label>
                 </h1>
             </div>            
         </div>
@@ -162,9 +162,9 @@
                     <asp:GridView ID="projectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging" OnRowDeleting="projectGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
-                            <asp:BoundField DataField="projectID" HeaderText="Project ID" ReadOnly="true"/>    
+                            <asp:BoundField DataField="projectID" HeaderText="Module ID" ReadOnly="true"/>    
                             
-                            <asp:TemplateField  HeaderText="Project Name">
+                            <asp:TemplateField  HeaderText="Module Name">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("projectName") %>'></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="editNameRequiredValidator" runat="server" ControlToValidate="editNameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large" ValidationGroup="tableValidation"></asp:RequiredFieldValidator>
