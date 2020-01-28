@@ -96,10 +96,19 @@ namespace ProjectFlow
 
         /// <summary>
         /// Change the currently selected project, 
-        /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc
+        /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc.
+        /// Setting this with null will clear the project
         /// </summary>
         public void SetCurrentProject(Project project)
         {
+
+            //Check if setting project to null
+            if(project == null)
+            {
+                //Clear the session
+                Session["CurrentProjectTeam"] = null;
+                Session["CurrentProject"] = null;
+            }
 
             //Check for access right into the project
             var user = HttpContext.Current.User;
@@ -180,6 +189,13 @@ namespace ProjectFlow
             }
         }
 
+        protected void ProjectBtnEvent(object sender, EventArgs e)
+        {
+            //Clear current project and go to project screen by refreshing
+            SetCurrentProject(null);
 
+            //Refresh
+            Response.Redirect(Request.RawUrl);
+        }
     }
 }

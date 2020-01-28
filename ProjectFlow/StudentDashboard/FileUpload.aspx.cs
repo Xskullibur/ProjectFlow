@@ -14,24 +14,17 @@ namespace ProjectFlow.DashBoard
     public partial class FileUpload : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-            if(Session["StudentTeamID"] != null)
-            {                
-                if (!IsPostBack)
-                {
-                    CheckFolderExist();
-                    DisplayFile();                                   
-                }               
-            }
-            else
+        {           
+            if (!IsPostBack)
             {
-                Response.Redirect("StudentProject.aspx");
-            }
+                CheckFolderExist();
+                DisplayFile();                                   
+            }               
         }
 
         public int GetTeamID()
         {
-            return int.Parse(Session["StudentTeamID"].ToString());
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void CheckFolderExist()
