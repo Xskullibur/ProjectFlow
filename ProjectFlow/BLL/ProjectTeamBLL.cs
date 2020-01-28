@@ -120,5 +120,28 @@ namespace ProjectFlow.BLL
                 }
             }
         }
+        public void lockTeam(string ProjectID, bool status, int Group)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                var projectTeam = dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.group == Group && x.dropped == false).ToList();
+                if (projectTeam != null)
+                {
+                    foreach(var item in projectTeam)
+                    {
+                        if (status)
+                        {
+                            item.open = false;
+                        }
+                        else
+                        {
+                            item.open = true;
+                        }
+                    }                  
+                    dbContext.SaveChanges();
+                }
+            }
+        }
     }
 }

@@ -22,6 +22,20 @@
             width: 371px;
             height: 42px;
         }
+        .auto-style15 {
+            width: 150px;
+            height: 42px;
+        }
+        .auto-style16 {
+            width: 150px;
+        }
+        .auto-style17 {
+            width: 53px;
+            height: 42px;
+        }
+        .auto-style18 {
+            width: 53px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -219,6 +233,87 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="controlModel" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <asp:Label ID="Label7" runat="server" Text="Access Control"></asp:Label>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">                    
+                    <table class="auto-style1">
+                             
+                        <tr>
+                            <td class="auto-style15">
+                                Team<br />
+                                <br />
+                            </td>
+                            <td class="auto-style14">
+                                <asp:DropDownList ID="groupAccessDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="False">
+                                        <asp:ListItem Value="1">1</asp:ListItem>
+                                        <asp:ListItem Value="2">2</asp:ListItem>
+                                        <asp:ListItem Value="3">3</asp:ListItem>
+                                        <asp:ListItem Value="4">4</asp:ListItem>
+                                        <asp:ListItem Value="5">5</asp:ListItem>
+                                        <asp:ListItem Value="6">6</asp:ListItem>
+                                        <asp:ListItem Value="7">7</asp:ListItem>
+                                        <asp:ListItem Value="8">8</asp:ListItem>
+                                        <asp:ListItem Value="9">9</asp:ListItem>
+                                        <asp:ListItem Value="10">10</asp:ListItem>
+                                    </asp:DropDownList> 
+                                <br />
+                            </td>
+                            <td class="auto-style17">
+                                &nbsp;
+
+                                &nbsp;<br />
+                                <br />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style15">
+                                <br />
+                                <br />
+                            </td>
+                            <td class="auto-style14">
+                                <br />
+                                <asp:Button ID="lockBtn" runat="server" CssClass="btn btn-primary" OnClick="lockBtn_Click" Text="Lock" />
+&nbsp;&nbsp;
+                                <asp:Button ID="unlockDP" runat="server" CssClass="btn btn-primary" OnClick="unlockDP_Click" Text="Unlock" />
+                            </td>
+                            <td class="auto-style17">
+                              
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="auto-style16">
+                                <br />
+                                <br />
+                            </td>
+                            <td class="auto-style13">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <br />
+                            </td>
+                            <td class="auto-style18">
+                                &nbsp;
+
+                                &nbsp;&nbsp;<br />
+                                <br />
+
+                            </td>
+                        </tr>                       
+                    </table>                   
+                </div>
+                <div class="modal-footer">
+                                <asp:Label ID="Label13" runat="server" ForeColor="Red"></asp:Label>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container"> 
         <div class="row">
             <div class="col">
@@ -242,15 +337,18 @@
             </div> 
             <div class="col-2">
                 <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />
-            </div>           
+            </div>
+            <div class="col-2">
+
+                <asp:Button ID="control" runat="server" Text="Control" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#controlModel"/>
+
+            </div> 
             <div class="col-3">
                  <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
                     <asp:ListItem Value="0">Avaliable</asp:ListItem>
                     <asp:ListItem Value="1">Deleted</asp:ListItem>
                 </asp:DropDownList>
-            </div>
-            <div class="col-1">
-            </div>           
+            </div>                    
             <div class="col-2">
                 <asp:DropDownList ID="sortGroupDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="sortGroupDP_SelectedIndexChanged">
                     <asp:ListItem Value="0">Show All</asp:ListItem>

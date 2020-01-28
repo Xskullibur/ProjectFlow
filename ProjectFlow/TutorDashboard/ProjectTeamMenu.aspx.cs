@@ -237,5 +237,19 @@ namespace ProjectFlow.DashBoard
             ShowTeam();
             Master.ShowAlert(total + " team add for group "  + group, BootstrapAlertTypes.SUCCESS);
         }
+
+        protected void lockBtn_Click(object sender, EventArgs e)
+        {
+            projectTeamBLL.lockTeam(GetProjectID(), true, int.Parse(groupAccessDP.SelectedValue));
+            Master.ShowAlert("Teams locked", BootstrapAlertTypes.SUCCESS);
+            ShowTeam();
+        }
+
+        protected void unlockDP_Click(object sender, EventArgs e)
+        {
+            projectTeamBLL.lockTeam(GetProjectID(), false, int.Parse(groupAccessDP.SelectedValue));
+            Master.ShowAlert("Team open for people to join", BootstrapAlertTypes.SUCCESS);
+            ShowTeam();
+        }
     }
 }
