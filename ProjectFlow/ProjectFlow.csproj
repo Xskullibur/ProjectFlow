@@ -345,7 +345,6 @@
     <Content Include="FileManagement\_KEYS\IV.bin" />
     <Content Include="FileManagement\_KEYS\KEY.bin" />
     <Content Include="Profile\Web.config" />
-    <Content Include="DashBoard\Web.config" />
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
@@ -448,15 +447,11 @@
     <Compile Include="BLL\TaskBLL.cs" />
     <Compile Include="BLL\TeamMemberBLL.cs" />
     <Compile Include="BLL\TranscriptBLL.cs" />
-    <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="BLL\PollingBLL.cs" />
     <Compile Include="BLL\TutorBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAO\CommentForIssueDAO.cs" />
-    <Compile Include="DAO\IssueDAO.cs" />
-    <Compile Include="DAO\PollingDAO.cs" />
     <Compile Include="FileManagement\Decryption.cs" />
     <Compile Include="FileManagement\Encryption.cs" />
     <Compile Include="FileManagement\FileDetails.cs" />

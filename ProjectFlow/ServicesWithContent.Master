@@ -118,10 +118,12 @@
                                     </li>
 
                               <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                                  <span class="mdc-list-item__primary-text">Task Management</span>
-                                    <span class="mdc-list-item__secondary-text"></span>
-                                </span>
+                                  <a class="nostyle" href="/Tasks/OngoingTaskView.aspx">
+                                        <span class="mdc-list-item__text">
+                                            <span class="mdc-list-item__primary-text">Task Management</span>
+                                            <span class="mdc-list-item__secondary-text"></span>
+                                        </span>
+                                  </a>
                               </li>
                               <li class="mdc-list-item">
                                 <span class="mdc-list-item__text">
@@ -130,10 +132,12 @@
                                 </span>
                               </li>
                               <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                                  <span class="mdc-list-item__primary-text">Issue Tracker</span>
-                                    <span class="mdc-list-item__secondary-text"></span>
-                                </span>
+                                  <a class="nostyle" href="/Issues/iAllView.aspx">
+                                    <span class="mdc-list-item__text">
+                                        <span class="mdc-list-item__primary-text">Issue Tracker</span>
+                                        <span class="mdc-list-item__secondary-text"></span>
+                                    </span>
+                                   </a>
                               </li>
                               <li class="mdc-list-item">
                                   <a class="nostyle" href="/Services/Christina/Christina.aspx">
@@ -143,6 +147,13 @@
                                     </span>
                                   </a>
                               </li>
+                              <li class="mdc-list-item">
+                                <a class="nostyle" href="/Services/Christina/ListOfRooms.aspx">
+                                    <span class="mdc-list-item__text">
+                                        <span class="mdc-list-item__primary-text">Past Meeting Minutes</span>
+                                    </span>
+                                </a>
+                             </li>
                             </ul>
                 </div>
 
