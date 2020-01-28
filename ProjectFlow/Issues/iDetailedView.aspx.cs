@@ -148,10 +148,12 @@ namespace ProjectFlow.Issues
             else
             {
                 // Get Controls
+                TextBox descTxt = (TextBox)row.FindControl("editDescTxt");
                 DropDownList statusDDL = (DropDownList)row.FindControl("editStatusDDL");
 
 
                 // Attributes
+                string desc = descTxt.Text;
                 int statusIndex = statusDDL.SelectedIndex;
 
                 // Clear Error Messages
@@ -175,7 +177,7 @@ namespace ProjectFlow.Issues
                     int statusID = Convert.ToInt32((statusDDL).SelectedValue);
 
                     // Update Task
-
+                    updated_issue.description = desc;
                     updated_issue.statusID = statusID;
 
               
