@@ -19,7 +19,15 @@ namespace ProjectFlow
             {
                 var user = HttpContext.Current.User;
                 var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
-                return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+                if(projectFlowIdentity.aspnet_Users.ProfileImagePath != null)
+                {
+                    return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+                }
+                else
+                {
+                    return "/Profile/ProfileImages/default-picture.png";
+                }
+                
             }
         }
 
