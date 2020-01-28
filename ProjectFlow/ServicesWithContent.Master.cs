@@ -169,7 +169,7 @@ namespace ProjectFlow
 
 
                         //Inject html for project
-                        ProjectID.Value = project.projectID;
+                        InjectHTMLForProjectTeamAndProject(project, null);
 
                     }
                     else
