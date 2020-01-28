@@ -121,6 +121,15 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Button addBtn;
         
         /// <summary>
+        /// addAnotherBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addAnotherBtn;
+        
+        /// <summary>
         /// errorLabel control.
         /// </summary>
         /// <remarks>
@@ -164,6 +173,33 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button openMilestone;
+        
+        /// <summary>
+        /// SearchTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchTB;
+        
+        /// <summary>
+        /// searchBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchBtn;
+        
+        /// <summary>
+        /// showAllBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button showAllBtn;
         
         /// <summary>
         /// MilestoneGV control.

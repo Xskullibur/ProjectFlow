@@ -73,6 +73,18 @@
         </div>
         <br>
         <div class="row">
+            <div class="col-3">
+                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="File Name" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-1">
+                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
+            </div> 
+            <div class="col-1">
+                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
+            </div>
+        </div>
+        <br>
+        <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">                   
                     <asp:GridView ID="FileGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" width ="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged" OnRowDeleting="FileGV_RowDeleting">

@@ -29,12 +29,14 @@ namespace ProjectFlow
         public int teamID { get; set; }
         public Nullable<int> milestoneID { get; set; }
         public int statusID { get; set; }
+        public int priorityID { get; set; }
         public bool dropped { get; set; }
         public int priorityID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issues { get; set; }
         public virtual Milestone Milestone { get; set; }
+        public virtual Priority Priority { get; set; }
         public virtual ProjectTeam ProjectTeam { get; set; }
         public virtual Status Status { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

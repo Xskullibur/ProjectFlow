@@ -26,14 +26,15 @@ namespace ProjectFlow.FileManagement
                     status = "Encrypted With Key";
                     name = name.Substring(20);
                 }
-                else if(name.Substring(0, 11).Equals("(ENCRYPTED)"))
+                else if(name.StartsWith("(ENCRYPTED)"))
                 {
                     status = "Encrypted";
                     name = name.Substring(11);
                 }
-                else
+                else if(name.StartsWith("(PLAIN)"))
                 {
                     status = "Not Encrypted";
+                    name = name.Substring(7);
                 }
 
                 FileDetails details = new FileDetails(name, status, sizeInByte.ToString() + " KB", date);
@@ -42,6 +43,46 @@ namespace ProjectFlow.FileManagement
             
             return fileList;
        }
+
+        public IEnumerable<FileDetails> SearchFiles(int TeamID, string search)
+        {
+            List<FileDetails> fileList = new List<FileDetails> { };
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\";
+
+            foreach (string file in Directory.GetFiles(path))
+            {
+                string status = "";
+                string name = Path.GetFileName(file);               
+                
+                FileInfo myFile = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\" + name);
+                double sizeInByte = (myFile.Length) / 1024;
+                string date = File.GetCreationTime(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\" + name).ToString("MM/dd/yyyy hh:mm tt");
+
+                if (name.StartsWith("(ENCRYPTED_WITH_KEY)"))
+                {
+                    status = "Encrypted With Key";
+                    name = name.Substring(20);
+                }
+                else if (name.StartsWith("(ENCRYPTED)"))
+                {
+                    status = "Encrypted";
+                    name = name.Substring(11);
+                }
+                else if (name.StartsWith("(PLAIN)"))
+                {
+                    status = "Not Encrypted";
+                    name = name.Substring(7);
+                }
+
+                if (name.ToLower().Contains(search.ToLower()))
+                {
+                    FileDetails details = new FileDetails(name, status, sizeInByte.ToString() + " KB", date);
+                    fileList.Add(details);
+                }             
+            }
+
+            return fileList;
+        }
 
     }
 }

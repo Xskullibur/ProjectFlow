@@ -109,9 +109,12 @@
                         <tr>
                             <td class="auto-style2">&nbsp;</td>
                             <td class="auto-style8">
-                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" ValidationGroup="modelValidation"/>
                             &nbsp;&nbsp;&nbsp;
+                                <asp:Button ID="CreateBtn" CssClass="btn btn-success" runat="server" Text="Create" OnClick="CreateBtn_Click" ValidationGroup="modelValidation"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <asp:Button ID="createAnotherBtn" runat="server" CssClass="btn btn-success" OnClick="createAnotherBtn_Click" Text="Create And Add Another" ValidationGroup="modelValidation" />
                                 </td>
+                            <td class="auto-style2">&nbsp;</td>
                         </tr>
                     </table>                   
                 </div>
@@ -125,7 +128,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Project Module Select"></asp:Label>
+                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Module Select"></asp:Label>
                 </h1>
             </div>            
         </div>
@@ -134,11 +137,22 @@
             <div class="col-2">
                 <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
             </div>
+            <div class="col-1">
+            </div>
             <div class="col-3">
                 <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
                     <asp:ListItem Value="0">Avaliable</asp:ListItem>
                     <asp:ListItem Value="1">Deleted</asp:ListItem>
                 </asp:DropDownList>
+            </div>
+             <div class="col-3">
+                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Project Name" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-1">
+                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
+            </div> 
+            <div class="col-1">
+                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
             </div>
         </div>
         <br>
@@ -148,9 +162,9 @@
                     <asp:GridView ID="projectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging" OnRowDeleting="projectGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
-                            <asp:BoundField DataField="projectID" HeaderText="Project ID" ReadOnly="true"/>    
+                            <asp:BoundField DataField="projectID" HeaderText="Module ID" ReadOnly="true"/>    
                             
-                            <asp:TemplateField  HeaderText="Project Name">
+                            <asp:TemplateField  HeaderText="Module Name">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("projectName") %>'></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="editNameRequiredValidator" runat="server" ControlToValidate="editNameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large" ValidationGroup="tableValidation"></asp:RequiredFieldValidator>

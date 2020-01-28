@@ -38,6 +38,7 @@ namespace ProjectFlow
         public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<Milestone> Milestones { get; set; }
         public virtual DbSet<Polling> Pollings { get; set; }
+        public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTeam> ProjectTeams { get; set; }
         public virtual DbSet<QRTZ_BLOB_TRIGGERS> QRTZ_BLOB_TRIGGERS { get; set; }

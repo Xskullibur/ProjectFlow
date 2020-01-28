@@ -22,40 +22,22 @@ namespace ProjectFlow {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// Label1 control.
+        /// Label5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// studentIDTB control.
+        /// studentList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox studentIDTB;
-        
-        /// <summary>
-        /// studentRequiredValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator studentRequiredValidator;
-        
-        /// <summary>
-        /// studentRegexValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator studentRegexValidator;
+        protected global::System.Web.UI.WebControls.ListBox studentList;
         
         /// <summary>
         /// Label2 control.
@@ -128,6 +110,33 @@ namespace ProjectFlow {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CreateMemberBtn;
+        
+        /// <summary>
+        /// SearchTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchTB;
+        
+        /// <summary>
+        /// searchBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button searchBtn;
+        
+        /// <summary>
+        /// showAllBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button showAllBtn;
         
         /// <summary>
         /// MemberGV control.
