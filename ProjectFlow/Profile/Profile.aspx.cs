@@ -63,7 +63,7 @@ namespace ProjectFlow.Profile
             EmailLbl.Text = tutor.aspnet_Users.aspnet_Membership.Email;
             AdminNoLbl.Text = "--not applicable--";
 
-            tutor.aspnet_Users.Pro
+            //tutor.aspnet_Users.Pro
 
             ProfileImg.ImageUrl = "";
 
