@@ -120,10 +120,12 @@
                                   </a>
                               </li>
                               <li class="mdc-list-item">
-                                <span class="mdc-list-item__text">
-                                  <span class="mdc-list-item__primary-text">Whiteboard</span>
-                                    <span class="mdc-list-item__secondary-text"></span>
-                                </span>
+                                  <a class="nostyle" href="/StudentDashboard/FileUpload.aspx">
+                                        <span class="mdc-list-item__text">
+                                          <span class="mdc-list-item__primary-text">Storage</span>
+                                            <span class="mdc-list-item__secondary-text"></span>
+                                        </span>
+                                   </a>
                               </li>
                               <li class="mdc-list-item">
                                   <a class="nostyle" href="/Issues/iAllView.aspx">
