@@ -88,10 +88,10 @@ namespace ProjectFlow.DashBoard
             TeamGV.DataBind();
         }
 
-        private void SearchTeam(string search)
+        private void SearchGroup(int Group)
         {
             List<ProjectTeam> teamList = new List<ProjectTeam> { };
-            teamList = projectTeamBLL.SearchTeam(GetProjectID(), search);
+            teamList = projectTeamBLL.SearchGroup(GetProjectID(), Group);
             TeamGV.DataSource = teamList;
             TeamGV.DataBind();
         }
@@ -199,12 +199,24 @@ namespace ProjectFlow.DashBoard
 
         protected void searchBtn_Click(object sender, EventArgs e)
         {
-            SearchTeam(SearchTB.Text);
+            //SearchTeam(SearchTB.Text);
         }
 
         protected void showAllBtn_Click(object sender, EventArgs e)
         {
             ShowTeam();
+        }
+
+        protected void sortGroupDP_SelectedIndexChanged(object sender, EventArgs e)
+        {         
+            if(int.Parse(sortGroupDP.SelectedValue) == 0)
+            {
+                ShowTeam();
+            }
+            else
+            {
+                SearchGroup(int.Parse(sortGroupDP.SelectedValue));
+            }
         }
     }
 }

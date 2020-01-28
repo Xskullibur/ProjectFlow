@@ -154,13 +154,21 @@
                 </asp:DropDownList>
             </div>
             <div class="col-3">
-                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Team Name" runat="server"></asp:TextBox>
-            </div>
-            <div class="col-1">
-                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
-            </div> 
-            <div class="col-1">
-                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
+            </div>           
+            <div class="col-2">
+                <asp:DropDownList ID="sortGroupDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="sortGroupDP_SelectedIndexChanged">
+                    <asp:ListItem Value="0">Show All</asp:ListItem>
+                    <asp:ListItem Value="1">1</asp:ListItem>
+                    <asp:ListItem Value="2">2</asp:ListItem>
+                    <asp:ListItem Value="3">3</asp:ListItem>
+                    <asp:ListItem Value="4">4</asp:ListItem>
+                    <asp:ListItem Value="5">5</asp:ListItem>
+                    <asp:ListItem Value="6">6</asp:ListItem>
+                    <asp:ListItem Value="7">7</asp:ListItem>
+                    <asp:ListItem Value="8">8</asp:ListItem>
+                    <asp:ListItem Value="9">9</asp:ListItem>
+                    <asp:ListItem Value="10">10</asp:ListItem>
+                </asp:DropDownList>
             </div>
         </div>
         <br>

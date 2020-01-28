@@ -61,11 +61,11 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public List<ProjectTeam> SearchTeam(string ProjectID, string search)
+        public List<ProjectTeam> SearchGroup(string ProjectID, int Group)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == false && x.teamName.ToLower().Contains(search.ToLower())).ToList();
+                return dbContext.ProjectTeams.Where(x => x.projectID.Equals(ProjectID) && x.dropped == false && x.group == Group).ToList();
             }
         }
 
