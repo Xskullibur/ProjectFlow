@@ -3,12 +3,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="container">
-        <div class="row">
-            <div class="col-4 mx-auto text-center">
-                <h1>
-                    <asp:Label ID="Label" runat="server" Font-Size="XX-Large" Text="Past created rooms"></asp:Label>
-                </h1>
-            </div>                   
+        <%--Title--%>
+        <div class="row mb-3">
+            <div class="col">
+                <h1>Past created rooms</h1>
+            </div>
         </div>
         <%-- Controls --%>
         <div class="row">

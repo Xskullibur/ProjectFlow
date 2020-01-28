@@ -16,6 +16,12 @@
     <asp:HiddenField ID="RoomID" runat="server" />
     <div class="container">
         <div class="row">
+                    <%--Title--%>
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>Meeting Minutes</h1>
+                </div>
+            </div>
             <div class="card w-100 m-3">
                 <%-- Fire event to update meeting details --%>
                 <asp:UpdatePanel runat="server">

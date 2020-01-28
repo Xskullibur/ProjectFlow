@@ -57,6 +57,15 @@ namespace ProjectFlow
                     {
                         Response.Redirect(studentDashboardPath);
                     }
+                    else
+                    {
+                        //Get session
+                        var projectTeam = Session["CurrentProjectTeam"] as ProjectTeam;
+                        var project = Session["CurrentProject"] as Project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
+                    }
                 }
                 else if (projectFlowIdentity.IsTutor)
                 {
@@ -69,6 +78,15 @@ namespace ProjectFlow
                     if (CurrentProject == null && !HttpContext.Current.Request.Url.AbsolutePath.Equals(tutorDashboardPath))
                     {
                         Response.Redirect(tutorDashboardPath);
+                    }
+                    else
+                    {
+                        //Get session
+                        var projectTeam = Session["CurrentProjectTeam"] as ProjectTeam;
+                        var project = Session["CurrentProject"] as Project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
                     }
                 }
 
@@ -131,10 +149,8 @@ namespace ProjectFlow
                         //Set the session of the current projects
                         Session["CurrentProject"] = project;
 
-
-                        //Inject html for project
-                        ProjectID.Value = project.projectID;
-                        TeamID.Value = projectTeam.teamID.ToString();
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
 
                     }
                     else
@@ -163,6 +179,15 @@ namespace ProjectFlow
                 }
             }
 
+        }
+
+        private void InjectHTMLForProjectTeamAndProject(Project project, ProjectTeam projectTeam)
+        {
+            //Inject html for project
+            if(project != null)
+                ProjectID.Value = project.projectID;
+            if (projectTeam != null)
+                TeamID.Value = projectTeam.teamID.ToString();
         }
 
         /// <summary>
