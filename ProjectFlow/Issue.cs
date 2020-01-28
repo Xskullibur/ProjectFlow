@@ -27,9 +27,12 @@ namespace ProjectFlow
         public int createdBy { get; set; }
         public int taskID { get; set; }
         public bool active { get; set; }
+        public Nullable<int> statusID { get; set; }
+        public Nullable<bool> votePublic { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentForIssue> CommentForIssues { get; set; }
+        public virtual Status Status { get; set; }
         public virtual Task Task { get; set; }
         public virtual TeamMember TeamMember { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

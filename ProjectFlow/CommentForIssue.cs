@@ -19,7 +19,7 @@ namespace ProjectFlow
         public int createdBy { get; set; }
         public int issueID { get; set; }
     
-        public virtual Issue Issue { get; set; }
         public virtual TeamMember TeamMember { get; set; }
+        public virtual Issue Issue { get; set; }
     }
 }

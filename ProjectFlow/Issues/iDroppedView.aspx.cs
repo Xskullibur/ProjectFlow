@@ -14,8 +14,11 @@ namespace ProjectFlow.Issues
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Master.changeSelectedView(IssueNested.IssueViews.iDroppedView);
-            refreshData(TEST_TEAM_ID);
+            if (!IsPostBack)
+            {
+                Master.changeSelectedView(IssueNested.IssueViews.iDroppedView);
+                refreshData(TEST_TEAM_ID);
+            }
         }
 
         private void refreshData(int id)

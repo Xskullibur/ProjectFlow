@@ -7,13 +7,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="container">
 
-        <%--Tool Bar--%>
+        <%--Status--%>
         <div class="row justify-content-between">
 
-            <%--Change View DropDownList--%>
+            <%--Error Summary--%>
             <div class="col-xl-3 col-12 align-self-end">
 
                 <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged">
+                    <asp:ListItem Value="All Tasks">All Issues</asp:ListItem>
                     <asp:ListItem Value="Ongoing Tasks">Ongoing Issues</asp:ListItem>
                     <asp:ListItem Value="Dropped Tasks">Dropped Issues</asp:ListItem>
                     
@@ -21,7 +22,7 @@
 
             </div>
 
-            <%--Add Task Button--%>
+            <%--Footer--%>
             <div class="col-xl-3 col-12 text-right">
 
                 <!-- Button trigger modal -->
@@ -37,7 +38,7 @@
 
                 <div class="modal-content">
 
-                    <%--Header--%>
+                    <%--Main Content--%>
                     <div class="modal-header">
                         <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -68,8 +69,23 @@
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
                             
-                            
+                            <%--Status--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:DropDownList ID="IssueStatusDLL" CssClass="form-control" runat="server"></asp:DropDownList>
 
+                                <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Public--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
+                                <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
+
+                                <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                
+                            </div>
                         </div>
 
                         <%--Error Summary--%>

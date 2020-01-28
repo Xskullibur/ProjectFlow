@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
+﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
 
 <!DOCTYPE html>
 
@@ -117,67 +117,57 @@
                                         </a>
                                     </li>
 
-                                    <li class="mdc-list-item">
-                                        <a class="nostyle" href="/Tasks/OngoingTaskView.aspx">
-                                            <span class="mdc-list-item__text">
-                                                <span class="mdc-list-item__primary-text">Task Management</span>
-                                                <span class="mdc-list-item__secondary-text"></span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="mdc-list-item">
+                              <li class="mdc-list-item">
+                                <span class="mdc-list-item__text">
+                                  <span class="mdc-list-item__primary-text">Task Management</span>
+                                    <span class="mdc-list-item__secondary-text"></span>
+                                </span>
+                              </li>
+                              <li class="mdc-list-item">
+                                <span class="mdc-list-item__text">
+                                  <span class="mdc-list-item__primary-text">Whiteboard</span>
+                                    <span class="mdc-list-item__secondary-text"></span>
+                                </span>
+                              </li>
+                              <li class="mdc-list-item">
+                                <span class="mdc-list-item__text">
+                                  <span class="mdc-list-item__primary-text">Issue Tracker</span>
+                                    <span class="mdc-list-item__secondary-text"></span>
+                                </span>
+                              </li>
+                              <li class="mdc-list-item">
+                                  <a class="nostyle" href="/Services/Christina/Christina.aspx">
                                     <span class="mdc-list-item__text">
-                                        <span class="mdc-list-item__primary-text">Whiteboard</span>
-                                        <span class="mdc-list-item__secondary-text"></span>
+                                      <span class="mdc-list-item__primary-text">Meeting Minutes Logger</span>
+                                      <span class="mdc-list-item__secondary-text">Christina AI</span>
                                     </span>
-                                    </li>
-                                    <li class="mdc-list-item">
-                                        <a class="nostyle" href="/Issues/iDetailedView.aspx">
-                                            <span class="mdc-list-item__text">
-                                                <span class="mdc-list-item__primary-text">Issue Tracker</span>
-                                                <span class="mdc-list-item__secondary-text"></span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="mdc-list-item">
-                                        <a class="nostyle" href="/Services/Christina/Christina.aspx">
-                                        <span class="mdc-list-item__text">
-                                            <span class="mdc-list-item__primary-text">Meeting Minutes Logger</span>
-                                            <span class="mdc-list-item__secondary-text">Christina AI</span>
-                                        </span>
-                                        </a>
-                                    </li>
-                                    <li class="mdc-list-item">
-                                        <a class="nostyle" href="/Services/Christina/ListOfRooms.aspx">
-                                        <span class="mdc-list-item__text">
-                                            <span class="mdc-list-item__primary-text">Past Meeting Minutes</span>
-                                        </span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                  </a>
+                              </li>
+                            </ul>
                 </div>
 
-                <div id="content" class="col-12 col-md-10">
-                    <div class="row h-100 pt-5" style="vertical-align:top;">
-
-                        <div class="col-12">
-                            <%--Alert Continer--%>
-                            <div class="container" id="alert_container">
-                                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                    <ContentTemplate>
-                                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
-                            </div>
-
-                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                            </asp:ContentPlaceHolder>
-
+                    <div id="content" class="col-12 col-md-10">
+                        <%--Alert Continer--%>
+                        <div class="container" id="alert_container">
+                            <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                <ContentTemplate>
+                                    <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
                         </div>
+                        <table style="width:100%;height:100vh;">
+                            <tr>
+                                <td class="h-100 pt-5" style="vertical-align:top;">
 
+
+                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </div>
-            </div>
+              </div>
+>>>>>>>>> Temporary merge branch 2
         </div>
     </form>
     <script type="text/javascript">

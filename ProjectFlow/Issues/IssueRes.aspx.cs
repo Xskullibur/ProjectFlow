@@ -10,31 +10,40 @@ namespace ProjectFlow.Issues
 {
     public partial class IssueRes : System.Web.UI.Page
     {
-        int idIssue = 1;
+        int idIssue;
         int idVoter = 4;
+        string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 lbMember.Text = (string)Session["SSName"];
                 lbIssue.Text = (string)Session["SSDesc"];
+                idIssue = (int)Session["SSIId"];
+                ispublic = (string)Session["SSIsPublic"];
                 check(idIssue, idVoter);
                 refreshCommentData(idIssue);
+                //Label1.ToolTip = getUserbySelection(idIssue, false); // this works but needs to be removed
+                isPublic(ispublic);
             }
         }
 
         protected void btnYes_Click(object sender, EventArgs e)
         {
+            idIssue = (int)Session["SSIId"];
             Label1.Text = "Yes";
             vote(true);
             check(idIssue, idVoter);
+            isPublic(ispublic);
         }
 
         protected void btnNo_Click(object sender, EventArgs e)
         {
+            idIssue = (int)Session["SSIId"];
             Label1.Text = "No";
             vote(false);
             check(idIssue, idVoter);
+            isPublic(ispublic);
         }
 
         protected void btnRandom_Click(object sender, EventArgs e)
@@ -45,12 +54,14 @@ namespace ProjectFlow.Issues
                 Label1.Text = "Yes";
                 vote(true);
                 check(idIssue, idVoter);
+                isPublic(ispublic);
             }
             else
             {
                 Label1.Text = "No";
                 vote(false);
                 check(idIssue, idVoter);
+                isPublic(ispublic);
             }
         }
 
@@ -61,8 +72,8 @@ namespace ProjectFlow.Issues
 
                 // Create Task Object
                 Polling newPoll = new Polling();
-                newPoll.issueID = idIssue;    //this is a placeholder and needs to be fixed
-                newPoll.voterID = idVoter;    //this is also a placeholder and also needs to be fixed
+                newPoll.issueID = idIssue;    
+                newPoll.voterID = idVoter;    
                 newPoll.vote = choice;      
 
                 // Submit Query
@@ -91,9 +102,6 @@ namespace ProjectFlow.Issues
             {
                 //Label1.Text = checking.ToString();
             }
-
-            //List<int> MyList = pollingBLL.Getcheck(vID);
-            //Label1.Text = string.Join(",", MyList);
         }
 
         private void refreshCommentData(int id)
@@ -144,6 +152,29 @@ namespace ProjectFlow.Issues
             else
             {
                 //tbComments.ToolTip = "Please enter a comment";
+            }
+        }
+
+        protected string getUserbySelection(int iID, bool selection)
+        {
+            PollingBLL pollingBLL = new PollingBLL();
+            var myList = pollingBLL.GetVotersBySelection(iID, selection);
+            string combindString = string.Join(",", myList);
+
+            return combindString;
+        }
+
+        protected void isPublic(string choice)
+        {
+            //IssueBLL issueBLL = new IssueBLL();
+            //bool isPub = issueBLL.isPublic(iID);
+            if (choice == "True")
+            {
+                btnNo.ToolTip = getUserbySelection(idIssue, false);
+                btnYes.ToolTip = getUserbySelection(idIssue, true);
+            } else
+            {
+
             }
         }
     }
