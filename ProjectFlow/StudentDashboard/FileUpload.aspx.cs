@@ -67,9 +67,9 @@ namespace ProjectFlow.DashBoard
                     errorList.Add("Key must be 32 character<br>");
                 }
 
-                while(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)" +  filename)
-                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)" + filename)
-                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(PLAIN)" + filename))               
+                while(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED_WITH_KEY)" +  filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED)" + filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(PLAIN)" + filename))               
                 {
                     filename = "(copy)" + filename ;
                 }
