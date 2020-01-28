@@ -16,6 +16,7 @@ namespace ProjectFlow.Tasks
         public List<string> TEndDateErrors { get; set; }
         public List<string> TStatusErrors { get; set; }
         public List<string> StartEndDateErrors { get; set; }
+        public List<string> TPriorityErrors { get; private set; }
 
         public TaskHelper()
         {
@@ -26,17 +27,11 @@ namespace ProjectFlow.Tasks
             TEndDateErrors = new List<string>();
             TStatusErrors = new List<string>();
             StartEndDateErrors = new List<string>();
+            TPriorityErrors = new List<string>();
         }
 
-        // Verify Add Task
-        public bool VerifyAddTask(string taskName, 
-            string taskDesc, 
-            int milestoneIndex, 
-            string startDate, 
-            string endDate, 
-            int statusIndex)
+        private void ClearErrorMsgs()
         {
-            bool verified = true;
             TNameErrors.Clear();
             TDescErrors.Clear();
             TMilestoneErrors.Clear();
@@ -44,10 +39,24 @@ namespace ProjectFlow.Tasks
             TEndDateErrors.Clear();
             TStatusErrors.Clear();
             StartEndDateErrors.Clear();
+        }
 
-            /**
-             * Check For Errors
-             **/ 
+
+        /// <summary>
+        /// Verification for valid task
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <param name="taskName"></param>
+        /// <param name="taskDesc"></param>
+        /// <param name="milestoneID"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="statusID"></param>
+        /// <returns>Booolean</returns>
+        public bool VerifyAddTask(int teamID, string taskName, string taskDesc, string milestoneID, string startDate, string endDate, string statusID, string priorityID)
+        {
+            bool verified = true;
+            ClearErrorMsgs();
 
             // Task Name
             if (string.IsNullOrEmpty(taskName))
@@ -73,10 +82,26 @@ namespace ProjectFlow.Tasks
                 verified = false;
             }
 
+
             // Milestone
-            if (milestoneIndex < 0)
+            MilestoneBLL milestoneBLL = new MilestoneBLL();
+            List<Milestone> teamMilestones = milestoneBLL.GetMilestonesByTeamID(teamID);
+
+            if (int.TryParse(milestoneID, out int milestoneID_Int))
             {
-                TMilestoneErrors.Add("Milestone Field is Required!");
+                if (milestoneID_Int != -1)
+                {
+                    if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
+                    {
+                        TMilestoneErrors.Add("Invalid Milestone Selected!");
+                        verified = false;
+                    }
+                }
+
+            }
+            else
+            {
+                TMilestoneErrors.Add("Invalid Milestone Selected!");
                 verified = false;
             }
 
@@ -107,7 +132,7 @@ namespace ProjectFlow.Tasks
             // Compare Start End Date
             if (TStartDateErrors.Count == 0 && TEndDateErrors.Count == 0)
             {
-                if (DateTime.Compare(DateTime.Parse(startDate), DateTime.Parse(endDate)) >= 0)
+                if (DateTime.Compare(DateTime.Parse(startDate).Date, DateTime.Parse(endDate).Date) > 0)
                 {
                     StartEndDateErrors.Add("Start Date cannot be later than End Date!");
                     verified = false;
@@ -115,9 +140,38 @@ namespace ProjectFlow.Tasks
             }
 
             // Status
-            if (statusIndex == -1)
+            StatusBLL statusBLL = new StatusBLL();
+            Dictionary<int, string> statusDict = statusBLL.Get();
+
+            if (int.TryParse(statusID, out int statusID_int))
             {
-                TStatusErrors.Add("Status Field is Required!");
+                if (!statusDict.Keys.Contains(statusID_int))
+                {
+                    TStatusErrors.Add("Invalid Status Selected!");
+                    verified = false;
+                } 
+            }
+            else
+            {
+                TMilestoneErrors.Add("Invalid Milestone Selected!");
+                verified = false;
+            }
+
+            // Priority
+            PriorityBLL priorityBLL = new PriorityBLL();
+            List<Priority> priorities = priorityBLL.Get();
+
+            if (int.TryParse(priorityID, out int priorityID_int))
+            {
+                if (!priorities.Select(x => x.ID).Contains(priorityID_int))
+                {
+                    TPriorityErrors.Add("Invalid Priority Selected!");
+                    verified = false;
+                }
+            }
+            else
+            {
+                TPriorityErrors.Add("Invalid Priority Selected!");
                 verified = false;
             }
 
@@ -129,10 +183,14 @@ namespace ProjectFlow.Tasks
         {
             if (currentStatus == StatusBLL.VERIFICATON)
             {
-                if (leader != currentUser)
+                if (leader.studentID != currentUser.studentID)
                 {
                     return false;
                 }
+            }
+            else if (currentStatus == StatusBLL.COMPLETED)
+            {
+                return false;
             }
 
             return true;

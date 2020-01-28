@@ -24,6 +24,7 @@
                                     <asp:BoundField DataField="Start" HeaderText="Start" />
                                     <asp:BoundField DataField="End" HeaderText="End" />
                                     <asp:BoundField DataField="Allocation" HeaderText="Allocation" />
+                                    <asp:BoundField DataField="Priority" HeaderText="Priority" />
                                     <asp:BoundField DataField="Status" HeaderText="Status" />
 
                                     <asp:TemplateField ShowHeader="False">

@@ -154,14 +154,7 @@ namespace ProjectFlow
                 if (user.Identity.IsAuthenticated)
                 {
                     var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
-                    if (projectFlowIdentity.IsStudent)
-                    {
-                        return Session["CurrentProjectTeam"] as ProjectTeam;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Trying to access Project Team as a Tutor is not allowed");
-                    }
+                    return Session["CurrentProjectTeam"] as ProjectTeam;
                 }
                 else
                 {

@@ -181,6 +181,7 @@
     <Content Include="Issues\IssueView.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
+    <Content Include="ProjectDashboard.aspx" />
     <Content Include="Profile\ProfileImages\default-picture.png" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -200,6 +201,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\calendar\calendarscript.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -350,6 +352,7 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Tasks\JsonResponse.ashx" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -376,6 +379,7 @@
     <Content Include="Services\Christina\RoomDetail.aspx" />
     <Content Include="Services\Christina\Christina.aspx" />
     <Content Include="Services\Christina\ListOfRooms.aspx" />
+    <Content Include="Tasks\CalendarView.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Tasks\EmailTest.aspx" />
@@ -391,6 +395,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\CalendarEvent.cs" />
+    <Content Include="App_Code\EventDAO.cs" />
+    <Content Include="App_Code\ImproperCalendarEvent.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="aspnet_Applications.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -429,6 +436,7 @@
     <Compile Include="BLL\JobDetailsBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\MilestoneBLL.cs" />
+    <Compile Include="BLL\PriorityBLL.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
     <Compile Include="BLL\ProjectTeamBLL.cs" />
     <Compile Include="BLL\RoomBLL.cs" />
@@ -532,6 +540,9 @@
     <Compile Include="Polling.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Priority.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Profile\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -541,6 +552,13 @@
     </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectDashboard.aspx.cs">
+      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectDashboard.aspx.designer.cs">
+      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectFlowDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -647,6 +665,13 @@
     <Compile Include="TaskAllocation.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\CalendarView.aspx.cs">
+      <DependentUpon>CalendarView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tasks\CalendarView.aspx.designer.cs">
+      <DependentUpon>CalendarView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tasks\DroppedTaskView.aspx.cs">
       <DependentUpon>DroppedTaskView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -745,6 +770,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
+    <Compile Include="Utils\Filter\Filter.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
     <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
@@ -787,7 +813,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="FileManagement\FileStorage\" />
     <Folder Include="FileManagement\Temp\" />
