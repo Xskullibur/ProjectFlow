@@ -260,5 +260,27 @@ namespace ProjectFlow.BLL
 
             }
         }
+
+        public bool Update(Issue issue)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    // Update Task
+                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+
+                    // Save Changes
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating Task: {e.Message}");
+                    return false;
+                }
+            }
+        }
     }
 }
