@@ -17,9 +17,12 @@ namespace ProjectFlow.Issues
         {
             if (!IsPostBack)
             {
-                lbMember.Text = (string)Session["SSName"];
-                lbIssue.Text = (string)Session["SSDesc"];
                 idIssue = (int)Session["SSIId"];
+                IssueBLL issueBLL = new IssueBLL();
+                Issue updated_issue = issueBLL.GetIssueByID(idIssue);
+                lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
+                lbIssue.Text = updated_issue.description;
+
                 ispublic = (string)Session["SSIsPublic"];
                 check(idIssue, idVoter);
                 refreshCommentData(idIssue);
@@ -31,7 +34,7 @@ namespace ProjectFlow.Issues
         protected void btnYes_Click(object sender, EventArgs e)
         {
             idIssue = (int)Session["SSIId"];
-            Label1.Text = "Yes";
+
             vote(true);
             check(idIssue, idVoter);
             isPublic(ispublic);
@@ -40,7 +43,6 @@ namespace ProjectFlow.Issues
         protected void btnNo_Click(object sender, EventArgs e)
         {
             idIssue = (int)Session["SSIId"];
-            Label1.Text = "No";
             vote(false);
             check(idIssue, idVoter);
             isPublic(ispublic);
@@ -51,14 +53,13 @@ namespace ProjectFlow.Issues
             Random rnd = new Random();
             int decision = rnd.Next(10);
             if (decision > 5) {
-                Label1.Text = "Yes";
                 vote(true);
                 check(idIssue, idVoter);
                 isPublic(ispublic);
             }
             else
             {
-                Label1.Text = "No";
+
                 vote(false);
                 check(idIssue, idVoter);
                 isPublic(ispublic);
@@ -96,7 +97,6 @@ namespace ProjectFlow.Issues
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
-                Label1.Text = "Already voted!";
             }
             else
             {

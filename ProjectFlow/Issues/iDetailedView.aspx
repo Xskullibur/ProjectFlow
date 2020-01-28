@@ -12,16 +12,24 @@
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" ReadOnly="True" />
                             <asp:BoundField DataField="TaskID" HeaderText="Task Id" ReadOnly="True" />
-                            <asp:BoundField DataField="Task" HeaderText="Issue Name" ReadOnly="True" />
+                            <%--Description--%>
+                            <asp:TemplateField HeaderText="Issue Name">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editNameTxt" CssClass="form-control" runat="server" Text='<%# Bind("Task") %>' TextMode="MultiLine"></asp:TextBox>
+                                
+                             
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="gridDesc" runat="server" Text='<%# Bind("Task") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
 
                             <%--Description--%>
                             <asp:TemplateField HeaderText="Description">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editDescTxt" CssClass="form-control" runat="server" Text='<%# Bind("Description") %>' TextMode="MultiLine"></asp:TextBox>
                                 
-                                    <asp:Label ID="tDescErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                    <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="editDescTxt" ValidationGroup="EditTask"></asp:RegularExpressionValidator>
-                                    <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="editDescTxt" Display="Dynamic" ValidationGroup="EditTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                   
                                 </EditItemTemplate>
                                 <ItemTemplate>
                                     <asp:Label ID="gridDesc" runat="server" Text='<%# Bind("Description") %>'></asp:Label>

@@ -148,11 +148,13 @@ namespace ProjectFlow.Issues
             else
             {
                 // Get Controls
+                TextBox nameTxt = (TextBox)row.FindControl("editNameTxt");
                 TextBox descTxt = (TextBox)row.FindControl("editDescTxt");
                 DropDownList statusDDL = (DropDownList)row.FindControl("editStatusDDL");
 
 
                 // Attributes
+                string name = nameTxt.Text;
                 string desc = descTxt.Text;
                 int statusIndex = statusDDL.SelectedIndex;
 
@@ -177,10 +179,10 @@ namespace ProjectFlow.Issues
                     int statusID = Convert.ToInt32((statusDDL).SelectedValue);
 
                     // Update Task
+
+                    updated_issue.title = name;
                     updated_issue.description = desc;
                     updated_issue.statusID = statusID;
-
-              
 
                     // Update Task and Allocations
                     if (issueBLL.Update(updated_issue))
