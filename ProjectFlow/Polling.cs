@@ -19,7 +19,7 @@ namespace ProjectFlow
         public int voterID { get; set; }
         public Nullable<bool> vote { get; set; }
     
-        public virtual TeamMember TeamMember { get; set; }
         public virtual Issue Issue { get; set; }
+        public virtual TeamMember TeamMember { get; set; }
     }
 }
