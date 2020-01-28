@@ -15,9 +15,10 @@ namespace ProjectFlow.Issues
         string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
+            idIssue = (int)Session["SSIId"];
             if (!IsPostBack)
             {
-                idIssue = (int)Session["SSIId"];
+                
                 IssueBLL issueBLL = new IssueBLL();
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
@@ -97,9 +98,11 @@ namespace ProjectFlow.Issues
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
+                voted_alert.Visible = true;
             }
             else
             {
+                voted_alert.Visible = false;
                 //Label1.Text = checking.ToString();
             }
         }
