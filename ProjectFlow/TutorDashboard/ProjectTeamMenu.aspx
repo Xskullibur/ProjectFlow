@@ -154,7 +154,7 @@
                              
                         <tr>
                             <td class="auto-style10">
-                                <asp:Label ID="Label8" runat="server" Text="Amount"></asp:Label>
+                                <asp:Label ID="Label8" runat="server" Text="Number of teams"></asp:Label>
                                 <br />
                                 <br />
                             </td>
@@ -318,7 +318,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Team Select"></asp:Label>
+                    <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Teams that are in this Module"></asp:Label>
                 </h1>
             </div>            
         </div>

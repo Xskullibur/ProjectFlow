@@ -128,7 +128,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Module Select"></asp:Label>
+                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Modules that I teach"></asp:Label>
                 </h1>
             </div>            
         </div>

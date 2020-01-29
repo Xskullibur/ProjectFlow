@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Project Select"></asp:Label>
+                    <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Projects that I belong to"></asp:Label>
                 </h1>
             </div>            
         </div>        

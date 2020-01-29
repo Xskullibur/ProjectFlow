@@ -137,7 +137,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label5" class="label label-primary" runat="server" Text="Milestone"></asp:Label>
+                    <asp:Label ID="Label5" class="label label-primary" runat="server" Text="Milestone belonging to this team"></asp:Label>
                 </h1>
             </div>            
         </div>

@@ -84,7 +84,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Team Members"></asp:Label>
+                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Team Members that are in this team"></asp:Label>
                 </h1>
             </div>            
         </div>
