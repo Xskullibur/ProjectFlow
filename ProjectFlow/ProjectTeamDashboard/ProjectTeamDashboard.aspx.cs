@@ -39,11 +39,14 @@ namespace ProjectFlow.ProjectTeamDashboard
                 string priorityName = priority.priority1;
                 var priorityTasks = tasks.Where(x => x.priorityID == priority.ID).ToList();
                 double completedTasks = priorityTasks.Count(x => x.Status.status1 == "Completed");
+                double uncompletedTasks = priorityTasks.Count(x => x.Status.status1 != "Completed");
                 double totalTasks = priorityTasks.Count();
 
                 Panel panel = new Panel();
                 panel.ID = $"{priorityName}_panel";
                 panel.CssClass = "col-4 border border-secondary";
+
+                string chartID = $"{priorityName}_chart";
 
                 LiteralControl literalControl = new LiteralControl();
                 literalControl.Text = $@"<div class='row'>
@@ -53,13 +56,15 @@ namespace ProjectFlow.ProjectTeamDashboard
                                         </div>
                                         <div class='row'>
                                             <div class='col'>
-                                                <canvas id='chart{count}'></canvas>
+                                                <canvas id='{chartID}'></canvas>
                                                 {completedTasks}/{totalTasks}
                                             </div>
                                         </div>";
 
                 panel.Controls.Add(literalControl);
                 TaskPanel.Controls.Add(panel);
+
+                ClientScript.RegisterStartupScript(this.GetType(), $"{chartID}_script", $"<script type='text/javascript'>loadDoughnutChart('{chartID}', {completedTasks}, {uncompletedTasks});</script>");
             }
 
         }

@@ -58,9 +58,9 @@
         <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="TeamID" runat="server"></asp:HiddenField>
         <script>
-            $(function() {
+            $(function () {
                 $('.datetimepicker').datetimepicker();
-            })
+            });
         </script>
 
         <div class="sticky-top">
