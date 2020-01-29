@@ -373,6 +373,7 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Christina\Christina.aspx" />
     <Content Include="Services\Christina\ListOfRooms.aspx" />
+    <Content Include="StudentDashboard\ManageMembers.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
     <Content Include="Tasks\EmailTest.aspx" />
@@ -632,6 +633,13 @@
     </Compile>
     <Compile Include="Student.cs">
       <DependentUpon>ProjectFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StudentDashboard\ManageMembers.aspx.cs">
+      <DependentUpon>ManageMembers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard\ManageMembers.aspx.designer.cs">
+      <DependentUpon>ManageMembers.aspx</DependentUpon>
     </Compile>
     <Compile Include="Task.cs">
       <DependentUpon>ProjectFlow.tt</DependentUpon>

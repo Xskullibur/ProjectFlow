@@ -257,5 +257,13 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public TeamMember getMemberByAdmin(Guid userID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Single(x => x.UserId == userID);
+            }
+        }
+
     }
 }
