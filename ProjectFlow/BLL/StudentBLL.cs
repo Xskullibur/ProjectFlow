@@ -236,12 +236,24 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public IEnumerable<ProjectTeam> ShowAvailbleProject()
+        public IEnumerable<ProjectTeam> ShowAvailbleProject(string studentID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var team = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true).ToList();
-                return team;
+                List<ProjectTeam> teamList = new List<ProjectTeam> { };
+
+                var project = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true).Select(x => x.Project).ToList();
+                var student = dbContext.Students.Single(x => x.studentID.Equals(studentID));
+
+                foreach(Project p in project)
+                {
+                    if(!ContainsProject(student, p))
+                    {
+                        teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID)).ToList();
+                    }
+                }
+
+                return teamList;
             }
         }
 

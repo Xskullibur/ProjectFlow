@@ -144,7 +144,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <asp:Label ID="Label6" runat="server" Text="Create Team"></asp:Label>
+                    <asp:Label ID="Label6" runat="server" Text="Bulk Create"></asp:Label>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -415,7 +415,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                             
-                            <asp:BoundField DataField="open" HeaderText="UnLocked" />
+                            <asp:BoundField DataField="open" HeaderText="Unlocked" />
                             
                             <asp:CommandField ButtonType="Button" SelectText="View Member" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-success" />

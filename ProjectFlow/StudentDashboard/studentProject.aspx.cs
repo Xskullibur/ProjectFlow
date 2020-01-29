@@ -71,7 +71,7 @@ namespace ProjectFlow.DashBoard
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
 
-            IEnumerable<ProjectTeam> avaliableList = studentBLL.ShowAvailbleProject();
+            IEnumerable<ProjectTeam> avaliableList = studentBLL.ShowAvailbleProject(getStudentID());
             availableGV.DataSource = avaliableList;
             availableGV.DataBind();
         }
