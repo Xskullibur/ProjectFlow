@@ -31,6 +31,24 @@ namespace ProjectFlow.StudentDashboard {
         protected global::System.Web.UI.WebControls.Label yourStatus;
         
         /// <summary>
+        /// leaderBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button leaderBtn;
+        
+        /// <summary>
+        /// STbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button STbtn;
+        
+        /// <summary>
         /// MemberGV control.
         /// </summary>
         /// <remarks>

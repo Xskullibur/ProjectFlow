@@ -257,13 +257,28 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public TeamMember getMemberByAdmin(Guid userID)
+        public TeamMember getMemberByAdmin(Guid userID, int TeamID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.TeamMembers.Single(x => x.UserId == userID);
+                return dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == TeamID);
             }
         }
 
+        public bool gotLeader(int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                List<TeamMember> memberList = dbContext.TeamMembers.Where(x => x.teamID == teamID && x.roleID == 1).ToList();
+                foreach(TeamMember m in memberList)
+                {
+                    if (m.roleID == 1)
+                    {
+                        return true;
+                    }                    
+                }
+                return false;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace ProjectFlow.StudentDashboard
     public partial class ManageMembers : System.Web.UI.Page
     {
         StudentBLL studentBLL = new StudentBLL();
+        TeamMemberBLL teamMemberBLL = new TeamMemberBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["StudentTeamID"] != null)
@@ -40,14 +41,14 @@ namespace ProjectFlow.StudentDashboard
             MemberGV.DataSource = memberList;
             MemberGV.DataBind();
 
-            TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()));
+            TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             int totalRow = MemberGV.Rows.Count;
 
             if (member.roleID == 1)
             {
-                yourStatus.Text = "Status : Leader";               
-                
-                for(int i = 0; i < totalRow; i++)
+                yourStatus.Text = "Status : Leader";
+                STbtn.Enabled = true;
+                for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
                     Button deleteBtn = (Button)row.FindControl("deleteBtn");
@@ -57,12 +58,18 @@ namespace ProjectFlow.StudentDashboard
             else
             {
                 yourStatus.Text = "Status : Member";
+                STbtn.Enabled = false;
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
                     Button deleteBtn = (Button)row.FindControl("deleteBtn");
                     deleteBtn.Visible = false;
                 }
+            }
+
+            if (studentBLL.gotLeader(GetTeamID()))
+            {
+                leaderBtn.Enabled = false;
             }
             
         }
@@ -75,6 +82,19 @@ namespace ProjectFlow.StudentDashboard
         protected void MemberGV_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void leaderBtn_Click(object sender, EventArgs e)
+        {
+            teamMemberBLL.ToLeader(Guid.Parse(getStudentID()), GetTeamID());
+            showTeam();
+        }
+
+        protected void STbtn_Click(object sender, EventArgs e)
+        {
+            teamMemberBLL.ToMember(Guid.Parse(getStudentID()),GetTeamID());
+            showTeam();
+            leaderBtn.Enabled = true;
         }
     }
 }

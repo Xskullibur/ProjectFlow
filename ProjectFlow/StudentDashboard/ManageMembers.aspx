@@ -12,15 +12,15 @@
         </div>        
         <br>
         <div class="row">
-            <div class="col-3">
-                
-                <asp:Label ID="yourStatus" runat="server"></asp:Label>
-                
+            <div class="col-3">               
+                <asp:Label ID="yourStatus" runat="server"></asp:Label>               
             </div>
-            <div class="col-1">
-                
+            <div class="col-2">               
+                <asp:Button ID="leaderBtn" runat="server" CssClass="btn btn-primary" Text="Become Leader" OnClick="leaderBtn_Click" />               
             </div> 
-            <div class="col-1">
+            <div class="col-2">
+                
+                <asp:Button ID="STbtn" runat="server" CssClass="btn btn-primary" OnClick="STbtn_Click" Text="Step Down" />
                 
             </div>
         </div>

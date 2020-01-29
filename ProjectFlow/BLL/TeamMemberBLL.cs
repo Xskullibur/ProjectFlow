@@ -66,5 +66,31 @@ namespace ProjectFlow.BLL
                 return dbContext.TeamMembers.Any(x => x.roleID == 1 && x.teamID == TeamID);
             }
         }
+
+        public void ToLeader(Guid userID, int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == teamID);
+                if(member != null)
+                {
+                    member.roleID = 1;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void ToMember(Guid userID, int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == teamID);
+                if (member != null)
+                {
+                    member.roleID = 2;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
     }
 }

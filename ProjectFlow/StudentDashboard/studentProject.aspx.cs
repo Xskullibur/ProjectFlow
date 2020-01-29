@@ -50,7 +50,6 @@ namespace ProjectFlow.DashBoard
             {
                 throw new InvalidOperationException("Invalid team ID given!");
             }
-
         }
 
         protected void ProjectGV_PageIndexChanged(object sender, EventArgs e)
