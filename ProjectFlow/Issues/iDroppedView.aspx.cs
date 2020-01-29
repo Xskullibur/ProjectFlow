@@ -54,5 +54,12 @@ namespace ProjectFlow.Issues
                 IssueView.UseAccessibleHeader = true;
             }
         }
+
+        //Pagination
+        protected void IssueView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            IssueView.PageIndex = e.NewPageIndex;
+            refreshData();
+        }
     }
 }

@@ -114,31 +114,38 @@ namespace ProjectFlow.Issues
                 bool IsPublic = checkCB();
                 ProjectTeam currentTeam = GetCurrentProjectTeam();
                 int teamID = currentTeam.teamID;
-
-                // Create Task Object
-                Issue newIssue = new Issue();
-                newIssue.title = tNameTxt.Text;
-                newIssue.description = tDescTxt.Text;
-                newIssue.taskID = Convert.ToInt32(TaskIdDLL.Text);             
-                newIssue.createdBy = teamID;      
-                newIssue.active = true;
-                newIssue.statusID = Convert.ToInt32(IssueStatusDLL.SelectedValue);
-                newIssue.votePublic = IsPublic;
-
-                // Submit Query
-                IssueBLL issueBLL = new IssueBLL();
-                bool result = issueBLL.Add(newIssue);
-
-                // Show Result
-                if (result)
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                
+                if (identity.IsStudent)
                 {
-                    hideModal();
-                    refreshGrid?.Invoke(this, EventArgs.Empty);
-                    this.Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
-                }
-                else
-                {
-                    this.Master.ShowAlert("Failed to Add Task!", BootstrapAlertTypes.DANGER);
+                    Guid Uid = identity.Student.aspnet_Users.UserId;
+                    // Create Task Object
+                    Issue newIssue = new Issue();
+                    newIssue.title = tNameTxt.Text;
+                    newIssue.description = tDescTxt.Text;
+                    newIssue.taskID = Convert.ToInt32(TaskIdDLL.Text);
+                    //newIssue.createdBy = teamID;
+                    newIssue.createdBy = teammemberBLL.GetMemIdbyUID(Uid);
+                    newIssue.active = true;
+                    newIssue.statusID = Convert.ToInt32(IssueStatusDLL.SelectedValue);
+                    newIssue.votePublic = IsPublic;
+
+                    // Submit Query
+                    IssueBLL issueBLL = new IssueBLL();
+                    bool result = issueBLL.Add(newIssue);
+
+                    // Show Result
+                    if (result)
+                    {
+                        hideModal();
+                        refreshGrid?.Invoke(this, EventArgs.Empty);
+                        this.Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
+                    }
+                    else
+                    {
+                        this.Master.ShowAlert("Failed to Add Task!", BootstrapAlertTypes.DANGER);
+                    }
                 }
             }
 

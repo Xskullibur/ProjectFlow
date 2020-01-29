@@ -12,7 +12,7 @@
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" ReadOnly="True" />
                             <asp:BoundField DataField="TaskID" HeaderText="Task Id" ReadOnly="True" />
-                            <%--Description--%>
+                            <%--Issue Name--%>
                             <asp:TemplateField HeaderText="Issue Name">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="editNameTxt" CssClass="form-control" runat="server" Text='<%# Bind("Task") %>' TextMode="MultiLine"></asp:TextBox>

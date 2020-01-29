@@ -119,11 +119,15 @@ namespace ProjectFlow.Issues
                      * STATUS
                      **/
 
-                    //Get Status Dropdownlist
+                    //Get Control
                     DropDownList editStatusDDL = (DropDownList)e.Row.FindControl("editStatusDDL");
+                    TextBox editNameTxt = (TextBox)e.Row.FindControl("editNameTxt");
+                    TextBox editDescTxt = (TextBox)e.Row.FindControl("editDescTxt");
 
                     //Set Style
                     editStatusDDL.Style.Add("width", "auto");
+                    editNameTxt.Style.Add("width", "auto");
+                    editDescTxt.Style.Add("width", "auto");
 
                     //Set Dropdownlist Datasource
                     StatusBLL statusBLL = new StatusBLL();
@@ -210,7 +214,7 @@ namespace ProjectFlow.Issues
                     // Update Task and Allocations
                     if (issueBLL.Update(updated_issue))
                     {
-                        NotificationHelper.Default_TaskUpdate_Setup(id);
+                        //NotificationHelper.Default_TaskUpdate_Setup(id);
                         this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
                     }
                     else
