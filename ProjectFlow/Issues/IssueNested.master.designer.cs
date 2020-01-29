@@ -103,6 +103,51 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator tDescRequiredValidator;
         
         /// <summary>
+        /// IssueStatusDLL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList IssueStatusDLL;
+        
+        /// <summary>
+        /// statusErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label statusErrorLbl;
+        
+        /// <summary>
+        /// statusRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator statusRequiredValidator;
+        
+        /// <summary>
+        /// cbPublic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbPublic;
+        
+        /// <summary>
+        /// checkBoxErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label checkBoxErrorLbl;
+        
+        /// <summary>
         /// addTaskSummaryValidator control.
         /// </summary>
         /// <remarks>

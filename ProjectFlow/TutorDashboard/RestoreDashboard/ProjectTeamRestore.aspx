@@ -26,9 +26,15 @@
                     <asp:ListItem Value="1">Deleted</asp:ListItem>
                 </asp:DropDownList>
             </div>           
-            <div class="col">
-                
-            </div>                                 
+            <div class="col-3">
+                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Team Name" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-1">
+                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
+            </div> 
+            <div class="col-1">
+                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
+            </div>                              
         </div>
         <br>
         <div class="row">

@@ -14,7 +14,7 @@ namespace ProjectFlow.DashBoard
     public partial class FileUpload : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {              
+        {           
             if (!IsPostBack)
             {
                 CheckFolderExist();
@@ -24,8 +24,7 @@ namespace ProjectFlow.DashBoard
 
         public int GetTeamID()
         {
-            ProjectTeam projectTeam = (Master as ServicesWithContent).CurrentProjectTeam;
-            return projectTeam.teamID;
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void CheckFolderExist()
@@ -35,6 +34,16 @@ namespace ProjectFlow.DashBoard
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + path);
             }
+        }
+
+        private void HideModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#uploadModal').modal('hide')", true);
+        }
+
+        private void ShowModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
         }
 
         protected void UploadBtn_Click(object sender, EventArgs e)
@@ -53,9 +62,16 @@ namespace ProjectFlow.DashBoard
                     errorList.Add("Cannot contain (ENCRYPTED_WITH_KEY)<br>");
                 }
 
-                if (!IsKeyValid(KeyTB.Text) && OptionDP.SelectedIndex == 2)
+                if (!IsKeyValid(KeyTB.Text) && OptionDP.SelectedIndex == 0)
                 {
                     errorList.Add("Key must be 32 character<br>");
+                }
+
+                while(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED_WITH_KEY)" +  filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED)" + filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(PLAIN)" + filename))               
+                {
+                    filename = "(copy)" + filename ;
                 }
 
                 if (OptionDP.SelectedIndex == 1)
@@ -66,7 +82,8 @@ namespace ProjectFlow.DashBoard
                         path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED_WITH_KEY)";
                         savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                         FileUploadControl.SaveAs(savedLocation);
-                        encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);                     
+                        encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);
+                        HideModel();
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                        
                     }
                     else
@@ -79,14 +96,17 @@ namespace ProjectFlow.DashBoard
                     path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED)";
                     savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                     FileUploadControl.SaveAs(savedLocation);
-                    encryption.EncryptFile(savedLocation);                    
+                    encryption.EncryptFile(savedLocation);
+                    HideModel();
+                    Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);
                 }                  
                 else
                 {
                     if (errorList.Count == 0)
                     {
-                        path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
+                        path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(PLAIN)";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
+                        HideModel();
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                      
                     }
                     else
@@ -106,7 +126,15 @@ namespace ProjectFlow.DashBoard
             FileGV.DataSource = fileList;
             FileGV.DataBind();
         }
-      
+
+        public void SearchFile(string search)
+        {
+            Info infomation = new Info();
+            IEnumerable<FileDetails> fileList = infomation.SearchFiles(GetTeamID(), search);
+            FileGV.DataSource = fileList;
+            FileGV.DataBind();
+        }
+
         private bool IsKeyValid(string key)
         {
             if(key.Length == 32)
@@ -127,7 +155,7 @@ namespace ProjectFlow.DashBoard
                 total += error;
             }
             errorLabel.Text = total;
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            ShowModel();
         }
          
         protected void FileGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -187,7 +215,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {           
-                DownloadFile(fileName, storagePath);
+                DownloadFile("(PLAIN)" + fileName, storagePath);
             }            
         }
 
@@ -197,19 +225,19 @@ namespace ProjectFlow.DashBoard
             {
                 KeyTB.Visible = false;
                 GenKeyBtn.Visible = false;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+                ShowModel();
             }
             else if(OptionDP.SelectedIndex == 2)
             {
                 KeyTB.Visible = false;
                 GenKeyBtn.Visible = false;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+                ShowModel();
             }
             else if(OptionDP.SelectedIndex == 1)
             {
                 KeyTB.Visible = true;
                 GenKeyBtn.Visible = true;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+                ShowModel();
             }
         }
 
@@ -217,7 +245,7 @@ namespace ProjectFlow.DashBoard
         {
             Encryption encryption = new Encryption();
             KeyTB.Text = encryption.GenerateKey(256).Substring(0, 32);
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+            ShowModel();
         }      
         
         private void DownloadFile(string FileName, string Path)
@@ -258,7 +286,7 @@ namespace ProjectFlow.DashBoard
         {
             GridViewRow row = (GridViewRow)FileGV.Rows[e.RowIndex];
             string fileName = row.Cells[0].Text;
-            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
 
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {
@@ -280,6 +308,16 @@ namespace ProjectFlow.DashBoard
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("FileUpload.aspx");
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchFile(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            DisplayFile();
         }
     }
 }

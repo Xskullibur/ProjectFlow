@@ -28,3 +28,9 @@ a.nostyle:visited {
 .content-profile-image {
     width: 110px;
 }
+
+
+/* Utils */
+.pointer {
+    cursor: pointer;
+}

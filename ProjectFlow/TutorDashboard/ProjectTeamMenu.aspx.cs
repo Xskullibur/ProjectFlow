@@ -35,15 +35,26 @@ namespace ProjectFlow.DashBoard
             return Session["PassProjectID"].ToString();
         }
 
+        private void OpenModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateTeam').modal('show');", true);
+        }
+
+        private void CloseModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateTeam').modal('hide')", true);
+        }
+
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
             string teamName = NameTB.Text;
             string desc = DescTB.Text;
+            int group = int.Parse(GroupDP.SelectedValue);
             List<string> errorList = new List<string> { };
 
 
-            errorList = bll.InsertProjectTeam(teamName, desc, Session["PassProjectID"].ToString());
+            errorList = bll.InsertProjectTeam(teamName, desc, group, Session["PassProjectID"].ToString());
             if (errorList.Count > 0)
             {
                 string total = "";
@@ -54,12 +65,13 @@ namespace ProjectFlow.DashBoard
                 errorLabel.Text = total;
                 NameTB.Text = teamName;
                 DescTB.Text = desc;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateTeam').modal('show');", true);
+                OpenModel();
             }
             else
             {
                 Master.ShowAlert("Successfully Created Team", BootstrapAlertTypes.SUCCESS);
                 ClearModel();
+                CloseModel();
                 ShowTeam();
             }
             
@@ -72,6 +84,14 @@ namespace ProjectFlow.DashBoard
            
             List<ProjectTeam> teamList = new List<ProjectTeam> { };
             teamList = projectBLL.GetProjectTeam(GetProjectID());
+            TeamGV.DataSource = teamList;
+            TeamGV.DataBind();
+        }
+
+        private void SearchGroup(int Group)
+        {
+            List<ProjectTeam> teamList = new List<ProjectTeam> { };
+            teamList = projectTeamBLL.SearchGroup(GetProjectID(), Group);
             TeamGV.DataSource = teamList;
             TeamGV.DataBind();
         }
@@ -90,8 +110,9 @@ namespace ProjectFlow.DashBoard
             int teamID = int.Parse(row.Cells[0].Text);
             TextBox editName = (TextBox)row.FindControl("editNameTB");
             TextBox editDesc = (TextBox)row.FindControl("editDescTB");
+            DropDownList editGroup = (DropDownList)row.FindControl("editGroupDP");
                     
-            List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text);
+            List<string> error = projectBLL.UpdateProjectTeam(teamID, editName.Text, editDesc.Text, int.Parse(editGroup.SelectedValue));
             TeamGV.EditIndex = -1;
             Master.ShowAlert("Successfully Updated Team", BootstrapAlertTypes.SUCCESS);
             ShowTeam();
@@ -152,6 +173,91 @@ namespace ProjectFlow.DashBoard
             {
                 Response.Redirect("RestoreDashboard/ProjectTeamRestore.aspx");
             }
+        }
+
+        protected void createAnotherBtn_Click(object sender, EventArgs e)
+        {
+            ProjectBLL bll = new ProjectBLL();
+            string teamName = NameTB.Text;
+            string desc = DescTB.Text;
+            int group = int.Parse(GroupDP.SelectedValue);
+            List<string> errorList = new List<string> { };
+
+            errorList = bll.InsertProjectTeam(teamName, desc, group, Session["PassProjectID"].ToString());
+
+            if (errorList.Count > 0)
+            {
+                string total = "";
+                foreach (string errorItem in errorList)
+                {
+                    total += errorItem;
+                }
+                errorLabel.Text = total;
+                NameTB.Text = teamName;
+                DescTB.Text = desc;                
+            }
+            else
+            {
+                Master.ShowAlert("Successfully Created Team", BootstrapAlertTypes.SUCCESS);
+                ClearModel();
+            }
+            ShowTeam();
+            OpenModel();
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            //SearchTeam(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowTeam();
+        }
+
+        protected void sortGroupDP_SelectedIndexChanged(object sender, EventArgs e)
+        {         
+            if(int.Parse(sortGroupDP.SelectedValue) == 0)
+            {
+                ShowTeam();
+            }
+            else
+            {
+                SearchGroup(int.Parse(sortGroupDP.SelectedValue));
+            }
+        }
+
+        protected void bulkCreateBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void bulkAddBtn_Click(object sender, EventArgs e)
+        {
+            int total = int.Parse(amountDP.SelectedValue);
+            int group = int.Parse(bulkGroupDP.SelectedValue);
+            ProjectBLL bll = new ProjectBLL();
+
+            for(int i = 1; i <= total; i++)
+            {
+                List<string> errorList = bll.InsertProjectTeam("team" + i.ToString(), "", group, Session["PassProjectID"].ToString());
+            }
+            ShowTeam();
+            Master.ShowAlert(total + " team add for group "  + group, BootstrapAlertTypes.SUCCESS);
+        }
+
+        protected void lockBtn_Click(object sender, EventArgs e)
+        {
+            projectTeamBLL.lockTeam(GetProjectID(), true, int.Parse(groupAccessDP.SelectedValue));
+            Master.ShowAlert("Teams locked", BootstrapAlertTypes.SUCCESS);
+            ShowTeam();
+        }
+
+        protected void unlockDP_Click(object sender, EventArgs e)
+        {
+            projectTeamBLL.lockTeam(GetProjectID(), false, int.Parse(groupAccessDP.SelectedValue));
+            Master.ShowAlert("Team open for people to join", BootstrapAlertTypes.SUCCESS);
+            ShowTeam();
         }
     }
 }

@@ -13,11 +13,20 @@
         <br>
         <div class="row">
             <div class="col-3">
-            <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
-                <asp:ListItem Value="0">Avaliable</asp:ListItem>
-                <asp:ListItem Value="1">Deleted</asp:ListItem>
-            </asp:DropDownList>
-        </div>
+                <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
+                    <asp:ListItem Value="0">Avaliable</asp:ListItem>
+                    <asp:ListItem Value="1">Deleted</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+            <div class="col-3">
+                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Project Name" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-1">
+                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
+            </div> 
+            <div class="col-1">
+                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
+            </div>
         </div>
         <br>
         <div class="row">

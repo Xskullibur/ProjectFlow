@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.BLL
 {
@@ -23,6 +24,22 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public Dictionary<Student, string> GetUsersByTeamID(int id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var users = dbContext.TeamMembers.Include("Students")
+                    .Where(x => x.teamID == id)
+                    .Select(y => new
+                    {
+                        Student = y.Student,
+                        Name = y.Student.firstName + " " + y.Student.lastName
+                    }).ToDictionary(key => key.Student, value => value.Name);
+
+                return users;
+            }
+        }
+
         public void DeleteMember(int MemberID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -33,6 +50,36 @@ namespace ProjectFlow.BLL
                     dbContext.TeamMembers.Remove(member);
                     dbContext.SaveChanges();
                 }              
+            }
+        }
+
+        public Dictionary<string, string> GetAllStudent()
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var student = dbContext.Students.Select(x => new
+                {
+                    StudentID = x.studentID,
+                    Name = x.firstName + " " + x.lastName
+                }).ToDictionary(key => key.StudentID, value => value.Name);
+
+                return student;
+            }
+        }
+
+        public List<TeamMember> SearchMember(int TeamID, string search)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Include(x => x.Student).Where(x => x.Student.firstName.ToLower().Contains(search.ToLower())).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
+            }
+        }
+
+        public bool CheckLeaderExist(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Any(x => x.roleID == 1 && x.teamID == TeamID);
             }
         }
     }

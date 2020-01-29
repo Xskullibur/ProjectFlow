@@ -43,6 +43,13 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
             DeletedTeamGV.DataBind();
         }
 
+        private void SearchTeam(string search)
+        {
+            List<ProjectTeam> teamList = new List<ProjectTeam> { };
+            teamList = projectTeamBLL.SearchDeletedTeam(GetProjectID(), search);
+            DeletedTeamGV.DataSource = teamList;
+            DeletedTeamGV.DataBind();
+        }
         protected void DeletedTeamGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = DeletedTeamGV.SelectedRow;
@@ -68,6 +75,16 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
             {
                 Response.Redirect("../ProjectTeamMenu.aspx");
             }
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchTeam(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            DisplayTeam();
         }
     }
 }

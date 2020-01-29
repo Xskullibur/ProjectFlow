@@ -16,6 +16,12 @@
     <asp:HiddenField ID="RoomID" runat="server" />
     <div class="container">
         <div class="row">
+                    <%--Title--%>
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>Meeting Minutes</h1>
+                </div>
+            </div>
             <div class="card w-100 m-3">
                 <%-- Fire event to update meeting details --%>
                 <asp:UpdatePanel runat="server">
@@ -48,7 +54,9 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-meeting-logger-table" role="tabpanel" aria-labelledby="nav-meeting-logger-table-tab">
                         <div class="row py-2 px-3">
-                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
+                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary mr-1" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
+                            <asp:Button ID="Button1" CssClass="btn btn-primary mjr-1" runat="server" Text="Select Mode" OnClick="ToggleSelectEvent" />
+                            <asp:Button ID="Button2" CssClass="btn btn-danger" runat="server" Text="Delete" OnClick="DeleteEvent" OnClientClick="delete" />
                         </div>
                         <div class="row pd-2">
                             <div class="col-12">
@@ -162,5 +170,6 @@
             $('<%=GeneratedCodeLbl.ClientID %>').val(code);
             $('#generated_code').text(code);
         }
+
     </script>
 </asp:Content>

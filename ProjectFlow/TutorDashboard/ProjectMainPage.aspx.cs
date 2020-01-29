@@ -42,26 +42,57 @@ namespace ProjectFlow
             memberList = projectBLL.GetTeamMember(GetTeamID());
             MemberGV.DataSource = memberList;
             MemberGV.DataBind();
+
+            Dictionary<string, string> studentlist = teamMemberBLL.GetAllStudent();
+            studentList.DataSource = studentlist;
+            studentList.DataTextField = "Value";
+            studentList.DataValueField = "Key";
+            studentList.DataBind();
+        }
+
+        public void SearchMember(string search)
+        {            
+            List<TeamMember> memberList = new List<TeamMember> { };
+            memberList = teamMemberBLL.SearchMember(GetTeamID(), search);
+            MemberGV.DataSource = memberList;
+            MemberGV.DataBind();           
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
-            List<string> errorList = new List<string> { };
-            string studentID = studentIDTB.Text;
+            List<string> errorList = new List<string> { };           
             int teamID = int.Parse(Session["PassTeamID"].ToString());
             int roleID = 0;
-
-            if(RoleDP.SelectedIndex == 0)
+                    
+            if(studentList.SelectedIndex == -1)
             {
-                roleID = 2;
+                errorList.Add("Must Select a student");
             }
             else
             {
-                roleID = 1;
+                foreach(ListItem item in studentList.Items.Cast<ListItem>().Where(x => x.Selected))
+                {
+                    if (RoleDP.SelectedIndex == 0)
+                    {
+                        roleID = 2;
+                    }
+                    else
+                    {
+                        if (teamMemberBLL.CheckLeaderExist(GetTeamID()))
+                        {
+                            roleID = 2;
+                        }
+                        else
+                        {
+                            roleID = 1;
+                        }
+                    }
+                    errorList = bll.ValidateInsertMember(item.Value.ToString(), teamID, roleID);
+                }
+                
             }
 
-            errorList = bll.ValidateInsertMember(studentID, teamID, roleID);
             if(errorList.Count > 0)
             {
                 string total = "";
@@ -73,7 +104,7 @@ namespace ProjectFlow
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateMember').modal('show');", true);
             }
             else
-            {
+            {                              
                 ClearModel();
                 ShowMember();
                 Master.ShowAlert("Successfully Added Member", BootstrapAlertTypes.SUCCESS);
@@ -91,16 +122,24 @@ namespace ProjectFlow
             if(editRole.SelectedIndex == 0)
             {
                 role = 2;
+                List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
+                Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
             }
             else
             {
-                role = 1;
+                if (teamMemberBLL.CheckLeaderExist(GetTeamID()) == false)
+                {
+                    role = 1;
+                    List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
+                    Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
+                }
+                else
+                {
+                    Master.ShowAlert("Team can't have 2 leaders", BootstrapAlertTypes.DANGER);
+                }              
             }
-
-            List<string> errorList = projectBLL.ValidateUpdateMember(memberID, role);
                      
-            MemberGV.EditIndex = -1;
-            Master.ShowAlert("Successfully Updated Member", BootstrapAlertTypes.SUCCESS);
+            MemberGV.EditIndex = -1;            
             ShowMember();
         }
 
@@ -137,9 +176,19 @@ namespace ProjectFlow
 
         private void ClearModel()
         {
-            studentIDTB.Text = "";
             RoleDP.SelectedIndex = 0;
             errorLabel.Text = "";
+            CloseModel();
+        }
+
+        private void CloseModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#CreateMember').modal('hide')", true);
+        }
+
+        private void OpenModel()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#CreateMember').modal('show');", true);
         }
 
         protected void MemberGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -153,6 +202,21 @@ namespace ProjectFlow
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProjectMainPage.aspx");
+        }
+
+        protected void searchBtn_Click(object sender, EventArgs e)
+        {
+            SearchMember(SearchTB.Text);
+        }
+
+        protected void showAllBtn_Click(object sender, EventArgs e)
+        {
+            ShowMember();
+        }
+
+        protected void RoleDP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //OpenModel();
         }
     }
 }

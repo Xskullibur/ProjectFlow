@@ -7,72 +7,83 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.TutorDashboard.RestoreDashboard {
-    
-    
-    public partial class ProjectMenuRestore {
-        
+namespace ProjectFlow.Services.Christina
+{
+
+
+    public partial class RoomDetail
+    {
+
         /// <summary>
-        /// Label3 control.
+        /// BackBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-        
+        protected global::System.Web.UI.WebControls.Button BackBtn;
+
         /// <summary>
-        /// PageSelectDP control.
+        /// MeetingDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList PageSelectDP;
-        
+        protected global::System.Web.UI.WebControls.Label MeetingDate;
+
         /// <summary>
-        /// SearchTB control.
+        /// MeetingTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchTB;
-        
+        protected global::System.Web.UI.WebControls.Label MeetingTime;
+
         /// <summary>
-        /// searchBtn control.
+        /// AttendeesLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button searchBtn;
-        
+        protected global::System.Web.UI.WebControls.Label AttendeesLbl;
+
         /// <summary>
-        /// showAllBtn control.
+        /// MadeByLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button showAllBtn;
-        
+        protected global::System.Web.UI.WebControls.Label MadeByLbl;
+
         /// <summary>
-        /// projectRestoreGV control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView projectRestoreGV;
-        
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
         /// <summary>
-        /// refreshBtn control.
+        /// materialTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button refreshBtn;
+        protected global::ProjectFlow.Utils.MaterialIO.MaterialIOTableControl materialTable;
+
+        /// <summary>
+        /// transcriptTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox transcriptTxtBox;
     }
 }
