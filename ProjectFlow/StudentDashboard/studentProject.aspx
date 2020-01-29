@@ -57,6 +57,14 @@
         <br>
         <div class="row">
             <div class="col">
+                <h1>
+                    <asp:Label ID="Label1" runat="server" Font-Size="XX-Large" Text="Joinable Projects"></asp:Label>
+                </h1>
+            </div>            
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
                 <div style="overflow-x: auto;">
                     <asp:GridView ID="availableGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged">
                         <HeaderStyle CssClass="thead-light"/>
@@ -67,7 +75,15 @@
                             <asp:CommandField ButtonType="Button" SelectText="Join" ShowSelectButton="True">
                                 <ControlStyle CssClass="btn btn-success" />
                             </asp:CommandField>
-                        </Columns>                        
+                        </Columns>
+                        <EmptyDataTemplate>
+                           <div class="jumbotron jumbotron-fluid">
+                                <div class="container">
+                                    <h1 class="display-4">No Available team open at this time</h1>                                          
+                                    <p>Projects not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                </div>
+                           </div>
+                       </EmptyDataTemplate>
                     </asp:GridView>
                 </div>
             </div>
