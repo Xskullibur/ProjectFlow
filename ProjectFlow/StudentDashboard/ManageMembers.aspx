@@ -16,11 +16,11 @@
                 <asp:Label ID="yourStatus" runat="server"></asp:Label>               
             </div>
             <div class="col-2">               
-                <asp:Button ID="leaderBtn" runat="server" CssClass="btn btn-primary" Text="Become Leader" OnClick="leaderBtn_Click" />               
+                <asp:Button ID="leaderBtn" runat="server" CssClass="btn btn-primary" Text="Become Leader" OnClick="leaderBtn_Click" OnClientClick="return confirm('Are you sure to become leader?');"/>               
             </div> 
             <div class="col-2">
                 
-                <asp:Button ID="STbtn" runat="server" CssClass="btn btn-primary" OnClick="STbtn_Click" Text="Step Down" />
+                <asp:Button ID="STbtn" runat="server" CssClass="btn btn-primary" OnClick="STbtn_Click" Text="Step Down" OnClientClick="return confirm('Are you sure to step down?');"/>
                 
             </div>
         </div>

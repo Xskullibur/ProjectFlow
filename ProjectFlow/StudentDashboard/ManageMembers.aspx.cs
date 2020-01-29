@@ -1,4 +1,6 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +89,7 @@ namespace ProjectFlow.StudentDashboard
         protected void leaderBtn_Click(object sender, EventArgs e)
         {
             teamMemberBLL.ToLeader(Guid.Parse(getStudentID()), GetTeamID());
+            Master.ShowAlert("Successfully become leader", BootstrapAlertTypes.SUCCESS);
             showTeam();
         }
 
@@ -95,6 +98,7 @@ namespace ProjectFlow.StudentDashboard
             teamMemberBLL.ToMember(Guid.Parse(getStudentID()),GetTeamID());
             showTeam();
             leaderBtn.Enabled = true;
+            Master.ShowAlert("Successfully Stepped down", BootstrapAlertTypes.SUCCESS);
         }
     }
 }
