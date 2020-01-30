@@ -137,6 +137,14 @@
                                         </span>
                                         </a>
                                     </li>
+                                    <li class="mdc-list-item">
+                                        <a class="nostyle" href="/ManageMembers.aspx">
+                                        <span class="mdc-list-item__text">
+                                            <span class="mdc-list-item__primary-text">Members</span>
+                                            <span class="mdc-list-item__secondary-text"></span>
+                                        </span>
+                                        </a>
+                                    </li>
                                 </ul>
                 </div>
 

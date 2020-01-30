@@ -53,9 +53,9 @@ namespace ProjectFlow.StudentDashboard
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
-                    Button deleteBtn = (Button)row.FindControl("deleteBtn");
-                    deleteBtn.Visible = true;
-                }                             
+                    Button deleteBtn = (Button)row.FindControl("deleteBtn");                                          
+                    deleteBtn.Visible = true;                   
+                }                
             }
             else
             {

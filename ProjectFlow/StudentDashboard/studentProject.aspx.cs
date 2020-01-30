@@ -42,7 +42,8 @@ namespace ProjectFlow.DashBoard
                 ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
                 ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(GetTeamID());
 
-                (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
+                //(Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
+                Session["StudentTeamID"] = row.Cells[0].Text;
 
                 Response.Redirect("FileUpload.aspx");
             }
