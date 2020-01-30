@@ -9,7 +9,6 @@
     <asp:PlaceHolder runat="server">
         <%: Styles.Render("~/Content/css") %>
         <%: Styles.Render("~/Content/bootstrap-select.css") %>
-        <%: Styles.Render("~/Content/ProjectFlow/content-nav.css") %>
         <%: Styles.Render("~/Content/Bootstrap_DateTimePicker/bootstrap-datetimepicker.css") %>
         <%: Styles.Render("~/Content/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.css") %>
         <%: Styles.Render("~/Content/ProjectFlow/CSS/content-nav.css") %>

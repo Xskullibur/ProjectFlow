@@ -200,21 +200,6 @@ namespace ProjectFlow.Services.Christina
             return msg;
         }
 
-        protected void ShowCreateActionItemModalEvent(object sender, EventArgs e)
-        {
-            ShowModal();
-        }
-
-        private void ShowModal()
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('show');", true);
-        }
-
-        private void HideModal()
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('hide');", true);
-        }
-
         protected void DeleteEvent(object sender, EventArgs e)
         {
             List<ActionItem> itemsToBeDeleted = new List<ActionItem>();
