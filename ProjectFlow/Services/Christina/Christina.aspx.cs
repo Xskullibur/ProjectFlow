@@ -240,7 +240,6 @@ namespace ProjectFlow.Services.Christina
             topicTxtBox.Text = "";
 
             InsertActionItems(text);
-            HideModal();
         }
 
         protected void UpdateRoomDetailEvent(object sender, EventArgs e)
