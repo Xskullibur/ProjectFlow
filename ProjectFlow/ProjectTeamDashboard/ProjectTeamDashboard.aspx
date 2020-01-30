@@ -1,47 +1,34 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="ProjectTeamDashboard.aspx.cs" Inherits="ProjectFlow.ProjectTeamDashboard.ProjectTeamDashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type='text/javascript'>
+        function loadDoughnutChart(canvasID, data1, data2) {
+
+            var ctx = document.getElementById(canvasID).getContext('2d')
+            var chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [data1, data2],
+                        backgroundColor: ['Green'],
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: true,
+                    tooltips: {
+                        enabled: false
+                    },
+                    legend: {
+                        onClick: (e) => e.stopPropagation()
+                    }
+                }
+            })
+
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-
-    <script>
-        $(function () {
-            var ctx1 = document.getElementById('chart1').getContext('2d');
-            var ctx2 = document.getElementById('chart2').getContext('2d');
-            var ctx3 = document.getElementById('chart3').getContext('2d');
-
-            var fetch_url = './ProjectTeamDashboard.aspx/LoadDoughnutChart';
-            return $.ajax({
-                url: fetch_url,
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (res, textStatus) {
-
-                    var parsedJson = JSON.parse(res.d);
-                    var chartData = parsedJson;
-                    var chartOptions = {
-                        responsive: false,
-                        maintainAspectRatio: true,
-                        tooltips: {
-                            enabled: false
-                        },
-                        legend: {
-                            onClick: (e) => e.stopPropagation()
-                        }
-                    };
-
-                    var myChart = new Chart(ctx1, { type: 'doughnut', data: chartData, options: chartOptions }); 
-                    var myChart2 = new Chart(ctx2, { type: 'doughnut', data: chartData, options: chartOptions }); 
-                    var myChart3 = new Chart(ctx3, { type: 'doughnut', data: chartData, options: chartOptions }); 
-                },
-                error: function (res, textStatus) {
-
-                }
-            });
-
-        });
-    </script>
 
     <div class="container">
 

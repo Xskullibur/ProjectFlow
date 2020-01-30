@@ -58,9 +58,9 @@
         <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="TeamID" runat="server"></asp:HiddenField>
         <script>
-            $(function() {
+            $(function () {
                 $('.datetimepicker').datetimepicker();
-            })
+            });
         </script>
 
         <div class="sticky-top">
@@ -159,27 +159,27 @@
                             </ul>
                 </div>
 
-                    <div id="content" class="col-12 col-md-10">
-                        <%--Alert Continer--%>
-                        <div class="container" id="alert_container">
-                            <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                <ContentTemplate>
-                                    <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
+                <div id="content" class="col-12 col-md-10">
+                    <div class="row h-100 pt-5" style="vertical-align:top;">
+
+                        <div class="col-12">
+                            <%--Alert Continer--%>
+                            <div class="container" id="alert_container">
+                                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                    <ContentTemplate>
+                                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </div>
+
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                            </asp:ContentPlaceHolder>
+
                         </div>
-                        <table style="width:100%;height:100vh;">
-                            <tr>
-                                <td class="h-100 pt-5" style="vertical-align:top;">
 
-
-                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                                    </asp:ContentPlaceHolder>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
-              </div>
+                </div>
+            </div>
         </div>
     </form>
     <script type="text/javascript">
