@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace ProjectFlow.Issues
 {
     public partial class IssueRes : System.Web.UI.Page
     {
+        
         int idIssue;
-        int idVoter = 4;
         string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,7 +26,7 @@ namespace ProjectFlow.Issues
                 lbIssue.Text = updated_issue.description;
 
                 ispublic = (string)Session["SSIsPublic"];
-                check(idIssue, idVoter);
+                check(idIssue);
                 refreshCommentData(idIssue);
                 //Label1.ToolTip = getUserbySelection(idIssue, false); // this works but needs to be removed
                 isPublic(ispublic);
@@ -37,7 +38,7 @@ namespace ProjectFlow.Issues
             idIssue = (int)Session["SSIId"];
 
             vote(true);
-            check(idIssue, idVoter);
+            check(idIssue);
             isPublic(ispublic);
         }
 
@@ -45,7 +46,7 @@ namespace ProjectFlow.Issues
         {
             idIssue = (int)Session["SSIId"];
             vote(false);
-            check(idIssue, idVoter);
+            check(idIssue);
             isPublic(ispublic);
         }
 
@@ -55,14 +56,14 @@ namespace ProjectFlow.Issues
             int decision = rnd.Next(10);
             if (decision > 5) {
                 vote(true);
-                check(idIssue, idVoter);
+                check(idIssue);
                 isPublic(ispublic);
             }
             else
             {
 
                 vote(false);
-                check(idIssue, idVoter);
+                check(idIssue);
                 isPublic(ispublic);
             }
         }
@@ -71,11 +72,15 @@ namespace ProjectFlow.Issues
         {
             if (Page.IsValid)
             {
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
                 // Create Task Object
                 Polling newPoll = new Polling();
                 newPoll.issueID = idIssue;    
-                newPoll.voterID = idVoter;    
+                newPoll.voterID = voterId;    
                 newPoll.vote = choice;      
 
                 // Submit Query
@@ -84,11 +89,15 @@ namespace ProjectFlow.Issues
             }
         }
 
-        protected void check(int iID, int vID)
+        protected void check(int iID)
         {
             PollingBLL pollingBLL = new PollingBLL();
+            var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+            TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+            Guid Uid = identity.Student.aspnet_Users.UserId;
+            int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
-            bool checking = pollingBLL.Check(iID, vID);
+            bool checking = pollingBLL.Check(iID, voterId);
 
             int result = pollingBLL.GetResult(iID);
             Label2.Text = result.ToString();
@@ -121,12 +130,16 @@ namespace ProjectFlow.Issues
 
             if (Page.IsValid)
             {
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
                 // Create Task Object
                 CommentForIssue newComment = new CommentForIssue();
                 newComment.comment = tbComments.Text;
                 newComment.issueID = idIssue;
-                newComment.createdBy = idVoter;    //this is a placeholder  
+                newComment.createdBy = voterId;    //this is a placeholder  
 
                 // Submit Query
                 CommentForIssueBLL commentBLL = new CommentForIssueBLL();
