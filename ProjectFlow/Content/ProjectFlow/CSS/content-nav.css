@@ -12,6 +12,9 @@ a.nostyle:visited {
 
 .content-nav {
     height: 4rem;
+    -webkit-box-shadow: 0 0 40px 0 rgba(82,63,105,.1);
+    box-shadow: 0 0 40px 0 rgba(82,63,105,.1);
+}
 }
 
 .content-sidenav{
