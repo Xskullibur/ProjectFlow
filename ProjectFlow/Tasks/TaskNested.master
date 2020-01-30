@@ -72,8 +72,8 @@
             border-color: #dddddd;
         }
     </style>
-
-    <div class="container">
+    <div class="card card-body projectflow-card-shadow ">
+    <div class="container-fluid mb-3">
 
         <%--Title--%>
         <div class="row mb-3">
@@ -291,5 +291,6 @@
     <%--Main Content--%>
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
-
+    
+    </div>
 </asp:Content>

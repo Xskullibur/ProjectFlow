@@ -7,8 +7,10 @@
 
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    
 
-    <div class="container py-2">
+    
+    <div class="container-fluid py-2">
 
         <div class="row pb-2">
             <div class="col">
@@ -17,7 +19,7 @@
                     <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" OnRowCommand="taskGrid_RowCommand" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered projectflow-table" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" OnRowCommand="taskGrid_RowCommand" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
