@@ -230,19 +230,9 @@ namespace ProjectFlow.Tasks
                     editMilestoneDDL.DataTextField = "milestoneName";
                     editMilestoneDDL.DataBind();
 
-                    editMilestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
-
                     //Set Inital Value
                     string milestoneVal = DataBinder.Eval(rowItems, "Milestone").ToString();
-
-                    if (milestoneVal == "-")
-                    {
-                        editMilestoneDDL.SelectedValue = "-1";
-                    }
-                    else
-                    {
-                        editMilestoneDDL.SelectedValue = teamMilestone.First(x => x.milestoneName == milestoneVal).milestoneID.ToString();
-                    }
+                    editMilestoneDDL.SelectedValue = teamMilestone.First(x => x.milestoneName == milestoneVal).milestoneID.ToString();
                 }
                 else
                 {
@@ -487,15 +477,7 @@ namespace ProjectFlow.Tasks
                     updated_task.endDate = Convert.ToDateTime(endDate);
                     updated_task.statusID = Convert.ToInt32(statusID);
                     updated_task.priorityID = Convert.ToInt32(priorityID);
-
-                    if (milestoneID_int != -1)
-                    {
-                        updated_task.milestoneID = milestoneID_int;
-                    }
-                    else
-                    {
-                        updated_task.milestoneID = null;
-                    }
+                    updated_task.milestoneID = milestoneID_int;
 
                     // Get Edit Allocation List Control
                     ListBox editAllocationList = (ListBox)row.FindControl("editAllocationList");

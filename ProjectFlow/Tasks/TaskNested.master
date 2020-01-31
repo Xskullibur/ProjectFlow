@@ -207,7 +207,6 @@
                                     <div class="form-group">
                                         <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
                                         <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server" ValidationGroup="AddTask">
-                                            <asp:ListItem Value="-1">Nothing Selected</asp:ListItem>
                                         </asp:DropDownList>
 
                                         <asp:Label ID="tMilestoneErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
