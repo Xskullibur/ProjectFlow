@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 
 namespace ProjectFlow.Issues
 {
@@ -24,6 +26,11 @@ namespace ProjectFlow.Issues
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;
+                IssueActive.Text = "";
+                IssuePublic.Text = updated_issue.votePublic.ToString();
+                IssueRaisedBy.Text = updated_issue.createdBy.ToString();
+                IssueStatus.Text = "";
+                
 
                 ispublic = (string)Session["SSIsPublic"];
                 check(idIssue);
@@ -99,20 +106,21 @@ namespace ProjectFlow.Issues
 
             bool checking = pollingBLL.Check(iID, voterId);
 
-            int result = pollingBLL.GetResult(iID);
-            Label2.Text = result.ToString();
+            List<int> result = pollingBLL.GetResult(iID);
+            
+            btnYesCount.Text = result[0].ToString();
+            btnNoCount.Text = result[1].ToString();
 
             if (checking == true)
             {
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
-                voted_alert.Visible = true;
+                this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
             }
             else
             {
-                voted_alert.Visible = false;
-                //Label1.Text = checking.ToString();
+
             }
         }
 

@@ -13,15 +13,6 @@ namespace ProjectFlow.Issues {
     public partial class IssueRes {
         
         /// <summary>
-        /// voted_alert control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl voted_alert;
-        
-        /// <summary>
         /// lbMember control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,42 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbMember;
+        
+        /// <summary>
+        /// IssueActive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IssueActive;
+        
+        /// <summary>
+        /// IssueStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IssueStatus;
+        
+        /// <summary>
+        /// IssuePublic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IssuePublic;
+        
+        /// <summary>
+        /// IssueRaisedBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IssueRaisedBy;
         
         /// <summary>
         /// lbIssue control.
@@ -49,6 +76,15 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Button btnYes;
         
         /// <summary>
+        /// btnYesCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnYesCount;
+        
+        /// <summary>
         /// btnNo control.
         /// </summary>
         /// <remarks>
@@ -58,6 +94,15 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Button btnNo;
         
         /// <summary>
+        /// btnNoCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNoCount;
+        
+        /// <summary>
         /// btnRandom control.
         /// </summary>
         /// <remarks>
@@ -65,15 +110,6 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRandom;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
         /// tbComments control.
