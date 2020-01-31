@@ -32,15 +32,6 @@
 
     <div class="container">
 
-        <%--Title--%>
-        <div class="row mb-3">
-            <div class="col">
-                <h1>
-                    Overal Project Dashboard
-                </h1>
-            </div>
-        </div>
-
         <%--Topbar--%>
         <div class="row mb-2">
             <div class="col">
