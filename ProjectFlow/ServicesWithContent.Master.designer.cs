@@ -105,6 +105,15 @@ namespace ProjectFlow
         protected global::System.Web.UI.WebControls.Panel AlertsPlaceHolder;
 
         /// <summary>
+        /// HeaderLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label HeaderLbl;
+
+        /// <summary>
         /// ContentPlaceHolder control.
         /// </summary>
         /// <remarks>

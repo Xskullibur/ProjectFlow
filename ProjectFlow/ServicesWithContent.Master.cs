@@ -31,6 +31,9 @@ namespace ProjectFlow
             }
         }
 
+        //Set service page header title
+        public string Header { get => HeaderLbl.Text; set => HeaderLbl.Text = value; }
+
         protected void Page_Init(object sender, EventArgs e)
         {
 

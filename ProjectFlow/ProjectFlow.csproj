@@ -517,6 +517,7 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>

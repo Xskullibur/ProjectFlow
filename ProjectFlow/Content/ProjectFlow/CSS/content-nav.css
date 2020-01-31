@@ -44,6 +44,10 @@ a.nostyle:visited {
 /* Card body */
 .projectflow-card-shadow {
     box-shadow: 0 0.15rem 1.75rem 0 rgba(34, 39, 46, 0.15);
+
+    /*padding inherited*/
+    padding: inherit;
+
 }
 
 /* Profile */
