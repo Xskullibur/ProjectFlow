@@ -36,10 +36,11 @@ namespace ProjectFlow
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            
             //Page Redirection
             matSidebar.NavClickListeners += (redirectionPage) =>
             {
-                Server.Transfer(redirectionPage);
+                Response.Redirect(redirectionPage);
             };
 
 #if SELECTEDPROJECT

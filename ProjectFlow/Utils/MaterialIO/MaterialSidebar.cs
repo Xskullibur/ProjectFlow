@@ -34,7 +34,7 @@ namespace ProjectFlow.Utils.MaterialIO
         protected override void RenderContents(HtmlTextWriter output)
         {
             var stringBuilder = new StringBuilder();
-            string selectedPage = HttpContext.Current.Session["SelectedPage"]?.ToString();
+            string selectedPage = HttpContext.Current.Request.Url.AbsolutePath;
             for (int i = 0; i < _groups.Count; i++)
             {
                 var group = _groups[i];
@@ -80,7 +80,6 @@ namespace ProjectFlow.Utils.MaterialIO
         public event NavClickListener NavClickListeners;
         public void RaisePostBackEvent(string eventArgument)
         {
-            HttpContext.Current.Session["SelectedPage"] = eventArgument;
             NavClickListeners(eventArgument);
         }
 
