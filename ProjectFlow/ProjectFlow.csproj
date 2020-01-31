@@ -348,6 +348,7 @@
     <Content Include="Profile\Web.config" />
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
+    <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
     <Content Include="Tasks\JsonResponse.ashx" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -517,6 +518,7 @@
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

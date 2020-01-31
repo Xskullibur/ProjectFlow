@@ -36,6 +36,11 @@ namespace ProjectFlow
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            //Page Redirection
+            matSidebar.NavClickListeners += (redirectionPage) =>
+            {
+                Server.Transfer(redirectionPage);
+            };
 
 #if SELECTEDPROJECT
             ProjectBLL projectBLL = new ProjectBLL();
@@ -96,10 +101,6 @@ namespace ProjectFlow
 
 
             }
-
-
-
-            
 
         }
 

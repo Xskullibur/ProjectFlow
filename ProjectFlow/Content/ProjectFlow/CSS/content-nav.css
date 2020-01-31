@@ -27,7 +27,7 @@ a.nostyle:visited {
 }
 
 .content-sidenav {
-    height: calc(100vh - 3.4rem);
+    height: calc(100vh - 3.4rem) !important;
     background-color: #fff;
 }
 
@@ -50,8 +50,12 @@ a.nostyle:visited {
 
 }
 
+/*Nav color override*/
+.mdc-list-item--activated {
+    background-color: rgba(0, 97, 242, .15) !important;
+    color: rgba(0, 97, 242) !important;
+}
 /* Profile */
-
 .content-profile {
     width: 350px;
     margin: 48px 0;
@@ -73,7 +77,7 @@ a.nostyle:visited {
 }
 
 .projectflow-table tr th {
-
-    color: #0061f2 !important;
+    color: #22272e !important;
     background-color: #fff !important;
 }
+

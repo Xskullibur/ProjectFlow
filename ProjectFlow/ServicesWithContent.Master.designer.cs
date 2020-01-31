@@ -87,6 +87,15 @@ namespace ProjectFlow
         protected global::System.Web.UI.WebControls.Label LoginEmailProfileLbl;
 
         /// <summary>
+        /// matSidebar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ProjectFlow.Utils.MaterialIO.MaterialSidebar matSidebar;
+
+        /// <summary>
         /// AlertsUpdatePanel control.
         /// </summary>
         /// <remarks>
