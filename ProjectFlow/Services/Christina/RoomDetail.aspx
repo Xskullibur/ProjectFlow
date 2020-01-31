@@ -53,9 +53,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab">
+                    <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab" style="height: 300px;">
                         <div class="row">
-                            <div class="col-12" style="height: 300px;">
+                            <div class="col-12" style="height: 260px;">
                                 <h5>Transcript</h5>
                                 <asp:TextBox ID="transcriptTxtBox" CssClass="w-100 h-100 my-2" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
                             </div>
