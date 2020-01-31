@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace ProjectFlow.Services.Christina
         {
             if (!IsPostBack)
             {
+                //Set title
+                this.SetHeader("Past created rooms");
+
+
                 //Display the list of room included in this project team
                 RefreshRoomsGridView();
 

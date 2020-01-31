@@ -4,12 +4,12 @@
     <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <asp:Button ID="BackBtn" CssClass="btn btn-primary" runat="server" Text="Back" OnClick="GoBackEvent" />
         </div>
         <div class="row">
-            <div class="card w-100 m-3">
+            <div class="card projectflow-card-shadow w-100 m-0 my-3">
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
                         <div class="card-body">
@@ -24,7 +24,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="row">
+        <div class="card card-body projectflow-card-shadow row py-3 px-0">
             <div class="col-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
