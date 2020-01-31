@@ -36,7 +36,7 @@ namespace ProjectFlow
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            
+
             //Page Redirection
             matSidebar.NavClickListeners += (redirectionPage) =>
             {
@@ -99,7 +99,8 @@ namespace ProjectFlow
                     }
                 }
 
-
+                //Set project title
+                ProjectTitleLbl.Text = CurrentProject?.projectName;
 
             }
 
