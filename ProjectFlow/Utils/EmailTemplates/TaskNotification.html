@@ -3,46 +3,51 @@
 <head>
     <meta charset="utf-8" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        p {
+            margin-top:  0;
+        }
+
+        .button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+    </style>
+
 </head>
 
-    <body>
+<body>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="30" height="30" alt="">
-                ProjectFlow
-            </a>
-        </nav>
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col">
-
-                    <div class="jumbotron">
-                        <h1>[Title]</h1>
-                        <p class="lead pb-2">[TaskDesc]</p>
-
-                        <b>Current Status: </b><p>[Status]</p>
-                        <b>Priority: </b><p>[Priority]</p>
-                        <b>Milestone: </b><p>[Milestone]</p>
-                        <b>Duration: </b><p>[StartDate] - [EndDate]</p>
-                        <b>Allocations: </b><p>[Allocations]</p>
-
-                        <hr  class="my-4" />
-                        <p class="lead text-right">
-                            <a class="btn btn-primary btn-lg" href="#" role="button">View Task</a>
-                        </p>
-
-                    </div>
-
-                </div>
-            </div>
-
+    <div style="border: 1px solid rgba(200,200,200,1.00);">
+        <div style="background-color: #555; padding: 1px 20px;">
+            <h1 style="color: #fff">ProjectFlow</h1>
         </div>
-    </body>
+        <div style="padding: 20px 20px 0;">
+
+            <h1>[Title]</h1>
+            <p>[TaskDesc]</p>
+
+            <b>Current Status: </b><p>[Status]</p>
+            <b>Priority: </b><p>[Priority]</p>
+            <b>Milestone: </b><p>[Milestone]</p>
+            <b>Duration: </b><p>[StartDate] - [EndDate]</p>
+            <b>Allocations: </b><p>[Allocations]</p>
+
+            <hr style="margin-top: 1rem;" >
+            <p align="right">
+                <a class="button" href="[TaskDirectory]">View Task</a>
+            </p>
+        </div>
+    </div>
+
+</body>
 </html>
