@@ -40,7 +40,8 @@ namespace ProjectFlow.Utils.MaterialIO
                 var group = _groups[i];
                 foreach(var item in group.SidebarItems)
                 {
-                    if (item.RedirectionPage.Equals(selectedPage))
+                    if (item.RedirectionPage.Equals(selectedPage) ||
+                        (item.AlsoSelectedForPages != null && item.AlsoSelectedForPages.Any(page => page.Equals(selectedPage))))
                     {
                         item.CurrentlySelected = true;
                     }
@@ -91,6 +92,9 @@ namespace ProjectFlow.Utils.MaterialIO
         private new CustomAttribute CustomAttribute;
         private DOMElement spanLabel;
         public string RedirectionPage { get; set; }
+
+        [TypeConverter(typeof(StringArrayConverter))]
+        public string[] AlsoSelectedForPages { get; set; }
         public string ItemText { get => spanLabel.Text; set
             {
                 spanLabel.Text = value;

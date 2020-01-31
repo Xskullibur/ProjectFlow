@@ -121,7 +121,7 @@
                                         <SidebarItems>
                                             <mio:SidebarItem ItemText="Home" RedirectionPage="/Services/Christina/Home.aspx">
                                             </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx">
+                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
