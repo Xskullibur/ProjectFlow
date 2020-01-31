@@ -19,6 +19,10 @@ namespace ProjectFlow.Services.Christina
         {
             if (!IsPostBack)
             {
+                //Set title
+                this.SetHeader("Meeting Minutes");
+
+
                 int roomID = (int) Session["DetailRoomID"];
                 var roomBLL = new RoomBLL();
                 var room = roomBLL.GetRoomByRoomID(roomID);

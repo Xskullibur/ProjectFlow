@@ -73,6 +73,10 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
+
+                // Set title
+                (this.Master as ServicesWithContent).Header = "Task Management";
+
                 // Current Team
                 ProjectTeam currentTeam = GetCurrentProjectTeam();
                 int teamID = currentTeam.teamID;

@@ -171,11 +171,11 @@
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
-                            <div class="container">
+                            <div class="container-fluid">
                                 <div class="row mb-3">
                                     <div class="col">
                                         <h1>
-                                            <asp:Label ID="HeaderLbl" runat="server" Font-Size="XX-Large" Text="Current Ongoing Projects" Font-Bold="true"></asp:Label>
+                                            <asp:Label ID="HeaderLbl" runat="server" Font-Size="XX-Large" Text="" Font-Bold="true"></asp:Label>
                                         </h1>
                                     </div>            
                                 </div>        

@@ -4,9 +4,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
     <div class="container">
+            <div class="container">
+                    <div class="row mb-3 ml-5">
+                        <div class="col">
+                            <h1>
+                                <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Profile informations" Font-Bold="true"></asp:Label>
+                            </h1>
+                        </div>            
+                    </div>        
+            </div>
         <div class="row">
             <div class="col-12 col-md-10 mx-auto">
-                <div class="card w-100">
+                <div class="card projectflow-card-shadow w-100">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 border-right mx-auto text-center">

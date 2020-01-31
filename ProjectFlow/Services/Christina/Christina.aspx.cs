@@ -19,6 +19,10 @@ namespace ProjectFlow.Services.Christina
         {
             if (!IsPostBack)
             {
+
+                //Set Title
+                this.SetHeader("Meeting Minutes");
+
                 //Get speakers belong to the current project team
                 ServicesWithContent servicesWithContent = this.Master as ServicesWithContent;
 

@@ -2,13 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <div class="container">
-        <%--Title--%>
-        <div class="row mb-3">
-            <div class="col">
-                <h1>Past created rooms</h1>
-            </div>
-        </div>
+    <div class="card card-body projectflow-card-shadow pt-3 container-fluid">
         <%-- Controls --%>
         <div class="row">
             <div class="col-12">
@@ -21,7 +15,7 @@
                 <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="roomsGridView" runat="server" CssClass="table table-bordered table-hover" 
+                            <asp:GridView ID="roomsGridView" runat="server" CssClass="table table-bordered table-hover projectflow-table" 
                                 AllowPaging="True" PageSize="10" OnPageIndexChanging="roomsGridView_PageIndexChanging" 
                                 AutoGenerateColumns="False" OnSelectedIndexChanged="OnSelectedIndexChanged" OnRowDataBound="OnRowDataBound"> 
                                 <HeaderStyle CssClass="thead-light" />
