@@ -50,11 +50,13 @@ a.nostyle:visited {
 
 }
 
-/*Nav color override*/
-.mdc-list-item--activated {
-    background-color: rgba(0, 97, 242, .15) !important;
-    color: rgba(0, 97, 242) !important;
+/*Material IO color override*/
+:root {
+    --mdc-theme-primary: rgba(0, 97, 242) !important;
 }
+
+
+
 /* Profile */
 .content-profile {
     width: 350px;
