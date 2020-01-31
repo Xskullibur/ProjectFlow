@@ -14,7 +14,7 @@
                     }]
                 },
                 options: {
-                    responsive: false,
+                    responsive: true,
                     maintainAspectRatio: true,
                     tooltips: {
                         enabled: false
