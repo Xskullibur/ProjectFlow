@@ -109,7 +109,7 @@
                 <div id="sidebar" class="sidebar position-sticky col-12 col-md-2 px-0">
                     <ul class="sidebar-shadow mdc-list mdc-list--two-line border-right content-sidenav">
                                     <li class="mdc-list-item">
-                                        <a class="nostyle" href="Login.aspx">
+                                        <a class="nostyle" href="/ProjectDashboard/ProjectTeamDashboard.aspx">
                                             <span class="mdc-list-item__text">
                                                 <span class="mdc-list-item__primary-text">Home</span>
                                                 <span class="mdc-list-item__secondary-text"></span>

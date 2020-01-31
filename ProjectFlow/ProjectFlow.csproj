@@ -193,7 +193,7 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
-    <Content Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx" />
+    <Content Include="ProjectDashboard\ProjectTeamDashboard.aspx" />
     <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -638,11 +638,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.cs">
+    <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.cs">
       <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.designer.cs">
+    <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.designer.cs">
       <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
