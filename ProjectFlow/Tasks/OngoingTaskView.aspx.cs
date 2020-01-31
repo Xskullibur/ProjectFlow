@@ -236,14 +236,14 @@ namespace ProjectFlow.Tasks
                 }
                 else
                 {
+                    string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
 
                     if (Master.GetCurrentIdentiy().IsStudent)
                     {
                         /**
                          * SETUP UPDATE STATUS BTN
                          **/
-                        int taskID = int.Parse(e.Row.Cells[0].Text);
-                        string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
+                        int taskID = int.Parse(e.Row.Cells[1].Text);
                         Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
 
                         if (currentStatus == StatusBLL.COMPLETED)
@@ -277,36 +277,45 @@ namespace ProjectFlow.Tasks
                      **/
 
                     // Get Due Date Cell
-                    TableCell DueDateCell = e.Row.Cells[1];
+                    TableCell DueDateCell = e.Row.Cells[0];
 
-                    // Task End Date
-                    DateTime EndDate = DateTime.ParseExact(((Label)e.Row.FindControl("gridEnd")).Text.Trim(), "dd/MM/yyyy", null);
-                    int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
-
-                    if (DaysLeft > 0)
+                    if (currentStatus == StatusBLL.COMPLETED)
                     {
-                        DueDateCell.Text = $"{DaysLeft} Days";
-
-                        if (DaysLeft > 5)
-                        {
-                            DueDateCell.CssClass = "text-success";
-                        }
-                        else
-                        {
-                            DueDateCell.CssClass = "text-warning";
-                        }
-
-                    }
-                    else if (DaysLeft == 0)
-                    {
-                        DueDateCell.Text = "Today";
-                        DueDateCell.CssClass = "text-danger";
+                        DueDateCell.Text = "<i class='fa fa-check-circle fa-lg text-success'></i>";
+                        DueDateCell.CssClass = "text-success";
                     }
                     else
                     {
-                        DueDateCell.Text = $"Overdue {Math.Abs(DaysLeft)} Days!";
-                        DueDateCell.CssClass = "text-danger";
+                        // Task End Date
+                        DateTime EndDate = DateTime.ParseExact(((Label)e.Row.FindControl("gridEnd")).Text.Trim(), "dd/MM/yyyy", null);
+                        int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
+
+                        if (DaysLeft > 0)
+                        {
+                            DueDateCell.Text = $"{DaysLeft} Days";
+
+                            if (DaysLeft > 5)
+                            {
+                                DueDateCell.CssClass = "text-success";
+                            }
+                            else
+                            {
+                                DueDateCell.CssClass = "text-warning";
+                            }
+
+                        }
+                        else if (DaysLeft == 0)
+                        {
+                            DueDateCell.Text = "Today";
+                            DueDateCell.CssClass = "text-danger";
+                        }
+                        else
+                        {
+                            DueDateCell.Text = $"<i class='fa fa-times-circle fa-lg'></i> Overdue {Math.Abs(DaysLeft)} Days!";
+                            DueDateCell.CssClass = "text-danger";
+                        }
                     }
+
                 }
             }
 
@@ -331,7 +340,7 @@ namespace ProjectFlow.Tasks
 
             // Get Task
             TaskBLL taskBLL = new TaskBLL();
-            int taskID = Convert.ToInt32(row.Cells[0].Text);
+            int taskID = Convert.ToInt32(row.Cells[1].Text);
             Task updated_task = taskBLL.GetTaskByID(taskID);
 
             // Verify TaskID
@@ -559,7 +568,7 @@ namespace ProjectFlow.Tasks
 
                     GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
 
-                    int taskID = Convert.ToInt32(row.Cells[0].Text);
+                    int taskID = Convert.ToInt32(row.Cells[1].Text);
                     string currentStatus = ((Label)row.FindControl("gridStatus")).Text;
 
                     // Get Leader

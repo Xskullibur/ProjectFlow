@@ -5,8 +5,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container py-2">
-        <div class="row">
+    <div class="container-fluid py-2">
+        <div class="row pb-2">
 
             <div class="col">
                 <div style="overflow-x: auto;">
