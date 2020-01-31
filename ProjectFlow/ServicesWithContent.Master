@@ -152,7 +152,7 @@
                       </div>
                     </aside>
                 </div>
-                <div id="content" class="projectflow-body-content col-xl-10 col-lg-9 col-md-9">
+                <div id="content" class="projectflow-body-content col-12 col-md-10">
                     <div class="row h-100 pt-5" style="vertical-align:top;">
 
                         <div class="col-12">
