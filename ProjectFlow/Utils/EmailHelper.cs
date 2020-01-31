@@ -49,6 +49,7 @@ namespace ProjectFlow.Utils
                     textBody = textBody.Replace("[Milestone]", milestone);
                     textBody = textBody.Replace("[Priority]", task.Priority.priority1);
                     textBody = textBody.Replace("[Status]", status);
+                    textBody = textBody.Replace("[TaskDirectory]", HttpContext.Current.Request.Url.AbsoluteUri);
 
                     if (allocations == null)
                     {
