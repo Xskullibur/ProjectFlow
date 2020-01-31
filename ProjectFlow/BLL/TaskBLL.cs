@@ -310,6 +310,9 @@ namespace ProjectFlow.BLL
                 try
                 {
                     Task task = dbContext.Tasks
+                        .Include("TaskAllocations.TeamMember.Student")
+                        .Include("Priority")
+                        .Include("Milestone")
                         .Include(x => x.Status)
                         .First(x => x.taskID == id);
                     return task;

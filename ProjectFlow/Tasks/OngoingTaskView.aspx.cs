@@ -577,12 +577,12 @@ namespace ProjectFlow.Tasks
 
                     GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
 
-                    int id = Convert.ToInt32(row.Cells[0].Text);
+                    int taskID = Convert.ToInt32(row.Cells[0].Text);
                     string currentStatus = ((Label)row.FindControl("gridStatus")).Text;
 
                     // Get Leader
                     StudentBLL studentBLL = new StudentBLL();
-                    Student leader = studentBLL.GetLeaderByTaskID(id);
+                    Student leader = studentBLL.GetLeaderByTaskID(taskID);
 
                     // Get Current User
                     Student currentUser = Master.GetCurrentIdentiy().Student;
@@ -593,10 +593,20 @@ namespace ProjectFlow.Tasks
                     if (verified)
                     {
                         StatusBLL statusBLL = new StatusBLL();
-                        bool result = statusBLL.UpdateStatusByTaskID(id);
+                        bool result = statusBLL.UpdateStatusByTaskID(taskID);
 
                         if (result)
                         {
+
+                            if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.VERIFICATON)
+                            {
+                                NotificationHelper.Send_Verification_Email(taskID);
+                            }
+                            else if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.COMPLETED)
+                            {
+                                NotificationHelper.Send_Complete_Email(taskID);
+                            }
+
                             Master.Master.ShowAlert("Successfully Updated Status", BootstrapAlertTypes.SUCCESS);
                             refreshData();
                         }
