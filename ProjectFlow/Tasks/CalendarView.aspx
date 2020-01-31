@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container mt-4" style="overflow-y: hidden;">
+    <div class="container-fluid mt-4" style="overflow-y: hidden;">
 
         <div id="calendar" class="m-3"></div>
 

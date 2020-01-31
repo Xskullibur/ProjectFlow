@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -22,7 +23,6 @@ namespace ProjectFlow.Profile
         protected void Page_Load(object sender, EventArgs e)
         {
             RefreshProfile();
-
         }
 
         private void RefreshProfile()

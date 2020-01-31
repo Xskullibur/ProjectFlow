@@ -14,15 +14,9 @@
 
     <%-- Current selected room id --%>
     <asp:HiddenField ID="RoomID" runat="server" />
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-                    <%--Title--%>
-            <div class="row mb-3">
-                <div class="col">
-                    <h1>Meeting Minutes</h1>
-                </div>
-            </div>
-            <div class="card w-100 m-3">
+            <div class="card projectflow-card-shadow w-100 m-0 my-3">
                 <%-- Fire event to update meeting details --%>
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
@@ -40,7 +34,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="row">
+        <div class="card card-body projectflow-card-shadow row py-3 px-0">
             <div class="col-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -78,7 +72,7 @@
                                            <asp:TextBox  ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                        </div>
                                        <div class="col-2">
-                                           <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary" runat="server" Text="Execute" OnClick="ExecuteEvent" />
+                                           <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary mx-auto" runat="server" Text="Execute" OnClick="ExecuteEvent" />
                                            
                                        </div>
                                        <div>
