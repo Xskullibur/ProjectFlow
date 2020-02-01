@@ -1,7 +1,4 @@
-﻿let nav_id;
-
-$(document).ready(function () {
-    nav_id = '#matSidebar';
+﻿$(document).ready(function () {
 
     let unique_id = $(nav_id).attr('name');
 
