@@ -28,12 +28,6 @@ namespace ProjectFlow.Services.Christina
 
         protected void CreateRoomEvent(object sender, EventArgs e)
         {
-            var selectedAttendees = ViewState["Attendees"] as List<string>;
-            Response.Redirect($"Christina.aspx?RoomName={RoomNameTextBox.Text}&RoomDescription={RoomDescriptionTextBox.Text}&Attendees={String.Join(",", selectedAttendees)}");
-        }
-
-        protected void searchList_SelectedIndexChanged(object sender, EventArgs e)
-        {
             List<string> selectedAttendees = new List<string>();
             foreach (ListItem item in searchList.Items)
             {
@@ -42,18 +36,23 @@ namespace ProjectFlow.Services.Christina
                     selectedAttendees.Add(item.Value);
                 }
             }
-            ViewState["Attendees"] = selectedAttendees;
+
+            if(selectedAttendees.Count == 0)
+            {
+                AttendeesErrorLbl.Text = "At least one attendees need to be selected!";
+                return;
+            }
+
+            Response.Redirect($"Christina.aspx?RoomName={RoomNameTextBox.Text}&RoomDescription={RoomDescriptionTextBox.Text}&Attendees={String.Join(",", selectedAttendees.ToArray())}");
         }
 
         private void RefreshSearchUserList()
         {
             var projectTeam = (Master as ServicesWithContent).CurrentProjectTeam;
             TeamMemberBLL memberBLL = new TeamMemberBLL();
-            Dictionary<Student, string> usersList = memberBLL.GetUsersByTeamID(projectTeam.teamID);
+            var usersList = memberBLL.GetUsersByTeamID(projectTeam.teamID);
 
             searchList.DataSource = usersList;
-            searchList.DataTextField = "Value";
-            searchList.DataValueField = "Key";
 
             searchList.DataBind();
         }

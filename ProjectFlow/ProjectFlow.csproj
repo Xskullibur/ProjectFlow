@@ -182,6 +182,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
     <Content Include="Profile\ProfileImages\default-picture.png" />
+    <Content Include="ProjectDashboard\ProjectTeamDashboard.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
@@ -192,7 +193,6 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
-    <Content Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx" />
     <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -451,6 +451,13 @@
     <Compile Include="Project.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.cs">
+      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.designer.cs">
+      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ProjectFlowDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -468,13 +475,6 @@
     </Compile>
     <Compile Include="ProjectTeam.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.cs">
-      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.designer.cs">
-      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_BLOB_TRIGGERS.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

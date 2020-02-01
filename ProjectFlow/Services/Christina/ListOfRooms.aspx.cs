@@ -42,11 +42,9 @@ namespace ProjectFlow.Services.Christina
         {
             var projectTeam = (Master as ServicesWithContent).CurrentProjectTeam;
             TeamMemberBLL memberBLL = new TeamMemberBLL();
-            Dictionary<Student, string> usersList = memberBLL.GetUsersByTeamID(projectTeam.teamID);
+            var usersList = memberBLL.GetUsersByTeamID(projectTeam.teamID);
 
             searchList.DataSource = usersList;
-            searchList.DataTextField = "Value";
-            searchList.DataValueField = "Key";
 
             searchList.DataBind();
         }

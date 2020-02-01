@@ -36,6 +36,19 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
+        /// Get aspnet_Users by user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public aspnet_Users Getaspnet_UsersByUserId(Guid userId)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.aspnet_Users.Find(userId);
+            }
+        }
+
+        /// <summary>
         /// Set profile image filename of the user
         /// </summary>
         /// <param name="filename"></param>

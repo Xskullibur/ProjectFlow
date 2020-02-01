@@ -19,6 +19,10 @@ namespace ProjectFlow.BLL
                 return dbContext.Rooms.Find(roomID);
             }
         }
+        /// <summary>
+        /// Create a new Room
+        /// </summary>
+        /// <param name="room"></param>
         public void CreateRoom(Room room)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -27,6 +31,20 @@ namespace ProjectFlow.BLL
                 dbContext.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Get list of Attendees from a Room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        public List<Attendee> GetListOfAttendeesFromRoom(Room room)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Rooms.Find(room.roomID).Attendees.ToList();
+            }
+        }
+
 
         /// <summary>
         /// Returns a list of Room which is created by a ProjectTeam

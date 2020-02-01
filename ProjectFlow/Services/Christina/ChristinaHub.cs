@@ -41,6 +41,12 @@ namespace ProjectFlow.Services.Christina
                 return;
             }
 
+            //Must have more than one attendees
+            if (attendees.Length == 0) return;
+
+            //Must have room name
+            if (String.IsNullOrEmpty(roomName)) return;
+
             //Generate secure password
             byte[] password = new byte[256];
             var rng = new RNGCryptoServiceProvider();
@@ -66,22 +72,24 @@ namespace ProjectFlow.Services.Christina
                     roomDescription = (String.IsNullOrEmpty(roomDescription))? null : roomDescription
                 };
 
+                //Create room
+                RoomBLL bll = new RoomBLL();
+                bll.CreateRoom(room);
+
                 //Insert attendees into table
                 //Changing username into userid
                 aspnet_UsersBLL aspnet_UsersBLL = new aspnet_UsersBLL();
                 AttendeeBLL attendeeBLL = new AttendeeBLL();
-                foreach(string username in attendees)
+                foreach (string username in attendees)
                 {
                     aspnet_Users aspnet_Users = aspnet_UsersBLL.Getaspnet_UsersByUserName(username);
                     if (aspnet_Users == null) return;
                     attendeeBLL.CreateAttendeeInRoom(room, new Attendee
                     {
+                        roomID = room.roomID,
                         attendeeUserId = aspnet_Users.UserId
                     });
                 }
-
-                RoomBLL bll = new RoomBLL();
-                bll.CreateRoom(room);
 
                 //Send room id to client
                 Clients.Caller.SendRoomID(room.roomID);

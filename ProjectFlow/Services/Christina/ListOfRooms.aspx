@@ -21,6 +21,14 @@
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
+                                    
+                                    <%--Room name--%>
+                                    <asp:TemplateField HeaderText="Room Name">
+                                        <ItemTemplate>
+                                            <asp:Label ID="roomNameLbl" runat="server" Text='<%# Bind("roomName") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
                                     <%--Creator--%>
                                     <asp:TemplateField HeaderText="Creator">
                                         <ItemTemplate>

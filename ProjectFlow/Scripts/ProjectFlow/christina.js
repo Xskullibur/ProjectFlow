@@ -58,7 +58,7 @@ $(document).ready(function () {
         const roomDescription = urlParams.get('RoomDescription');
         const attendees = urlParams.get('Attendees');
 
-        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val(), roomName, roomDescription, attendees.split(',')));
+        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val()), roomName, roomDescription, attendees.split(','));
     });
     
 });
