@@ -7,8 +7,7 @@
 
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <div class="container py-2">
+    <div class="container-fluid py-2">
 
         <div class="row pb-2">
             <div class="col">
@@ -17,7 +16,7 @@
                     <asp:UpdatePanel ID="TaskGridUpdatePanel" runat="server">
                         <ContentTemplate>
 
-                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" OnRowCommand="taskGrid_RowCommand" > 
+                            <asp:GridView ID="taskGrid" runat="server" CssClass="table table-bordered table-striped projectflow-table" OnRowEditing="taskGrid_RowEditing" AutoGenerateColumns="False" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDataBound="taskGrid_RowDataBound" OnRowDeleting="taskGrid_RowDeleting" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="taskGrid_PageIndexChanging" PageSize="4" OnRowCommand="taskGrid_RowCommand" > 
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
@@ -26,9 +25,21 @@
 
                                     <%--Due Date--%>
                                     <asp:BoundField HeaderText="Due" ReadOnly="True" >
-                                    <ItemStyle Font-Bold="True" />
-
+                                        <ItemStyle Font-Bold="True" />
                                     </asp:BoundField>
+                                                                        
+                                    <%--Priority--%>
+                                    <asp:TemplateField HeaderText="Priority">
+                                        <EditItemTemplate>
+                                            <asp:DropDownList ID="editPriorityDDL" CssClass="form-control" runat="server"></asp:DropDownList>
+                                
+                                            <asp:Label ID="priorityErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                            <asp:RequiredFieldValidator ID="priorityRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="editStatusDDL" Display="Dynamic" ValidationGroup="EditTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="gridPriority" runat="server" Text='<%# Bind("Priority") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
                                     <%--Task--%>
                                     <asp:TemplateField HeaderText="Task">
@@ -121,7 +132,7 @@
                                         <ItemTemplate>
                                             <asp:Label ID="gridStatus" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>    
 
                                     <%--Action Settings--%>
                                     <asp:TemplateField ShowHeader="false">
@@ -135,8 +146,6 @@
                                                     <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
                                                     <asp:Button ID="updateStatusBtn" Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
                                                 </div>
-
-
                                             </div>
                                             <asp:Button ID="DeleteButton" Text="Delete" runat="server" 
                                                 CssClass="btn btn-sm btn-danger"

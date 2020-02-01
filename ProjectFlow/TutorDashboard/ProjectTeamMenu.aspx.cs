@@ -125,6 +125,14 @@ namespace ProjectFlow.DashBoard
 
             Session["PassTeamID"] = row.Cells[0].Text;
             Session["PassTeamName"] = name.Text;
+
+            // Alson Edit
+            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(Convert.ToInt32(row.Cells[0].Text));
+
+            Session["CurrentProjectTeam"] = projectTeam;
+            // Alson Edit Ends
+
             Response.Redirect("ProjectMainPage.aspx");
         }
 

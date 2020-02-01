@@ -14,9 +14,9 @@
 
     <%-- Current selected room id --%>
     <asp:HiddenField ID="RoomID" runat="server" />
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="card w-100 m-3">
+            <div class="card projectflow-card-shadow w-100 m-0 my-3">
                 <%-- Fire event to update meeting details --%>
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
@@ -34,7 +34,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="row">
+        <div class="card card-body projectflow-card-shadow row py-3 px-0">
             <div class="col-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -48,7 +48,9 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-meeting-logger-table" role="tabpanel" aria-labelledby="nav-meeting-logger-table-tab">
                         <div class="row py-2 px-3">
-                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary" runat="server" Text="Create New" OnClick="ShowCreateActionItemModalEvent" />
+                            <asp:Button ID="CreateNewBtn" CssClass="btn btn-primary mr-1" runat="server" Text="Create New"  OnClientClick="updateCode(); $('#actionItemCreateModal').modal('show'); return false;"/>
+                            <asp:Button ID="Button1" CssClass="btn btn-primary mr-1" runat="server" Text="Select Mode" OnClick="ToggleSelectEvent" />
+                            <asp:Button ID="Button2" CssClass="btn btn-danger" runat="server" Text="Delete" OnClick="DeleteEvent" OnClientClick="delete" />
                         </div>
                         <div class="row pd-2">
                             <div class="col-12">
@@ -70,7 +72,7 @@
                                            <asp:TextBox  ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                        </div>
                                        <div class="col-2">
-                                           <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary" runat="server" Text="Execute" OnClick="ExecuteEvent" />
+                                           <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary mx-auto" runat="server" Text="Execute" OnClick="ExecuteEvent" />
                                            
                                        </div>
                                        <div>
@@ -144,23 +146,32 @@
     </div>
 
     <script type="text/javascript">
+        
         $(document).ready(function () {
 
             canvas = $('#speaker_display');
             canvas_window = $('#canvas_window');
             init_display(canvas_window, canvas);
-
-            $('div.form-group input').change(function () {
-                
-                updateCode();
-            });
-            
         });
+
+        $('#actionItemCreateModal').on('shown.bs.modal', function () {
+            registerOnInput();
+        });
+
+        function registerOnInput() {
+            $.each($('div.form-group input'), function (i, value) {
+                value.oninput = function (e) {
+                    updateCode();
+                }
+            });
+        }
+
         function updateCode() {
             let code = "person: " + $('#<%=personNameTxtBox.ClientID %>').val() + ' topic: "' + $('#<%=topicTxtBox.ClientID %>').val() + '"' + " type: " + $('#<%=typeTxtBox.ClientID %>').val() + ';';
 
-            $('<%=GeneratedCodeLbl.ClientID %>').val(code);
+            $('#<%=GeneratedCodeLbl.ClientID %>').val(code);
             $('#generated_code').text(code);
         }
+
     </script>
 </asp:Content>

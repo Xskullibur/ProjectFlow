@@ -24,6 +24,22 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public Dictionary<Student, string> GetUsersByTeamID(int id)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var users = dbContext.TeamMembers.Include("Students")
+                    .Where(x => x.teamID == id)
+                    .Select(y => new
+                    {
+                        Student = y.Student,
+                        Name = y.Student.firstName + " " + y.Student.lastName
+                    }).ToDictionary(key => key.Student, value => value.Name);
+
+                return users;
+            }
+        }
+
         public void DeleteMember(int MemberID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

@@ -31,6 +31,33 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.DropDownList taskViewDDL;
         
         /// <summary>
+        /// addTaskBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTaskBtn;
+        
+        /// <summary>
+        /// fTaskNameTxt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox fTaskNameTxt;
+        
+        /// <summary>
+        /// fTaskNameBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button fTaskNameBtn;
+        
+        /// <summary>
         /// personalChkBx control.
         /// </summary>
         /// <remarks>
@@ -40,13 +67,13 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.CheckBox personalChkBx;
         
         /// <summary>
-        /// addTaskBtn control.
+        /// currentFiltersPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button addTaskBtn;
+        protected global::System.Web.UI.WebControls.Panel currentFiltersPanel;
         
         /// <summary>
         /// modalUpdatePanel control.
@@ -272,6 +299,33 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator statusRequiredValidator;
+        
+        /// <summary>
+        /// priorityDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList priorityDDL;
+        
+        /// <summary>
+        /// priorityErrorLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label priorityErrorLbl;
+        
+        /// <summary>
+        /// priorityRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator priorityRequiredValidator;
         
         /// <summary>
         /// addTaskSummaryValidator control.

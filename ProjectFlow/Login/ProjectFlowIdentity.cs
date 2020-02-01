@@ -18,6 +18,24 @@ namespace ProjectFlow.Login
         public Student Student { get; private set; }
         public Tutor Tutor { get; private set; }
 
+        public aspnet_Users aspnet_Users
+        {
+            get
+            {
+                if (IsStudent)
+                {
+                    return Student.aspnet_Users;
+                }else if (IsTutor)
+                {
+                    return Tutor.aspnet_Users;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public ProjectFlowIdentity(Student student, ClaimsIdentity identity) : this(identity) {
             this.Student = student;
         }

@@ -14,29 +14,22 @@ namespace ProjectFlow.DashBoard
     public partial class FileUpload : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-            if(Session["StudentTeamID"] != null)
-            {                
-                if (!IsPostBack)
-                {
-                    CheckFolderExist();
-                    DisplayFile();                                   
-                }               
-            }
-            else
+        {           
+            if (!IsPostBack)
             {
-                Response.Redirect("StudentProject.aspx");
-            }
+                CheckFolderExist();
+                DisplayFile();                                   
+            }               
         }
 
         public int GetTeamID()
         {
-            return int.Parse(Session["StudentTeamID"].ToString());
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void CheckFolderExist()
         {
-            string path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+            string path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + path))
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + path);
@@ -74,9 +67,9 @@ namespace ProjectFlow.DashBoard
                     errorList.Add("Key must be 32 character<br>");
                 }
 
-                while(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)" +  filename)
-                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)" + filename)
-                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(PLAIN)" + filename))               
+                while(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED_WITH_KEY)" +  filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED)" + filename)
+                    || File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(PLAIN)" + filename))               
                 {
                     filename = "(copy)" + filename ;
                 }
@@ -86,7 +79,7 @@ namespace ProjectFlow.DashBoard
                     
                     if(errorList.Count == 0)
                     {                  
-                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED_WITH_KEY)";
+                        path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED_WITH_KEY)";
                         savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                         FileUploadControl.SaveAs(savedLocation);
                         encryption.EncryptFileWithKey(savedLocation, KeyTB.Text);
@@ -100,7 +93,7 @@ namespace ProjectFlow.DashBoard
                 }
                 else if(OptionDP.SelectedIndex == 0)
                 {
-                    path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(ENCRYPTED)";
+                    path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(ENCRYPTED)";
                     savedLocation = AppDomain.CurrentDomain.BaseDirectory + path + filename;
                     FileUploadControl.SaveAs(savedLocation);
                     encryption.EncryptFile(savedLocation);
@@ -111,7 +104,7 @@ namespace ProjectFlow.DashBoard
                 {
                     if (errorList.Count == 0)
                     {
-                        path = "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\(PLAIN)";
+                        path = "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\(PLAIN)";
                         FileUploadControl.SaveAs(AppDomain.CurrentDomain.BaseDirectory + path + filename);
                         HideModel();
                         Master.ShowAlert("File successfully uploaded", BootstrapAlertTypes.SUCCESS);                      
@@ -172,7 +165,7 @@ namespace ProjectFlow.DashBoard
             TextBox key = (TextBox)row.FindControl("tableKeyTB");
             Encryption encryption = new Encryption();
             Decryption decryption = new Decryption();
-            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
           
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {

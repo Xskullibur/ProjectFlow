@@ -12,10 +12,17 @@ namespace ProjectFlow.Services.Christina
 {
     public partial class Christina : System.Web.UI.Page
     {
+
+        public List<ActionItem> ActionItems { get => ViewState["ActionItems"] as List<ActionItem>; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
+                //Set Title
+                this.SetHeader("Meeting Minutes");
+
                 //Get speakers belong to the current project team
                 ServicesWithContent servicesWithContent = this.Master as ServicesWithContent;
 
@@ -31,7 +38,12 @@ namespace ProjectFlow.Services.Christina
                 Student[] students = projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(tm => tm.Student).ToArray();
                 InjectSpeaker(students);
 
+                //Create viewstate list
+                ViewState["ActionItems"] = new List<ActionItem>();
+
             }
+
+
         }
 
         /// <summary>
@@ -65,7 +77,7 @@ namespace ProjectFlow.Services.Christina
         /// <param name="speakers"></param>
         private void InjectSpeaker(Student[] speakers)
         {
-            
+
             string createSpeakers = @"
                 <script type=""text/javascript"">
                     $(document).ready(function (){
@@ -73,7 +85,7 @@ namespace ProjectFlow.Services.Christina
 
             aspnet_UsersBLL aspnet_UsersBLL = new aspnet_UsersBLL();
 
-            foreach(var speaker in speakers)
+            foreach (var speaker in speakers)
             {
 
                 aspnet_Users aspnet_Users = aspnet_UsersBLL.Getaspnet_UsersByStudent(speaker);
@@ -92,7 +104,7 @@ namespace ProjectFlow.Services.Christina
             string text = ExecuteTextBox.Text;
 
             InsertActionItems(text);
-
+            ExecuteTextBox.Text = "";
         }
 
         private void InsertActionItems(string text)
@@ -101,29 +113,40 @@ namespace ProjectFlow.Services.Christina
 
             try
             {
-                List<ActionItem> actionItems = parser.Parse(text);
+                List<ParseItem> parseItems = parser.Parse(text);
                 ErrMsg.Text = "";
                 ErrLine.Text = "";
 
-                foreach (var actionItem in actionItems)
+                foreach (var parseItem in parseItems)
                 {
-                    materialTable.AddRow(new string[] {
-                        actionItem.Type,
-                        actionItem.PersonName,
-                        actionItem.Topic
-                    });
-
-                    var room = Session["Room"] as Room;
-
-                    //Add action item into database
-                    ActionItemBLL actionItemBLL = new ActionItemBLL();
-                    actionItemBLL.AddActionItem(new RoomActionItem
+                    var actionItem = parseItem.QueryActionItem;
+                    if (parseItem.ParseItemType == ParseItemType.CREATE)
                     {
-                        personName = actionItem.PersonName,
-                        topic = actionItem.Topic,
-                        type = actionItem.Type,
-                        roomID = room.roomID
-                    });
+                        var room = Session["Room"] as Room;
+                        
+
+                        //Add action item into database
+                        ActionItemBLL actionItemBLL = new ActionItemBLL();
+                        var roomActionItem = new RoomActionItem
+                        {
+                            personName = actionItem.PersonName,
+                            topic = actionItem.Topic,
+                            type = actionItem.Type,
+                            roomID = room.roomID
+                        };
+                        actionItemBLL.AddActionItem(roomActionItem);
+                        actionItem.ActionItemID = roomActionItem.actionItemID;
+
+                        AddNewActionItem(actionItem);
+                    }
+                    else if (parseItem.ParseItemType == ParseItemType.DELETE)
+                    {
+
+                        ////Locate index with the parsed object
+                        //int index = ActionItems.First(parseItem.QueryActionItem);
+
+                        //materialTable.RemoveRow(index);
+                    }
 
                 }
 
@@ -142,6 +165,37 @@ namespace ProjectFlow.Services.Christina
             }
         }
 
+        private void AddNewActionItem(ActionItem actionItem)
+        {
+
+            materialTable.AddRow(new string[] {
+                            actionItem.Type,
+                            actionItem.PersonName,
+                            actionItem.Topic
+                        });
+            ActionItems.Add(actionItem);
+        }
+
+        private string[] ErrorIfMissingAttributeForActionItem(ActionItem actionItem)
+        {
+
+            var missingAttributes = new List<string>();
+
+            if (String.IsNullOrWhiteSpace(actionItem.PersonName))
+            {
+                missingAttributes.Add("Person Name");
+            }
+            if (String.IsNullOrWhiteSpace(actionItem.Topic))
+            {
+                missingAttributes.Add("Topic");
+            }
+            if (String.IsNullOrWhiteSpace(actionItem.Type))
+            {
+                missingAttributes.Add("Type");
+            }
+            return missingAttributes.ToArray();
+        }
+
         private string ErrorAt(string errorMsg, int at, int length = 1)
         {
             string msg = errorMsg.Substring(0, at);
@@ -150,19 +204,36 @@ namespace ProjectFlow.Services.Christina
             return msg;
         }
 
-        protected void ShowCreateActionItemModalEvent(object sender, EventArgs e)
+        protected void DeleteEvent(object sender, EventArgs e)
         {
-            ShowModal();
+            List<ActionItem> itemsToBeDeleted = new List<ActionItem>();
+            bool[] selectedValues = materialTable.SelectedValues;
+            for (int i = 0; i < selectedValues.Length; i++)
+            {
+                bool value = selectedValues[i];
+
+                if (value)
+                {
+                    itemsToBeDeleted.Add(ActionItems[i]);
+                    materialTable.RemoveRow(i);
+                }
+            }
+
+            ActionItemBLL actionItemBLL = new ActionItemBLL();
+            foreach (var item in itemsToBeDeleted)
+            {
+                ActionItems.Remove(item);
+                actionItemBLL.RemoveActionItem(item.ActionItemID);
+            }
+
+            //material back to normal mode
+            materialTable.ToNormalMode();
+            
         }
 
-        private void ShowModal()
+        protected void ToggleSelectEvent(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('show');", true);
-        }
-
-        private void HideModal()
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('hide');", true);
+            materialTable.ToSelectMode();
         }
 
         protected void CreateActionItemEvent(object sender, EventArgs e)
@@ -173,7 +244,6 @@ namespace ProjectFlow.Services.Christina
             topicTxtBox.Text = "";
 
             InsertActionItems(text);
-            HideModal();
         }
 
         protected void UpdateRoomDetailEvent(object sender, EventArgs e)

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.DashBoard {
-    
-    
-    public partial class studentProject {
-        
+namespace ProjectFlow.DashBoard
+{
+
+
+    public partial class studentProject
+    {
+
         /// <summary>
         /// Label3 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
-        
+
         /// <summary>
         /// SearchTB control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox SearchTB;
-        
+
         /// <summary>
         /// searchBtn control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button searchBtn;
-        
+
         /// <summary>
         /// showAllBtn control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button showAllBtn;
-        
+
         /// <summary>
         /// ProjectGV control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView ProjectGV;
-        
+
         /// <summary>
         /// refreshBtn control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button refreshBtn;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>

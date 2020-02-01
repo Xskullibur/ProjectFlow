@@ -13,8 +13,35 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
+        public string ProfileUrl
+        {
+            get
+            {
+                var user = HttpContext.Current.User;
+                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                if(projectFlowIdentity.aspnet_Users.ProfileImagePath != null)
+                {
+                    return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+                }
+                else
+                {
+                    return "/Profile/ProfileImages/default-picture.png";
+                }
+                
+            }
+        }
+
+        //Set service page header title
+        public string Header { get => HeaderLbl.Text; set => HeaderLbl.Text = value; }
+
         protected void Page_Init(object sender, EventArgs e)
         {
+
+            //Page Redirection
+            matSidebar.NavClickListeners += (redirectionPage) =>
+            {
+                Response.Redirect(redirectionPage);
+            };
 
 #if SELECTEDPROJECT
             ProjectBLL projectBLL = new ProjectBLL();
@@ -39,6 +66,15 @@ namespace ProjectFlow
                     {
                         Response.Redirect(studentDashboardPath);
                     }
+                    else
+                    {
+                        //Get session
+                        var projectTeam = Session["CurrentProjectTeam"] as ProjectTeam;
+                        var project = Session["CurrentProject"] as Project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
+                    }
                 }
                 else if (projectFlowIdentity.IsTutor)
                 {
@@ -52,15 +88,21 @@ namespace ProjectFlow
                     {
                         Response.Redirect(tutorDashboardPath);
                     }
+                    else
+                    {
+                        //Get session
+                        var projectTeam = Session["CurrentProjectTeam"] as ProjectTeam;
+                        var project = Session["CurrentProject"] as Project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
+                    }
                 }
 
-
+                //Set project title
+                ProjectTitleLbl.Text = CurrentProject?.projectName;
 
             }
-
-
-
-            
 
         }
 
@@ -78,10 +120,20 @@ namespace ProjectFlow
 
         /// <summary>
         /// Change the currently selected project, 
-        /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc
+        /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc.
+        /// Setting this with null will clear the project
         /// </summary>
         public void SetCurrentProject(Project project)
         {
+
+            //Check if setting project to null
+            if(project == null)
+            {
+                //Clear the session
+                Session["CurrentProjectTeam"] = null;
+                Session["CurrentProject"] = null;
+                return;
+            }
 
             //Check for access right into the project
             var user = HttpContext.Current.User;
@@ -103,10 +155,8 @@ namespace ProjectFlow
                         //Set the session of the current projects
                         Session["CurrentProject"] = project;
 
-
-                        //Inject html for project
-                        ProjectID.Value = project.projectID;
-                        TeamID.Value = projectTeam.teamID.ToString();
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
 
                     }
                     else
@@ -125,7 +175,7 @@ namespace ProjectFlow
 
 
                         //Inject html for project
-                        ProjectID.Value = project.projectID;
+                        InjectHTMLForProjectTeamAndProject(project, null);
 
                     }
                     else
@@ -135,6 +185,15 @@ namespace ProjectFlow
                 }
             }
 
+        }
+
+        private void InjectHTMLForProjectTeamAndProject(Project project, ProjectTeam projectTeam)
+        {
+            //Inject html for project
+            if(project != null)
+                ProjectID.Value = project.projectID;
+            if (projectTeam != null)
+                TeamID.Value = projectTeam.teamID.ToString();
         }
 
         /// <summary>
@@ -153,15 +212,7 @@ namespace ProjectFlow
                 var user = HttpContext.Current.User;
                 if (user.Identity.IsAuthenticated)
                 {
-                    var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
-                    if (projectFlowIdentity.IsStudent)
-                    {
-                        return Session["CurrentProjectTeam"] as ProjectTeam;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Trying to access Project Team as a Tutor is not allowed");
-                    }
+                    return Session["CurrentProjectTeam"] as ProjectTeam;
                 }
                 else
                 {
@@ -170,6 +221,13 @@ namespace ProjectFlow
             }
         }
 
+        protected void ProjectBtnEvent(object sender, EventArgs e)
+        {
+            //Clear current project and go to project screen by refreshing
+            SetCurrentProject(null);
 
+            //Refresh
+            Response.Redirect(Request.RawUrl);
+        }
     }
 }

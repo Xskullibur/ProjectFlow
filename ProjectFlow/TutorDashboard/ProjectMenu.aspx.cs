@@ -91,6 +91,12 @@ namespace ProjectFlow.DashBoard
             Label name = (Label)row.FindControl("nameLabel");
             Session["PassProjectID"] = row.Cells[0].Text;
             Session["PassProjectName"] = name.Text;
+
+            //Temp fix
+            ProjectBLL projectBLL = new ProjectBLL();
+            var project = projectBLL.GetProjectByProjectId(row.Cells[0].Text);
+            (Master as ServicesWithContent).SetCurrentProject(project);
+
             Response.Redirect("ProjectTeamMenu.aspx");
         }
 

@@ -19,7 +19,7 @@
                             <asp:Button ID="btnYes" CssClass ="" runat="server" Text="&#128077;" OnClick="btnYes_Click" BorderStyle="None"/>&nbsp;
                         </div>
                         <div>
-                            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="Label" ToolTip=""></asp:Label>
                         </div>
                         <div>
                             <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>

@@ -21,7 +21,6 @@ namespace ProjectFlow.DashBoard
             {
                 Session["StudentID"] = identity.Student.UserId.ToString();
                 Session["Student"] = identity.Student.studentID.ToString();
-                Session["StudentTeamID"] = (Master as ServicesWithContent).CurrentProjectTeam.teamID;
                 ShowProject();
             }            
         }
@@ -30,6 +29,18 @@ namespace ProjectFlow.DashBoard
         {
             return Session["Student"].ToString();
         }
+
+        protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            //Make gridview row clickable
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(ProjectGV, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Click to view project";
+            }
+        }
+
+
 
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -40,12 +51,12 @@ namespace ProjectFlow.DashBoard
             {
 
                 ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(GetTeamID());
+                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
 
                 //(Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
                 Session["StudentTeamID"] = row.Cells[0].Text;
 
-                Response.Redirect("FileUpload.aspx");
+                Response.Redirect("/Tasks/OngoingTaskView.aspx");
             }
             else
             {
@@ -56,11 +67,6 @@ namespace ProjectFlow.DashBoard
         protected void ProjectGV_PageIndexChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private int GetTeamID()
-        {
-            return int.Parse(Session["StudentTeamID"].ToString());
         }
 
 

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace ProjectFlow
 {
-    public partial class Logon : System.Web.UI.MasterPage
+    public partial class ProjectDashboard : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

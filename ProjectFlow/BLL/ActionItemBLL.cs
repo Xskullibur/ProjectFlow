@@ -20,5 +20,35 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// Remove an existing RoomActionItem from database
+        /// </summary>
+        /// <param name="roomActionItemID">roo</param>
+        public void RemoveActionItem(int roomActionItemID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var actionItem = dbContext.RoomActionItems.Find(roomActionItemID);
+                dbContext.RoomActionItems.Remove(actionItem);
+                dbContext.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Return a list of RoomActionItem from a Room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        public List<RoomActionItem> GetListOfRoomActionItemsFromRoom(Room room)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var _room = dbContext.Rooms.Find(room.roomID);
+                return _room.RoomActionItems.ToList();
+            }
+
+        }
+
+
     }
 }

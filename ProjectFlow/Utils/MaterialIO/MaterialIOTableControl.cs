@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,7 @@ namespace ProjectFlow.Utils.MaterialIO
 {
     [ToolboxData("<{0}:MaterialIOTableControl runat=server></{0}:MaterialIOTableControl>")]
     [ParseChildren(true)]
-    public class MaterialIOTableControl: WebControl
+    public class MaterialIOTableControl: WebControl, IPostBackEventHandler
     {
 
         private List<MaterialIOTableRowHeaderData> _headers
@@ -62,6 +64,63 @@ namespace ProjectFlow.Utils.MaterialIO
             this.Headers = new List<MaterialIOTableRowHeaderData>(headers);
         }
 
+        public bool IsSelectMode
+        {
+            get {
+                if (ViewState["IsSelected"] == null) return false;
+                else return (bool)ViewState["IsSelected"];
+            }
+            private set
+            {
+                ViewState["IsSelected"] = value;
+            }
+        }
+
+        public bool[] SelectedValues
+        {
+            get
+            {
+                bool[] selected = new bool[_rows.Count];
+                if (IsSelectMode)
+                {
+                    for (int i = 0; i < selected.Length; i++)
+                    {
+                        selected[i] = (_rows[i].Datas[0] as MaterialIOTableRowCheckbox).Checked;
+                    }
+                }
+                return selected;
+            }
+        }
+
+        public void ToSelectMode()
+        {
+            if (IsSelectMode) return;
+
+            
+
+            IsSelectMode = true;
+            this.Headers.Insert(0, new MaterialIOTableRowHeaderCheckbox());
+
+            foreach(var row in this.Rows)
+            {
+                row.Datas.Insert(0, new MaterialIOTableRowCheckbox());
+            }
+            ViewState["Headers"] = this._headers;
+        }
+
+        public void ToNormalMode()
+        {
+            if (!IsSelectMode) return;
+            IsSelectMode = false;
+            this.Headers.RemoveAt(0);
+
+            foreach (var row in this.Rows)
+            {
+                row.Datas.RemoveAt(0);
+            }
+            ViewState["Headers"] = this._headers;
+        }
+
         public void AddRow(string[] values)
         {
 
@@ -72,11 +131,21 @@ namespace ProjectFlow.Utils.MaterialIO
 
             var row = new MaterialIOTableRow();
 
-            var datas = new MaterialIOTableRowData[values.Length];
+            MaterialIOTableRowData[] datas;
 
-            for (int i = 0; i < datas.Length; i++)
+            if (IsSelectMode)
             {
-                string value = values[i];
+                datas = new MaterialIOTableRowData[values.Length + 1];
+                datas[0] = new MaterialIOTableRowCheckbox();
+            }
+            else
+            {
+                datas = new MaterialIOTableRowData[values.Length];
+            }
+            int starting = IsSelectMode ? 1 : 0;
+            for (int i = starting; i < datas.Length; i++)
+            {
+                string value = values[i - starting];
                 datas[i] = new MaterialIOTableRowData();
                 datas[i].Value = value;
             }
@@ -86,6 +155,25 @@ namespace ProjectFlow.Utils.MaterialIO
             ViewState["Rows"] = this._rows;
         }
 
+        public void RemoveRow(int index)
+        {
+            this._rows.RemoveAt(index);
+            ViewState["Rows"] = this._rows;
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            
+            Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "materialio_selection_postback",
+                this.ResolveUrl("~/Scripts/ProjectFlow/materialio_selection_postback.js"));
+        }
+
+        protected override void AddAttributesToRender(HtmlTextWriter writer)
+        {
+            base.AddAttributesToRender(writer);
+            writer.AddAttribute(HtmlTextWriterAttribute.Name, base.UniqueID);
+        }
 
         protected override void RenderContents(HtmlTextWriter output)
         {
@@ -101,16 +189,28 @@ namespace ProjectFlow.Utils.MaterialIO
             Table.Body.ClearRows();
 
             if(Rows != null)
-            foreach (var row in Rows)
+            for (int i = 0; i < Rows.Count; i++)
             {
+                var row = Rows[i];
                 Table.Body.AddRow(row);
             }
 
             output.Write(Table.GetHTML());
         }
 
-
-     }
+        public void RaisePostBackEvent(string eventArgument)
+        {
+            if (!IsSelectMode) return;
+            JArray array = JArray.Parse(eventArgument);
+            if (array.Count != _rows.Count) return;
+            int i = 0;
+            foreach(var value in array)
+            {
+                (_rows[i].Datas[0] as MaterialIOTableRowCheckbox).Checked = value.ToObject<bool>();
+                i++;
+            }
+        }
+    }
 
     public class MaterialIOTableHead : DOMElement, Renderer
     {
@@ -148,8 +248,36 @@ namespace ProjectFlow.Utils.MaterialIO
 
 
     }
+
+    [Serializable]
+    public class MaterialIOTableRowHeaderCheckbox : MaterialIOTableRowHeaderData
+    {
+        public MaterialIOTableRowHeaderCheckbox() : base()
+        {
+            AddClass(MaterialIODataType.CHECKBOX);
+        }
+
+        public override void InsertElement(StringBuilder stringBuilder)
+        {
+            string checkboxHTML = $@"<div class=""mdc-checkbox mdc-data-table__row-checkbox mdc-checkbox--upgraded mdc-ripple-upgraded mdc-ripple-upgraded--unbounded"" style=""--mdc-ripple-fg-size:24px;--mdc-ripple-fg-scale:1.6666666666666667;--mdc-ripple-left:8px;--mdc-ripple-top:8px;"">
+                                             <input type=""checkbox"" class=""mdc-checkbox__native-control autoselect"">
+                                    <div class=""mdc-checkbox__background"">
+                                      <svg class=""mdc-checkbox__checkmark"" viewBox=""0 0 24 24"">
+                                        <path class=""mdc-checkbox__checkmark-path"" fill=""none"" d=""M1.73,12.91 8.1,19.28 22.79,4.59""></path>
+                                      </svg>
+                                      <div class=""mdc-checkbox__mixedmark""></div>
+                                    </div>
+                                    <div class=""mdc-checkbox__ripple""></div>
+                                  </div>";
+            stringBuilder.Append(checkboxHTML);
+        }
+
+    }
+
+    [Serializable]
     public class MaterialIOTableRowHeaderData : DOMElement, Renderer
     {
+
         public string HeaderName
         {
             get => Text; set
@@ -254,10 +382,36 @@ namespace ProjectFlow.Utils.MaterialIO
             stringBuilder.Append(GetHTML());
         }
     }
+    
+    [Serializable]
+    public class MaterialIOTableRowCheckbox : MaterialIOTableRowData
+    {
+        public bool Checked { get; set; }
+
+        public MaterialIOTableRowCheckbox()
+        {
+            AddClass(MaterialIODataType.CHECKBOX);
+        }
+
+        public override void InsertElement(StringBuilder stringBuilder)
+        {
+            string checkboxHTML = $@"<div class=""mdc-checkbox mdc-data-table__row-checkbox mdc-checkbox--upgraded mdc-ripple-upgraded mdc-ripple-upgraded--unbounded"" style=""--mdc-ripple-fg-size:24px;--mdc-ripple-fg-scale:1.6666666666666667;--mdc-ripple-left:8px;--mdc-ripple-top:8px;"">
+                                             <input type=""checkbox"" class=""mdc-checkbox__native-control"" {(Checked ? "checked" : "")}>
+                                    <div class=""mdc-checkbox__background"">
+                                      <svg class=""mdc-checkbox__checkmark"" viewBox=""0 0 24 24"">
+                                        <path class=""mdc-checkbox__checkmark-path"" fill=""none"" d=""M1.73,12.91 8.1,19.28 22.79,4.59""></path>
+                                      </svg>
+                                      <div class=""mdc-checkbox__mixedmark""></div>
+                                    </div>
+                                    <div class=""mdc-checkbox__ripple""></div>
+                                  </div>";
+            stringBuilder.Append(checkboxHTML);
+        }
+    }
+
     [Serializable]
     public class MaterialIOTableRowData : DOMElement, Renderer
     {
-        
 
         public string Value { get => Text; set
             {
@@ -281,6 +435,12 @@ namespace ProjectFlow.Utils.MaterialIO
         }
     }
 
+    public class MaterialIODataType
+    {
+        public static string CHECKBOX = "mdc-data-table__cell--checkbox";
+        public static string NUMERIC = "mdc-data-table__cell--numeric";
+
+    }
 
     public class MaterialIOTable : DOMElement, Renderer
     {
@@ -294,7 +454,6 @@ namespace ProjectFlow.Utils.MaterialIO
             AddClass("mdc-data-table");
             Table = new DefaultDOMElement("table");
             Table.AddClass("mdc-data-table__table");
-            Table.AddAttribute(new CustomAttribute("aria-label", "Dessert calories"));
             Table.AddDOMElement(Head);
             Table.AddDOMElement(Body);
         }
@@ -370,6 +529,10 @@ namespace ProjectFlow.Utils.MaterialIO
 
         }
 
+        public void RemoveClass(string classValue)
+        {
+            ClassDescriptor.Remove(classValue);
+        }
 
         public void AddAttribute(CustomAttribute attribute)
         {

@@ -51,6 +51,15 @@ namespace ProjectFlow
         protected global::System.Web.UI.WebControls.HiddenField TeamID;
 
         /// <summary>
+        /// ProjectBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ProjectBtn;
+
+        /// <summary>
         /// LoginUsernameLbl control.
         /// </summary>
         /// <remarks>
@@ -78,6 +87,24 @@ namespace ProjectFlow
         protected global::System.Web.UI.WebControls.Label LoginEmailProfileLbl;
 
         /// <summary>
+        /// ProjectTitleLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ProjectTitleLbl;
+
+        /// <summary>
+        /// matSidebar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ProjectFlow.Utils.MaterialIO.MaterialSidebar matSidebar;
+
+        /// <summary>
         /// AlertsUpdatePanel control.
         /// </summary>
         /// <remarks>
@@ -94,6 +121,15 @@ namespace ProjectFlow
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel AlertsPlaceHolder;
+
+        /// <summary>
+        /// HeaderLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label HeaderLbl;
 
         /// <summary>
         /// ContentPlaceHolder control.

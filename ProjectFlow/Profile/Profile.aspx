@@ -4,13 +4,25 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
     <div class="container">
+            <div class="container">
+                    <div class="row mb-3 ml-5">
+                        <div class="col">
+                            <h1>
+                                <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Profile informations" Font-Bold="true"></asp:Label>
+                            </h1>
+                        </div>            
+                    </div>        
+            </div>
         <div class="row">
             <div class="col-12 col-md-10 mx-auto">
-                <div class="card w-100">
+                <div class="card projectflow-card-shadow w-100">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 border-right mx-auto text-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" class="card-img-top" alt="Profile-Image">
+                                <%-- Profile image --%>
+                                <asp:FileUpload ID="ImageFileUploadControl" CssClass="d-none" runat="server"/>
+                                <asp:Image ID="ProfileImg" runat="server" CssClass="card-img-top content-profile-image pointer" />
+                                <asp:Button ID="ImageChangeBtn" runat="server" CssClass="d-none" OnClick="ChangeProfileImageEvent"></asp:Button>
                                 <asp:Label ID="UsernameLbl" CssClass="card-title" runat="server" Text=""></asp:Label>
                             </div>
                             <div class="col-10">
@@ -68,5 +80,30 @@
             </div>
         </div>
     </div>
+    <%-- File upload script for profile image --%>
+    <script type="text/javascript">
+        var fileUploadID = '<%=ImageFileUploadControl.ClientID%>';
+        var profileImageID = '<%=ProfileImg.ClientID%>';
+        var imageChangeBtnID = '<%=ImageChangeBtn.ClientID%>';
+        $(document).ready(function () {
 
+            //Bind to the fileUpload to detect for changes
+            $('#' + fileUploadID).change(function () {
+                $('#' + imageChangeBtnID).click();
+            });
+
+            $('#' + profileImageID).click(function () {
+                showFileUploadDialogForProfileChange();
+            });
+
+        });
+
+        function showFileUploadDialogForProfileChange() {
+            document.getElementById(fileUploadID).style.display = '';
+            var result = document.getElementById(fileUploadID).click();
+            document.getElementById(fileUploadID).style.display = 'none';
+
+            return result;
+        }
+    </script>
 </asp:Content>

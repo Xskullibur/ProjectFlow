@@ -22,5 +22,19 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// Set profile image filename of the user
+        /// </summary>
+        /// <param name="filename"></param>
+        public void UpdateProfilePicture(aspnet_Users user,  string filename)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var _user = dbContext.aspnet_Users.Find(user.UserId);
+                _user.ProfileImagePath = filename;
+                dbContext.SaveChanges();
+            }
+        }
+
     }
 }
