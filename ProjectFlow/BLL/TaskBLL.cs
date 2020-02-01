@@ -119,7 +119,7 @@ namespace ProjectFlow.BLL
                         ID = y.taskID,
                         Task = y.taskName,
                         Description = y.taskDescription,
-                        MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                        MileStone = y.Milestone.milestoneName,
                         Start = y.startDate,
                         End = y.endDate,
                         Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
@@ -179,7 +179,7 @@ namespace ProjectFlow.BLL
                         ID = y.taskID,
                         Task = y.taskName,
                         Description = y.taskDescription,
-                        MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                        MileStone = y.Milestone.milestoneName,
                         Start = y.startDate,
                         End = y.endDate,
                         Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
@@ -204,7 +204,7 @@ namespace ProjectFlow.BLL
                 ID = y.taskID,
                 Task = y.taskName,
                 Description = y.taskDescription,
-                MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                MileStone = y.Milestone.milestoneName,
                 Start = y.startDate,
                 End = y.endDate,
                 Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
@@ -236,7 +236,7 @@ namespace ProjectFlow.BLL
                             ID = y.taskID,
                             Task = y.taskName,
                             Description = y.taskDescription,
-                            MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                            MileStone = y.Milestone.milestoneName,
                             Start = y.startDate,
                             End = y.endDate,
                             Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
@@ -277,7 +277,7 @@ namespace ProjectFlow.BLL
                             ID = y.taskID,
                             Task = y.taskName,
                             Description = y.taskDescription,
-                            MileStone = y.Milestone == null ? "-" : y.Milestone.milestoneName,
+                            MileStone = y.Milestone.milestoneName,
                             Start = y.startDate,
                             End = y.endDate,
                             Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
@@ -310,6 +310,9 @@ namespace ProjectFlow.BLL
                 try
                 {
                     Task task = dbContext.Tasks
+                        .Include("TaskAllocations.TeamMember.Student")
+                        .Include("Priority")
+                        .Include("Milestone")
                         .Include(x => x.Status)
                         .First(x => x.taskID == id);
                     return task;
@@ -395,6 +398,7 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
+                    task.Milestone = null;
                     dbContext.Tasks.Attach(task);
 
                     // Update Task
