@@ -52,7 +52,13 @@ $(document).ready(function () {
 
     $.connection.hub.start().done(function () {
 
-        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val()));
+        //Get url params 
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomName = urlParams.get('RoomName');
+        const roomDescription = urlParams.get('RoomDescription');
+        const attendees = urlParams.get('Attendees');
+
+        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val(), roomName, roomDescription, attendees.split(',')));
     });
     
 });

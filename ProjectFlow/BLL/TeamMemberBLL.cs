@@ -33,8 +33,8 @@ namespace ProjectFlow.BLL
                     .Select(y => new
                     {
                         Student = y.Student,
-                        Name = y.Student.firstName + " " + y.Student.lastName
-                    }).ToDictionary(key => key.Student, value => value.Name);
+                        UserName = y.Student.aspnet_Users.UserName
+                    }).ToDictionary(key => key.Student, value => value.UserName);
 
                 return users;
             }

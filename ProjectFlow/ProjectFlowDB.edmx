@@ -137,6 +137,14 @@
           <Property Name="ExceptionType" Type="nvarchar" MaxLength="256" />
           <Property Name="Details" Type="ntext" />
         </EntityType>
+        <EntityType Name="Attendee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roomID" Type="int" Nullable="false" />
+          <Property Name="attendeeUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="CommentForIssue">
           <Key>
             <PropertyRef Name="commentID" />
@@ -378,6 +386,8 @@
           <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="accessToken" Type="varbinary" MaxLength="32" Nullable="false" />
+          <Property Name="roomName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="roomDescription" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="RoomActionItem">
           <Key>
@@ -415,7 +425,7 @@
           <Property Name="startDate" Type="date" Nullable="false" />
           <Property Name="endDate" Type="date" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
-          <Property Name="milestoneID" Type="int" />
+          <Property Name="milestoneID" Type="int" Nullable="false" />
           <Property Name="statusID" Type="int" Nullable="false" />
           <Property Name="priorityID" Type="int" Nullable="false" />
           <Property Name="dropped" Type="bit" Nullable="false" />
@@ -591,6 +601,30 @@
             </Principal>
             <Dependent Role="aspnet_UsersInRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendee_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="attendeeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendee_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomID" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="roomID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -833,7 +867,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Task_Milestone">
-          <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Milestone">
@@ -1012,6 +1046,7 @@
           <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_UsersInRoles" EntityType="Self.aspnet_UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendee" EntityType="Self.Attendee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CommentForIssue" EntityType="Self.CommentForIssue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Milestone" EntityType="Self.Milestone" Schema="dbo" store:Type="Tables" />
@@ -1084,6 +1119,14 @@
           <AssociationSet Name="FK__aspnet_Us__UserI__0D7A0286" Association="Self.FK__aspnet_Us__UserI__0D7A0286">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendee_aspnet_Users" Association="Self.FK_Attendee_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Attendee" EntitySet="Attendee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendee_Room" Association="Self.FK_Attendee_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Attendee" EntitySet="Attendee" />
           </AssociationSet>
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issue" />
@@ -1341,6 +1384,7 @@
           <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__UserI__04E4BC85" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
           <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__UserI__08B54D69" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
           <NavigationProperty Name="aspnet_Profile" Relationship="Self.FK__aspnet_Pr__UserI__09A971A2" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
+          <NavigationProperty Name="Attendees" Relationship="Self.FK_Attendee_aspnet_Users" FromRole="aspnet_Users" ToRole="Attendee" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_aspnet_Users" FromRole="aspnet_Users" ToRole="Student" />
           <NavigationProperty Name="Transcripts" Relationship="Self.FK_Transcript_aspnet_Users" FromRole="aspnet_Users" ToRole="Transcript" />
           <NavigationProperty Name="Tutor" Relationship="Self.FK_Tutor_aspnet_Users" FromRole="aspnet_Users" ToRole="Tutor" />
@@ -1365,6 +1409,16 @@
           <Property Name="RequestUrl" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="ExceptionType" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Attendee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roomID" Type="Int32" Nullable="false" />
+          <Property Name="attendeeUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Attendee_aspnet_Users" FromRole="Attendee" ToRole="aspnet_Users" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_Attendee_Room" FromRole="Attendee" ToRole="Room" />
         </EntityType>
         <EntityType Name="CommentForIssue">
           <Key>
@@ -1637,6 +1691,9 @@
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="accessToken" Type="Binary" MaxLength="32" FixedLength="false" Nullable="false" />
+          <Property Name="roomName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roomDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Attendees" Relationship="Self.FK_Attendee_Room" FromRole="Room" ToRole="Attendee" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Room_ProjectTeam" FromRole="Room" ToRole="ProjectTeam" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Room_Student" FromRole="Room" ToRole="Student" />
           <NavigationProperty Name="RoomActionItems" Relationship="Self.FK_RoomActionItem_Room" FromRole="Room" ToRole="RoomActionItem" />
@@ -1685,7 +1742,7 @@
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
-          <Property Name="milestoneID" Type="Int32" />
+          <Property Name="milestoneID" Type="Int32" Nullable="false" />
           <Property Name="statusID" Type="Int32" Nullable="false" />
           <Property Name="priorityID" Type="Int32" Nullable="false" />
           <Property Name="dropped" Type="Boolean" Nullable="false" />
@@ -1860,6 +1917,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Attendee_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="attendeeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Student_aspnet_Users">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
@@ -1893,6 +1962,18 @@
             </Principal>
             <Dependent Role="Tutor">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendee_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomID" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="roomID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1993,7 +2074,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Task_Milestone">
-          <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Milestone">
@@ -2281,6 +2362,7 @@
           <EntitySet Name="aspnet_SchemaVersions" EntityType="Self.aspnet_SchemaVersions" />
           <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" />
           <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" />
+          <EntitySet Name="Attendees" EntityType="Self.Attendee" />
           <EntitySet Name="CommentForIssues" EntityType="Self.CommentForIssue" />
           <EntitySet Name="Issues" EntityType="Self.Issue" />
           <EntitySet Name="Milestones" EntityType="Self.Milestone" />
@@ -2346,6 +2428,10 @@
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
           </AssociationSet>
+          <AssociationSet Name="FK_Attendee_aspnet_Users" Association="Self.FK_Attendee_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Attendee" EntitySet="Attendees" />
+          </AssociationSet>
           <AssociationSet Name="FK_Student_aspnet_Users" Association="Self.FK_Student_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Student" EntitySet="Students" />
@@ -2357,6 +2443,10 @@
           <AssociationSet Name="FK_Tutor_aspnet_Users" Association="Self.FK_Tutor_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Tutor" EntitySet="Tutors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendee_Room" Association="Self.FK_Attendee_Room">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Attendee" EntitySet="Attendees" />
           </AssociationSet>
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issues" />
@@ -2618,6 +2708,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Attendees">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Attendee">
+              <MappingFragment StoreEntitySet="Attendee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="roomID" ColumnName="roomID" />
+                <ScalarProperty Name="attendeeUserId" ColumnName="attendeeUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CommentForIssues">
             <EntityTypeMapping TypeName="ProjectFlowModel.CommentForIssue">
               <MappingFragment StoreEntitySet="CommentForIssue">
@@ -2860,6 +2959,8 @@
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="accessToken" ColumnName="accessToken" />
+                <ScalarProperty Name="roomName" ColumnName="roomName" />
+                <ScalarProperty Name="roomDescription" ColumnName="roomDescription" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

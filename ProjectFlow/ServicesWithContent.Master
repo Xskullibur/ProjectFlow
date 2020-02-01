@@ -141,7 +141,7 @@
                                         <SidebarItems>
                                             <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx">
                                             </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/Christina.aspx">
+                                            <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/CreateRoom.aspx">
 
                                             </mio:SidebarItem>
                                         </SidebarItems>

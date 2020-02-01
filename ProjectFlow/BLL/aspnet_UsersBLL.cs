@@ -23,6 +23,19 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
+        /// Get aspnet_Users by username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public aspnet_Users Getaspnet_UsersByUserName(string username)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.aspnet_Users.FirstOrDefault(x => x.UserName.Equals(username));
+            }
+        }
+
+        /// <summary>
         /// Set profile image filename of the user
         /// </summary>
         /// <param name="filename"></param>
