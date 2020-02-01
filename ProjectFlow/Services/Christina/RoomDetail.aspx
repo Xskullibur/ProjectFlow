@@ -13,12 +13,13 @@
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
                         <div class="card-body">
-                            <h5 class="card-title">Meeting Minutes</h5>
+                            <h5 class="card-title"><asp:Label ID="RoomNameLbl" runat="server" Text=""></asp:Label></h5>
                             <h6 class="card-subtitle mb-2 text-muted">Room Info:</h6>
-                            <div class="col-12 col-md-6"><i class="fa fa-calendar" aria-hidden="true">&nbsp;</i><label>Meeting Date:&nbsp;</label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
-                            <div class="col-12 col-md-6"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;</i><label>Meeting Time:&nbsp;</label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
-                            <div class="col-12 col-md-6"><i class="fa fa-user" aria-hidden="true">&nbsp;</i><label>Attendees:&nbsp;</label><asp:Label ID="AttendeesLbl" runat="server" Text=""></asp:Label></div>
-                            <div class="col-12 col-md-6"><i class="fa fa-smile-o" aria-hidden="true">&nbsp;</i><label>Meeting made by:&nbsp;</label><asp:Label ID="MadeByLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-calendar" aria-hidden="true">&nbsp;</i><label>Meeting Date:&nbsp;</label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-clock-o" aria-hidden="true">&nbsp;</i><label>Meeting Time:&nbsp;</label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-user" aria-hidden="true">&nbsp;</i><label>Attendees:&nbsp;</label><asp:Label ID="AttendeesLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-smile-o" aria-hidden="true">&nbsp;</i><label>Meeting made by:&nbsp;</label><asp:Label ID="MadeByLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-book-open" aria-hidden="true">&nbsp;</i><label>Description:&nbsp;</label><asp:Label ID="DescriptionLbl" runat="server" Text=""></asp:Label></div>
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
@@ -53,9 +54,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab">
+                    <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab" style="height: 300px;">
                         <div class="row">
-                            <div class="col-12" style="height: 300px;">
+                            <div class="col-12" style="height: 260px;">
                                 <h5>Transcript</h5>
                                 <asp:TextBox ID="transcriptTxtBox" CssClass="w-100 h-100 my-2" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
                             </div>

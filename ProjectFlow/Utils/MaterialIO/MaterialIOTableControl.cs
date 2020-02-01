@@ -529,6 +529,10 @@ namespace ProjectFlow.Utils.MaterialIO
 
         }
 
+        public void RemoveClass(string classValue)
+        {
+            ClassDescriptor.Remove(classValue);
+        }
 
         public void AddAttribute(CustomAttribute attribute)
         {

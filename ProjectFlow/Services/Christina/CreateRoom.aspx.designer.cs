@@ -11,17 +11,26 @@ namespace ProjectFlow.Services.Christina
 {
 
 
-    public partial class ListOfRooms
+    public partial class CreateRoom
     {
 
         /// <summary>
-        /// LinkButton1 control.
+        /// RoomNameTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.TextBox RoomNameTextBox;
+
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
         /// searchList control.
@@ -33,39 +42,30 @@ namespace ProjectFlow.Services.Christina
         protected global::System.Web.UI.WebControls.ListBox searchList;
 
         /// <summary>
-        /// SearchBtn control.
+        /// AttendeesErrorLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchBtn;
+        protected global::System.Web.UI.WebControls.Label AttendeesErrorLbl;
 
         /// <summary>
-        /// TaskGridUpdatePanel control.
+        /// RoomDescriptionTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel TaskGridUpdatePanel;
+        protected global::System.Web.UI.WebControls.TextBox RoomDescriptionTextBox;
 
         /// <summary>
-        /// roomsGridView control.
+        /// CreateRoomBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView roomsGridView;
-
-        /// <summary>
-        /// lnkDummy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkDummy;
+        protected global::System.Web.UI.WebControls.Button CreateRoomBtn;
     }
 }

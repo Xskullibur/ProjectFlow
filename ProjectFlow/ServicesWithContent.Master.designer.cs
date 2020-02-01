@@ -87,6 +87,33 @@ namespace ProjectFlow
         protected global::System.Web.UI.WebControls.Label LoginEmailProfileLbl;
 
         /// <summary>
+        /// ProjectTitleLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ProjectTitleLbl;
+
+        /// <summary>
+        /// matStudentSidebar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ProjectFlow.Utils.MaterialIO.MaterialSidebar matStudentSidebar;
+
+        /// <summary>
+        /// matTutorSidebar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ProjectFlow.Utils.MaterialIO.MaterialSidebar matTutorSidebar;
+
+        /// <summary>
         /// AlertsUpdatePanel control.
         /// </summary>
         /// <remarks>

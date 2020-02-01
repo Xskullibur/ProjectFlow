@@ -27,7 +27,7 @@ a.nostyle:visited {
 }
 
 .content-sidenav {
-    height: calc(100vh - 3.4rem);
+    height: calc(100vh - 3.4rem) !important;
     background-color: #fff;
 }
 
@@ -50,8 +50,16 @@ a.nostyle:visited {
 
 }
 
-/* Profile */
+/*Material IO color override*/
+:root {
+    --mdc-theme-primary: rgba(0, 97, 242) !important;
+}
 
+.mdc-list-item--activated {
+    color: var(--mdc-theme-primary) !important;
+}
+
+/* Profile */
 .content-profile {
     width: 350px;
     margin: 48px 0;
@@ -73,7 +81,7 @@ a.nostyle:visited {
 }
 
 .projectflow-table tr th {
-
-    color: #0061f2 !important;
+    color: #22272e !important;
     background-color: #fff !important;
 }
+

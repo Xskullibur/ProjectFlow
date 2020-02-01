@@ -1,6 +1,7 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
 using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.MaterialIO;
 using System;
 using System.Web;
 using System.Web.Security;
@@ -13,15 +14,16 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
+        public ProjectFlowIdentity Identity { get => HttpContext.Current.User.Identity as ProjectFlowIdentity; }
+        public MaterialSidebar matSidebar { get => matStudentSidebar ?? matTutorSidebar; }
+
         public string ProfileUrl
         {
             get
             {
-                var user = HttpContext.Current.User;
-                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
-                if(projectFlowIdentity.aspnet_Users.ProfileImagePath != null)
+                if(Identity.aspnet_Users.ProfileImagePath != null)
                 {
-                    return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+                    return "/Profile/ProfileImages/" + Identity.aspnet_Users.ProfileImagePath;
                 }
                 else
                 {
@@ -36,6 +38,12 @@ namespace ProjectFlow
 
         protected void Page_Init(object sender, EventArgs e)
         {
+
+            //Page Redirection
+            matSidebar.NavClickListeners += (redirectionPage) =>
+            {
+                Response.Redirect(redirectionPage);
+            };
 
 #if SELECTEDPROJECT
             ProjectBLL projectBLL = new ProjectBLL();
@@ -93,13 +101,10 @@ namespace ProjectFlow
                     }
                 }
 
-
+                //Set project title
+                ProjectTitleLbl.Text = CurrentProject?.projectName;
 
             }
-
-
-
-            
 
         }
 
