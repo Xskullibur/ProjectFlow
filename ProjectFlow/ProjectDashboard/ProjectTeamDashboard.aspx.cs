@@ -18,7 +18,7 @@ namespace ProjectFlow.ProjectTeamDashboard
             if (!IsPostBack)
             {
                 // Set title
-                (this.Master as ServicesWithContent).Header = "Overal Project Dashboard";
+                (this.Master as ServicesWithContent).Header = "Overall Project Dashboard";
             }
 
             ProjectTeam currentTeam = (Master as ServicesWithContent).CurrentProjectTeam;
