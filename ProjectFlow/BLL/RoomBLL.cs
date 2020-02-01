@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.BLL
 {
@@ -89,10 +90,15 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.Rooms
-                    .Include("Student.aspnet_Users")//For displaying student name
-                    .Where(room => room.teamID == projectTeam.teamID && filters.Contains(room.Student.aspnet_Users))
+                var rooms = dbContext.Rooms
+                    .Include(room => room.Student.aspnet_Users)//For displaying student name
+                    .Where(room => room.teamID == projectTeam.teamID)
                     .OrderByDescending(room => room.creationDate).ToList();
+                return rooms
+                    .Where(room => filters
+                    .Select(x => x.UserId)
+                    .Contains(room.Student.aspnet_Users.UserId))
+                    .ToList();
             }
         }
     }

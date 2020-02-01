@@ -76,7 +76,7 @@ namespace ProjectFlow.Services.Christina
             roomsGridView.DataSource = listOfRooms;
             roomsGridView.DataBind();
 
-            //Store inside sessio
+            //Store inside session
             Rooms = listOfRooms;
 
         }
@@ -119,16 +119,31 @@ namespace ProjectFlow.Services.Christina
             RefreshRoomsGridView(FilterBy.Default);
         }
 
-        protected void searchList_SelectedIndexChanged(object sender, EventArgs e)
+        protected void SearchEvent(object sender, EventArgs e)
         {
+            //Get filter list
+            StudentBLL studentBLL = new StudentBLL();
             List<Student> filterList = new List<Student>();
-            foreach(ListItem item in searchList.Items)
+            foreach (ListItem item in searchList.Items)
             {
                 if (item.Selected)
                 {
-                    //filterList.Add(item.Value as Student);
+                    Student student = studentBLL.FindStudentByUsername(item.Value);
+                    filterList.Add(student);
                 }
             }
+
+
+            //Refresh data
+            RefreshRoomsGridView(FilterBy.Students, filterList);
+
+        }
+
+        protected void SearchSelfEvent(object sender, EventArgs e)
+        {
+            searchList.ClearSelection();
+
+            RefreshRoomsGridView(FilterBy.SelfCreated);
         }
     }
 }
