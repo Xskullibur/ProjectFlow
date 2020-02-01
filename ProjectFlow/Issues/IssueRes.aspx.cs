@@ -1,27 +1,39 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 
 namespace ProjectFlow.Issues
 {
     public partial class IssueRes : System.Web.UI.Page
     {
+        
         int idIssue;
-        int idVoter = 4;
         string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
+            idIssue = (int)Session["SSIId"];
             if (!IsPostBack)
             {
-                lbMember.Text = (string)Session["SSName"];
-                lbIssue.Text = (string)Session["SSDesc"];
-                idIssue = (int)Session["SSIId"];
+                
+                IssueBLL issueBLL = new IssueBLL();
+                Issue updated_issue = issueBLL.GetIssueByID(idIssue);
+                lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
+                lbIssue.Text = updated_issue.description;
+                IssueActive.Text = "";
+                IssuePublic.Text = updated_issue.votePublic.ToString();
+                IssueRaisedBy.Text = updated_issue.createdBy.ToString();
+                IssueStatus.Text = "";
+                
+
                 ispublic = (string)Session["SSIsPublic"];
-                check(idIssue, idVoter);
+                check(idIssue);
                 refreshCommentData(idIssue);
                 //Label1.ToolTip = getUserbySelection(idIssue, false); // this works but needs to be removed
                 isPublic(ispublic);
@@ -31,18 +43,17 @@ namespace ProjectFlow.Issues
         protected void btnYes_Click(object sender, EventArgs e)
         {
             idIssue = (int)Session["SSIId"];
-            Label1.Text = "Yes";
+
             vote(true);
-            check(idIssue, idVoter);
+            check(idIssue);
             isPublic(ispublic);
         }
 
         protected void btnNo_Click(object sender, EventArgs e)
         {
             idIssue = (int)Session["SSIId"];
-            Label1.Text = "No";
             vote(false);
-            check(idIssue, idVoter);
+            check(idIssue);
             isPublic(ispublic);
         }
 
@@ -51,16 +62,15 @@ namespace ProjectFlow.Issues
             Random rnd = new Random();
             int decision = rnd.Next(10);
             if (decision > 5) {
-                Label1.Text = "Yes";
                 vote(true);
-                check(idIssue, idVoter);
+                check(idIssue);
                 isPublic(ispublic);
             }
             else
             {
-                Label1.Text = "No";
+
                 vote(false);
-                check(idIssue, idVoter);
+                check(idIssue);
                 isPublic(ispublic);
             }
         }
@@ -69,11 +79,15 @@ namespace ProjectFlow.Issues
         {
             if (Page.IsValid)
             {
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
                 // Create Task Object
                 Polling newPoll = new Polling();
                 newPoll.issueID = idIssue;    
-                newPoll.voterID = idVoter;    
+                newPoll.voterID = voterId;    
                 newPoll.vote = choice;      
 
                 // Submit Query
@@ -82,25 +96,31 @@ namespace ProjectFlow.Issues
             }
         }
 
-        protected void check(int iID, int vID)
+        protected void check(int iID)
         {
             PollingBLL pollingBLL = new PollingBLL();
+            var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+            TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+            Guid Uid = identity.Student.aspnet_Users.UserId;
+            int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
-            bool checking = pollingBLL.Check(iID, vID);
+            bool checking = pollingBLL.Check(iID, voterId);
 
-            int result = pollingBLL.GetResult(iID);
-            Label2.Text = result.ToString();
+            List<int> result = pollingBLL.GetResult(iID);
+            
+            btnYesCount.Text = result[0].ToString();
+            btnNoCount.Text = result[1].ToString();
 
             if (checking == true)
             {
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
-                Label1.Text = "Already voted!";
+                this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
             }
             else
             {
-                //Label1.Text = checking.ToString();
+
             }
         }
 
@@ -118,12 +138,16 @@ namespace ProjectFlow.Issues
 
             if (Page.IsValid)
             {
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
                 // Create Task Object
                 CommentForIssue newComment = new CommentForIssue();
                 newComment.comment = tbComments.Text;
                 newComment.issueID = idIssue;
-                newComment.createdBy = idVoter;    //this is a placeholder  
+                newComment.createdBy = voterId;    //this is a placeholder  
 
                 // Submit Query
                 CommentForIssueBLL commentBLL = new CommentForIssueBLL();

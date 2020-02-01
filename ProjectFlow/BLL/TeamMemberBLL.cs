@@ -79,5 +79,20 @@ namespace ProjectFlow.BLL
                 return dbContext.TeamMembers.Any(x => x.roleID == 1 && x.teamID == TeamID);
             }
         }
+
+        public int GetMemIdbyUID(Guid Uid)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var MID = dbContext.TeamMembers
+                    .First(x => x.UserId == Uid)
+                    .memberID;
+                    
+
+                //int MID = int.Parse(student);
+
+                return MID;
+            }
+        }
     }
 }

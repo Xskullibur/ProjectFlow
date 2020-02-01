@@ -7,7 +7,7 @@
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-hover table-bordered" AutoGenerateColumns="False">
+                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-hover table-bordered" AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" />
@@ -26,6 +26,8 @@
                                 </div>
                             </div>
                         </EmptyDataTemplate>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="3" />
+                        <PagerStyle CssClass="pagination-ys table-borderless" />
                     </asp:GridView>
                 </div>
             </div>
