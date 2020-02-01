@@ -65,6 +65,10 @@
             $(function () {
                 $('.datetimepicker').datetimepicker();
             });
+
+
+            //Nav id setup
+            var nav_id = '#<%=matSidebar.ClientID%>';
         </script>
 
         <div class="sticky-top">
@@ -117,7 +121,9 @@
                         <hr class="mdc-list-divider">
                       <div class="mdc-drawer__content">
                         <nav class="mdc-list">
-                            <mio:MaterialSidebar ID="matSidebar" runat="server">
+                            <% if(Identity.IsStudent) { %>
+                            <mio:MaterialSidebar ID="matStudentSidebar" runat="server">
+
                                 <Groups>
                                     <mio:SidebarGroup SubHeaderText="Project">
                                         <SidebarItems>
@@ -149,7 +155,28 @@
                                         </SidebarItems>
                                     </mio:SidebarGroup>
                                 </Groups>
-                            </mio:MaterialSidebar>
+                                </mio:MaterialSidebar>
+                            <% }else if(Identity.IsTutor) {  %>
+                                <mio:MaterialSidebar ID="matTutorSidebar" runat="server">
+                                    <Groups>
+                                        <mio:SidebarGroup SubHeaderText="Project">
+                                            <SidebarItems>
+                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/Services/Christina/Home.aspx">
+                                                </mio:SidebarItem>
+                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx">
+                                                </mio:SidebarItem>
+                                            </SidebarItems>
+                                        </mio:SidebarGroup>
+                                        <mio:SidebarGroup SubHeaderText="Issues">
+                                            <SidebarItems>
+                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx">
+                                                </mio:SidebarItem>
+                                            </SidebarItems>
+                                        </mio:SidebarGroup>
+                                    </Groups>
+                                </mio:MaterialSidebar>
+                                <% } %>
+                            
                         </nav>
                       </div>
                     </aside>
