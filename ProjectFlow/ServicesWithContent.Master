@@ -129,7 +129,7 @@
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Storage">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="File storage" RedirectionPage="/StudentDashboard/FileUpload.aspx">
+                                            <mio:SidebarItem ItemText="File Storage" RedirectionPage="/StudentDashboard/FileUpload.aspx">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
