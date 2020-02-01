@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="ProjectTeamDashboard.aspx.cs" Inherits="ProjectFlow.ProjectTeamDashboard.ProjectTeamDashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="https://kodhus.com/kodhus-ui/kodhus-0.1.0.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://kodhus.com/kodhus-ui/kodhus-0.1.0.min.js"></script>
     <script type='text/javascript'>
         function loadDoughnutChart(canvasID, data1, data2) {
 
@@ -31,6 +33,33 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
     <div class="container">
+
+        <div class="row mb-4">
+            <div class="col">
+                <ul id="progressbar" class="cdt-step-progressbar horizontal pt-5">
+                    <li>
+                        <span class="indicator">1</span>
+                        <span class="title">Initiate</span>
+                    </li>
+                    <li>
+                        <span class="indicator">2</span>
+                        <span class="title">Buy item 1</span>
+                    </li>
+                    <li>
+                        <span class="indicator">3</span>
+                        <span class="title">Finally make it</span>
+                    </li>
+                    <li>
+                        <span class="indicator">4</span>
+                        <span class="title">In production</span>
+                    </li>
+                    <li>
+                        <span class="indicator">5</span>
+                        <span class="title">Delivery</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
         <%--Topbar--%>
         <div class="row mb-2">
@@ -103,5 +132,10 @@
             <//div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        var progressBar = document.getElementById("progressbar");
+        progressBar = new Kodhus.StepProgressBar();
+    </script>
 
 </asp:Content>

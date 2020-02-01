@@ -101,26 +101,6 @@ namespace ProjectFlow.ProjectTeamDashboard
             overdueTaskGrid.DataBind();
         }
 
-        [WebMethod]
-        public static string LoadDoughnutChart()
-        {
-            var data = new
-            {
-                datasets = new[]
-                {
-                    new {
-                        data = new[] { 50, 50 },
-                        backgroundColor = new[]
-                        {
-                            "Green"
-                        }
-                    },
-                }
-            };
-
-            return data.ToJSON();
-        }
-
         protected void overdueTaskGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -142,22 +122,6 @@ namespace ProjectFlow.ProjectTeamDashboard
                     DueDateCell.CssClass = "text-danger";
                 }
             }
-        }
-    }
-
-    public static class JSONHelper
-    {
-        public static string ToJSON(this object obj)
-        {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            return serializer.Serialize(obj);
-        }
-
-        public static string ToJSON(this object obj, int recursionDepth)
-        {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            serializer.RecursionLimit = recursionDepth;
-            return serializer.Serialize(obj);
         }
     }
 }
