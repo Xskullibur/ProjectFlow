@@ -141,7 +141,7 @@
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Issues">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx">
+                                            <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
@@ -169,7 +169,7 @@
                                         </mio:SidebarGroup>
                                         <mio:SidebarGroup SubHeaderText="Issues">
                                             <SidebarItems>
-                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx">
+                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx">
                                                 </mio:SidebarItem>
                                             </SidebarItems>
                                         </mio:SidebarGroup>

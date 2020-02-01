@@ -3,11 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container py-2 w-100 h-100">
+    <div class="container-fluid py-2 w-100 h-100">
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-hover table-bordered" AutoGenerateColumns="False" OnRowDataBound="IssueView_RowDataBound"  OnSelectedIndexChanged="IssueView_SelectedIndexChanged" OnRowDeleting="IssueView_RowDeleting">
+                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnRowDataBound="IssueView_RowDataBound"  OnSelectedIndexChanged="IssueView_SelectedIndexChanged" OnRowDeleting="IssueView_RowDeleting" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" />
@@ -35,6 +35,8 @@
                                 </div>
                             </div>
                         </EmptyDataTemplate>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="3" />
+                        <PagerStyle CssClass="pagination-ys table-borderless" />
                     </asp:GridView>
                 </div>
             </div>

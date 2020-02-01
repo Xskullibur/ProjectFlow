@@ -75,13 +75,6 @@
     <div class="card card-body projectflow-card-shadow py-3">
     <div class="container-fluid mb-3">
 
-        <%--Title--%>
-<%--        <div class="row mb-3">
-            <div class="col">
-                <h1>Task Management</h1>
-            </div>
-        </div>--%>
-
         <%--Tool Bar--%>
         <div class="row justify-content-between">
 
