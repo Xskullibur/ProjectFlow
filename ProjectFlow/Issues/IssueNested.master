@@ -70,15 +70,8 @@
             border-color: #dddddd;
         }
     </style>
-
-    <div class="container">
-
-        <%--Title--%>
-        <div class="row mb-3">
-            <div class="col">
-                <h1>Issue Tracker</h1>
-            </div>
-        </div>
+    <div class="card card-body projectflow-card-shadow py-3">
+    <div class="container-fluid">
 
         <%--Status--%>
         <div class="row justify-content-between">
@@ -190,4 +183,5 @@
     <%--Main Content--%>
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
+    </div>
 </asp:Content>

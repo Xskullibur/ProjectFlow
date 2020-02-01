@@ -62,6 +62,10 @@ namespace ProjectFlow.Issues
         {
             if (!IsPostBack)
             {
+
+                // Set title
+                (this.Master as ServicesWithContent).Header = "Issue Tracker";
+
                 // Task ID
                 TaskBLL taskBLL = new TaskBLL();
                 ProjectTeam currentTeam = GetCurrentProjectTeam();
