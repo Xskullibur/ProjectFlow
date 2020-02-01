@@ -53,18 +53,20 @@ namespace ProjectFlow.ProjectTeamDashboard
 
                 string chartID = $"{priorityName}_chart";
 
-                LiteralControl literalControl = new LiteralControl();
-                literalControl.Text = $@"<div class='row'>
-                                            <div class='col'>
-                                                <h5 class='text-center'>{priorityName} Priority Tasks</h5>
-                                            </div>
-                                        </div>
-                                        <div class='row'>
-                                            <div class='col'>
-                                                <canvas id='{chartID}'></canvas>
-                                                {completedTasks}/{totalTasks}
-                                            </div>
-                                        </div>";
+                LiteralControl literalControl = new LiteralControl
+                {
+                    Text = $@"<div class='row'>
+                                <div class='col'>
+                                    <h5 class='text-center'>{priorityName} Priority Tasks</h5>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col'>
+                                    <canvas id='{chartID}'></canvas>
+                                    {completedTasks}/{totalTasks}
+                                </div>
+                            </div>"
+                };
 
                 panel.Controls.Add(literalControl);
                 TaskPanel.Controls.Add(panel);
