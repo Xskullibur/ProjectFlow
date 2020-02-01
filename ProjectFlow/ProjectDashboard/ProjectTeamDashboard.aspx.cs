@@ -29,6 +29,50 @@ namespace ProjectFlow.ProjectTeamDashboard
             FillPriorityTasks(tasks);
             FillUpcomingTasks(tasks);
             FillOverdueTasks(tasks);
+            FillMilestoneBar(tasks, currentTeam.teamID);
+        }
+
+        public void FillMilestoneBar(List<Task> tasks, int teamID)
+        {
+
+            string startString = "<ul id='progressbar' class='cdt-step-progressbar horizontal pt-5'>";
+            string endString = "</ul>";
+            int count = 1;
+
+            MilestoneBLL milestoneBLL = new MilestoneBLL();
+            List<Milestone> milestones = milestoneBLL.GetMilestonesByTeamID(teamID)
+                .OrderBy(x => x.endDate)
+                .ToList();
+
+            foreach (Milestone milestone in milestones)
+            {
+                List<Task> milestoneTasks = tasks.Where(x => x.milestoneID == milestone.milestoneID)
+                    .ToList();
+
+                int totalTasks = milestoneTasks.Count();
+                int completedTasks = milestoneTasks.Count(x => x.Status.status1 == StatusBLL.COMPLETED);
+
+                string col = $@"
+                    <li class='pb-0'>
+                        <span class='indicator'>{count}</span>
+                        <p class='title font-weight-bold'>{milestone.milestoneName}</p>
+                        <p class='content'>{completedTasks} / {totalTasks} Completed</p>
+                    </li>
+                ";
+
+                startString += col;
+                count++;
+            }
+
+            string progressBar = startString + endString;
+            milestoneLiteral.Text = progressBar;
+
+            int? milestoneID = tasks.GroupBy(x => x.milestoneID)
+                .First(x => x.Count(task => task.Status.status1 == StatusBLL.COMPLETED) != x.Count()).Key;
+
+            int activeIndex = milestones.FindIndex(x => x.milestoneID == milestoneID);
+
+            ClientScript.RegisterStartupScript(this.GetType(), $"milestone_script", $"<script type='text/javascript'>loadProgressBar({activeIndex});</script>");
         }
 
         public void FillPriorityTasks(List<Task> tasks)
@@ -49,21 +93,23 @@ namespace ProjectFlow.ProjectTeamDashboard
 
                 Panel panel = new Panel();
                 panel.ID = $"{priorityName}_panel";
-                panel.CssClass = "col-4 border border-secondary";
+                panel.CssClass = "col-4 p-0";
 
                 string chartID = $"{priorityName}_chart";
 
                 LiteralControl literalControl = new LiteralControl
                 {
-                    Text = $@"<div class='row'>
-                                <div class='col'>
-                                    <h5 class='text-center'>{priorityName} Priority Tasks</h5>
+                    Text = $@"<div class='card card-body projectflow-card-shadow p-2'>
+                                <div class='row'>
+                                    <div class='col'>
+                                        <h5 class='text-center'>{priorityName} Priority Tasks</h5>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='row'>
-                                <div class='col'>
-                                    <canvas id='{chartID}'></canvas>
-                                    {completedTasks}/{totalTasks}
+                                <div class='row'>
+                                    <div class='col'>
+                                        <canvas id='{chartID}'></canvas>
+                                        {completedTasks}/{totalTasks}
+                                    </div>
                                 </div>
                             </div>"
                 };

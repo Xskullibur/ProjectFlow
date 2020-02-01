@@ -28,7 +28,45 @@
             })
 
         }
+
+        function loadProgressBar(activeIndex) {
+            var progressBar = document.getElementById("progressbar");
+            progressBar = new Kodhus.StepProgressBar();
+            progressBar.init({ activeIndex })
+        }
     </script>
+
+    <style>
+        .cdt-step-progressbar.horizontal li .indicator{
+            z-index: 2;
+        }
+
+        .cdt-step-progressbar.horizontal li.active .indicator {
+            border-color: #28a745;
+            background-color: #28a745;
+            color: white;
+        }
+
+        .cdt-step-progressbar.horizontal li.active .title{
+            color: black;
+        }
+
+        .cdt-step-progressbar.horizontal li.active:before{
+            background-color: #28a745;
+        }
+
+        .cdt-step-progressbar.horizontal li:before{
+            height: 5px;
+            z-index: 1;
+        }
+
+        .cdt-step-progressbar li .indicator{
+            width: 40px;
+            height: 40px;
+            border-width: 2.5px;
+        }
+    </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
@@ -36,28 +74,12 @@
 
         <div class="row mb-4">
             <div class="col">
-                <ul id="progressbar" class="cdt-step-progressbar horizontal pt-5">
-                    <li>
-                        <span class="indicator">1</span>
-                        <span class="title">Initiate</span>
-                    </li>
-                    <li>
-                        <span class="indicator">2</span>
-                        <span class="title">Buy item 1</span>
-                    </li>
-                    <li>
-                        <span class="indicator">3</span>
-                        <span class="title">Finally make it</span>
-                    </li>
-                    <li>
-                        <span class="indicator">4</span>
-                        <span class="title">In production</span>
-                    </li>
-                    <li>
-                        <span class="indicator">5</span>
-                        <span class="title">Delivery</span>
-                    </li>
-                </ul>
+
+                <div class="card card-body projectflow-card-shadow">
+
+                    <asp:Literal ID="milestoneLiteral" runat="server"></asp:Literal>
+
+                </div>
             </div>
         </div>
 
@@ -66,7 +88,7 @@
             <div class="col">
                 <div class="card card-body projectflow-card-shadow">
 
-                    <asp:Panel ID="TaskPanel" CssClass="row" runat="server">
+                    <asp:Panel ID="TaskPanel" CssClass="row p-3" runat="server">
                     </asp:Panel>
 
                 </div>
@@ -132,10 +154,5 @@
             <//div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        var progressBar = document.getElementById("progressbar");
-        progressBar = new Kodhus.StepProgressBar();
-    </script>
 
 </asp:Content>
