@@ -136,7 +136,7 @@
                     <code id="generated_code"></code>
                     <asp:HiddenField ID="GeneratedCodeLbl" runat="server"></asp:HiddenField>
                 </div>
-                <asp:Button CssClass="btn btn-primary" ID="createActionItemBtn" runat="server" Text="Create Action Item" OnClick="CreateActionItemEvent" />
+                <asp:Button CssClass="btn btn-primary" ID="createActionItemBtn" runat="server" Text="Create Action Item" OnClientClick="clearValuesForModal();$('#actionItemCreateModal').modal('hide');return true;" OnClick="CreateActionItemEvent" />
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
@@ -171,6 +171,10 @@
 
             $('#<%=GeneratedCodeLbl.ClientID %>').val(code);
             $('#generated_code').text(code);
+        }
+
+        function clearValuesForModal() {
+            $('#generated_code').text('');
         }
 
     </script>

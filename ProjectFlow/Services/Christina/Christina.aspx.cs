@@ -123,7 +123,13 @@ namespace ProjectFlow.Services.Christina
                     if (parseItem.ParseItemType == ParseItemType.CREATE)
                     {
                         var room = Session["Room"] as Room;
-                        
+
+                        string[] errorIfMissingAttributes = ErrorIfMissingAttributeForActionItem(actionItem);
+                        if(errorIfMissingAttributes.Length > 0)
+                        {
+                            ErrLine.Text = "<code>Missing attributes: <br>" + String.Join("<br>", errorIfMissingAttributes) + "</code>";
+                            return;
+                        }
 
                         //Add action item into database
                         ActionItemBLL actionItemBLL = new ActionItemBLL();
