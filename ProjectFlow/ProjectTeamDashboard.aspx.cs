@@ -15,6 +15,12 @@ namespace ProjectFlow.ProjectTeamDashboard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                // Set title
+                (this.Master as ServicesWithContent).Header = "Overal Project Dashboard";
+            }
+
             ProjectTeam currentTeam = (Master as ServicesWithContent).CurrentProjectTeam;
 
             TaskBLL taskBLL = new TaskBLL();

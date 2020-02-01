@@ -181,8 +181,8 @@
     <Content Include="Issues\IssueRes.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
-    <Content Include="ProjectDashboard.aspx" />
     <Content Include="Profile\ProfileImages\default-picture.png" />
+    <Content Include="ProjectDashboard\ProjectTeamDashboard.aspx" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
@@ -193,7 +193,6 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
       <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
-    <Content Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx" />
     <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -349,6 +348,7 @@
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
+    <Content Include="Services\Christina\CreateRoom.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -429,6 +429,10 @@
     <Compile Include="aspnet_WebEvent_Events.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Attendee.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\AttendeeBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -447,10 +451,27 @@
     <Compile Include="Project.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.cs">
+      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.designer.cs">
+      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectFlowDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectFlowDB.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProjectFlowDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectFlowDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="ProjectTeam.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -496,6 +517,13 @@
     </Compile>
     <Compile Include="RoomActionItem.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Christina\CreateRoom.aspx.cs">
+      <DependentUpon>CreateRoom.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Christina\CreateRoom.aspx.designer.cs">
+      <DependentUpon>CreateRoom.aspx</DependentUpon>
     </Compile>
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -622,30 +650,6 @@
     </Compile>
     <Compile Include="Profile\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectDashboard.aspx.cs">
-      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProjectDashboard.aspx.designer.cs">
-      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectFlowDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlowDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectFlowDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.cs">
-      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.designer.cs">
-      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduler\JobScheduler.cs" />

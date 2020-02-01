@@ -24,17 +24,14 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public Dictionary<Student, string> GetUsersByTeamID(int id)
+        public List<string> GetUsersByTeamID(int id)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var users = dbContext.TeamMembers.Include("Students")
                     .Where(x => x.teamID == id)
-                    .Select(y => new
-                    {
-                        Student = y.Student,
-                        Name = y.Student.firstName + " " + y.Student.lastName
-                    }).ToDictionary(key => key.Student, value => value.Name);
+                    .Select(y => y.Student.aspnet_Users.UserName)
+                    .ToList();
 
                 return users;
             }

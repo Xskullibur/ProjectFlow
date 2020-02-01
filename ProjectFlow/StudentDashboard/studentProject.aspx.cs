@@ -55,7 +55,7 @@ namespace ProjectFlow.DashBoard
 
                 (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
 
-                Response.Redirect("/Tasks/OngoingTaskView.aspx");
+                Response.Redirect("/ProjectDashboard/ProjectTeamDashboard.aspx");
             }
             else
             {

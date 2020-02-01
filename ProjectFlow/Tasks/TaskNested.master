@@ -120,7 +120,7 @@
             <div class="col">
                 <div class="collapse mt-3 mb-2" id="filterDiv">
 
-                    <div class="container rounded border border-dark p-4">
+                    <div class="container-fluid rounded border border-dark p-4">
 
                         <%--Title--%>
                         <div class="row">
@@ -207,7 +207,6 @@
                                     <div class="form-group">
                                         <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
                                         <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server" ValidationGroup="AddTask">
-                                            <asp:ListItem Value="-1">Nothing Selected</asp:ListItem>
                                         </asp:DropDownList>
 
                                         <asp:Label ID="tMilestoneErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>

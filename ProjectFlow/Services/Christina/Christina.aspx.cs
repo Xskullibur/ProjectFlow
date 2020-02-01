@@ -54,16 +54,16 @@ namespace ProjectFlow.Services.Christina
             Session["Room"] = room;
             MeetingDate.Text = room.creationDate.ToShortDateString();
             MeetingTime.Text = room.creationDate.ToShortTimeString();
+            RoomNameLbl.Text = room.roomName;
+            DescriptionLbl.Text = room?.roomDescription;
 
             Project project = (Master as ServicesWithContent).CurrentProject;
             Student student = (User.Identity as ProjectFlowIdentity).Student;
 
-
-            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, project);
-            StudentBLL studentBLL = new StudentBLL();
-
-            AttendeesLbl.Text = String.Join(",", projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(x => studentBLL.GetStudentByTeamMember(x).lastName));
+            aspnet_UsersBLL aspnet_UsersBLL = new aspnet_UsersBLL();
+            RoomBLL roomBLL = new RoomBLL();
+            var attendees = roomBLL.GetListOfAttendeesFromRoom(room).Select(attendee => aspnet_UsersBLL.Getaspnet_UsersByUserId(attendee.attendeeUserId).UserName);
+            AttendeesLbl.Text = String.Join(",", attendees);
 
             MadeByLbl.Text = student.aspnet_Users.UserName;
         }
@@ -123,7 +123,13 @@ namespace ProjectFlow.Services.Christina
                     if (parseItem.ParseItemType == ParseItemType.CREATE)
                     {
                         var room = Session["Room"] as Room;
-                        
+
+                        string[] errorIfMissingAttributes = ErrorIfMissingAttributeForActionItem(actionItem);
+                        if(errorIfMissingAttributes.Length > 0)
+                        {
+                            ErrLine.Text = "<code>Missing attributes: <br>" + String.Join("<br>", errorIfMissingAttributes) + "</code>";
+                            return;
+                        }
 
                         //Add action item into database
                         ActionItemBLL actionItemBLL = new ActionItemBLL();

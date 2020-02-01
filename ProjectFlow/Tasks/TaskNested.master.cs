@@ -118,9 +118,6 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataValueField = "milestoneID";
 
                 milestoneDDL.DataBind();
-
-                milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
-
             }
 
             if (GetCurrentIdentiy().IsTutor)
@@ -372,15 +369,7 @@ namespace ProjectFlow.Tasks
                 newTask.endDate = DateTime.Parse(endDate);
                 newTask.statusID = Convert.ToInt32(statusID);
                 newTask.priorityID = Convert.ToInt32(priorityID);
-
-                if (Convert.ToInt32(milestoneID) == -1)
-                {
-                    newTask.milestoneID = null;
-                }
-                else
-                {
-                    newTask.milestoneID = Convert.ToInt32(milestoneID);
-                }
+                newTask.milestoneID = Convert.ToInt32(milestoneID);
 
                 newTask.teamID = teamID;
 

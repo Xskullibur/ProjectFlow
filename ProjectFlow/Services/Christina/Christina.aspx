@@ -23,12 +23,13 @@
                         <asp:LinkButton ID="RoomUpdateEventLinkBtn" CssClass="d-none" runat="server" OnClick="UpdateRoomDetailEvent">
                         </asp:LinkButton>
                         <div class="card-body">
-                            <h5 class="card-title">Meeting Minutes</h5>
+                            <h5 class="card-title"><asp:Label ID="RoomNameLbl" runat="server" Text=""></asp:Label></h5>
                             <h6 class="card-subtitle mb-2 text-muted">Room Info:</h6>
-                            <div class="col-12 col-md-6"><i class="fa fa-calendar" aria-hidden="true">&nbsp;</i><label>Meeting Date:&nbsp;</label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
-                            <div class="col-12 col-md-6"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;</i><label>Meeting Time:&nbsp;</label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
-                            <div class="col-12 col-md-6"><i class="fa fa-user" aria-hidden="true">&nbsp;</i><label>Attendees:&nbsp;</label><asp:Label ID="AttendeesLbl" runat="server" Text=""></asp:Label></div>
-                            <div class="col-12 col-md-6"><i class="fa fa-smile-o" aria-hidden="true">&nbsp;</i><label>Meeting made by:&nbsp;</label><asp:Label ID="MadeByLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-calendar" aria-hidden="true">&nbsp;</i><label>Meeting Date:&nbsp;</label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-clock-o" aria-hidden="true">&nbsp;</i><label>Meeting Time:&nbsp;</label><asp:Label ID="MeetingTime" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-user" aria-hidden="true">&nbsp;</i><label>Attendees:&nbsp;</label><asp:Label ID="AttendeesLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-smile-o" aria-hidden="true">&nbsp;</i><label>Meeting made by:&nbsp;</label><asp:Label ID="MadeByLbl" runat="server" Text=""></asp:Label></div>
+                            <div class="col-12 col-md-6"><i class="fas fa-book-open" aria-hidden="true">&nbsp;</i><label>Description:&nbsp;</label><asp:Label ID="DescriptionLbl" runat="server" Text=""></asp:Label></div>
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
@@ -136,7 +137,7 @@
                     <code id="generated_code"></code>
                     <asp:HiddenField ID="GeneratedCodeLbl" runat="server"></asp:HiddenField>
                 </div>
-                <asp:Button CssClass="btn btn-primary" ID="createActionItemBtn" runat="server" Text="Create Action Item" OnClick="CreateActionItemEvent" />
+                <asp:Button CssClass="btn btn-primary" ID="createActionItemBtn" runat="server" Text="Create Action Item" OnClientClick="clearValuesForModal();$('#actionItemCreateModal').modal('hide');return true;" OnClick="CreateActionItemEvent" />
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
@@ -171,6 +172,10 @@
 
             $('#<%=GeneratedCodeLbl.ClientID %>').val(code);
             $('#generated_code').text(code);
+        }
+
+        function clearValuesForModal() {
+            $('#generated_code').text('');
         }
 
     </script>

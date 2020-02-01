@@ -23,8 +23,30 @@ namespace ProjectFlow.Services.Christina
     public class ChristinaHub : Hub
     {
 
-        public async System.Threading.Tasks.Task CreateRoom(int teamID)
+        public async System.Threading.Tasks.Task CreateRoom(int teamID, string roomName, string roomDescription, string[] attendees)
         {
+
+            //Get Student creating this Room
+            Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
+
+            //Get ProjectTeam
+            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
+
+            //Check if student belongs to the team
+            StudentBLL studentBLL = new StudentBLL();
+            if (!studentBLL.HaveProjectTeam(student, projectTeam))
+            {
+                //Illegal access
+                return;
+            }
+
+            //Must have more than one attendees
+            if (attendees.Length == 0) return;
+
+            //Must have room name
+            if (String.IsNullOrEmpty(roomName)) return;
+
             //Generate secure password
             byte[] password = new byte[256];
             var rng = new RNGCryptoServiceProvider();
@@ -45,13 +67,29 @@ namespace ProjectFlow.Services.Christina
                     accessToken = hashedPasswordWithSalt,
                     teamID = teamID,
                     creationDate = DateTime.Now,
-                    createdBy = (Context.User.Identity as ProjectFlowIdentity).Student.UserId,
-                    
+                    createdBy = student.aspnet_Users.UserId,
+                    roomName = roomName,
+                    roomDescription = (String.IsNullOrEmpty(roomDescription))? null : roomDescription
                 };
-                
 
+                //Create room
                 RoomBLL bll = new RoomBLL();
                 bll.CreateRoom(room);
+
+                //Insert attendees into table
+                //Changing username into userid
+                aspnet_UsersBLL aspnet_UsersBLL = new aspnet_UsersBLL();
+                AttendeeBLL attendeeBLL = new AttendeeBLL();
+                foreach (string username in attendees)
+                {
+                    aspnet_Users aspnet_Users = aspnet_UsersBLL.Getaspnet_UsersByUserName(username);
+                    if (aspnet_Users == null) return;
+                    attendeeBLL.CreateAttendeeInRoom(room, new Attendee
+                    {
+                        roomID = room.roomID,
+                        attendeeUserId = aspnet_Users.UserId
+                    });
+                }
 
                 //Send room id to client
                 Clients.Caller.SendRoomID(room.roomID);

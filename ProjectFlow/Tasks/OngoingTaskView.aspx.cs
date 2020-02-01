@@ -230,30 +230,20 @@ namespace ProjectFlow.Tasks
                     editMilestoneDDL.DataTextField = "milestoneName";
                     editMilestoneDDL.DataBind();
 
-                    editMilestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
-
                     //Set Inital Value
                     string milestoneVal = DataBinder.Eval(rowItems, "Milestone").ToString();
-
-                    if (milestoneVal == "-")
-                    {
-                        editMilestoneDDL.SelectedValue = "-1";
-                    }
-                    else
-                    {
-                        editMilestoneDDL.SelectedValue = teamMilestone.First(x => x.milestoneName == milestoneVal).milestoneID.ToString();
-                    }
+                    editMilestoneDDL.SelectedValue = teamMilestone.First(x => x.milestoneName == milestoneVal).milestoneID.ToString();
                 }
                 else
                 {
+                    string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
 
                     if (Master.GetCurrentIdentiy().IsStudent)
                     {
                         /**
                          * SETUP UPDATE STATUS BTN
                          **/
-                        int taskID = int.Parse(e.Row.Cells[0].Text);
-                        string currentStatus = ((Label)e.Row.FindControl("gridStatus")).Text;
+                        int taskID = int.Parse(e.Row.Cells[1].Text);
                         Button updateStatusBtn = ((Button)e.Row.FindControl("updateStatusBtn"));
 
                         if (currentStatus == StatusBLL.COMPLETED)
@@ -287,36 +277,45 @@ namespace ProjectFlow.Tasks
                      **/
 
                     // Get Due Date Cell
-                    TableCell DueDateCell = e.Row.Cells[1];
+                    TableCell DueDateCell = e.Row.Cells[0];
 
-                    // Task End Date
-                    DateTime EndDate = DateTime.ParseExact(((Label)e.Row.FindControl("gridEnd")).Text.Trim(), "dd/MM/yyyy", null);
-                    int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
-
-                    if (DaysLeft > 0)
+                    if (currentStatus == StatusBLL.COMPLETED)
                     {
-                        DueDateCell.Text = $"{DaysLeft} Days";
-
-                        if (DaysLeft > 5)
-                        {
-                            DueDateCell.CssClass = "text-success";
-                        }
-                        else
-                        {
-                            DueDateCell.CssClass = "text-warning";
-                        }
-
-                    }
-                    else if (DaysLeft == 0)
-                    {
-                        DueDateCell.Text = "Today";
-                        DueDateCell.CssClass = "text-danger";
+                        DueDateCell.Text = "<i class='fa fa-check-circle fa-lg text-success'></i>";
+                        DueDateCell.CssClass = "text-success";
                     }
                     else
                     {
-                        DueDateCell.Text = $"Overdue {Math.Abs(DaysLeft)} Days!";
-                        DueDateCell.CssClass = "text-danger";
+                        // Task End Date
+                        DateTime EndDate = DateTime.ParseExact(((Label)e.Row.FindControl("gridEnd")).Text.Trim(), "dd/MM/yyyy", null);
+                        int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
+
+                        if (DaysLeft > 0)
+                        {
+                            DueDateCell.Text = $"{DaysLeft} Days";
+
+                            if (DaysLeft > 5)
+                            {
+                                DueDateCell.CssClass = "text-success";
+                            }
+                            else
+                            {
+                                DueDateCell.CssClass = "text-warning";
+                            }
+
+                        }
+                        else if (DaysLeft == 0)
+                        {
+                            DueDateCell.Text = "Today";
+                            DueDateCell.CssClass = "text-danger";
+                        }
+                        else
+                        {
+                            DueDateCell.Text = $"<i class='fa fa-times-circle fa-lg'></i> Overdue {Math.Abs(DaysLeft)} Days!";
+                            DueDateCell.CssClass = "text-danger";
+                        }
                     }
+
                 }
             }
 
@@ -341,7 +340,7 @@ namespace ProjectFlow.Tasks
 
             // Get Task
             TaskBLL taskBLL = new TaskBLL();
-            int taskID = Convert.ToInt32(row.Cells[0].Text);
+            int taskID = Convert.ToInt32(row.Cells[1].Text);
             Task updated_task = taskBLL.GetTaskByID(taskID);
 
             // Verify TaskID
@@ -487,15 +486,7 @@ namespace ProjectFlow.Tasks
                     updated_task.endDate = Convert.ToDateTime(endDate);
                     updated_task.statusID = Convert.ToInt32(statusID);
                     updated_task.priorityID = Convert.ToInt32(priorityID);
-
-                    if (milestoneID_int != -1)
-                    {
-                        updated_task.milestoneID = milestoneID_int;
-                    }
-                    else
-                    {
-                        updated_task.milestoneID = null;
-                    }
+                    updated_task.milestoneID = milestoneID_int;
 
                     // Get Edit Allocation List Control
                     ListBox editAllocationList = (ListBox)row.FindControl("editAllocationList");
@@ -577,12 +568,12 @@ namespace ProjectFlow.Tasks
 
                     GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
 
-                    int id = Convert.ToInt32(row.Cells[0].Text);
+                    int taskID = Convert.ToInt32(row.Cells[1].Text);
                     string currentStatus = ((Label)row.FindControl("gridStatus")).Text;
 
                     // Get Leader
                     StudentBLL studentBLL = new StudentBLL();
-                    Student leader = studentBLL.GetLeaderByTaskID(id);
+                    Student leader = studentBLL.GetLeaderByTaskID(taskID);
 
                     // Get Current User
                     Student currentUser = Master.GetCurrentIdentiy().Student;
@@ -593,10 +584,20 @@ namespace ProjectFlow.Tasks
                     if (verified)
                     {
                         StatusBLL statusBLL = new StatusBLL();
-                        bool result = statusBLL.UpdateStatusByTaskID(id);
+                        bool result = statusBLL.UpdateStatusByTaskID(taskID);
 
                         if (result)
                         {
+
+                            if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.VERIFICATON)
+                            {
+                                NotificationHelper.Send_Verification_Email(taskID);
+                            }
+                            else if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.COMPLETED)
+                            {
+                                NotificationHelper.Send_Complete_Email(taskID);
+                            }
+
                             Master.Master.ShowAlert("Successfully Updated Status", BootstrapAlertTypes.SUCCESS);
                             refreshData();
                         }
