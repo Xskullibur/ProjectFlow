@@ -181,7 +181,6 @@
     <Content Include="Issues\IssueRes.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
-    <Content Include="ProjectDashboard.aspx" />
     <Content Include="Profile\ProfileImages\default-picture.png" />
     <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -470,6 +469,13 @@
     <Compile Include="ProjectTeam.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.cs">
+      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.designer.cs">
+      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="QRTZ_BLOB_TRIGGERS.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -644,20 +650,6 @@
     </Compile>
     <Compile Include="Profile\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectDashboard.aspx.cs">
-      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProjectDashboard.aspx.designer.cs">
-      <DependentUpon>ProjectDashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.cs">
-      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProjectTeamDashboard\ProjectTeamDashboard.aspx.designer.cs">
-      <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduler\JobScheduler.cs" />
