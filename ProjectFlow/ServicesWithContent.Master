@@ -127,7 +127,7 @@
                                 <Groups>
                                     <mio:SidebarGroup SubHeaderText="Project">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Home" RedirectionPage="/Services/Christina/Home.aspx">
+                                            <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx">
                                             </mio:SidebarItem>
                                             <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx">
                                             </mio:SidebarItem>
@@ -161,7 +161,7 @@
                                     <Groups>
                                         <mio:SidebarGroup SubHeaderText="Project">
                                             <SidebarItems>
-                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/Services/Christina/Home.aspx">
+                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx">
                                                 </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx">
                                                 </mio:SidebarItem>
