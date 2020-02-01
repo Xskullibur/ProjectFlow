@@ -141,9 +141,10 @@
                                     <asp:BoundField HeaderText="Due" ReadOnly="True" >
                                         <ItemStyle Font-Bold="True" />
                                     </asp:BoundField>
-                                    <asp:BoundField DataField="taskID" HeaderText="ID" />
-                                    <asp:BoundField DataField="taskName" HeaderText="Task Name" />
-                                    <asp:BoundField DataField="endDate" DataFormatString="{0:dd/MM/yyyy}" HeaderText="End" />
+                                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                                    <asp:BoundField DataField="Task" HeaderText="Task Name" />
+                                    <asp:BoundField DataField="End" DataFormatString="{0:dd/MM/yyyy}" HeaderText="End" />
+                                    <asp:BoundField DataField="Status" HeaderText="Status" />
                                 </Columns>
                                 <HeaderStyle CssClass="thead-light" />
                             </asp:GridView>

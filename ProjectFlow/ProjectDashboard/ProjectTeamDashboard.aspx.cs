@@ -125,6 +125,7 @@ namespace ProjectFlow.ProjectTeamDashboard
         public void FillUpcomingTasks(List<Task> tasks)
         {
             List<Task> upcomingTasks = tasks.Where(x => x.endDate >= DateTime.Now.Date)
+                .Where(x => x.Status.status1 != StatusBLL.COMPLETED)
                 .OrderBy(x => x.endDate)
                 .Take(5)
                 .ToList();
@@ -138,12 +139,16 @@ namespace ProjectFlow.ProjectTeamDashboard
 
         public void FillOverdueTasks(List<Task> tasks)
         {
-            List<Task> upcomingTasks = tasks.Where(x => x.endDate < DateTime.Now.Date)
+            List<Task> overdueTasks = tasks.Where(x => x.endDate < DateTime.Now.Date)
+                .Where(x => x.Status.status1 != StatusBLL.COMPLETED)
                 .OrderBy(x => x.endDate)
                 .Take(5)
                 .ToList();
 
-            overdueTaskGrid.DataSource = upcomingTasks;
+            TaskBLL taskBLL = new TaskBLL();
+            var ds = taskBLL.ConvertToDataSource(overdueTasks);
+
+            overdueTaskGrid.DataSource = ds;
             overdueTaskGrid.DataBind();
         }
 
@@ -151,21 +156,44 @@ namespace ProjectFlow.ProjectTeamDashboard
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                string currentStatus = e.Row.Cells[4].Text;
                 TableCell DueDateCell = e.Row.Cells[0];
 
-                // Task End Date
-                DateTime EndDate = DateTime.ParseExact(e.Row.Cells[3].Text, "dd/MM/yyyy", null);
-                int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
-
-                DueDateCell.Text = $"{Math.Abs(DaysLeft)} Days";
-
-                if (DaysLeft >=  -5)
+                if (currentStatus == StatusBLL.COMPLETED)
                 {
-                    DueDateCell.CssClass = "text-warning";
+                    DueDateCell.Text = "<i class='fa fa-check-circle fa-lg text-success'></i>";
+                    DueDateCell.CssClass = "text-success";
                 }
-                else if (DaysLeft <-5)
+                else
                 {
-                    DueDateCell.CssClass = "text-danger";
+                    // Task End Date
+                    DateTime EndDate = DateTime.ParseExact(e.Row.Cells[3].Text, "dd/MM/yyyy", null);
+                    int DaysLeft = TaskHelper.GetDaysLeft(EndDate);
+
+                    if (DaysLeft > 0)
+                    {
+                        DueDateCell.Text = $"{DaysLeft} Days";
+
+                        if (DaysLeft > 5)
+                        {
+                            DueDateCell.CssClass = "text-success";
+                        }
+                        else
+                        {
+                            DueDateCell.CssClass = "text-warning";
+                        }
+
+                    }
+                    else if (DaysLeft == 0)
+                    {
+                        DueDateCell.Text = "Today";
+                        DueDateCell.CssClass = "text-danger";
+                    }
+                    else
+                    {
+                        DueDateCell.Text = $"<i class='fa fa-times-circle fa-lg'></i> Overdue {Math.Abs(DaysLeft)} Days!";
+                        DueDateCell.CssClass = "text-danger";
+                    }
                 }
             }
         }
