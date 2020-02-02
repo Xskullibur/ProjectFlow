@@ -15,7 +15,7 @@ namespace ProjectFlow
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
         public ProjectFlowIdentity Identity { get => HttpContext.Current.User.Identity as ProjectFlowIdentity; }
-        public MaterialSidebar matSidebar { get => matStudentSidebar ?? matTutorSidebar; }
+        public MaterialSidebar matSidebar { get => Identity.IsStudent ? matStudentSidebar : matTutorSidebar; }
 
         public string ProfileUrl
         {

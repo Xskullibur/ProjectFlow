@@ -4,17 +4,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
     <div class="container">
-            <div class="container">
-                    <div class="row mb-3 ml-5">
-                        <div class="col">
-                            <h1>
-                                <asp:Label ID="Label3" runat="server" Font-Size="XX-Large" Text="Profile informations" Font-Bold="true"></asp:Label>
-                            </h1>
-                        </div>            
-                    </div>        
-            </div>
         <div class="row">
-            <div class="col-12 col-md-10 mx-auto">
+            <div class="col-12 mx-auto">
                 <div class="card projectflow-card-shadow w-100">
                     <div class="card-body">
                         <div class="row">
@@ -31,6 +22,8 @@
                                 <hr>
                                 <h5>Admin No:</h5>
                                 <asp:Label ID="AdminNoLbl" runat="server" Text=""></asp:Label><br><br>
+                                <h5>Name:</h5>
+                                <asp:Label ID="NameLbl" runat="server" Text=""></asp:Label><br><br>
                                 <h5>Email:</h5>
                                 <asp:Label ID="EmailLbl" runat="server" Text=""></asp:Label><br><br>
 

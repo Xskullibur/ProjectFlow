@@ -2,6 +2,7 @@
 <%@ Register Assembly="ProjectFlow"  Namespace="ProjectFlow.Utils.MaterialIO"  TagPrefix="mio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
+    <link href="/Content/ProjectFlow/CSS/effect/live-ring.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
@@ -14,7 +15,7 @@
 
     <%-- Current selected room id --%>
     <asp:HiddenField ID="RoomID" runat="server" />
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="card projectflow-card-shadow w-100 m-0 my-3">
                 <%-- Fire event to update meeting details --%>
@@ -41,8 +42,13 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-meeting-logger-table-tab" data-toggle="tab" href="#nav-meeting-logger-table" role="tab" aria-controls="nav-meeting-logger-table" aria-selected="true">Meeting Logger</a>
                     <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-christina" role="tab" aria-controls="nav-christina" aria-selected="false">
-                        Christina
-                        <span class="badge badge-pill badge-info">Experimental</span>
+                        <div class="ring-container" style="min-height: 20px; min-width: 20px;">
+                                <div class="ring small-ping"></div> <span class="dot"></span>
+                        </div>
+                         <div class="position-relative" style="top: 7px;min-height: 20px; min-width: 200px;">
+                             Christina
+                             <span class="badge badge-pill badge-info">Experimental</span>
+                         </div>
                     </a>
                     </div>
                 </nav>
@@ -69,10 +75,10 @@
                                 <%-- Inputs --%>
                                 <div class="container">
                                    <div class="row py-3 mx-auto">
-                                       <div class="col-10 px-0">
-                                           <asp:TextBox  ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                       <div class="col-12 px-0">
+                                           <asp:TextBox ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                        </div>
-                                       <div class="col-2">
+                                       <div class="offset-10 col-2 text-right pt-2">
                                            <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary mx-auto" runat="server" Text="Execute" OnClick="ExecuteEvent" />
                                            
                                        </div>
@@ -95,7 +101,8 @@
                         </div>
                         <div class="col-3">
                             <h5>Transcript</h5>
-                            <textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 h-100 my-2"></textarea>
+                            <asp:TextBox ID="TranscriptTxtBox" CssClass="w-100 my-2" style="height: 503px;"  runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                            <%--<textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 my-2" style="height: 503px;"></textarea>--%>
                         </div>
                         </div>
                     </div>

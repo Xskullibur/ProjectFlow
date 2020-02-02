@@ -55,9 +55,14 @@ a.nostyle:visited {
     --mdc-theme-primary: rgba(0, 97, 242) !important;
 }
 
+.mdc-drawer .mdc-list-item--activated .mdc-list-item__graphic {
+    color: var(--mdc-theme-primary) !important;
+}
+
 .mdc-list-item--activated {
     color: var(--mdc-theme-primary) !important;
 }
+
 
 /* Profile */
 .content-profile {

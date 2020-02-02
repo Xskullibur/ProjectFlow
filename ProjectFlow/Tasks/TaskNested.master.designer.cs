@@ -49,22 +49,40 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.TextBox fTaskNameTxt;
         
         /// <summary>
-        /// fTaskNameBtn control.
+        /// fPriorityListBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button fTaskNameBtn;
+        protected global::System.Web.UI.WebControls.ListBox fPriorityListBox;
         
         /// <summary>
-        /// personalChkBx control.
+        /// fStatusListBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox personalChkBx;
+        protected global::System.Web.UI.WebControls.ListBox fStatusListBox;
+        
+        /// <summary>
+        /// fAllocationListBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox fAllocationListBox;
+        
+        /// <summary>
+        /// filterBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button filterBtn;
         
         /// <summary>
         /// currentFiltersPanel control.

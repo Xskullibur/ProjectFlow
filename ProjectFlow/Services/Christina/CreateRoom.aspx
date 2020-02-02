@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
             <%-- Create Room Content --%>
-                <div class="card card-body projectflow-card-shadow container-fluid">
+                <div class="card card-body projectflow-card-shadow container">
                     <div class="row py-3">
                         <div class="col-12">
                               <div class="form-group">
@@ -22,7 +22,7 @@
                                  <label for="RoomDescriptionTextBox">Room Description</label>
                                  <asp:TextBox ID="RoomDescriptionTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                               </div>
-                              <asp:Button ID="CreateRoomBtn" CssClass="btn btn-primary" runat="server" Text="New Room" OnClick="CreateRoomEvent" />
+                              <asp:Button ID="CreateRoomBtn" CssClass="btn btn-primary" runat="server" Text="New Room" OnClick="CreateRoomEvent" OnClientClick="localStorage.setItem('create_room', false); return true;"/>
                         </div>
                     </div>
                 </div>

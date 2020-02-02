@@ -44,7 +44,7 @@ namespace ProjectFlow.BLL
             var list = GetPollByID(vID).ToList();
             return list;
         }
-        public int GetResult(int iID)
+        public List<int> GetResult(int iID)
         {
             var result = GetResultByID(iID);
             return result;
@@ -75,30 +75,35 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public int GetResultByID(int iID)
+        public List<int> GetResultByID(int iID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 try
                 {
-                    var count = dbContext.Pollings
+                    int upvote = dbContext.Pollings
                         .Where(x => x.issueID == iID)
                         .Where(x => x.vote == true)
                         .Select(y => y
-                        ).Count() - dbContext.Pollings
+                        ).Count();
+
+                    int downvote = dbContext.Pollings
                         .Where(x => x.issueID == iID)
                         .Where(x => x.vote == false)
                         .Select(y => y
                         ).Count(); ;
 
-                    System.Diagnostics.Debug.WriteLine(count);
+                    List<int> count = new List<int>();
+                    count.Add(upvote);
+                    count.Add(downvote);
+
                     return count;
 
                 }
                 catch (Exception e)
                 {
                     Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
-                    return 0;
+                    return null;
                 }
             }
         }

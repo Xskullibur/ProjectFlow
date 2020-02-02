@@ -217,7 +217,7 @@ namespace ProjectFlow.BLL
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine($"wrong user droppping task");
+                        System.Diagnostics.Debug.WriteLine($"wrong user dropping task");
                         return false;
                     }
                 }

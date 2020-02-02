@@ -48,7 +48,9 @@ namespace ProjectFlow.Services.Christina
 
                 DisplayRoomInfo(room);
                 var transcriptBLL = new TranscriptBLL();
-                DisplayTranscript(transcriptBLL.GetListOfTranscripts(room));
+                List<Transcript> transcripts = transcriptBLL.GetListOfTranscripts(room);
+                transcripts.Reverse();
+                DisplayTranscript(transcripts);
 
 
             }

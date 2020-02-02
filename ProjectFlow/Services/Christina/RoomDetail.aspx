@@ -4,15 +4,14 @@
     <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <div class="container-fluid">
-        <div class="row">
-            <asp:Button ID="BackBtn" CssClass="btn btn-primary" runat="server" Text="Back" OnClick="GoBackEvent" />
-        </div>
+    <div class="container">
         <div class="row">
             <div class="card projectflow-card-shadow w-100 m-0 my-3">
+
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
                         <div class="card-body">
+                            <asp:Button ID="BackBtn" CssClass="my-2 float-right btn btn-primary" runat="server" Text="Back" OnClick="GoBackEvent" />
                             <h5 class="card-title"><asp:Label ID="RoomNameLbl" runat="server" Text=""></asp:Label></h5>
                             <h6 class="card-subtitle mb-2 text-muted">Room Info:</h6>
                             <div class="col-12 col-md-6"><i class="fas fa-calendar" aria-hidden="true">&nbsp;</i><label>Meeting Date:&nbsp;</label><asp:Label ID="MeetingDate" runat="server" Text=""></asp:Label></div>

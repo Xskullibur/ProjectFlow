@@ -169,6 +169,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ProjectFlow\CSS\christina.css" />
+    <Content Include="Content\ProjectFlow\CSS\effect\live-ring.css" />
     <Content Include="Content\ProjectFlow\CSS\main.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
@@ -357,6 +358,7 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
+    <Content Include="ProjectDashboard\Web.config" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

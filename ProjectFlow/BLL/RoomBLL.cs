@@ -101,5 +101,21 @@ namespace ProjectFlow.BLL
                     .ToList();
             }
         }
+
+        /// <summary>
+        /// Set Room access token to new access token
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="accessToken"></param>
+        public void UpdateRoomAccessToken(Room room, byte[] accessToken)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var _room = dbContext.Rooms.Find(room.roomID);
+                _room.accessToken = accessToken;
+                dbContext.SaveChanges();
+            }
+        }
+
     }
 }

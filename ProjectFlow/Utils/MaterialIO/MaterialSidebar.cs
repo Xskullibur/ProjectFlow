@@ -91,7 +91,9 @@ namespace ProjectFlow.Utils.MaterialIO
     {
         private new CustomAttribute CustomAttribute;
         private DOMElement spanLabel;
+        private DOMElement graphic;
         public string RedirectionPage { get; set; }
+        public string FASLogo { get; set; }
 
         [TypeConverter(typeof(StringArrayConverter))]
         public string[] AlsoSelectedForPages { get; set; }
@@ -116,10 +118,22 @@ namespace ProjectFlow.Utils.MaterialIO
             spanLabel = new DefaultDOMElement("span");
             spanLabel.AddClass("mdc-list-item__text");
             spanLabel.Text = label;
+
+            graphic = new DefaultDOMElement("i");
+            graphic.AddClass("material-icons");
+            graphic.AddClass("mdc-list-item__graphic");
+            graphic.AddClass("fas");
         }
 
         public override void InsertElement(StringBuilder stringBuilder)
         {
+            if (!String.IsNullOrEmpty(FASLogo))
+            {
+                graphic.RemoveClass("fa-" + FASLogo);
+                graphic.AddClass("fa-" + FASLogo);
+                stringBuilder.Append(graphic.GetHTML());
+            }
+
             stringBuilder.Append(spanLabel.GetHTML());
         }
 
