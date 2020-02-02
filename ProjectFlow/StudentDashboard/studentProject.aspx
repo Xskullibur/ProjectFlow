@@ -16,10 +16,10 @@
             <div class="row p-3 mx-auto">
                 <div class="row my-3">
                     <div class="d-flex align-content-end flex-wrap col-6">
-                        <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Project Name" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="SearchTB" CssClass="form-control mr-3" placeholder="Project Name" runat="server"></asp:TextBox>
                     </div>
                     <div class="d-flex align-content-end flex-wrap col-6">
-                        <asp:Button ID="searchBtn" CssClass="btn btn-primary mr-1" runat="server" Text="Search" OnClick="searchBtn_Click"/>
+                        <asp:Button ID="searchBtn" CssClass="btn btn-primary mr-3" runat="server" Text="Search" OnClick="searchBtn_Click"/>
                         <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
                     </div> 
                 </div>
