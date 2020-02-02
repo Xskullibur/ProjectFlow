@@ -99,7 +99,7 @@ namespace ProjectFlow.ProjectTeamDashboard
 
                 LiteralControl literalControl = new LiteralControl
                 {
-                    Text = $@"<div class='card card-body projectflow-card-shadow p-2'>
+                    Text = $@"<div class='card card-body projectflow-card-shadow p-2 mx-1'>
                                 <div class='row'>
                                     <div class='col'>
                                         <h5 class='text-center'>{priorityName} Priority Tasks</h5>
