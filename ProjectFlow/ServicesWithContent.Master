@@ -127,29 +127,29 @@
                                 <Groups>
                                     <mio:SidebarGroup SubHeaderText="Project">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx">
+                                            <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                             </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx">
+                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Storage">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="File Storage" RedirectionPage="/StudentDashboard/FileUpload.aspx">
+                                            <mio:SidebarItem ItemText="File Storage" RedirectionPage="/StudentDashboard/FileUpload.aspx" FASLogo="file">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Issues">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx">
+                                            <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Meeting Minutes">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx">
+                                            <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx" FASLogo="history">
                                             </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/CreateRoom.aspx" AlsoSelectedForPages="/Services/Christina/Christina.aspx">
+                                            <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/CreateRoom.aspx" AlsoSelectedForPages="/Services/Christina/Christina.aspx" FASLogo="handshake">
 
                                             </mio:SidebarItem>
                                         </SidebarItems>
