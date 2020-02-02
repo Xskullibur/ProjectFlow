@@ -42,17 +42,11 @@
                         <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <h1>
-                            <asp:Label ID="Label1" runat="server" Font-Size="XX-Large" Text="Joinable Projects"></asp:Label>
-                        </h1>
-                    </div>
-                </div>
+                <br>                
                 <div class="row mb-3">
                     <div class="col">
                         <div style="overflow-x: auto;">
-                            <asp:GridView ID="availableGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged">
+                            <asp:GridView ID="availableGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged">
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
                                     <asp:BoundField DataField="teamID" HeaderText="ID" />
@@ -65,7 +59,7 @@
                                 <EmptyDataTemplate>
                                    <div class="jumbotron jumbotron-fluid">
                                         <div class="container">
-                                            <h1 class="display-4">No Available team open at this time</h1>                                          
+                                            <h1 class="display-4">No Available team to join at this time</h1>                                          
                                             <p>Projects not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
                                         </div>
                                    </div>
