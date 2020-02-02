@@ -2,6 +2,7 @@
 <%@ Register Assembly="ProjectFlow"  Namespace="ProjectFlow.Utils.MaterialIO"  TagPrefix="mio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="/Content/ProjectFlow/CSS/christina.css" rel="stylesheet" />
+    <link href="/Content/ProjectFlow/CSS/effect/live-ring.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
 
@@ -41,8 +42,13 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-meeting-logger-table-tab" data-toggle="tab" href="#nav-meeting-logger-table" role="tab" aria-controls="nav-meeting-logger-table" aria-selected="true">Meeting Logger</a>
                     <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-christina" role="tab" aria-controls="nav-christina" aria-selected="false">
-                        Christina
-                        <span class="badge badge-pill badge-info">Experimental</span>
+                        <div class="ring-container" style="min-height: 20px; min-width: 20px;">
+                                <div class="ring small-ping"></div> <span class="dot"></span>
+                        </div>
+                         <div class="position-relative" style="top: 7px;min-height: 20px; min-width: 200px;">
+                             Christina
+                             <span class="badge badge-pill badge-info">Experimental</span>
+                         </div>
                     </a>
                     </div>
                 </nav>
