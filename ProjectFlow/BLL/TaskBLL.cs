@@ -25,9 +25,8 @@ namespace ProjectFlow.BLL
                         .Include("Priority")
                         .Include("Milestone")
                         .Include("Status")
+                        .OrderByDescending(x => x.taskID)
                         .Where(x => x.teamID == teamID)
-                        .OrderBy(x => x.startDate)
-                        .ThenBy(x => x.endDate)
                         .ToList();
 
                     return tasks;
@@ -270,8 +269,6 @@ namespace ProjectFlow.BLL
                         .Where(x => x.teamID == teamID)
                         .Where(x => x.TaskAllocations.Select(allocation => allocation.TeamMember.Student.studentID).Contains(currentUser.studentID))
                         .Where(x => x.dropped != true)
-                        .OrderBy(x => x.startDate)
-                        .ThenBy(x => x.endDate)
                         .ToList().Select(y => new
                         {
                             ID = y.taskID,
