@@ -161,15 +161,15 @@
                                     <Groups>
                                         <mio:SidebarGroup SubHeaderText="Project">
                                             <SidebarItems>
-                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx">
+                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                                 </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx">
+                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>
                                             </SidebarItems>
                                         </mio:SidebarGroup>
                                         <mio:SidebarGroup SubHeaderText="Issues">
                                             <SidebarItems>
-                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx">
+                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
                                                 </mio:SidebarItem>
                                             </SidebarItems>
                                         </mio:SidebarGroup>
