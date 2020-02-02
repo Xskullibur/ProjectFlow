@@ -65,6 +65,10 @@
             height: 40px;
             border-width: 2.5px;
         }
+
+        body{
+            font-size: 1rem;
+        }
     </style>
 
 </asp:Content>
