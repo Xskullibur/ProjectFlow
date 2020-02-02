@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -26,6 +27,7 @@ namespace ProjectFlow.DashBoard
                     Session["PassProjectName"] = null;
                     Session["PassTeamID"] = null;
                     Session["PassTeamName"] = null;
+                    this.SetHeader("Modules that I teach");
                     ShowProject();
                 }
             }                                
