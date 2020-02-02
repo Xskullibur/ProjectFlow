@@ -23,7 +23,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
                 {                   
                     DisplayTeam();
                     InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Restore)";
-                    this.SetHeader("Modules that I can Restore");
+                    this.SetHeader("Teams that I can Restore");
                 }
                 else
                 {

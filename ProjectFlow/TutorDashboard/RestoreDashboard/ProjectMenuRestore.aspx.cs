@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -23,6 +24,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
                 {
                     Session["TutorID"] = identity.Tutor.UserId.ToString();
                     DisplayProject();
+                    this.SetHeader("Module that I can Restore");
                 }
             }
         }
