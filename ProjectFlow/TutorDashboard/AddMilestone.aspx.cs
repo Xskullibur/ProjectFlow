@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -22,6 +23,7 @@ namespace ProjectFlow.DashBoard
                     InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
                                      + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Milestones)";
                     ShowMilestone();
+                    this.SetHeader("Milestone belonging to this team");
                     PageSelectDP.SelectedIndex = 1;
                 }
                 else

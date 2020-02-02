@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -22,6 +23,7 @@ namespace ProjectFlow
                                      + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Team Members)";
                     ShowMember();
                     PageSelectDP.SelectedIndex = 0;
+                    this.SetHeader("Team Members that are in this team");
                 }
                 else
                 {
