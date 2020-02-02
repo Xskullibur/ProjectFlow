@@ -11,7 +11,7 @@
             </div>
             <div class="col-12 py-2">
                 <asp:Button ID="SearchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="SearchEvent" />
-                <asp:Button ID="ClearBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="ClearEvent" />
+                <asp:Button ID="ClearBtn" CssClass="btn btn-primary" runat="server" Text="Clear" OnClick="ClearEvent" />
             </div>
         </div>
         <div class="row">

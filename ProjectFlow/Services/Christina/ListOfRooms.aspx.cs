@@ -152,6 +152,9 @@ namespace ProjectFlow.Services.Christina
         {
             searchList.ClearSelection();
 
+            string username = (Master as ServicesWithContent).Identity.aspnet_Users.UserName;
+            searchList.SelectedValue = username;
+
             RefreshRoomsGridView(FilterBy.SelfCreated);
         }
     }
