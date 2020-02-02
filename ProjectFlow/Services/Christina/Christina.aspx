@@ -15,7 +15,7 @@
 
     <%-- Current selected room id --%>
     <asp:HiddenField ID="RoomID" runat="server" />
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="card projectflow-card-shadow w-100 m-0 my-3">
                 <%-- Fire event to update meeting details --%>

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <div class="card card-body projectflow-card-shadow pt-3 container-fluid">
+    <div class="card card-body projectflow-card-shadow pt-3 container">
         <%-- Controls --%>
         <div class="row py-3">
             <div class="col-12 py-2">
