@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -23,6 +24,7 @@ namespace ProjectFlow.DashBoard
                     Session["PassTeamName"] = null;
                     ShowTeam();
                     InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Select)";
+                    this.SetHeader("Teams that are in this Module");
                 }
                 else
                 {

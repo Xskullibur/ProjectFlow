@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -22,6 +23,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
                 {                   
                     DisplayTeam();
                     InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Restore)";
+                    this.SetHeader("Modules that I can Restore");
                 }
                 else
                 {
