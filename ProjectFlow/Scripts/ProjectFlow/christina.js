@@ -8,7 +8,7 @@ $(document).ready(function () {
     var christinaHub = $.connection.christina;
 
     //Clear textbox
-    $('#transcriptTxtBox').val('');
+    //$('#ContentPlaceHolder_TranscriptTxtBox').val('');
 
     let createdRoom = localStorage.getItem('create_room') === 'true' || false;
     christinaHub.client.sendPassword = function (password) {
@@ -29,7 +29,7 @@ $(document).ready(function () {
                 // Rerecord microphone once receive the predicted speaker from server
                 focus_speaker(e.data.predicted_speaker);
                 if (e.data.predicted_speaker != '') {
-                    let txtBox = $('#transcriptTxtBox');
+                    let txtBox = $('#ContentPlaceHolder_TranscriptTxtBox');
                     txtBox.val(e.data.predicted_speaker + ':' + e.data.transcript + '\n' + txtBox.val());
                 }
 

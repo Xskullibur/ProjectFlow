@@ -101,7 +101,8 @@
                         </div>
                         <div class="col-3">
                             <h5>Transcript</h5>
-                            <textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 my-2" style="height: 503px;"></textarea>
+                            <asp:TextBox ID="TranscriptTxtBox" CssClass="w-100 my-2" style="height: 503px;"  runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                            <%--<textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 my-2" style="height: 503px;"></textarea>--%>
                         </div>
                         </div>
                     </div>

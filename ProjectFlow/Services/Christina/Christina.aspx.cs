@@ -53,7 +53,27 @@ namespace ProjectFlow.Services.Christina
             AttendeesLbl.Text = String.Join(",", attendeesName);
 
             MadeByLbl.Text = student.aspnet_Users.UserName;
+
+            //Redisplay transcripts
+
+            TranscriptBLL transcriptBLL = new TranscriptBLL();
+            List<Transcript> transcripts = transcriptBLL.GetListOfTranscripts(room);
+            transcripts.Reverse();
+            DisplayTranscript(transcripts);
         }
+
+
+        private void DisplayTranscript(List<Transcript> transcripts)
+        {
+            TranscriptTxtBox.Text = "";
+
+            foreach (var transcript in transcripts)
+            {
+                TranscriptTxtBox.Text += transcript.aspnet_Users.UserName + ":" + transcript.transcript1 + Environment.NewLine;
+            }
+
+        }
+
 
         /// <summary>
         /// Create speaker on the client side so all the speaker are displayed
