@@ -10,9 +10,12 @@ $(document).ready(function () {
     //Clear textbox
     $('#transcriptTxtBox').val('');
 
-    let createdRoom = false;
+    let createdRoom = localStorage.getItem('create_room') === 'true' || false;
     christinaHub.client.sendPassword = function (password) {
         createdRoom = true;
+        localStorage.setItem('create_room', true);
+        localStorage.setItem('room_accessToken', password);
+
         websocket_worker.postMessage({
             hostname: window.location.hostname,
             password: password
@@ -46,9 +49,11 @@ $(document).ready(function () {
     }
 
     christinaHub.client.sendRoomID = function (roomID) {
+        localStorage.setItem('room_id', roomID);
         $('#ContentPlaceHolder_RoomID').val(roomID);
         document.getElementById('ContentPlaceHolder_RoomUpdateEventLinkBtn').click();
     }
+
 
     $.connection.hub.start().done(function () {
 
@@ -58,9 +63,22 @@ $(document).ready(function () {
         const roomDescription = urlParams.get('RoomDescription');
         const attendees = urlParams.get('Attendees');
 
-        if (!createdRoom) christinaHub.server.createRoom(parseInt($('#TeamID').val()), roomName, roomDescription, attendees.split(','));
+        const teamID = parseInt($('#TeamID').val());
+
+        if (!createdRoom) christinaHub.server.createRoom(teamID, roomName, roomDescription, attendees.split(','));
+        else {
+            const accessToken = localStorage.getItem('room_accessToken');
+            christinaHub.server.reconnectRoom(localStorage.getItem('room_id'), teamID, accessToken);
+        }
     });
-    
+
+    //When error
+    christinaHub.client.expiredRoom = function () {
+        window.location.href = '/InvalidRequest.aspx';
+    }
+    christinaHub.client.illegalAccess = function () {
+        window.location.href = '/InvalidRequest.aspx';
+    }
 });
 
 async function startRecording() {
