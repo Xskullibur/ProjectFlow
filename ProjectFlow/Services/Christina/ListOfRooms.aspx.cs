@@ -139,6 +139,15 @@ namespace ProjectFlow.Services.Christina
 
         }
 
+        protected void ClearEvent(object sender, EventArgs e)
+        {
+            searchList.ClearSelection();
+            //Refresh data
+            RefreshRoomsGridView();
+
+        }
+
+
         protected void SearchSelfEvent(object sender, EventArgs e)
         {
             searchList.ClearSelection();
