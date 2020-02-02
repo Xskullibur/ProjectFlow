@@ -22,22 +22,6 @@ namespace ProjectFlow.Services.Christina
 
                 //Set Title
                 this.SetHeader("Meeting Minutes");
-
-                //Get speakers belong to the current project team
-                ServicesWithContent servicesWithContent = this.Master as ServicesWithContent;
-
-                Project selectedProject = servicesWithContent.CurrentProject;
-                var projectFlowIdentity = this.User.Identity as ProjectFlowIdentity;
-                Student student = projectFlowIdentity.Student;
-
-                ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-
-                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, selectedProject);
-
-                //Create all the speakers in client side
-                Student[] students = projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(tm => tm.Student).ToArray();
-                InjectSpeaker(students);
-
                 //Create viewstate list
                 ViewState["ActionItems"] = new List<ActionItem>();
 
@@ -59,11 +43,14 @@ namespace ProjectFlow.Services.Christina
 
             Project project = (Master as ServicesWithContent).CurrentProject;
             Student student = (User.Identity as ProjectFlowIdentity).Student;
-
             aspnet_UsersBLL aspnet_UsersBLL = new aspnet_UsersBLL();
             RoomBLL roomBLL = new RoomBLL();
-            var attendees = roomBLL.GetListOfAttendeesFromRoom(room).Select(attendee => aspnet_UsersBLL.Getaspnet_UsersByUserId(attendee.attendeeUserId).UserName);
-            AttendeesLbl.Text = String.Join(",", attendees);
+            var attendeesAspnet_Users = roomBLL.GetListOfAttendeesFromRoom(room).Select(attendee => aspnet_UsersBLL.Getaspnet_UsersByUserId(attendee.attendeeUserId));
+            InjectSpeaker(attendeesAspnet_Users.Where(x => x.IsStudent()).Select(x => x.Student).ToArray());
+           
+
+            var attendeesName = attendeesAspnet_Users.Select(x => x.UserName);
+            AttendeesLbl.Text = String.Join(",", attendeesName);
 
             MadeByLbl.Text = student.aspnet_Users.UserName;
         }
@@ -89,14 +76,18 @@ namespace ProjectFlow.Services.Christina
             {
 
                 aspnet_Users aspnet_Users = aspnet_UsersBLL.Getaspnet_UsersByStudent(speaker);
-
-                createSpeakers += $"speakers_circles.push(create_speaker('{aspnet_Users.UserName}', null));";
+                string imagePath = "/Profile/ProfileImages/default-picture.png";
+                if (aspnet_Users.ProfileImagePath != null)
+                {
+                    imagePath =  "/Profile/ProfileImages/" + aspnet_Users.ProfileImagePath;
+                }
+                createSpeakers += $"speakers_circles.push(create_speaker('{aspnet_Users.UserName}', '{imagePath}'));";
             }
             createSpeakers += @"
                     });
                 </script>";
 
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "create_speakers", createSpeakers, false);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "create_speakers", createSpeakers, false);
         }
 
         protected void ExecuteEvent(object sender, EventArgs e)

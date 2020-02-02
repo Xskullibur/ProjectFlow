@@ -44,7 +44,10 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.aspnet_Users.Find(userId);
+                return dbContext.aspnet_Users
+                    .Include(x => x.Student)
+                    .Include(x => x.Tutor)
+                    .FirstOrDefault(x => x.UserId.Equals(userId));
             }
         }
 

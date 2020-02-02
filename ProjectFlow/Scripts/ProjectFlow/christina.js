@@ -166,7 +166,7 @@ function init_display(bound_window, display_canvas) {
             //Draw name
             ctx.font = "15px Verdana";
             ctx.textAlign = "center"; 
-            ctx.fillText(speaker_circle.speaker_name, speaker_circle.x * scaleX, speaker_circle.y * scaleY);
+            ctx.fillText(speaker_circle.speaker_name, speaker_circle.x * scaleX, speaker_circle.y * scaleY - (size * scale / 2) + size * scale + 50);
 
         }
         
@@ -201,7 +201,10 @@ function create_speaker(speaker_name, speaker_image) {
 
     let x = r * Math.cos(theta) + drawWidth / 2;
     let y = r * Math.sin(theta) + drawHeight / 2;
-    return { speaker_name: speaker_name, speaker_image: speaker_image, x: x, y: y, percent: 0, grow: true, ungrow: false };
+    let img = new Image(300, 300);
+    img.src = window.location.origin + '/' + speaker_image;
+
+    return { speaker_name: speaker_name, speaker_image: img, x: x, y: y, percent: 0, grow: true, ungrow: false };
 }
 
 
