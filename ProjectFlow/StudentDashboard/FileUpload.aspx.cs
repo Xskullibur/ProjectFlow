@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.FileManagement;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -18,7 +19,8 @@ namespace ProjectFlow.DashBoard
             if (!IsPostBack)
             {
                 CheckFolderExist();
-                DisplayFile();                                   
+                DisplayFile();
+                this.SetHeader("File Sharing");
             }               
         }
 

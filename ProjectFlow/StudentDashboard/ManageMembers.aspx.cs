@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -21,6 +22,7 @@ namespace ProjectFlow.StudentDashboard
                 if (!IsPostBack)
                 {
                     showTeam();
+                    this.SetHeader("Members in my team");
                 }
             }
             else
