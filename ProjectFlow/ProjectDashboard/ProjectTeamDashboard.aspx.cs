@@ -29,6 +29,7 @@ namespace ProjectFlow.ProjectTeamDashboard
             FillPriorityTasks(tasks);
             FillUpcomingTasks(tasks);
             FillOverdueTasks(tasks);
+            FillIssueGrid(currentTeam.teamID);
             FillMilestoneBar(tasks, currentTeam.teamID);
         }
 
@@ -150,6 +151,14 @@ namespace ProjectFlow.ProjectTeamDashboard
 
             overdueTaskGrid.DataSource = ds;
             overdueTaskGrid.DataBind();
+        }
+
+        public void FillIssueGrid(int teamID)
+        {
+            IssueBLL issueBLL = new IssueBLL();
+
+            IssueGrid.DataSource = issueBLL.GetActiveIssuesByTeamId(teamID);
+            IssueGrid.DataBind();
         }
 
         protected void overdueTaskGrid_RowDataBound(object sender, GridViewRowEventArgs e)

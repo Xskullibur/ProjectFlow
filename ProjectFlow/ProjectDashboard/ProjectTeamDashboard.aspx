@@ -99,10 +99,11 @@
             </div>
         </div>
 
-        <%--Middle Bar--%>
+        <%--Upcoming Task / Issues--%>
         <div class="row mb-2">
 
-            <div class="col-6 p-3">
+            <%--Upcoming Task--%>
+            <div class="col p-3">
                 <div class="card card-body projectflow-card-shadow">
 
                     <div class="row">
@@ -129,7 +130,38 @@
                 </div>
             </div>
 
-            <div class="col-6 p-3">
+            <%--Issues--%>
+            <div class="col p-3">
+                <div class="card card-body projectflow-card-shadow">
+
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="text-center">Issues</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <asp:GridView ID="IssueGrid" runat="server" CssClass="table table-sm table-bordered" AutoGenerateColumns="False" > 
+                                <Columns>
+                                    <asp:BoundField DataField="ID" HeaderText="Issue ID" />
+                                    <asp:BoundField DataField="Task" HeaderText="Issue Name" />
+                                    <asp:BoundField DataField="TaskID" HeaderText="Task ID" />
+                                    <asp:BoundField DataField="Description" HeaderText="Description" />
+                                </Columns>
+                                <HeaderStyle CssClass="thead-light" />
+                            </asp:GridView>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <%--Overdue Task--%>
+        <div class="row mb-2">
+            <div class="col p-3">
                 <div class="card card-body projectflow-card-shadow">
 
                     <div class="row">
@@ -140,7 +172,7 @@
 
                     <div class="row">
                         <div class="col">
-                            <asp:GridView ID="overdueTaskGrid" runat="server" CssClass="table table-sm table-bordered" AutoGenerateColumns="False" OnRowDataBound="overdueTaskGrid_RowDataBound" > 
+                            <asp:GridView ID="overdueTaskGrid" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" OnRowDataBound="overdueTaskGrid_RowDataBound" > 
                                 <Columns>
                                     <asp:BoundField HeaderText="Due" ReadOnly="True" >
                                         <ItemStyle Font-Bold="True" />
