@@ -118,7 +118,8 @@ namespace ProjectFlow.Services.Christina
                         string[] errorIfMissingAttributes = ErrorIfMissingAttributeForActionItem(actionItem);
                         if(errorIfMissingAttributes.Length > 0)
                         {
-                            ErrLine.Text = "<code>Missing attributes: <br>" + String.Join("<br>", errorIfMissingAttributes) + "</code>";
+                            ErrMsg.Text = "Missing attributes:";
+                            ErrLine.Text = "<code>" + String.Join("<br>", errorIfMissingAttributes) + "</code>";
                             return;
                         }
 

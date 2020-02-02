@@ -75,10 +75,10 @@
                                 <%-- Inputs --%>
                                 <div class="container">
                                    <div class="row py-3 mx-auto">
-                                       <div class="col-10 px-0">
-                                           <asp:TextBox  ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                       <div class="col-12 px-0">
+                                           <asp:TextBox ID="ExecuteTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                        </div>
-                                       <div class="col-2">
+                                       <div class="offset-10 col-2 text-right pt-2">
                                            <asp:Button ID="ExecuteBtn" CssClass="btn btn-primary mx-auto" runat="server" Text="Execute" OnClick="ExecuteEvent" />
                                            
                                        </div>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="col-3">
                             <h5>Transcript</h5>
-                            <textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 h-100 my-2"></textarea>
+                            <textarea rows="2" cols="20" readonly="readonly" id="transcriptTxtBox" class="w-100 my-2" style="height: 503px;"></textarea>
                         </div>
                         </div>
                     </div>
