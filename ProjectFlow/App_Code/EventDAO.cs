@@ -4,10 +4,19 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using ProjectFlow.BLL;
+using ProjectFlow;
+using System.Web;
+using System.Linq;
 
 public class EventDAO
 {
-    private static string connectionString = ConfigurationManager.AppSettings["DBConnString"];
+    private struct FilterType
+    {
+        public static string KEYWORD = "filterTaskName";
+        public static string PRIORITY = "filterPriority";
+        public static string STATUS = "filterStatus";
+        public static string ALLOCATION = "filterAllocation";
+    }
 
     const string LOW_PRIORITY_COLOR = "rgba(0, 153, 0, 0.3)";
     const string MEDIUM_PRIORITY_COLOR = "rgba(255, 127, 0, 0.3)";
@@ -21,7 +30,9 @@ public class EventDAO
         TaskBLL taskBLL = new TaskBLL();
         var taskList = taskBLL.GetOngoingTasksBetween(start, end);
 
-        foreach (ProjectFlow.Task task in taskList)
+        taskList = ApplyFilters(taskList);
+
+        foreach (Task task in taskList)
         {
             string color;
 
@@ -60,84 +71,52 @@ public class EventDAO
         return events;
     }
 
-	//this method updates the event title and description
-    public static void updateEvent(int id, String title, String description)
+    public static List<Task> ApplyFilters(List<Task> data)
     {
-        SqlConnection con = new SqlConnection(connectionString);
-        SqlCommand cmd = new SqlCommand("UPDATE Event SET title=@title, description=@description WHERE event_id=@event_id", con);
-        cmd.Parameters.Add("@title", SqlDbType.VarChar).Value = title;
-        cmd.Parameters.Add("@description", SqlDbType.VarChar).Value= description;
-        cmd.Parameters.Add("@event_id", SqlDbType.Int).Value = id;
+        HttpContext context = HttpContext.Current;
 
-        using (con)
+        if (context.Session[FilterType.KEYWORD] != null)
         {
-            con.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-	//this method updates the event start and end time ... allDay parameter added for FullCalendar 2.x
-    public static void updateEventTime(int id, DateTime start, DateTime end, bool allDay)
-    {
-        SqlConnection con = new SqlConnection(connectionString);
-        SqlCommand cmd = new SqlCommand("UPDATE Event SET event_start=@event_start, event_end=@event_end, all_day=@all_day WHERE event_id=@event_id", con);
-        cmd.Parameters.Add("@event_start", SqlDbType.DateTime).Value = start;
-        cmd.Parameters.Add("@event_end", SqlDbType.DateTime).Value = end;
-        cmd.Parameters.Add("@event_id", SqlDbType.Int).Value = id;
-        cmd.Parameters.Add("@all_day", SqlDbType.Bit).Value = allDay;
-
-        using (con)
-        {
-            con.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-	//this mehtod deletes event with the id passed in.
-    public static void deleteEvent(int id)
-    {
-        SqlConnection con = new SqlConnection(connectionString);
-        SqlCommand cmd = new SqlCommand("DELETE FROM Event WHERE (event_id = @event_id)", con);
-        cmd.Parameters.Add("@event_id", SqlDbType.Int).Value = id;
-
-        using (con)
-        {
-            con.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-	//this method adds events to the database
-    public static int addEvent(CalendarEvent cevent)
-    {
-        //add event to the database and return the primary key of the added event row
-
-        //insert
-        SqlConnection con = new SqlConnection(connectionString);
-        SqlCommand cmd = new SqlCommand("INSERT INTO Event(title, description, event_start, event_end, all_day) VALUES(@title, @description, @event_start, @event_end, @all_day)", con);
-        cmd.Parameters.Add("@title", SqlDbType.VarChar).Value = cevent.title;
-        cmd.Parameters.Add("@description", SqlDbType.VarChar).Value = cevent.description;
-        cmd.Parameters.Add("@event_start", SqlDbType.DateTime).Value = cevent.start;
-        cmd.Parameters.Add("@event_end", SqlDbType.DateTime).Value = cevent.end;
-        cmd.Parameters.Add("@all_day", SqlDbType.Bit).Value = cevent.allDay;
-
-        int key = 0;
-        using (con)
-        {
-            con.Open();
-            cmd.ExecuteNonQuery();
-
-            //get primary key of inserted row
-            cmd = new SqlCommand("SELECT max(event_id) FROM Event where title=@title AND description=@description AND event_start=@event_start AND event_end=@event_end AND all_day=@all_day", con);
-            cmd.Parameters.Add("@title", SqlDbType.VarChar).Value = cevent.title;
-            cmd.Parameters.Add("@description", SqlDbType.VarChar).Value = cevent.description;
-            cmd.Parameters.Add("@event_start", SqlDbType.DateTime).Value = cevent.start;
-            cmd.Parameters.Add("@event_end", SqlDbType.DateTime).Value = cevent.end;
-            cmd.Parameters.Add("@all_day", SqlDbType.Bit).Value = cevent.allDay;
-
-            key = (int)cmd.ExecuteScalar();
+            string filterKeyword = context.Session[FilterType.KEYWORD].ToString();
+            data = data.Where(x => x.taskName.ToLower().Contains(filterKeyword.ToLower()))
+                .ToList();
         }
 
-        return key;
+        if (context.Session[FilterType.PRIORITY] != null)
+        {
+            Dictionary<int, string> priorityDict = (context.Session[FilterType.PRIORITY] as Dictionary<int, string>);
+
+            foreach (var item in priorityDict)
+            {
+                data = data.Where(x => x.priorityID == item.Key)
+                    .ToList();
+            }
+        }
+
+        if (context.Session[FilterType.STATUS] != null)
+        {
+            Dictionary<int, string> statusDict = (context.Session[FilterType.STATUS] as Dictionary<int, string>);
+
+            foreach (var item in statusDict)
+            {
+                data = data.Where(x => x.statusID == item.Key)
+                    .ToList();
+            }
+        }
+
+        if (context.Session[FilterType.ALLOCATION] != null)
+        {
+            Dictionary<int, string> allocationDict = (context.Session[FilterType.ALLOCATION] as Dictionary<int, string>);
+
+            foreach (var item in allocationDict)
+            {
+                data = data.Where(x => x.TaskAllocations.Select(allocation => allocation.TeamMember.memberID).Contains(item.Key))
+                    .ToList();
+            }
+
+        }
+
+        return data;
     }
+
 }
