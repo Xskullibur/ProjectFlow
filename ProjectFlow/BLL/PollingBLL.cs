@@ -14,18 +14,28 @@ namespace ProjectFlow.BLL
                 // Check if object exist
                 if (vote != null)
                 {
-                    try
+                    bool preCheck = Check(vote.issueID, vote.voterID);
+                    if (preCheck != true)
                     {
+                        try
+                        {
 
-                        dbContext.Pollings.Add(vote);
-                        dbContext.SaveChanges();
-                        return true;
+                            dbContext.Pollings.Add(vote);
+                            dbContext.SaveChanges();
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                            return false;
+                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                        Console.Error.WriteLine("User has already voted");
                         return false;
                     }
+                    
                 }
                 else
                 {
@@ -33,17 +43,14 @@ namespace ProjectFlow.BLL
                 }
             }
         }
+
         public bool Check(int iID, int vID)
         {
             var list = GetPollByID(vID).ToList();
             var exist = list.Contains(iID);
             return exist;
         }
-        public List<int> Getcheck(int vID) //this is just for testing and needs to be removed
-        {
-            var list = GetPollByID(vID).ToList();
-            return list;
-        }
+
         public List<int> GetResult(int iID)
         {
             var result = GetResultByID(iID);

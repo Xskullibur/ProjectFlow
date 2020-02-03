@@ -69,7 +69,7 @@
                                             <asp:Button ID="updateStatusBtn" Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
                                         </div>
                                     </div>
-                                    <asp:Button ID="DeleteButton" Text="Delete" runat="server" 
+                                    <asp:Button ID="DeleteButton" Text="Drop" runat="server" 
                                         CssClass="btn btn-sm btn-danger"
                                         data-toggle="confirmation"
                                         data-btn-ok-icon-class="fa fa-check"

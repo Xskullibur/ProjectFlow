@@ -15,11 +15,10 @@ namespace ProjectFlow.Issues
     public partial class IssueRes : System.Web.UI.Page
     {
         
-        int idIssue;
         string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
-            idIssue = (int)Session["SSIId"];
+            int idIssue = (int)Session["SSIId"];
             if (!IsPostBack)
             {
                 
@@ -40,27 +39,32 @@ namespace ProjectFlow.Issues
                 IssueStatus.Text = currentstat.status1;
 
                 ispublic = updated_issue.votePublic.ToString();
-                check(idIssue);
+                check();
                 refreshCommentData(idIssue);
                 isActive(updated_issue.active);
                 isPublic(ispublic);
             }
         }
 
+        // Get Current User
+        public ProjectFlowIdentity GetCurrentIdentiy()
+        {
+            var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+
+            return projectFlowIdentity;
+        }
+
         protected void btnYes_Click(object sender, EventArgs e)
         {
-            idIssue = (int)Session["SSIId"];
-
             vote(true);
-            check(idIssue);
+            check();
             isPublic(ispublic);
         }
 
         protected void btnNo_Click(object sender, EventArgs e)
         {
-            idIssue = (int)Session["SSIId"];
             vote(false);
-            check(idIssue);
+            check();
             isPublic(ispublic);
         }
 
@@ -70,14 +74,14 @@ namespace ProjectFlow.Issues
             int decision = rnd.Next(10);
             if (decision > 5) {
                 vote(true);
-                check(idIssue);
+                check();
                 isPublic(ispublic);
             }
             else
             {
 
                 vote(false);
-                check(idIssue);
+                check();
                 isPublic(ispublic);
             }
         }
@@ -93,7 +97,7 @@ namespace ProjectFlow.Issues
 
                 // Create Task Object
                 Polling newPoll = new Polling();
-                newPoll.issueID = idIssue;    
+                newPoll.issueID = (int)Session["SSIId"];    
                 newPoll.voterID = voterId;    
                 newPoll.vote = choice;      
 
@@ -103,31 +107,40 @@ namespace ProjectFlow.Issues
             }
         }
 
-        protected void check(int iID)
+        protected void check()
         {
+            int iID = (int)Session["SSIId"];
             PollingBLL pollingBLL = new PollingBLL();
-            var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
-            TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-            Guid Uid = identity.Student.aspnet_Users.UserId;
-            int voterId = teammemberBLL.GetMemIdbyUID(Uid);
-
-            bool checking = pollingBLL.Check(iID, voterId);
-
             List<int> result = pollingBLL.GetResult(iID);
-            
             btnYesCount.Text = result[0].ToString();
             btnNoCount.Text = result[1].ToString();
 
-            if (checking == true)
+            if (GetCurrentIdentiy().IsTutor)
             {
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
-                this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
             }
             else
-            {
+            {               
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+                //the above only checks for the user id if it is a student, tutors must also be accounted for
+                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
+                bool checking = pollingBLL.Check(iID, voterId);
 
+                if (checking == true)
+                {
+                    btnYes.Enabled = false;
+                    btnNo.Enabled = false;
+                    btnRandom.Enabled = false;
+                    this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
+                }
+                else
+                {
+
+                }
             }
         }
 
@@ -142,7 +155,7 @@ namespace ProjectFlow.Issues
 
         protected void addComment()
         {
-
+            int idIssue = (int)Session["SSIId"];
             if (Page.IsValid)
             {
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
@@ -197,8 +210,7 @@ namespace ProjectFlow.Issues
 
         protected void isPublic(string choice)
         {
-            //IssueBLL issueBLL = new IssueBLL();
-            //bool isPub = issueBLL.isPublic(iID);
+            int idIssue = (int)Session["SSIId"];
             if (choice == "True")
             {
                 btnNo.ToolTip = getUserbySelection(idIssue, false);
@@ -217,11 +229,16 @@ namespace ProjectFlow.Issues
             }
             else
             {
-                tbComments.Visible = false;
-                tbComments.Enabled = false;
-                btnComment.Visible = false;
-                btnComment.Enabled = false;
+                disablecomments();
             }
+        }
+
+        protected void disablecomments()
+        {
+            tbComments.Visible = false;
+            tbComments.Enabled = false;
+            btnComment.Visible = false;
+            btnComment.Enabled = false;
         }
 
         protected void edit_click(object sender, EventArgs e)

@@ -232,7 +232,12 @@ namespace ProjectFlow.BLL
             }
 
         }
-        
+
+        /// <summary>
+        /// check if Issue is public
+        /// </summary>
+        /// <param name="iTD"></param>
+        /// <returns>Boolean</returns>
         public bool isPublic(int iID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -264,6 +269,11 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// updates Issue
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns>Boolean</returns>
         public bool Update(Issue issue)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -281,6 +291,31 @@ namespace ProjectFlow.BLL
                 catch (Exception e)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error While Updating Task: {e.Message}");
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Restore Issue
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns></returns>
+        public bool Restore(Issue issue)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    issue.active = true;
+                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Restoring Issue: {e.Message}");
                     return false;
                 }
             }

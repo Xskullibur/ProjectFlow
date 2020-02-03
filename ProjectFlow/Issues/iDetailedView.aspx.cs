@@ -38,7 +38,10 @@ namespace ProjectFlow.Issues
                 Master.changeSelectedView(IssueNested.IssueViews.iDetailedView);
                 refreshData(); 
             }
-
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                IssueView.Columns[IssueView.Columns.Count - 1].Visible = false;
+            }
             IssueView.Font.Size = 11;
         }
 
