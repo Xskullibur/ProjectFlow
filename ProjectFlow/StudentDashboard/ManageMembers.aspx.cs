@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Login;
 using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
@@ -21,7 +22,7 @@ namespace ProjectFlow.StudentDashboard
             {
                 if (!IsPostBack)
                 {
-                    showTeam();
+                    showTeam();                   
                     this.SetHeader("Members in my team");
                 }
             }
@@ -80,7 +81,7 @@ namespace ProjectFlow.StudentDashboard
 
         public int GetTeamID()
         {
-            return int.Parse(Session["StudentTeamID"].ToString());
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         protected void MemberGV_SelectedIndexChanged(object sender, EventArgs e)
