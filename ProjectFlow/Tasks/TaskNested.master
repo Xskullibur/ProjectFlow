@@ -2,7 +2,8 @@
 
 <%--Main Master Page--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </asp:Content>
 
 <%--Nested Master Page--%>
@@ -72,15 +73,8 @@
             border-color: #dddddd;
         }
     </style>
-
-    <div class="container">
-
-        <%--Title--%>
-        <div class="row mb-3">
-            <div class="col">
-                <h1>Task Management</h1>
-            </div>
-        </div>
+    <div class="container container-fluid card card-body projectflow-card-shadow py-3">
+    <div class="container container-fluid mb-3">
 
         <%--Tool Bar--%>
         <div class="row justify-content-between">
@@ -120,32 +114,55 @@
             <div class="col">
                 <div class="collapse mt-3 mb-2" id="filterDiv">
 
-                    <div class="container rounded border border-dark p-4">
+                    <div class="container container-fluid card card-body projectflow-card-shadow">
 
                         <%--Title--%>
-                        <div class="row">
-                            <div class="col">
-                                <h5>Filter</h5>
-                            </div>
+                        <div class="card-header">
+                            <h5 class="m-0">Filter</h5>
                         </div>
 
-                        <%--Task Name Search--%>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <asp:TextBox ID="fTaskNameTxt" CssClass="form-control" runat="server" placeholder="Task Name"></asp:TextBox>
-                            </div>
-                            <div class="col">
-                                <asp:Button ID="fTaskNameBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="fTaskNameBtn_Click" />
-                            </div>
-                        </div>
+                        <div class="card-body">
 
-                        <%--Filter Personal--%>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <button class="btn border border-secondary">
-                                    <asp:CheckBox Text="Personal Tasks" CssClass="chkbxLbl" runat="server" ID="personalChkBx" OnCheckedChanged="personalChkBx_CheckedChanged" />
-                                </button>
+                            <%--Task Name Search--%>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <asp:Label CssClass="control-label" Text="Task Name Keywords:" AssociatedControlID="fTaskNameTxt" runat="server" />
+                                    <asp:TextBox ID="fTaskNameTxt" CssClass="form-control form-control-sm" runat="server" placeholder="Eg. Test, Design, Create"></asp:TextBox>
+                                </div>
                             </div>
+
+                            <%--Priority Filter--%>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <asp:Label CssClass="control-label" Text="Priority:" AssociatedControlID="fPriorityListBox" runat="server" />
+                                    <asp:ListBox ID="fPriorityListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                </div>
+                            </div>                        
+                        
+                            <%--Status Filter--%>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="fStatusListBox" runat="server" />
+                                    <asp:ListBox ID="fStatusListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                </div>
+                            </div>      
+                        
+                            <%--Allocation Filter--%>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <asp:Label CssClass="control-label" Text="Allocation:" AssociatedControlID="fAllocationListBox" runat="server" />
+                                    <asp:ListBox ID="fAllocationListBox" CssClass="selectpicker form-control" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                </div>
+                            </div>
+
+                            <%--Filter Button--%>
+                            <div class="row mb-2 text-right">
+                                <div class="col">
+                                    <asp:Button ID="filterBtn" CssClass="btn btn-primary" runat="server" Text="Filter" OnClick="filterBtn_Click" />
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
 
@@ -207,7 +224,6 @@
                                     <div class="form-group">
                                         <asp:Label CssClass="control-label" Text="Milestone" AssociatedControlID="milestoneDDL" runat="server" />
                                         <asp:DropDownList CssClass="form-control" ID="milestoneDDL" runat="server" ValidationGroup="AddTask">
-                                            <asp:ListItem Value="-1">Nothing Selected</asp:ListItem>
                                         </asp:DropDownList>
 
                                         <asp:Label ID="tMilestoneErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
@@ -291,5 +307,6 @@
     <%--Main Content--%>
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
-
+    
+    </div>
 </asp:Content>

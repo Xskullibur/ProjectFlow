@@ -19,21 +19,9 @@ namespace ProjectFlow.Services.Christina
         {
             if (!IsPostBack)
             {
-                //Get speakers belong to the current project team
-                ServicesWithContent servicesWithContent = this.Master as ServicesWithContent;
 
-                Project selectedProject = servicesWithContent.CurrentProject;
-                var projectFlowIdentity = this.User.Identity as ProjectFlowIdentity;
-                Student student = projectFlowIdentity.Student;
-
-                ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-
-                ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, selectedProject);
-
-                //Create all the speakers in client side
-                Student[] students = projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(tm => tm.Student).ToArray();
-                InjectSpeaker(students);
-
+                //Set Title
+                this.SetHeader("Meeting Minutes");
                 //Create viewstate list
                 ViewState["ActionItems"] = new List<ActionItem>();
 
@@ -50,19 +38,42 @@ namespace ProjectFlow.Services.Christina
             Session["Room"] = room;
             MeetingDate.Text = room.creationDate.ToShortDateString();
             MeetingTime.Text = room.creationDate.ToShortTimeString();
+            RoomNameLbl.Text = room.roomName;
+            DescriptionLbl.Text = room?.roomDescription;
 
             Project project = (Master as ServicesWithContent).CurrentProject;
             Student student = (User.Identity as ProjectFlowIdentity).Student;
+            aspnet_UsersBLL aspnet_UsersBLL = new aspnet_UsersBLL();
+            RoomBLL roomBLL = new RoomBLL();
+            var attendeesAspnet_Users = roomBLL.GetListOfAttendeesFromRoom(room).Select(attendee => aspnet_UsersBLL.Getaspnet_UsersByUserId(attendee.attendeeUserId));
+            InjectSpeaker(attendeesAspnet_Users.Where(x => x.IsStudent()).Select(x => x.Student).ToArray());
+           
 
-
-            ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
-            ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByStudentAndProject(student, project);
-            StudentBLL studentBLL = new StudentBLL();
-
-            AttendeesLbl.Text = String.Join(",", projectTeamBLL.GetTeamMembersFromProjectTeam(projectTeam).Select(x => studentBLL.GetStudentByTeamMember(x).lastName));
+            var attendeesName = attendeesAspnet_Users.Select(x => x.UserName);
+            AttendeesLbl.Text = String.Join(",", attendeesName);
 
             MadeByLbl.Text = student.aspnet_Users.UserName;
+
+            //Redisplay transcripts
+
+            TranscriptBLL transcriptBLL = new TranscriptBLL();
+            List<Transcript> transcripts = transcriptBLL.GetListOfTranscripts(room);
+            transcripts.Reverse();
+            DisplayTranscript(transcripts);
         }
+
+
+        private void DisplayTranscript(List<Transcript> transcripts)
+        {
+            TranscriptTxtBox.Text = "";
+
+            foreach (var transcript in transcripts)
+            {
+                TranscriptTxtBox.Text += transcript.aspnet_Users.UserName + ":" + transcript.transcript1 + Environment.NewLine;
+            }
+
+        }
+
 
         /// <summary>
         /// Create speaker on the client side so all the speaker are displayed
@@ -85,14 +96,18 @@ namespace ProjectFlow.Services.Christina
             {
 
                 aspnet_Users aspnet_Users = aspnet_UsersBLL.Getaspnet_UsersByStudent(speaker);
-
-                createSpeakers += $"speakers_circles.push(create_speaker('{aspnet_Users.UserName}', null));";
+                string imagePath = "/Profile/ProfileImages/default-picture.png";
+                if (aspnet_Users.ProfileImagePath != null)
+                {
+                    imagePath =  "/Profile/ProfileImages/" + aspnet_Users.ProfileImagePath;
+                }
+                createSpeakers += $"speakers_circles.push(create_speaker('{aspnet_Users.UserName}', '{imagePath}'));";
             }
             createSpeakers += @"
                     });
                 </script>";
 
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "create_speakers", createSpeakers, false);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "create_speakers", createSpeakers, false);
         }
 
         protected void ExecuteEvent(object sender, EventArgs e)
@@ -119,7 +134,14 @@ namespace ProjectFlow.Services.Christina
                     if (parseItem.ParseItemType == ParseItemType.CREATE)
                     {
                         var room = Session["Room"] as Room;
-                        
+
+                        string[] errorIfMissingAttributes = ErrorIfMissingAttributeForActionItem(actionItem);
+                        if(errorIfMissingAttributes.Length > 0)
+                        {
+                            ErrMsg.Text = "Missing attributes:";
+                            ErrLine.Text = "<code>" + String.Join("<br>", errorIfMissingAttributes) + "</code>";
+                            return;
+                        }
 
                         //Add action item into database
                         ActionItemBLL actionItemBLL = new ActionItemBLL();
@@ -200,21 +222,6 @@ namespace ProjectFlow.Services.Christina
             return msg;
         }
 
-        protected void ShowCreateActionItemModalEvent(object sender, EventArgs e)
-        {
-            ShowModal();
-        }
-
-        private void ShowModal()
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('show');", true);
-        }
-
-        private void HideModal()
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "actionItemCreateModal", "updateCode(); $('#actionItemCreateModal').modal('hide');", true);
-        }
-
         protected void DeleteEvent(object sender, EventArgs e)
         {
             List<ActionItem> itemsToBeDeleted = new List<ActionItem>();
@@ -255,7 +262,6 @@ namespace ProjectFlow.Services.Christina
             topicTxtBox.Text = "";
 
             InsertActionItems(text);
-            HideModal();
         }
 
         protected void UpdateRoomDetailEvent(object sender, EventArgs e)

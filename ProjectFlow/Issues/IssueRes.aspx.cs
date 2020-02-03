@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
+using ProjectFlow.Utils;
 
 namespace ProjectFlow.Issues
 {
@@ -24,6 +25,10 @@ namespace ProjectFlow.Issues
                 
                 IssueBLL issueBLL = new IssueBLL();
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
+
+                //Set header
+                this.SetHeader("Issue: " + updated_issue.issueID);
+
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;
                 IssueActive.Text = "";

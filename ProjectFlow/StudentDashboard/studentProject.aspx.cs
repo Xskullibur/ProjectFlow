@@ -30,6 +30,18 @@ namespace ProjectFlow.DashBoard
             return Session["Student"].ToString();
         }
 
+        protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            //Make gridview row clickable
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(ProjectGV, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Click to view project";
+            }
+        }
+
+
+
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = ProjectGV.SelectedRow;
@@ -43,7 +55,7 @@ namespace ProjectFlow.DashBoard
 
                 (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
 
-                Response.Redirect("/Tasks/OngoingTaskView.aspx");
+                Response.Redirect("/ProjectDashboard/ProjectTeamDashboard.aspx");
             }
             else
             {

@@ -17,7 +17,7 @@ namespace ProjectFlow.Utils
         string smtp= ConfigurationManager.AppSettings["SMTP"].ToString();
         int portNo = Convert.ToInt32(ConfigurationManager.AppSettings["PortNo"].ToString());
 
-        public static string GetTaskNotificationTemplate(string title, int dueDays, Task task, List<string> allocations)
+        public static string GetTaskNotificationTemplate(string title, Task task)
         {
 
             try
@@ -30,6 +30,8 @@ namespace ProjectFlow.Utils
                 string status = statusBLL.GetStatusByID(task.statusID).status1;
                 string milestone = "-";
 
+                List<string> allocations = task.TaskAllocations.Select(x => x.TeamMember.Student.firstName + " " + x.TeamMember.Student.lastName).ToList();
+
                 if (task.milestoneID != null)
                 {
                     milestone = milestoneBLL.GetMilestoneByID(task.milestoneID).milestoneName;
@@ -41,12 +43,13 @@ namespace ProjectFlow.Utils
 
                     //Update Template Values
                     textBody = textBody.Replace("[Title]", title);
-                    textBody = textBody.Replace("[DueDays]", dueDays.ToString());
                     textBody = textBody.Replace("[TaskDesc]", task.taskDescription);
                     textBody = textBody.Replace("[StartDate]", task.startDate.ToString());
                     textBody = textBody.Replace("[EndDate]", task.endDate.ToString());
                     textBody = textBody.Replace("[Milestone]", milestone);
+                    textBody = textBody.Replace("[Priority]", task.Priority.priority1);
                     textBody = textBody.Replace("[Status]", status);
+                    textBody = textBody.Replace("[TaskDirectory]", HttpContext.Current.Request.Url.AbsoluteUri);
 
                     if (allocations == null)
                     {

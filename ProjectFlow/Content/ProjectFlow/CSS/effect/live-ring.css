@@ -1,0 +1,78 @@
+﻿
+
+div.ring-container {
+    display: block;
+    float: left;
+    position: relative;
+    height: 40px;
+    width: 40px;
+}
+
+div.ring {
+    position: absolute;
+    border-radius: 55px;
+    width: 40px;
+    height: 40px;
+    transform: scale(0.25);
+    transform-origin: center;
+    animation-iteration-count: infinite;
+}
+
+.small-ping {
+    position: absolute;
+    border: double #D80416 10px;
+    animation-duration: .75s;
+    animation-name: smallping;
+}
+
+@-webkit-keyframes ping {
+    from {
+        transform: scale(0.25);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes smallping {
+    from {
+        transform: scale(0.1);
+        opacity: 1;
+    }
+
+    to {
+        color: white;
+        transform: scale(0.55);
+        opacity: 0;
+    }
+}
+
+span.dot {
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    text-decoration: none;
+    background-color: #D80416;
+    border-radius: 55px;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-delay: 0s;
+}
+
+@-webkit-keyframes breathe {
+    from {
+        border-color: #D80416;
+        background-color: #77d2ff;
+    }
+
+    to {
+        border-color: #D80416;
+        background-color: #6dc1ec;
+    }
+}

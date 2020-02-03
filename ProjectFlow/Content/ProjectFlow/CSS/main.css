@@ -1,0 +1,92 @@
+﻿/*Main*/
+body {
+    min-height: 100vh;
+    background-color: #f2f4f9;
+}
+
+.projectflow-body-content {
+    height: 100%;
+}
+/*Nav*/
+
+a.nostyle:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+.content-nav {
+    height: 3.4rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(34, 39, 46, 0.15) !important;
+}
+
+.content-sidenav {
+    height: calc(100vh - 3.4rem) !important;
+    background-color: #fff;
+}
+
+.sidebar {
+    top: 3.4rem;
+    height: calc(100vh - 7rem);
+
+}
+
+.sidebar-shadow {
+    box-shadow: 0.15rem 0 1.75rem 0 rgba(34, 39, 46, 0.15);
+}
+
+/* Card body */
+.projectflow-card-shadow {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(34, 39, 46, 0.15);
+
+    /*padding inherited*/
+    padding: inherit;
+
+}
+
+/*Material IO color override*/
+:root {
+    --mdc-theme-primary: rgba(0, 97, 242) !important;
+}
+
+.mdc-drawer .mdc-list-item--activated .mdc-list-item__graphic {
+    color: var(--mdc-theme-primary) !important;
+}
+
+.mdc-list-item--activated {
+    color: var(--mdc-theme-primary) !important;
+}
+
+
+/* Profile */
+.content-profile {
+    width: 350px;
+    margin: 48px 0;
+}
+
+.content-profile-image {
+    width: 110px;
+}
+
+
+/* Utils */
+.pointer {
+    cursor: pointer;
+}
+
+/*Tables*/
+.projectflow-table tr {
+    margin: 4px !important;
+}
+
+.projectflow-table tr th {
+    color: #22272e !important;
+    background-color: #fff !important;
+}
+

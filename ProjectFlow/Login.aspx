@@ -20,9 +20,7 @@
                     <asp:CheckBox CssClas="form-check-input" ID="rememberMeCheckBox" runat="server" />
                     <label class="form-check-label" for="rememberMeCheckBox">Remember me</label>
                   </div>
-                  <div class="form-group col align-self-end text-right">
-                      <asp:HyperLink runat="server">Create Account</asp:HyperLink>
-                  </div>
+                  
               </div>
               <asp:Button CssClass="btn btn-primary" ID="submitBtn" runat="server" Text="Login" OnClick="LoginValidateAction" />
         </div>

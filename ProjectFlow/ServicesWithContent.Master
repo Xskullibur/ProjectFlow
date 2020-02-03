@@ -1,5 +1,5 @@
 ﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
-
+<%@ Register Assembly="ProjectFlow"  Namespace="ProjectFlow.Utils.MaterialIO"  TagPrefix="mio" %>
 <!DOCTYPE html>
 
 <html>
@@ -9,21 +9,31 @@
     <asp:PlaceHolder runat="server">
         <%: Styles.Render("~/Content/css") %>
         <%: Styles.Render("~/Content/bootstrap-select.css") %>
-        <%: Styles.Render("~/Content/ProjectFlow/content-nav.css") %>
         <%: Styles.Render("~/Content/Bootstrap_DateTimePicker/bootstrap-datetimepicker.css") %>
         <%: Styles.Render("~/Content/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.css") %>
-        <%: Styles.Render("~/Content/ProjectFlow/CSS/content-nav.css") %>
+        <%: Styles.Render("~/Content/ProjectFlow/CSS/main.css") %>
+
+        <script src="https://kit.fontawesome.com/8861810238.js" crossorigin="anonymous"></script>
         <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
         <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>    
         <script src="/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="/Scripts/ProjectFlow/materialio_selection_nav_postback.js"></script>
+
 
         <%-- Alson pls do not put your script here --%>
         <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
 
+        <%--ChartJS--%>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     </asp:PlaceHolder>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -34,6 +44,19 @@
     </style>
 </head>
 <body>
+
+    <script type="text/javascript">
+        //Initialize side bar
+        function hideSidebar() {
+            $('#sidebar').hide();
+            $('#content').removeClass('col-md-10');
+        }
+        function showSidebar() {
+            $('#sidebar').show();
+            $('#content').addClass('col-md-10');
+        }
+    </script>
+
     <form id="form1" runat="server">
         <asp:ScriptManager EnablePartialRendering="true" runat="server">
             <Scripts>
@@ -52,13 +75,17 @@
         <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="TeamID" runat="server"></asp:HiddenField>
         <script>
-            $(function() {
+            $(function () {
                 $('.datetimepicker').datetimepicker();
-            })
+            });
+
+
+            //Nav id setup
+            var nav_id = '#<%=matSidebar.ClientID%>';
         </script>
 
         <div class="sticky-top">
-            <nav class="navbar content-nav navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar content-nav navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="30" height="30" alt="">
                     ProjectFlow
@@ -99,119 +126,129 @@
 
         <div class="container-fluid">
             <div class="row" style="max-width: 100vw;">
+                <div id="sidebar" class="sidebar position-sticky col-xl-2 col-lg-3 col-md-3 px-0" >
+                    <aside class="mdc-drawer content-sidenav sidebar-shadow w-100">
+                        <div class="mdc-drawer__header">
+                             <asp:Label ID="ProjectTitleLbl" CssClass="mdc-drawer__title py-2" runat="server" Text=""></asp:Label>
+                          </div>
+                        <hr class="mdc-list-divider">
+                      <div class="mdc-drawer__content">
+                        <nav class="mdc-list">
+                            <% if(Identity.IsStudent) { %>
+                            <mio:MaterialSidebar ID="matStudentSidebar" runat="server">
 
-                <div id="sidebar" class="position-sticky col-12 col-md-2 px-0" style="top: 4rem; height: calc(100vh - 7rem);">
-                    <ul class="mdc-list mdc-list--two-line border-right content-sidenav">
-                                    <li class="mdc-list-item">
-                                        <a class="nostyle" href="Login.aspx">
-                                            <span class="mdc-list-item__text">
-                                                <span class="mdc-list-item__primary-text">Home</span>
-                                                <span class="mdc-list-item__secondary-text"></span>
-                                            </span>
-                                        </a>
-                                    </li>
+                                <Groups>
+                                    <mio:SidebarGroup SubHeaderText="Project">
+                                        <SidebarItems>
+                                            <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
+                                            </mio:SidebarItem>
+                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                            </mio:SidebarItem>
+                                        </SidebarItems>
+                                    </mio:SidebarGroup>
+                                    <mio:SidebarGroup SubHeaderText="Storage">
+                                        <SidebarItems>
+                                            <mio:SidebarItem ItemText="File Storage" RedirectionPage="/StudentDashboard/FileUpload.aspx" FASLogo="file">
+                                            </mio:SidebarItem>
+                                        </SidebarItems>
+                                    </mio:SidebarGroup>
+                                    <mio:SidebarGroup SubHeaderText="Issues">
+                                        <SidebarItems>
+                                            <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
+                                            </mio:SidebarItem>
+                                        </SidebarItems>
+                                    </mio:SidebarGroup>
+                                    <mio:SidebarGroup SubHeaderText="Meeting Minutes">
+                                        <SidebarItems>
+                                            <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx" FASLogo="history">
+                                            </mio:SidebarItem>
+                                            <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/CreateRoom.aspx" AlsoSelectedForPages="/Services/Christina/Christina.aspx" FASLogo="handshake">
 
-                              <li class="mdc-list-item">
-                                  <a class="nostyle" href="/Tasks/OngoingTaskView.aspx">
-                                        <span class="mdc-list-item__text">
-                                            <span class="mdc-list-item__primary-text">Task Management</span>
-                                            <span class="mdc-list-item__secondary-text"></span>
-                                        </span>
-                                  </a>
-                              </li>
-                              <li class="mdc-list-item">
-                                  <a class="nostyle" href="/StudentDashboard/FileUpload.aspx">
-                                        <span class="mdc-list-item__text">
-                                          <span class="mdc-list-item__primary-text">Storage</span>
-                                            <span class="mdc-list-item__secondary-text"></span>
-                                        </span>
-                                   </a>
-                              </li>
-                              <li class="mdc-list-item">
-                                  <a class="nostyle" href="/Issues/iAllView.aspx">
-                                    <span class="mdc-list-item__text">
-                                        <span class="mdc-list-item__primary-text">Issue Tracker</span>
-                                        <span class="mdc-list-item__secondary-text"></span>
-                                    </span>
-                                   </a>
-                              </li>
-                              <li class="mdc-list-item">
-                                  <a class="nostyle" href="/Services/Christina/Christina.aspx">
-                                    <span class="mdc-list-item__text">
-                                      <span class="mdc-list-item__primary-text">Meeting Minutes Logger</span>
-                                      <span class="mdc-list-item__secondary-text">Christina AI</span>
-                                    </span>
-                                  </a>
-                              </li>
-                              <li class="mdc-list-item">
-                                <a class="nostyle" href="/Services/Christina/ListOfRooms.aspx">
-                                    <span class="mdc-list-item__text">
-                                        <span class="mdc-list-item__primary-text">Past Meeting Minutes</span>
-                                    </span>
-                                </a>
-                             </li>
-                            </ul>
+                                            </mio:SidebarItem>
+                                        </SidebarItems>
+                                    </mio:SidebarGroup>
+                                </Groups>
+                                </mio:MaterialSidebar>
+                            <% }else if(Identity.IsTutor) {  %>
+                                <mio:MaterialSidebar ID="matTutorSidebar" runat="server">
+                                    <Groups>
+                                        <mio:SidebarGroup SubHeaderText="Project">
+                                            <SidebarItems>
+                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
+                                                </mio:SidebarItem>
+                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                                </mio:SidebarItem>
+                                            </SidebarItems>
+                                        </mio:SidebarGroup>
+                                        <mio:SidebarGroup SubHeaderText="Issues">
+                                            <SidebarItems>
+                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
+                                                </mio:SidebarItem>
+                                            </SidebarItems>
+                                        </mio:SidebarGroup>
+                                    </Groups>
+                                </mio:MaterialSidebar>
+                                <% } %>
+                            
+                        </nav>
+                      </div>
+                    </aside>
                 </div>
+                <div id="content" class="projectflow-body-content col-12 col-md-10">
+                    <div class="row h-100 pt-5" style="vertical-align:top;">
 
-                    <div id="content" class="col-12 col-md-10">
-                        <%--Alert Continer--%>
-                        <div class="container" id="alert_container">
-                            <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                <ContentTemplate>
-                                    <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
+                        <div class="col-12">
+                            <%--Alert Continer--%>
+                            <div class="container" id="alert_container">
+                                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
+                                    <ContentTemplate>
+                                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </div>
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <h1>
+                                            <asp:Label ID="HeaderLbl" runat="server" Font-Size="XX-Large" Text="" Font-Bold="true"></asp:Label>
+                                        </h1>
+                                    </div>            
+                                </div>        
+                            </div>
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                            </asp:ContentPlaceHolder>
+
                         </div>
-                        <table style="width:100%;height:100vh;">
-                            <tr>
-                                <td class="h-100 pt-5" style="vertical-align:top;">
 
-
-                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                                    </asp:ContentPlaceHolder>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
-              </div>
->>>>>>>>> Temporary merge branch 2
+                </div>
+            </div>
         </div>
     </form>
     <script type="text/javascript">
-
         //Initialize popper
         var reference = $("#LoginUsernameLbl");
         var popper = $("#profile-popper");
         popper.hide();
 
-        $(document).on('click touchend', function (e) {
-            var target = $(e.target);
-            if (target.is(reference) || target.is(popper)) {
-                e.preventDefault();
-                popper.show();
-                var popperInstance = new Popper(reference, popper, {
-                    placement: 'bottom'
+        $(document).ready(function () {
+            $(document).on('click touchend', function (e) {
+                var target = $(e.target);
+                if (target.is(reference) || target.is(popper)) {
+                    e.preventDefault();
+                    popper.show();
+                    var popperInstance = new Popper(reference, popper, {
+                        placement: 'bottom'
+                    });
+                } else {
+                    popper.hide();
+                }
+                //Click on profile 
+                $('#profile-info').on('click', function () {
+                    window.location.href = "/Profile/Profile.aspx";
                 });
-            } else {
-                popper.hide();
-            }
-            
+            });
         });
-
-        //Click on profile 
-        $('#profile-info').on('click', function () {
-            window.location.href = "/Profile/Profile.aspx";
-        });
-
-        //Initialize side bar
-        function hideSidebar() {
-            $('#sidebar').hide();
-            $('#content').removeClass('col-md-10');
-        }
-        function showSidebar() {
-            $('#sidebar').show();
-            $('#content').addClass('col-md-10');
-        }
-    </script>
+     </script>
 </body>
 </html>

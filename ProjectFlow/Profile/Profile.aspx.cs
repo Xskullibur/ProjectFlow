@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -21,8 +22,8 @@ namespace ProjectFlow.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.SetHeader("Profile informations");
             RefreshProfile();
-
         }
 
         private void RefreshProfile()
@@ -54,6 +55,7 @@ namespace ProjectFlow.Profile
             UsernameLbl.Text = student.aspnet_Users.UserName;
             EmailLbl.Text = student.aspnet_Users.aspnet_Membership.Email;
             AdminNoLbl.Text = student.studentID;
+            NameLbl.Text = student.firstName + " " + student.lastName;
 
             DisplayProfileImage(student.aspnet_Users);
         }
@@ -67,6 +69,7 @@ namespace ProjectFlow.Profile
             UsernameLbl.Text = tutor.aspnet_Users.UserName;
             EmailLbl.Text = tutor.aspnet_Users.aspnet_Membership.Email;
             AdminNoLbl.Text = "--not applicable--";
+            NameLbl.Text = tutor.firstName + " " + tutor.lastName;
 
             DisplayProfileImage(tutor.aspnet_Users);
 

@@ -1,6 +1,7 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
 using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.MaterialIO;
 using System;
 using System.Web;
 using System.Web.Security;
@@ -13,15 +14,16 @@ namespace ProjectFlow
     {
         public override Panel AlertsPanel => AlertsPlaceHolder;
 
+        public ProjectFlowIdentity Identity { get => HttpContext.Current.User.Identity as ProjectFlowIdentity; }
+        public MaterialSidebar matSidebar { get => Identity.IsStudent ? matStudentSidebar : matTutorSidebar; }
+
         public string ProfileUrl
         {
             get
             {
-                var user = HttpContext.Current.User;
-                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
-                if(projectFlowIdentity.aspnet_Users.ProfileImagePath != null)
+                if(Identity.aspnet_Users.ProfileImagePath != null)
                 {
-                    return "/Profile/ProfileImages/" + projectFlowIdentity.aspnet_Users.ProfileImagePath;
+                    return "/Profile/ProfileImages/" + Identity.aspnet_Users.ProfileImagePath;
                 }
                 else
                 {
@@ -31,8 +33,17 @@ namespace ProjectFlow
             }
         }
 
+        //Set service page header title
+        public string Header { get => HeaderLbl.Text; set => HeaderLbl.Text = value; }
+
         protected void Page_Init(object sender, EventArgs e)
         {
+
+            //Page Redirection
+            matSidebar.NavClickListeners += (redirectionPage) =>
+            {
+                Response.Redirect(redirectionPage);
+            };
 
 #if SELECTEDPROJECT
             ProjectBLL projectBLL = new ProjectBLL();
@@ -57,6 +68,15 @@ namespace ProjectFlow
                     {
                         Response.Redirect(studentDashboardPath);
                     }
+                    else
+                    {
+                        //Get session
+                        var projectTeam = Session["CurrentProjectTeam"] as ProjectTeam;
+                        var project = Session["CurrentProject"] as Project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
+                    }
                 }
                 else if (projectFlowIdentity.IsTutor)
                 {
@@ -70,15 +90,21 @@ namespace ProjectFlow
                     {
                         Response.Redirect(tutorDashboardPath);
                     }
+                    else
+                    {
+                        //Get session
+                        var projectTeam = Session["CurrentProjectTeam"] as ProjectTeam;
+                        var project = Session["CurrentProject"] as Project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
+                    }
                 }
 
-
+                //Set project title
+                ProjectTitleLbl.Text = CurrentProject?.projectName;
 
             }
-
-
-
-            
 
         }
 
@@ -131,10 +157,8 @@ namespace ProjectFlow
                         //Set the session of the current projects
                         Session["CurrentProject"] = project;
 
-
-                        //Inject html for project
-                        ProjectID.Value = project.projectID;
-                        TeamID.Value = projectTeam.teamID.ToString();
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
 
                     }
                     else
@@ -153,7 +177,7 @@ namespace ProjectFlow
 
 
                         //Inject html for project
-                        ProjectID.Value = project.projectID;
+                        InjectHTMLForProjectTeamAndProject(project, null);
 
                     }
                     else
@@ -163,6 +187,15 @@ namespace ProjectFlow
                 }
             }
 
+        }
+
+        private void InjectHTMLForProjectTeamAndProject(Project project, ProjectTeam projectTeam)
+        {
+            //Inject html for project
+            if(project != null)
+                ProjectID.Value = project.projectID;
+            if (projectTeam != null)
+                TeamID.Value = projectTeam.teamID.ToString();
         }
 
         /// <summary>

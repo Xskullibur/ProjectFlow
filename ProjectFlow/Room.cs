@@ -17,6 +17,7 @@ namespace ProjectFlow
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Room()
         {
+            this.Attendees = new HashSet<Attendee>();
             this.RoomActionItems = new HashSet<RoomActionItem>();
             this.Transcripts = new HashSet<Transcript>();
         }
@@ -26,7 +27,11 @@ namespace ProjectFlow
         public System.DateTime creationDate { get; set; }
         public int teamID { get; set; }
         public byte[] accessToken { get; set; }
+        public string roomName { get; set; }
+        public string roomDescription { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attendee> Attendees { get; set; }
         public virtual ProjectTeam ProjectTeam { get; set; }
         public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

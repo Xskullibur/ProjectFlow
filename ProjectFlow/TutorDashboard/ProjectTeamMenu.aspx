@@ -450,8 +450,8 @@
         </div>
     </div>
     <script>
+        hideSidebar(); 
         $(document).ready(function () {
-            hideSidebar();    
             $('#CreateProject').modal('hide');
         });      
     </script>

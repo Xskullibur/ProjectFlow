@@ -5,8 +5,8 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-10 mx-auto">
-                <div class="card w-100">
+            <div class="col-12 mx-auto">
+                <div class="card projectflow-card-shadow w-100">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 border-right mx-auto text-center">
@@ -22,6 +22,8 @@
                                 <hr>
                                 <h5>Admin No:</h5>
                                 <asp:Label ID="AdminNoLbl" runat="server" Text=""></asp:Label><br><br>
+                                <h5>Name:</h5>
+                                <asp:Label ID="NameLbl" runat="server" Text=""></asp:Label><br><br>
                                 <h5>Email:</h5>
                                 <asp:Label ID="EmailLbl" runat="server" Text=""></asp:Label><br><br>
 

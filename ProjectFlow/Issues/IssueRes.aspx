@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <div class="container py-2">
+    <div class="card card-body projectflow-card-shadow container py-2">
         <div class="row">
             <div class="card w-100 m-3">
                 <asp:UpdatePanel runat="server">
@@ -40,7 +40,7 @@
             <asp:TextBox ID="tbComments" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                 
             <div class="text-right">
-            <asp:Button ID="btnComment" CssClass ="btn btn-info" runat="server" Text="post" OnClick="btnCommentSubmit_Click"/>
+            <asp:Button ID="btnComment" CssClass="btn btn-primary px-4 mt-3" runat="server" Text="Post" OnClick="btnCommentSubmit_Click"/>
             </div>
         </div>
         <div class ="col">
