@@ -54,7 +54,10 @@ namespace ProjectFlow.Tasks
             ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
             TaskBLL taskBLL = new TaskBLL();
 
-            taskGrid.DataSource = taskBLL.GetDroppedTaskDataSource(currentTeam.teamID);
+            List<Task> droppedTasks = taskBLL.GetDroppedTasksByTeamID(currentTeam.teamID);
+            var ds = Master.ApplyFilters(droppedTasks);
+
+            taskGrid.DataSource = ds;
             taskGrid.DataBind();
         }
 
