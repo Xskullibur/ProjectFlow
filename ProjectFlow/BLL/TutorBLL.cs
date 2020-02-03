@@ -50,6 +50,21 @@ namespace ProjectFlow.BLL
             return tutor.UserId.Equals(project.UserId);
         }
 
-
+        /// <summary>
+        /// Check if the a ProjectTeam belongs to a Tutor
+        /// </summary>
+        /// <param name="tutor"></param>
+        /// <param name="projectTeam"></param>
+        /// <returns></returns>
+        public bool HaveProjectTeam(Tutor tutor, ProjectTeam projectTeam)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var _tutor = dbContext.Tutors.Find(tutor.UserId);
+                return _tutor.Projects
+                    .Any(project => project.ProjectTeams
+                    .Any(_projectTeam => _projectTeam.teamID.Equals(projectTeam.teamID)));
+            }
+        }
     }
 }
