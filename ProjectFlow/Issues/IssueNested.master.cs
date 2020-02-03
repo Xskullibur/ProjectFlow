@@ -68,12 +68,18 @@ namespace ProjectFlow.Issues
                 List<Task> ongoingTasks = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
                 List<int> taskIdList = new List<int>();
 
+                Dictionary<int, string> TaskDict = new Dictionary<int, string>();
+
                 foreach (Task i in ongoingTasks)
                 {
                     taskIdList.Add(i.taskID);
+                    TaskDict.Add(i.taskID, i.taskName);
                 }
 
-                TaskIdDLL.DataSource = taskIdList;
+                //TaskIdDLL.DataSource = taskIdList;
+                TaskIdDLL.DataSource = TaskDict;
+                TaskIdDLL.DataTextField = "Value";
+                TaskIdDLL.DataValueField = "Key";
                 TaskIdDLL.DataBind();
 
                 // Status
@@ -124,7 +130,7 @@ namespace ProjectFlow.Issues
                     Issue newIssue = new Issue();
                     newIssue.title = tNameTxt.Text;
                     newIssue.description = tDescTxt.Text;
-                    newIssue.taskID = Convert.ToInt32(TaskIdDLL.Text);
+                    newIssue.taskID = Convert.ToInt32(TaskIdDLL.SelectedValue);
                     //newIssue.createdBy = teamID;
                     newIssue.createdBy = teammemberBLL.GetMemIdbyUID(Uid);
                     newIssue.active = true;

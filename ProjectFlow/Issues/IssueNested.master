@@ -113,7 +113,7 @@
 
                     <%--Main Content--%>
                     <div class="modal-header">
-                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
+                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Issue" runat="server" />
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -144,7 +144,7 @@
 
                             <%--Task--%>
                             <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Task Id:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:Label CssClass="control-label" Text="Task Name:" AssociatedControlID="IssueStatusDLL" runat="server" />
                                 <asp:DropDownList ID="TaskIdDLL" CssClass="form-control" runat="server"></asp:DropDownList>
 
                                 <asp:Label ID="taskIdErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
