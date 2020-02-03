@@ -92,5 +92,12 @@ namespace ProjectFlow.Issues
         {
             refreshData(TEST_TEAM_ID);
         }
+
+        //Pagination
+        protected void IssueView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            IssueView.PageIndex = e.NewPageIndex;
+            //refreshData();
+        }
     }
 }

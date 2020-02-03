@@ -89,15 +89,11 @@ namespace ProjectFlow.Tasks
 
             if (int.TryParse(milestoneID, out int milestoneID_Int))
             {
-                if (milestoneID_Int != -1)
+                if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
                 {
-                    if (!teamMilestones.Select(x => x.milestoneID).Contains(milestoneID_Int))
-                    {
-                        TMilestoneErrors.Add("Invalid Milestone Selected!");
-                        verified = false;
-                    }
+                    TMilestoneErrors.Add("Invalid Milestone Selected!");
+                    verified = false;
                 }
-
             }
             else
             {
@@ -153,7 +149,7 @@ namespace ProjectFlow.Tasks
             }
             else
             {
-                TMilestoneErrors.Add("Invalid Milestone Selected!");
+                TStatusErrors.Add("Invalid Status Selected!");
                 verified = false;
             }
 

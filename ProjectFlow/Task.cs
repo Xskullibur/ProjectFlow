@@ -27,7 +27,7 @@ namespace ProjectFlow
         public System.DateTime startDate { get; set; }
         public System.DateTime endDate { get; set; }
         public int teamID { get; set; }
-        public Nullable<int> milestoneID { get; set; }
+        public int milestoneID { get; set; }
         public int statusID { get; set; }
         public int priorityID { get; set; }
         public bool dropped { get; set; }

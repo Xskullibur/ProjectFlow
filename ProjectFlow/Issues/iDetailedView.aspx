@@ -3,17 +3,39 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container py-2 w-100 h-100">
+    <div class="container-fluid py-2 w-100 h-100">
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-hover table-bordered" AutoGenerateColumns="False" OnRowEditing="taskGrid_RowEditing" OnSelectedIndexChanged="IssueView_SelectedIndexChanged" OnRowDataBound="taskGrid_RowDataBound" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDeleting="IssueView_RowDeleting">
+                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnRowEditing="taskGrid_RowEditing" OnSelectedIndexChanged="IssueView_SelectedIndexChanged" OnRowDataBound="taskGrid_RowDataBound" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDeleting="IssueView_RowDeleting" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" ReadOnly="True" />
                             <asp:BoundField DataField="TaskID" HeaderText="Task Id" ReadOnly="True" />
-                            <asp:BoundField DataField="Task" HeaderText="Issue Name" />
-                            <asp:BoundField DataField="Description" HeaderText="Description" />
+                            <%--Issue Name--%>
+                            <asp:TemplateField HeaderText="Issue Name">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editNameTxt" CssClass="form-control" runat="server" Text='<%# Bind("Task") %>' TextMode="MultiLine"></asp:TextBox>
+                                
+                             
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="gridDesc" runat="server" Text='<%# Bind("Task") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <%--Description--%>
+                            <asp:TemplateField HeaderText="Description">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="editDescTxt" CssClass="form-control" runat="server" Text='<%# Bind("Description") %>' TextMode="MultiLine"></asp:TextBox>
+                                
+                                   
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="gridDesc" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" ReadOnly="True" />
                             <asp:BoundField DataField="Active" HeaderText="Active" ReadOnly="True" />
 
@@ -30,7 +52,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:BoundField DataField="IsPublic" HeaderText="Public vote" />
+                            <asp:BoundField DataField="IsPublic" HeaderText="Public vote" ReadOnly="True" />
                             <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success mb-2" />
                             </asp:CommandField>
@@ -51,6 +73,8 @@
                                 </div>
                             </div>
                         </EmptyDataTemplate>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="3" />
+                        <PagerStyle CssClass="pagination-ys table-borderless" />
                     </asp:GridView>
                 </div>
             </div>

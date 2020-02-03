@@ -26,6 +26,14 @@ namespace ProjectFlow.Tasks
             Swimlane
         }
 
+        private struct FilterType
+        {
+            public static string KEYWORD = "keyword";
+            public static string PRIORITY = "priority";
+            public static string STATUS = "status";
+            public static string ALLOCATION = "allocation";
+        }
+
         // Change Selected  Task View
         public void changeSelectedView(TaskViews selectedView)
         {
@@ -90,6 +98,11 @@ namespace ProjectFlow.Tasks
                 statusDDL.DataValueField = "Key";
                 statusDDL.DataBind();
 
+                fStatusListBox.DataSource = statusDict;
+                fStatusListBox.DataTextField = "Value";
+                fStatusListBox.DataValueField = "Key";
+                fStatusListBox.DataBind();
+
                 // Priority
                 PriorityBLL priorityBLL = new PriorityBLL();
                 List<Priority> priorities = priorityBLL.Get();
@@ -99,6 +112,11 @@ namespace ProjectFlow.Tasks
                 priorityDDL.DataValueField = "ID";
                 priorityDDL.DataBind();
 
+                fPriorityListBox.DataSource = priorities;
+                fPriorityListBox.DataTextField = "priority1";
+                fPriorityListBox.DataValueField = "ID";
+                fPriorityListBox.DataBind();
+
                 // Allocations
                 TeamMemberBLL memberBLL = new TeamMemberBLL();
                 Dictionary<int, string> memberList = memberBLL.GetTeamMembersByTeamID(teamID);
@@ -106,8 +124,12 @@ namespace ProjectFlow.Tasks
                 allocationList.DataSource = memberList;
                 allocationList.DataTextField = "Value";
                 allocationList.DataValueField = "Key";
-
                 allocationList.DataBind();
+
+                fAllocationListBox.DataSource = memberList;
+                fAllocationListBox.DataTextField = "Value";
+                fAllocationListBox.DataValueField = "Key";
+                fAllocationListBox.DataBind();
 
                 // Milestone
                 MilestoneBLL milestoneBLL = new MilestoneBLL();
@@ -118,9 +140,6 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataValueField = "milestoneID";
 
                 milestoneDDL.DataBind();
-
-                milestoneDDL.Items.Insert(0, new ListItem("-- No Milestone --", "-1"));
-
             }
 
             if (GetCurrentIdentiy().IsTutor)
@@ -157,20 +176,37 @@ namespace ProjectFlow.Tasks
             }
         }
 
+
+        /**
+         * FILTER
+         **/
+
         // Filter Task
-        protected void fTaskNameBtn_Click(object sender, EventArgs e)
+        protected void filterBtn_Click(object sender, EventArgs e)
         {
+            currentFiltersPanel.Controls.Clear();
+
+            // Check Keyword Filter
             if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
             {
-
                 string filterTaskName = fTaskNameTxt.Text;
 
-                if (Session["filterTaskName"] != null)
+                Session["filterTaskName"] = fTaskNameTxt.Text;
+                refreshGrid?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Check Priority Filter
+            if (fPriorityListBox.GetSelectedIndices() != null)
+            {
+                Dictionary<int, string> priorityFilters = new Dictionary<int, string>();
+
+                foreach (int index in fPriorityListBox.GetSelectedIndices())
                 {
-                    currentFiltersPanel.Controls.Remove(currentFiltersPanel.FindControl("cancelTaskNameFilter"));
+                    var item = fPriorityListBox.Items[index];
+                    priorityFilters.Add(Convert.ToInt32(item.Value), item.Text);
                 }
 
-                Session["filterTaskName"] = fTaskNameTxt.Text;
+                Session["filterPriority"] = priorityFilters;
                 refreshGrid?.Invoke(this, EventArgs.Empty);
                 updateCurrentFilterPanel();
             }
@@ -183,14 +219,32 @@ namespace ProjectFlow.Tasks
             {
                 string taskName = Session["filterTaskName"].ToString();
 
-                LinkButton linkButton = new LinkButton();
-                linkButton.ID = "cancelTaskNameFilter";
-                linkButton.Text = $"{taskName}<i class='fa fa-close ml-2'></i>";
-                linkButton.CssClass = "btn btn-danger my-2";
-                linkButton.Click += new EventHandler(removeTaskNameFilter_Click);
-
+                LinkButton linkButton = CreateFilterButton(taskName, FilterType.KEYWORD, removeTaskNameFilter_Click);
                 currentFiltersPanel.Controls.Add(linkButton);
             }
+
+            if (Session["filterPriority"] != null)
+            {
+                List<string> priorityFilters = (Session["filterPriority"] as Dictionary<int, string>).Values.ToList();
+
+                foreach (string priority in priorityFilters)
+                {
+                    LinkButton linkButton = CreateFilterButton(priority, FilterType.PRIORITY, removePriorityFilter_Click);
+                    currentFiltersPanel.Controls.Add(linkButton);
+                }
+            }
+        }
+
+        private LinkButton CreateFilterButton(string filterName, string filterType, EventHandler eventHandler)
+        {
+            LinkButton linkButton = new LinkButton();
+
+            linkButton.ID = $"filter_{filterType}_{filterName}";
+            linkButton.Text = $"{filterName} <i class='fa fa-close ml-2'></i>";
+            linkButton.CssClass = "btn btn-danger my-4 mr-1";
+            linkButton.Click += eventHandler;
+
+            return linkButton;
         }
 
         // Remove Task Name Filter
@@ -200,6 +254,24 @@ namespace ProjectFlow.Tasks
             currentFiltersPanel.Controls.Remove(linkButton);
 
             Session["filterTaskName"] = null;
+            refreshGrid?.Invoke(this, EventArgs.Empty);
+        }
+        
+        // Remove Priority Filter
+        protected void removePriorityFilter_Click(object sender,EventArgs e)
+        {
+            LinkButton linkButton = (LinkButton)sender;
+            currentFiltersPanel.Controls.Remove(linkButton);
+
+            string value = linkButton.Text.Split(' ')[0];
+            Dictionary<int, string> priorityFilters = (Session["filterPriority"] as Dictionary<int, string>);
+
+            int key = priorityFilters.FirstOrDefault(x => x.Value == value).Key;
+            priorityFilters.Remove(key);
+
+            if (priorityFilters.Count() == 0)
+                Session["filterPriority"] = null;
+
             refreshGrid?.Invoke(this, EventArgs.Empty);
         }
 
@@ -372,15 +444,7 @@ namespace ProjectFlow.Tasks
                 newTask.endDate = DateTime.Parse(endDate);
                 newTask.statusID = Convert.ToInt32(statusID);
                 newTask.priorityID = Convert.ToInt32(priorityID);
-
-                if (Convert.ToInt32(milestoneID) == -1)
-                {
-                    newTask.milestoneID = null;
-                }
-                else
-                {
-                    newTask.milestoneID = Convert.ToInt32(milestoneID);
-                }
+                newTask.milestoneID = Convert.ToInt32(milestoneID);
 
                 newTask.teamID = teamID;
 
@@ -417,21 +481,6 @@ namespace ProjectFlow.Tasks
                 }
             }
 
-        }
-
-        // Filter Task
-        protected void personalChkBx_CheckedChanged(object sender, EventArgs e)
-        {
-            if (((CheckBox)sender).Checked)
-            {
-                PersonalTaskSelected = true;
-            }
-            else
-            {
-                PersonalTaskSelected = false;
-            }
-
-            refreshGrid?.Invoke(this, EventArgs.Empty);
         }
 
     }

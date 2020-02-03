@@ -25,6 +25,56 @@ namespace ProjectFlow.Utils
         }
 
 
+        // Status Update
+
+        /// <summary>
+        /// Email Notification When Task Updated to Verification
+        /// </summary>
+        /// <param name="taskID"></param>
+        public static void Send_Verification_Email(int taskID)
+        {
+            TaskBLL taskBLL = new TaskBLL();
+            Task task = taskBLL.GetTaskByID(taskID);
+
+            string title = $"{task.taskName} is up for verification";
+            string subject = "Task Verification";
+            string emailTemplate = EmailHelper.GetTaskNotificationTemplate(title, task);
+
+            StudentBLL studentBLL = new StudentBLL();
+            List<string> leaderEmail = new List<string> {
+                studentBLL.GetLeaderByTaskID(task.taskID)
+                .aspnet_Users
+                .aspnet_Membership
+                .Email
+            };
+
+            EmailHelper emailHelper = new EmailHelper();
+            emailHelper.SendEmail(leaderEmail, subject, emailTemplate);
+        }
+
+        /// <summary>
+        /// Email Notification When Task Updated to Completed
+        /// </summary>
+        /// <param name="taskID"></param>
+        public static void Send_Complete_Email(int taskID)
+        {
+            TaskBLL taskBLL = new TaskBLL();
+            Task task = taskBLL.GetTaskByID(taskID);
+
+            string title = $"{task.taskName} Completed";
+            string subject = "Task Completed";
+            string emailTemplate = EmailHelper.GetTaskNotificationTemplate(title, task);
+
+            StudentBLL studentBLL = new StudentBLL();
+            List<string> allocatorsEmail = studentBLL.GetAllocationsByTaskID(task.taskID)
+                .Select(x => x.aspnet_Users.aspnet_Membership.Email)
+                .ToList();
+
+            EmailHelper emailHelper = new EmailHelper();
+            emailHelper.SendEmail(allocatorsEmail, subject, emailTemplate);
+        }
+
+
         // Task Updated
 
         /// <summary>
@@ -106,43 +156,30 @@ namespace ProjectFlow.Utils
             StatusBLL statusBLL = new StatusBLL();
             Status task_status = statusBLL.GetStatusByID(task.statusID);
 
-            if (task_status.status1 == StatusBLL.COMPLETED)
-            {
-                // TODO: Task Completed Job
-            }
-            else if (task_status.status1 == StatusBLL.VERIFICATON)
-            {
-                // TODO: Task Verification Job
-            }
-            else
-            {
-                // Task Reminder Job
-                int days_remaining = TaskHelper.GetDaysLeft(task.endDate);
+            // Task Reminder Job
+            int days_remaining = TaskHelper.GetDaysLeft(task.endDate);
 
-                // In-progress Reminder
-                if (days_remaining >= 0)
+            // In-progress Reminder
+            if (days_remaining >= 0)
+            {
+                //  7 DAYS
+                if (days_remaining >= 7)
                 {
-                    //  7 DAYS
-                    if (days_remaining >= 7)
-                    {
-                        GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_7, task);
-                    }
-
-                    // TOMORROW
-                    if (days_remaining >= 1)
-                    {
-                        GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_1, task);
-                    }
-
-                    // TODAY
-                    GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_0, task);
-                    // TODO: SMS Today Reminder
+                    GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_7, task);
                 }
 
-                // Overdue
-                GetDetailsAndSendReminderEmail(REMINDER_TYPE.OVERDUE, task);
-                // TODO: SMS Overdue Reminder
+                // TOMORROW
+                if (days_remaining >= 1)
+                {
+                    GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_1, task);
+                }
+
+                // TODAY
+                GetDetailsAndSendReminderEmail(REMINDER_TYPE.DAY_0, task);
             }
+
+            // Overdue
+            GetDetailsAndSendReminderEmail(REMINDER_TYPE.OVERDUE, task);
 
         }
 
@@ -164,14 +201,12 @@ namespace ProjectFlow.Utils
             bool students_allocated_exist = allocatedStudents.Count > 0 ? true : false;
 
             // Default Values
-            List<string> allocated_names = new List<string>();
             List<string> email_recivers = new List<string>();
             string leader_email = leader.aspnet_Users.aspnet_Membership.Email;
 
             // Send Notification to Leader if No Allocation
             if (allocatedStudents.Count > 0)
             {
-                allocated_names = allocatedStudents.Select(x => x.firstName + " " + x.lastName).ToList();
                 email_recivers = allocatedStudents.Select(x => x.aspnet_Users.aspnet_Membership.Email).ToList();
             }
 
@@ -181,18 +216,18 @@ namespace ProjectFlow.Utils
                 if (!LeaderInAllocation(allocatedStudents, leader))
                 {
                     // Leader Not in Allocation
-                    Schedule_Email_TaskReminder(type, task, allocated_names, email_recivers, leader_email);
+                    Schedule_Email_TaskReminder(type, task, email_recivers, leader_email);
                 }
                 else
                 {
                     // Leader in Allocation
-                    Schedule_Email_TaskReminder(type, task, allocated_names, email_recivers);
+                    Schedule_Email_TaskReminder(type, task, email_recivers);
                 }
             }
             else
             {
                 // Send Leader
-                Schedule_Email_TaskReminder(type, task, null, new List<string> { leader_email });
+                Schedule_Email_TaskReminder(type, task, new List<string> { leader_email });
             }
         }
 
@@ -202,10 +237,9 @@ namespace ProjectFlow.Utils
         /// </summary>
         /// <param name="type">Reminder Type</param>
         /// <param name="task">Task to notify</param>
-        /// <param name="allocatedNames">Names of allocated team members</param>
         /// <param name="reciversEmail">Email of allocated team members</param>
         /// <param name="cc"></param>
-        private static void Schedule_Email_TaskReminder(REMINDER_TYPE type, Task task, List<string> allocatedNames, List<string> reciversEmail, string cc = null)
+        private static void Schedule_Email_TaskReminder(REMINDER_TYPE type, Task task, List<string> reciversEmail, string cc = null)
         {
             // Task Details
             string taskID = task.taskID.ToString();
@@ -229,25 +263,25 @@ namespace ProjectFlow.Utils
                 case REMINDER_TYPE.DAY_7:
                     jobName += $"{taskID}_7DAYS{jobNamePrefix}";
                     subject = $"{taskName} is Due in 7 Days";
-                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, task);
                     triggerDate = task.endDate.AddDays(-7);
                     break;
                 case REMINDER_TYPE.DAY_1:
                     jobName += $"{taskID}_1DAY{jobNamePrefix}";
                     subject = $"{taskName} is Due Tomorrow";
-                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, task);
                     triggerDate = task.endDate.AddDays(1);
                     break;
                 case REMINDER_TYPE.DAY_0:
                     jobName += $"{taskID}_0DAY{jobNamePrefix}";
                     subject = $"{taskName} is Due Today";
-                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, task);
                     triggerDate = task.endDate;
                     break;
                 case REMINDER_TYPE.OVERDUE:
                     jobName += $"{taskID}_OVERDUE{jobNamePrefix}";
                     subject = $"{taskName} is Overdue";
-                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, 7, task, allocatedNames);
+                    emailBody = EmailHelper.GetTaskNotificationTemplate(subject, task);
                     triggerDate = task.endDate.AddDays(1);
                     break;
             }

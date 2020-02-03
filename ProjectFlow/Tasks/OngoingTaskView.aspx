@@ -7,7 +7,7 @@
 
 <%--Content--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container-fluid py-2">
+    <div class="container container-fluid py-2">
 
         <div class="row pb-2">
             <div class="col">
@@ -20,13 +20,13 @@
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
 
-                                    <%--ID--%>
-                                    <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
-
                                     <%--Due Date--%>
                                     <asp:BoundField HeaderText="Due" ReadOnly="True" >
                                         <ItemStyle Font-Bold="True" />
                                     </asp:BoundField>
+
+                                    <%--ID--%>
+                                    <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
                                                                         
                                     <%--Priority--%>
                                     <asp:TemplateField HeaderText="Priority">

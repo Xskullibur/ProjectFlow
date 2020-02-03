@@ -24,6 +24,15 @@ namespace ProjectFlow.Services.Christina
         protected global::System.Web.UI.WebControls.Button BackBtn;
 
         /// <summary>
+        /// RoomNameLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RoomNameLbl;
+
+        /// <summary>
         /// MeetingDate control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace ProjectFlow.Services.Christina
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label MadeByLbl;
+
+        /// <summary>
+        /// DescriptionLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DescriptionLbl;
 
         /// <summary>
         /// UpdatePanel1 control.

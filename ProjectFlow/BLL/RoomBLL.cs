@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace ProjectFlow.BLL
 {
@@ -19,6 +20,10 @@ namespace ProjectFlow.BLL
                 return dbContext.Rooms.Find(roomID);
             }
         }
+        /// <summary>
+        /// Create a new Room
+        /// </summary>
+        /// <param name="room"></param>
         public void CreateRoom(Room room)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -27,6 +32,20 @@ namespace ProjectFlow.BLL
                 dbContext.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Get list of Attendees from a Room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        public List<Attendee> GetListOfAttendeesFromRoom(Room room)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Rooms.Find(room.roomID).Attendees.ToList();
+            }
+        }
+
 
         /// <summary>
         /// Returns a list of Room which is created by a ProjectTeam
@@ -71,11 +90,32 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.Rooms
-                    .Include("Student.aspnet_Users")//For displaying student name
-                    .Where(room => room.teamID == projectTeam.teamID && filters.Contains(room.Student.aspnet_Users))
+                var rooms = dbContext.Rooms
+                    .Include(room => room.Student.aspnet_Users)//For displaying student name
+                    .Where(room => room.teamID == projectTeam.teamID)
                     .OrderByDescending(room => room.creationDate).ToList();
+                return rooms
+                    .Where(room => filters
+                    .Select(x => x.UserId)
+                    .Contains(room.Student.aspnet_Users.UserId))
+                    .ToList();
             }
         }
+
+        /// <summary>
+        /// Set Room access token to new access token
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="accessToken"></param>
+        public void UpdateRoomAccessToken(Room room, byte[] accessToken)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var _room = dbContext.Rooms.Find(room.roomID);
+                _room.accessToken = accessToken;
+                dbContext.SaveChanges();
+            }
+        }
+
     }
 }

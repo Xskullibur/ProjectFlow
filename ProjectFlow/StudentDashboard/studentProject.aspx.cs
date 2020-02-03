@@ -57,7 +57,7 @@ namespace ProjectFlow.DashBoard
                 (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(int.Parse(row.Cells[0].Text)));
                 //Session["StudentTeamID"] = row.Cells[0].Text;
 
-                Response.Redirect("/Tasks/OngoingTaskView.aspx");
+                Response.Redirect("/ProjectDashboard/ProjectTeamDashboard.aspx");
             }
             else
             {

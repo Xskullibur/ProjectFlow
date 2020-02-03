@@ -24,17 +24,14 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public Dictionary<Student, string> GetUsersByTeamID(int id)
+        public List<string> GetUsersByTeamID(int id)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var users = dbContext.TeamMembers.Include("Students")
                     .Where(x => x.teamID == id)
-                    .Select(y => new
-                    {
-                        Student = y.Student,
-                        Name = y.Student.firstName + " " + y.Student.lastName
-                    }).ToDictionary(key => key.Student, value => value.Name);
+                    .Select(y => y.Student.aspnet_Users.UserName)
+                    .ToList();
 
                 return users;
             }
@@ -83,29 +80,18 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public void ToLeader(Guid userID, int teamID)
+        public int GetMemIdbyUID(Guid Uid)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var member = dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == teamID);
-                if(member != null)
-                {
-                    member.roleID = 1;
-                    dbContext.SaveChanges();
-                }
-            }
-        }
+                var MID = dbContext.TeamMembers
+                    .First(x => x.UserId == Uid)
+                    .memberID;
+                    
 
-        public void ToMember(Guid userID, int teamID)
-        {
-            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
-            {
-                var member = dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == teamID);
-                if (member != null)
-                {
-                    member.roleID = 2;
-                    dbContext.SaveChanges();
-                }
+                //int MID = int.Parse(student);
+
+                return MID;
             }
         }
     }

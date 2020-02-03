@@ -7,74 +7,54 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.Services.Christina
-{
-
-
-    public partial class ListOfRooms
-    {
-
+namespace ProjectFlow.ProjectTeamDashboard {
+    
+    
+    public partial class ProjectTeamDashboard {
+        
         /// <summary>
-        /// LinkButton1 control.
+        /// milestoneLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-
+        protected global::System.Web.UI.WebControls.Literal milestoneLiteral;
+        
         /// <summary>
-        /// searchList control.
+        /// TaskPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox searchList;
-
+        protected global::System.Web.UI.WebControls.Panel TaskPanel;
+        
         /// <summary>
-        /// SearchBtn control.
+        /// upcomingTaskGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchBtn;
-
+        protected global::System.Web.UI.WebControls.GridView upcomingTaskGrid;
+        
         /// <summary>
-        /// ClearBtn control.
+        /// IssueGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ClearBtn;
-
+        protected global::System.Web.UI.WebControls.GridView IssueGrid;
+        
         /// <summary>
-        /// TaskGridUpdatePanel control.
+        /// overdueTaskGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel TaskGridUpdatePanel;
-
-        /// <summary>
-        /// roomsGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView roomsGridView;
-
-        /// <summary>
-        /// lnkDummy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkDummy;
+        protected global::System.Web.UI.WebControls.GridView overdueTaskGrid;
     }
 }
