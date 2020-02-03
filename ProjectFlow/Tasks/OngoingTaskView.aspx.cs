@@ -511,7 +511,7 @@ namespace ProjectFlow.Tasks
         {
 
             // Selected Task ID
-            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
+            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[1].Text);
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
