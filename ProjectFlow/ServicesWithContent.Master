@@ -5,7 +5,8 @@
 <html>
 <head runat="server">
     <title></title>
-        
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
     <asp:PlaceHolder runat="server">
         <%: Styles.Render("~/Content/css") %>
         <%: Styles.Render("~/Content/bootstrap-select.css") %>
@@ -35,8 +36,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     </asp:PlaceHolder>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+
     <style type="text/css">
         .auto-style5 {
             width: 286px;
