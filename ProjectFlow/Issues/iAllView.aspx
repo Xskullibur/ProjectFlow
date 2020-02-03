@@ -21,9 +21,6 @@
                             <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success mb-2" />
                             </asp:CommandField>
-                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-danger" />
-                            </asp:CommandField>
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="jumbotron jumbotron-fluid">

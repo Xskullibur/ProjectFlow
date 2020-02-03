@@ -94,5 +94,18 @@ namespace ProjectFlow.BLL
                 return MID;
             }
         }
+
+        public string GetUsernamebyMID(int memberId)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var username = dbContext.TeamMembers.Include("Students")
+                    .Where(x => x.memberID == memberId)
+                    .Select(y => y.Student.aspnet_Users.UserName)
+                    .ToString();
+
+                return username;
+            }
+        }
     }
 }

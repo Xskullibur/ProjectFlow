@@ -44,9 +44,7 @@ namespace ProjectFlow.Issues
             {
                 if (e.Row.Cells[5].Text == "False")//orderstatus index
                 {
-                    e.Row.Enabled = false;
-                    //e.Row.Cells[8].Visible = false;
-                    //e.Row.Cells[9].Visible = false;
+                    //e.Row.Enabled = false;
                 }
 
                 else
