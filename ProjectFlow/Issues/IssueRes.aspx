@@ -70,30 +70,5 @@
                 </ItemTemplate>     
             </asp:Repeater>
         </div>
-        <div class="card card-body projectflow-card-shadow row py-3 px-0">
-            <div class="col-12">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-meeting-logger-table-tab" data-toggle="tab" href="#nav-meeting-logger-table" role="tab" aria-controls="nav-meeting-logger-table" aria-selected="true">Meeting Logger</a>
-                    <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-christina" role="tab" aria-controls="nav-christina" aria-selected="false">
-                        Christina
-                        <span class="badge badge-pill badge-info">Experimental</span>
-                    </a>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-meeting-logger-table" role="tabpanel" aria-labelledby="nav-meeting-logger-table-tab">
-                        <div class="row pd-2">
-                            <div class="col-12">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-christina" role="tabpanel" aria-labelledby="nav-christina-tab" style="height: 300px;">
-                        hello
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </asp:Content>
