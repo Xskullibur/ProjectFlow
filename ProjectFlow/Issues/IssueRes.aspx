@@ -3,6 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="container py-2">
+
         <div class="row">
             <div class="col-sm-12 col-lg-8 p-3">
                 <div class="card h-100">
@@ -42,33 +43,70 @@
                 </div>&nbsp;
                 <asp:Button ID="btnRandom" CssClass ="btn btn-outline-secondary" runat="server" Text="&#127922;" OnClick="btnRandom_Click" />
             </div>
-            <div class="col-xl-3 col-12 text-right">
-                <asp:Button Text="Edit Issue" CssClass="btn btn-primary" runat="server" ID="editIssueBtn" CausesValidation="False" OnClick="edit_click"/>
-            </div>
+            
         </div>
+
         <hr/>
-        <div class="">
-            <asp:TextBox ID="tbComments" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+        <div class="card card-body projectflow-card-shadow row py-3 px-0">
+            <div class="col-12">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-meeting-logger-table-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-meeting-logger-table" aria-selected="true">Comments</a>
+                    <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-conclusion" role="tab" aria-controls="nav-christina" aria-selected="false">
+                        Conclusion
+                    </a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments">
+                        <div class="row pd-2">
+                            <div class="col-12">
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <ContentTemplate>
+                                        <br>
+                                        <div class="">
+                                            <asp:TextBox ID="tbComments" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                 
-            <div class="text-right">
-            <asp:Button ID="btnComment" CssClass="btn btn-primary px-4 mt-3" runat="server" Text="Post" OnClick="btnCommentSubmit_Click"/>
-            </div>
-        </div>
-        <div class ="col">
-            <asp:Repeater ID="Repeater1" runat="server">
-                <HeaderTemplate>
-                </HeaderTemplate>
-                <ItemTemplate>
-                    </br>
-                    <div class="mdc-card">
-                        <div class="card-body">
-                            <asp:Label ID="lbCreatedBy" CssClass="card-title" runat="server" Text='<%# Eval("CreatedBy") %>' ForeColor="#0066FF"></asp:Label>
-                            <asp:Label ID="lbComment" CssClass="card-text" runat="server" Text='<%# Eval("Comment") %>'></asp:Label>
+                                            <div class="text-right">
+                                            <asp:Button ID="btnComment" CssClass="btn btn-primary px-4 mt-3" runat="server" Text="Post" OnClick="btnCommentSubmit_Click"/>
+                                            </div>
+                                        </div>
+                                        <div class ="col">
+                                            <asp:Repeater ID="Repeater1" runat="server">
+                                                <HeaderTemplate>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    </br>
+                                                    <div class="mdc-card">
+                                                        <div class="card-body">
+                                                            <asp:Label ID="lbCreatedBy" CssClass="card-title" runat="server" Text='<%# Eval("CreatedBy") %>' ForeColor="#0066FF"></asp:Label>
+                                                            <asp:Label ID="lbComment" CssClass="card-text" runat="server" Text='<%# Eval("Comment") %>'></asp:Label>
+                                                        </div>
+                                                    </div>
+                                  
+                                                </ItemTemplate>     
+                                            </asp:Repeater>
+                                        </div>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </div>
                         </div>
                     </div>
-                                  
-                </ItemTemplate>     
-            </asp:Repeater>
+                    <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion" style="height: 300px;">
+                        <br>
+                        <div class="row justify-content-between">
+                            <div class="col-xl-5 col-12 align-self-end">
+                                hello
+                            </div>
+                            <div class="col-xl-3 col-12 text-right">
+                                <asp:Button Text="Edit Issue" CssClass="btn btn-primary" runat="server" ID="editIssueBtn" CausesValidation="False" OnClick="edit_click"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+
     </div>
 </asp:Content>
