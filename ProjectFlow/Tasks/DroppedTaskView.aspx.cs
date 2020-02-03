@@ -52,23 +52,10 @@ namespace ProjectFlow.Tasks
         {
             // Get Current Project Team
             ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
-
             TaskBLL taskBLL = new TaskBLL();
 
-            if (!Master.PersonalTaskSelected)
-            {
-                taskGrid.DataSource = taskBLL.GetDroppedTaskDataSource(currentTeam.teamID);
-                taskGrid.DataBind();
-            }
-            else
-            {
-                // Get Current User
-                Student currentUser = Master.GetCurrentIdentiy().Student;
-
-                taskGrid.DataSource = taskBLL.GetDroppedTaskByTeamIdWithStudent(currentTeam.teamID, currentUser);
-                taskGrid.DataBind();
-            }
-            
+            taskGrid.DataSource = taskBLL.GetDroppedTaskDataSource(currentTeam.teamID);
+            taskGrid.DataBind();
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)

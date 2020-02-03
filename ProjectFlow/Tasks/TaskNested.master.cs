@@ -17,7 +17,6 @@ namespace ProjectFlow.Tasks
     {
         // Public Attributes and Methods
         public event EventHandler refreshGrid;
-        public bool PersonalTaskSelected = false;
         public enum TaskViews
         {
             OngoingTaskView,
@@ -28,13 +27,13 @@ namespace ProjectFlow.Tasks
 
         private struct FilterType
         {
-            public static string KEYWORD = "keyword";
-            public static string PRIORITY = "priority";
-            public static string STATUS = "status";
-            public static string ALLOCATION = "allocation";
+            public static string KEYWORD = "filterTaskName";
+            public static string PRIORITY = "filterPriority";
+            public static string STATUS = "filterStatus";
+            public static string ALLOCATION = "filterAllocation";
         }
 
-        // Change Selected  Task View
+        // Change Selected Task View
         public void changeSelectedView(TaskViews selectedView)
         {
             switch (selectedView)
@@ -70,6 +69,54 @@ namespace ProjectFlow.Tasks
             var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
 
             return projectFlowIdentity;
+        }
+
+        public IEnumerable<object> ApplyFilters(List<Task> data)
+        {
+            if (Session[FilterType.KEYWORD] != null)
+            {
+                string filterKeyword = Session[FilterType.KEYWORD].ToString();
+                data = data.Where(x => x.taskName.ToLower().Contains(filterKeyword.ToLower()))
+                    .ToList();
+            }
+
+            if (Session[FilterType.PRIORITY] != null)
+            {
+                Dictionary<int, string> priorityDict = (Session[FilterType.PRIORITY] as Dictionary<int, string>);
+
+                foreach (var item in priorityDict)
+                {
+                    data = data.Where(x => x.priorityID == item.Key)
+                        .ToList();
+                }
+            }
+
+            if (Session[FilterType.STATUS] != null)
+            {
+                Dictionary<int, string> statusDict = (Session[FilterType.STATUS] as Dictionary<int, string>);
+
+                foreach (var item in statusDict)
+                {
+                    data = data.Where(x => x.statusID == item.Key)
+                        .ToList();
+                }
+            }
+
+            if (Session[FilterType.ALLOCATION] != null)
+            {
+                Dictionary<int, string> allocationDict = (Session[FilterType.ALLOCATION] as Dictionary<int, string>);
+
+                foreach (var item in allocationDict)
+                {                    
+                    data = data.Where(x => x.TaskAllocations.Select(allocation => allocation.TeamMember.memberID).Contains(item.Key))
+                        .ToList();
+                }
+
+            }
+
+            TaskBLL taskBLL = new TaskBLL();
+            var ds = taskBLL.ConvertToDataSource(data);
+            return ds;
         }
 
 
@@ -181,22 +228,21 @@ namespace ProjectFlow.Tasks
          * FILTER
          **/
 
-        // Filter Task
+        // Filter Add Event
         protected void filterBtn_Click(object sender, EventArgs e)
         {
+            // Remove All Controls From Panel
             currentFiltersPanel.Controls.Clear();
 
-            // Check Keyword Filter
+            // Check Keyword Fiter
             if (!string.IsNullOrEmpty(fTaskNameTxt.Text))
             {
                 string filterTaskName = fTaskNameTxt.Text;
-
-                Session["filterTaskName"] = fTaskNameTxt.Text;
-                refreshGrid?.Invoke(this, EventArgs.Empty);
+                Session[FilterType.KEYWORD] = fTaskNameTxt.Text;
             }
 
             // Check Priority Filter
-            if (fPriorityListBox.GetSelectedIndices() != null)
+            if (fPriorityListBox.GetSelectedIndices().Length != 0)
             {
                 Dictionary<int, string> priorityFilters = new Dictionary<int, string>();
 
@@ -206,34 +252,102 @@ namespace ProjectFlow.Tasks
                     priorityFilters.Add(Convert.ToInt32(item.Value), item.Text);
                 }
 
-                Session["filterPriority"] = priorityFilters;
-                refreshGrid?.Invoke(this, EventArgs.Empty);
-                updateCurrentFilterPanel();
+                Session[FilterType.PRIORITY] = priorityFilters;
             }
+
+            // Status Filter
+            if (fStatusListBox.GetSelectedIndices().Length != 0)
+            {
+                Dictionary<int, string> statusFilters = new Dictionary<int, string>();
+
+                foreach (int index in fStatusListBox.GetSelectedIndices())
+                {
+                    var item = fStatusListBox.Items[index];
+                    statusFilters.Add(Convert.ToInt32(item.Value), item.Text);
+                }
+
+                Session[FilterType.STATUS] = statusFilters;
+            }
+
+            // Allocation Filter
+            if (fAllocationListBox.GetSelectedIndices().Length != 0)
+            {
+                Dictionary<int, string> allocationFilters = new Dictionary<int, string>();
+
+                foreach (int index in fAllocationListBox.GetSelectedIndices())
+                {
+                    var item = fAllocationListBox.Items[index];
+                    allocationFilters.Add(Convert.ToInt32(item.Value), item.Text);
+                }
+
+                Session[FilterType.ALLOCATION] = allocationFilters;
+            }
+
+            updateCurrentFilterPanel();
+            refreshGrid?.Invoke(this, EventArgs.Empty);
         }
 
-        // Add Current Applied Filters
+        // Update Filter Panel
         private void updateCurrentFilterPanel()
         {
-            if (Session["filterTaskName"] != null)
+            if (Session[FilterType.KEYWORD] != null)
             {
-                string taskName = Session["filterTaskName"].ToString();
+                string taskName = Session[FilterType.KEYWORD].ToString();
 
                 LinkButton linkButton = CreateFilterButton(taskName, FilterType.KEYWORD, removeTaskNameFilter_Click);
                 currentFiltersPanel.Controls.Add(linkButton);
             }
 
-            if (Session["filterPriority"] != null)
+            if (Session[FilterType.PRIORITY] != null)
             {
-                List<string> priorityFilters = (Session["filterPriority"] as Dictionary<int, string>).Values.ToList();
+                AddFilterButtonsToPanel(FilterType.PRIORITY);
+            }
 
-                foreach (string priority in priorityFilters)
+            if (Session[FilterType.STATUS] != null)
+            {
+                AddFilterButtonsToPanel(FilterType.STATUS);
+            }
+
+            if (Session[FilterType.ALLOCATION] != null)
+            {
+                AddFilterButtonsToPanel(FilterType.ALLOCATION);
+            }
+
+        }
+
+        private void AddFilterButtonsToPanel(string sessionName)
+        {
+            List<string> filters = (Session[sessionName] as Dictionary<int, string>).Values.ToList();
+
+            foreach (string filter in filters) { 
+            
+                LinkButton linkButton = new LinkButton();
+
+                if (sessionName == FilterType.KEYWORD)
                 {
-                    LinkButton linkButton = CreateFilterButton(priority, FilterType.PRIORITY, removePriorityFilter_Click);
-                    currentFiltersPanel.Controls.Add(linkButton);
+                    linkButton = CreateFilterButton(filter, sessionName, removeTaskNameFilter_Click);
                 }
+                else if (sessionName == FilterType.PRIORITY)
+                {
+                    linkButton = CreateFilterButton(filter, sessionName, removePriorityFilter_Click);
+                }
+                else if (sessionName == FilterType.STATUS)
+                {
+                    linkButton = CreateFilterButton(filter, sessionName, removeStatusFilter_Click);
+                }
+                else if (sessionName == FilterType.ALLOCATION)
+                {
+                    linkButton = CreateFilterButton(filter, sessionName, removeAllocationFilter_Click);
+                }
+
+                currentFiltersPanel.Controls.Add(linkButton);
             }
         }
+
+
+        /**
+         * Create Filter Button
+         **/
 
         private LinkButton CreateFilterButton(string filterName, string filterType, EventHandler eventHandler)
         {
@@ -247,33 +361,57 @@ namespace ProjectFlow.Tasks
             return linkButton;
         }
 
-        // Remove Task Name Filter
-        protected void removeTaskNameFilter_Click(object sender,EventArgs e)
+
+        /**
+         * REMOVE FILTER EVENTS
+         **/
+
+        // Remove Filter Event Handler
+        private void FilterHandler(object sender, string sessionName)
         {
             LinkButton linkButton = (LinkButton)sender;
             currentFiltersPanel.Controls.Remove(linkButton);
 
-            Session["filterTaskName"] = null;
+            string value = linkButton.Text;
+            Dictionary<int, string> filters = (Session[sessionName] as Dictionary<int, string>);
+
+            int key = filters.FirstOrDefault(x => value.Contains(x.Value)).Key;
+            filters.Remove(key);
+
+            if (filters.Count() == 0)
+                Session[sessionName] = null;
+
             refreshGrid?.Invoke(this, EventArgs.Empty);
+        }
+
+        // Keyword
+        protected void removeTaskNameFilter_Click(object sender, EventArgs e)
+        {
+            LinkButton linkButton = (LinkButton)sender;
+            currentFiltersPanel.Controls.Remove(linkButton);
+
+            Session[FilterType.KEYWORD] = null;
+            refreshGrid?.Invoke(this, EventArgs.Empty);
+        }
+
+        // Allocation
+        private void removeAllocationFilter_Click(object sender, EventArgs e)
+        {
+            FilterHandler(sender, FilterType.ALLOCATION);
+        }
+
+        // Status
+        private void removeStatusFilter_Click(object sender, EventArgs e)
+        {
+            FilterHandler(sender, FilterType.STATUS);
         }
         
-        // Remove Priority Filter
-        protected void removePriorityFilter_Click(object sender,EventArgs e)
+        // Priority
+        protected void removePriorityFilter_Click(object sender, EventArgs e)
         {
-            LinkButton linkButton = (LinkButton)sender;
-            currentFiltersPanel.Controls.Remove(linkButton);
-
-            string value = linkButton.Text.Split(' ')[0];
-            Dictionary<int, string> priorityFilters = (Session["filterPriority"] as Dictionary<int, string>);
-
-            int key = priorityFilters.FirstOrDefault(x => x.Value == value).Key;
-            priorityFilters.Remove(key);
-
-            if (priorityFilters.Count() == 0)
-                Session["filterPriority"] = null;
-
-            refreshGrid?.Invoke(this, EventArgs.Empty);
+            FilterHandler(sender, FilterType.PRIORITY);
         }
+
 
         /**
          * MODAL MANIPULATION
