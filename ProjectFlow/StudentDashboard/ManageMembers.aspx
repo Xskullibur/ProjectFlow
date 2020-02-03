@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="card card-body projectflow-card-shadow container">
         <div class="container">            
-            <div class="row mb-3">
+            <div class="row mb-3 mt-3">
                 <div class="col-3">
                     <asp:Label ID="yourStatus" runat="server"></asp:Label>
                 </div>

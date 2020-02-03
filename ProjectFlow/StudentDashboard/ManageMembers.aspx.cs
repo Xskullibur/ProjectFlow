@@ -18,7 +18,7 @@ namespace ProjectFlow.StudentDashboard
         TeamMemberBLL teamMemberBLL = new TeamMemberBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["StudentTeamID"] != null)
+            if (GetTeamID().ToString() != null)
             {
                 if (!IsPostBack)
                 {
