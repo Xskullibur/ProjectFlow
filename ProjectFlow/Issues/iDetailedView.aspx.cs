@@ -100,13 +100,13 @@ namespace ProjectFlow.Issues
             }
         }
 
-        protected void taskGrid_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void IssueView_RowEditing(object sender, GridViewEditEventArgs e)
         {
             IssueView.EditIndex = e.NewEditIndex;
             refreshData();
         }
 
-        protected void taskGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -143,18 +143,34 @@ namespace ProjectFlow.Issues
                     editStatusDDL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
 
                 }
+                else
+                {
+                    if (e.Row.RowType == DataControlRowType.DataRow)
+                    {
+                        TableCell PublicCell = e.Row.Cells[5];
+                        if (PublicCell.Text == "True")
+                        {
+                            PublicCell.Text = "<i class='fa fa-check-circle fa-lg text-success'></i>";
+                        }
+
+                        else
+                        {
+                            PublicCell.Text = "<i class='fa fa-times-circle fa-lg text-danger'></i>";
+                        }
+                    }
+                }
             }
 
         }
 
-        protected void taskGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void IssueView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             IssueView.EditIndex = -1;
             refreshData();
         }
 
         // Updating
-        protected void taskGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void IssueView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             // Get Values
             GridViewRow row = IssueView.Rows[e.RowIndex];

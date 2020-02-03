@@ -11,7 +11,6 @@
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" />
-                            <asp:BoundField DataField="TaskID" HeaderText="Task Id" />
                             <asp:BoundField DataField="Task" HeaderText="Issue Name" />
                             <asp:BoundField DataField="Description" HeaderText="Description" />
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />

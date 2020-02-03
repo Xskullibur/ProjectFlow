@@ -150,6 +150,9 @@ namespace ProjectFlow.BLL
                             Task = y.title,
                             Description = y.description,
                             CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
+                            Active = y.active,
+                            Status = y.Status.status1,
+                            IsPublic = y.votePublic
                         }).ToList();
 
                     return list;

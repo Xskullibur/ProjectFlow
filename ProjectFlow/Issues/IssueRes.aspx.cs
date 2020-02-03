@@ -31,20 +31,18 @@ namespace ProjectFlow.Issues
 
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;
-                IssueActive.Text = "";
+                IssueActive.Text = updated_issue.active.ToString();
                 IssuePublic.Text = updated_issue.votePublic.ToString();
                 TeamMemberBLL teammember = new TeamMemberBLL();
                 IssueRaisedBy.Text = teammember.GetUsernamebyMID(updated_issue.createdBy);
-                //updated_issue.createdBy.ToString();
-                IssueStatus.Text = "";
+                StatusBLL status = new StatusBLL();
+                Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
+                IssueStatus.Text = currentstat.status1;
 
-
-                //ispublic = (string)Session["SSIsPublic"];
                 ispublic = updated_issue.votePublic.ToString();
                 check(idIssue);
                 refreshCommentData(idIssue);
                 isActive(updated_issue.active);
-                //Label1.ToolTip = getUserbySelection(idIssue, false); // this works but needs to be removed
                 isPublic(ispublic);
             }
         }
@@ -224,6 +222,11 @@ namespace ProjectFlow.Issues
                 btnComment.Visible = false;
                 btnComment.Enabled = false;
             }
+        }
+
+        protected void edit_click(object sender, EventArgs e)
+        {
+
         }
     }
 }

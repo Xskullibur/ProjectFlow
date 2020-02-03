@@ -22,6 +22,15 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Label lbMember;
         
         /// <summary>
+        /// lbIssue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbIssue;
+        
+        /// <summary>
         /// IssueActive control.
         /// </summary>
         /// <remarks>
@@ -56,15 +65,6 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label IssueRaisedBy;
-        
-        /// <summary>
-        /// lbIssue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbIssue;
         
         /// <summary>
         /// btnYes control.
@@ -110,6 +110,15 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRandom;
+        
+        /// <summary>
+        /// editIssueBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button editIssueBtn;
         
         /// <summary>
         /// tbComments control.

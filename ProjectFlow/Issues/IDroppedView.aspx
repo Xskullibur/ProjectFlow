@@ -7,14 +7,15 @@
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
+                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" OnRowDataBound="IssueView_RowDataBound" PageSize="4">
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" />
-                            <asp:BoundField DataField="TaskID" HeaderText="Task Id" />
                             <asp:BoundField DataField="Task" HeaderText="Issue Name" />
                             <asp:BoundField DataField="Description" HeaderText="Description" />
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
+                            <asp:BoundField DataField="Status" HeaderText="Status" />
+                            <asp:BoundField DataField="IsPublic" HeaderText="Public Cote" />
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="jumbotron jumbotron-fluid">
