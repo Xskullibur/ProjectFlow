@@ -26,7 +26,7 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
                                     <ItemTemplate>
-                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.scoreID") %>'></asp:Label>
+                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("scoreID") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -38,49 +38,49 @@
 
                                 <asp:TemplateField HeaderText="Proposal">
                                     <ItemTemplate>
-                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.proposal") %>'></asp:Label>
+                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("proposal") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Report">
                                     <ItemTemplate>
-                                        <asp:Label ID="reportLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.report") %>'></asp:Label>
+                                        <asp:Label ID="reportLabel" runat="server" Text='<%# Bind("report") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="1st Review">
                                     <ItemTemplate>
-                                        <asp:Label ID="reviewoneLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.reviewOne") %>'></asp:Label>
+                                        <asp:Label ID="reviewoneLabel" runat="server" Text='<%# Bind("reviewOne") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="2nd Review">
                                      <ItemTemplate>
-                                        <asp:Label ID="reviewtwoLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.reviewTwo") %>'></asp:Label>
+                                        <asp:Label ID="reviewtwoLabel" runat="server" Text='<%# Bind("reviewTwo") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Presentation">
                                     <ItemTemplate>
-                                        <asp:Label ID="presentationLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.presentation") %>'></asp:Label>
+                                        <asp:Label ID="presentationLabel" runat="server" Text='<%# Bind("presentation") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Test">
                                     <ItemTemplate>
-                                        <asp:Label ID="testLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.test") %>'></asp:Label>
+                                        <asp:Label ID="testLabel" runat="server" Text='<%# Bind("test") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="SDL">
                                     <ItemTemplate>
-                                        <asp:Label ID="sdlLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.sdl") %>'></asp:Label>
+                                        <asp:Label ID="sdlLabel" runat="server" Text='<%# Bind("sdl") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Participation">
                                     <ItemTemplate>
-                                        <asp:Label ID="particationLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.participation") %>'></asp:Label>
+                                        <asp:Label ID="particationLabel" runat="server" Text='<%# Bind("participation") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 

@@ -13,7 +13,10 @@ namespace ProjectFlow.TutorDashboard
         TeamMemberBLL teamMemberBLL = new TeamMemberBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                ShowGrade();
+            }
         }
 
         private int GetTeamID()
@@ -21,10 +24,15 @@ namespace ProjectFlow.TutorDashboard
             return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
+        private string GetProjectD()
+        {
+            return (Master as ServicesWithContent).CurrentProject.projectID;
+        }
+
         private void ShowGrade()
         {
-            //List<TeamMember> studentList = teamMemberBLL.GetUserGradesByTeamID(GetTeamID());
-            //gradeGV.DataSource = studentList;
+            List<Score> studentList = teamMemberBLL.GetGradeByProjectID(GetProjectD());
+            gradeGV.DataSource = studentList;
             gradeGV.DataBind();
         }
 

@@ -121,5 +121,13 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public List<Score> GetGradeByProjectID(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Scores.Include(x => x.Student).Where(x => x.projectID.Equals(ProjectID)).ToList();
+            }
+        }
+
     }
 }
