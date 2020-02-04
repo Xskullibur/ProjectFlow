@@ -3,16 +3,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="card card-body projectflow-card-shadow pt-3 container">
-        <%-- Controls --%>
+        <%-- Filter Controls --%>
         <div class="row py-3">
-            <div class="col-12 py-2">
-                <asp:LinkButton CssClass="py-1 ml-1" ID="LinkButton1" runat="server" OnClick="SearchSelfEvent">Created By Me</asp:LinkButton>
-                <asp:ListBox ID="searchList" CssClass="selectpicker form-control mt-2" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                                <h5 class="m-0">Filter</h5>
+                    </div>
+                    <div class="card-body">
+                            <div class="col-12 py-2">
+                            <asp:LinkButton CssClass="py-1 ml-1" ID="LinkButton1" runat="server" OnClick="SearchSelfEvent">Created By Me</asp:LinkButton>
+                            <asp:ListBox ID="searchList" CssClass="selectpicker form-control mt-2" data-live-search="true" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                            </div>
+                            <div class="col-12 py-2">
+                                <asp:Button ID="SearchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="SearchEvent" />
+                                <asp:Button ID="ClearBtn" CssClass="btn btn-primary" runat="server" Text="Clear" OnClick="ClearEvent" />
+                            </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-12 py-2">
-                <asp:Button ID="SearchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="SearchEvent" />
-                <asp:Button ID="ClearBtn" CssClass="btn btn-primary" runat="server" Text="Clear" OnClick="ClearEvent" />
-            </div>
+        
         </div>
         <div class="row">
             <div class="col-12">
