@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,15 @@ namespace ProjectFlow.TutorDashboard
         {
             if (!IsPostBack)
             {
-                ShowGrade();
+                if(GetProjectD() != null && GetTeamID().ToString() != null)
+                {
+                    ShowGrade();
+                    this.SetHeader("Student's Grades");
+                }
+                else
+                {
+                    Response.Redirect("ProjectTeamMenu.aspx");
+                }              
             }
         }
 

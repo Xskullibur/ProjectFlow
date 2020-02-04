@@ -44,7 +44,7 @@ namespace ProjectFlow.BLL
                 var member = dbContext.TeamMembers.Find(MemberID);
                 if(member != null)
                 {
-                    dbContext.TeamMembers.Remove(member);
+                    member.dropped = true;
                     dbContext.SaveChanges();
                 }              
             }

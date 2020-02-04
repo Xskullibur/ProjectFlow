@@ -427,6 +427,7 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
+                var project = dbContext.ProjectTeams.Find(TeamID);
 
                 var member = new TeamMember()
                 {
@@ -434,7 +435,26 @@ namespace ProjectFlow.BLL
                     teamID = TeamID,
                     roleID = RoleID
                 };
+                if(project != null)
+                {
+                    insertScore(student.UserId, project.projectID);
+                }
+
                 dbContext.TeamMembers.Add(member);
+                dbContext.SaveChanges();
+            }
+        }
+
+        private void insertScore(Guid UserID, string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var score = new Score()
+                {
+                    projectID = ProjectID,
+                    UserId = UserID
+                };
+                dbContext.Scores.Add(score);
                 dbContext.SaveChanges();
             }
         }
