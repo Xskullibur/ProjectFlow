@@ -480,6 +480,17 @@ namespace ProjectFlow.Tasks
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_pickers", "$('.selectpicker').selectpicker();", true);
         }
 
+        // Clear Input
+        private void ClearModalInputs()
+        {
+            tNameTxt.Text = string.Empty;
+            tDescTxt.Text = string.Empty;
+            tStartTxt.Text = string.Empty;
+            tEndTxt.Text = string.Empty;
+            milestoneDDL.ClearSelection();
+            statusDDL.ClearSelection();
+            priorityDDL.ClearSelection();
+        }
 
         /**
          * TASK MANIPULATION
@@ -517,36 +528,38 @@ namespace ProjectFlow.Tasks
         private void hideModal()
         {
             // Clear Fields
-            tNameTxt.Text = string.Empty;
-            tDescTxt.Text = string.Empty;
-            tStartTxt.Text = string.Empty;
-            tEndTxt.Text = string.Empty;
-            allocationList.ClearSelection();
-            statusDDL.ClearSelection();
-            milestoneDDL.ClearSelection();
+            ClearModalInputs();
 
             // Hide Modal
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('hide')", true);
         }
 
-        // Add Task Event
-        protected void addTask_Click(object sender, EventArgs e)
+        // Verify Task Details and Show Error Messages
+        private bool VerifyTask(
+            out int teamID, 
+            out string taskName, 
+            out string taskDesc, 
+            out string milestoneID,
+            out string startDate, 
+            out string endDate, 
+            out string statusID, 
+            out string priorityID)
         {
             // Get CurrentTeam
             ProjectTeam currentTeam = GetCurrentProjectTeam();
-            int teamID = currentTeam.teamID;
+            teamID = currentTeam.teamID;
 
             // Create Verification Variable
             bool verified = true;
 
             // Get Attributes
-            string taskName = tNameTxt.Text;
-            string taskDesc = tDescTxt.Text;
-            string milestoneID = milestoneDDL.SelectedValue;
-            string startDate = tStartTxt.Text;
-            string endDate = tEndTxt.Text;
-            string statusID = statusDDL.SelectedValue;
-            string priorityID = priorityDDL.SelectedValue;
+            taskName = tNameTxt.Text;
+            taskDesc = tDescTxt.Text;
+            startDate = tStartTxt.Text;
+            endDate = tEndTxt.Text;
+            milestoneID = milestoneDDL.SelectedValue;
+            statusID = statusDDL.SelectedValue;
+            priorityID = priorityDDL.SelectedValue;
 
             // Clear all Error Messages
             ClearErrorMessages();
@@ -618,58 +631,106 @@ namespace ProjectFlow.Tasks
                 }
 
             }
+
+            return verified;
+        }
+
+        // Add Task
+        private bool AddTask(int teamID, string taskName, string taskDesc, string milestoneID, string startDate, string endDate, string statusID, string priorityID)
+        {
+            // Create Task Object
+            Task newTask = new Task();
+            newTask.taskName = taskName;
+            newTask.taskDescription = taskDesc;
+            newTask.startDate = DateTime.Parse(startDate);
+            newTask.endDate = DateTime.Parse(endDate);
+            newTask.statusID = Convert.ToInt32(statusID);
+            newTask.priorityID = Convert.ToInt32(priorityID);
+            newTask.milestoneID = Convert.ToInt32(milestoneID);
+
+            newTask.teamID = teamID;
+
+            // Create Task Allocations
+            List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
+
+            foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where(x => x.Selected))
+            {
+                TaskAllocation newAllocation = new TaskAllocation();
+                newAllocation.taskID = newTask.taskID;
+                newAllocation.assignedTo = Convert.ToInt32(item.Value);
+
+                taskAllocations.Add(newAllocation);
+            }
+
+            // Submit Query
+            TaskBLL taskBLL = new TaskBLL();
+            bool result = taskBLL.Add(newTask, taskAllocations);
+
+            // Show Result
+            if (result)
+            {
+                // Default Notification Setup (One Day Reminder + Delay Update and Alert)
+                NotificationHelper.Default_AddTask_Setup(newTask.taskID);
+
+                refreshGrid?.Invoke(this, EventArgs.Empty);
+                Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 3000);
+            }
             else
             {
-                /**
-                 * Add Task
-                 **/
+                Master.ShowAlertWithTiming("Error While Adding Task, Please Try Again", BootstrapAlertTypes.DANGER, 3000);
+            }
 
-                // Create Task Object
-                Task newTask = new Task();
-                newTask.taskName = taskName;
-                newTask.taskDescription = taskDesc;
-                newTask.startDate = DateTime.Parse(startDate);
-                newTask.endDate = DateTime.Parse(endDate);
-                newTask.statusID = Convert.ToInt32(statusID);
-                newTask.priorityID = Convert.ToInt32(priorityID);
-                newTask.milestoneID = Convert.ToInt32(milestoneID);
+            return result;
+        }
 
-                newTask.teamID = teamID;
+        // Add Task Event
+        protected void addTask_Click(object sender, EventArgs e)
+        {
+            // Verify Task
+            bool verified = VerifyTask(out int teamID, 
+                out string taskName, 
+                out string taskDesc, 
+                out string milestoneID,
+                out string startDate, 
+                out string endDate, 
+                out string statusID,
+                out string priorityID);
 
-                // Create Task Allocations
-                List<TaskAllocation> taskAllocations = new List<TaskAllocation>();
+            // Task Verified
+            if (verified)
+            {
+                // Add Task
+                bool result = AddTask(teamID, taskName, taskDesc, milestoneID, startDate, endDate, statusID, priorityID);
 
-                foreach (ListItem item in allocationList.Items.Cast<ListItem>().Where( x => x.Selected))
-                {
-                    TaskAllocation newAllocation = new TaskAllocation();
-                    newAllocation.taskID = newTask.taskID;
-                    newAllocation.assignedTo = Convert.ToInt32(item.Value);
-
-                    taskAllocations.Add(newAllocation);
-                }
-
-                // Submit Query
-                TaskBLL taskBLL = new TaskBLL();
-                bool result = taskBLL.Add(newTask, taskAllocations);
-
-                // Show Result
                 if (result)
                 {
-                    // Default Notification Setup (One Day Reminder + Delay Update and Alert)
-                    NotificationHelper.Default_AddTask_Setup(newTask.taskID);
-
-                    // Update Page
                     hideModal();
-                    refreshGrid?.Invoke(this, EventArgs.Empty);
-                    this.Master.ShowAlertWithTiming("Task Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
-                }
-                else
-                {
-                    this.Master.ShowAlert("Failed to Add Task!", BootstrapAlertTypes.DANGER);
                 }
             }
 
         }
 
+        protected void tSaveAnotherBtn_Click(object sender, EventArgs e)
+        {
+            bool verified = VerifyTask(out int teamID,
+                out string taskName,
+                out string taskDesc,
+                out string milestoneID,
+                out string startDate,
+                out string endDate,
+                out string statusID,
+                out string priorityID);
+
+            if (verified)
+            {
+                bool result = AddTask(teamID, taskName, taskDesc, milestoneID, startDate, endDate, statusID, priorityID);
+
+                if (result)
+                {
+                    ClearModalInputs();
+                }
+            }
+
+        }
     }
 }

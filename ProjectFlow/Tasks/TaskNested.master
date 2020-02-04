@@ -293,7 +293,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
-                                <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary disabled" Text="Save and Add Another Task" Enabled="false" runat="server" />
+                                <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" OnClick="tSaveAnotherBtn_Click" />
                             </div>
                         </div>
 
