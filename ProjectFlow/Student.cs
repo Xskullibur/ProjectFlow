@@ -26,6 +26,7 @@ namespace ProjectFlow
         public string firstName { get; set; }
         public string lastName { get; set; }
         public System.Guid UserId { get; set; }
+        public Nullable<int> group { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

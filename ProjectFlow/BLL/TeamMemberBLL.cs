@@ -36,7 +36,7 @@ namespace ProjectFlow.BLL
                 return users;
             }
         }
-
+   
         public void DeleteMember(int MemberID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
