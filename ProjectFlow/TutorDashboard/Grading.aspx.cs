@@ -52,7 +52,8 @@ namespace ProjectFlow.TutorDashboard
 
         protected void gradeGV_RowEditing(object sender, GridViewEditEventArgs e)
         {
-
+            gradeGV.EditIndex = e.NewEditIndex;
+            ShowGrade();
         }
 
         protected void gradeGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -67,6 +68,12 @@ namespace ProjectFlow.TutorDashboard
 
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
+            ShowGrade();
+        }
+
+        protected void gradeGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gradeGV.EditIndex = -1;
             ShowGrade();
         }
     }

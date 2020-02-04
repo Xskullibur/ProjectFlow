@@ -21,7 +21,7 @@
             <div class="row mb-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="gradeGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowEditing="gradeGV_RowEditing" OnRowUpdating="gradeGV_RowUpdating" AllowPaging="True" PageSize="4" OnSelectedIndexChanging="gradeGV_SelectedIndexChanging">
+                        <asp:GridView ID="gradeGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowEditing="gradeGV_RowEditing" OnRowUpdating="gradeGV_RowUpdating" AllowPaging="True" PageSize="4" OnSelectedIndexChanging="gradeGV_SelectedIndexChanging" OnRowCancelingEdit="gradeGV_RowCancelingEdit">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
@@ -36,49 +36,73 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Proposal">
+                                <asp:TemplateField HeaderText="Proposal(10%)">
                                     <ItemTemplate>
                                         <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("proposal") %>'></asp:Label>
                                     </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editProposalTB" CssClass="form-control" runat="server" Text='<%# Bind("proposal") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Report">
+                                <asp:TemplateField HeaderText="Report(10%)">
                                     <ItemTemplate>
                                         <asp:Label ID="reportLabel" runat="server" Text='<%# Bind("report") %>'></asp:Label>
                                     </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editReportTB" CssClass="form-control" runat="server" Text='<%# Bind("report") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="1st Review">
+                                <asp:TemplateField HeaderText="1st Review(5%)">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editReviewOneTB" CssClass="form-control" runat="server" Text='<%# Bind("reviewOne") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="reviewoneLabel" runat="server" Text='<%# Bind("reviewOne") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="2nd Review">
+                                <asp:TemplateField HeaderText="2nd Review(15%)">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editReviewTwoTB" CssClass="form-control" runat="server" Text='<%# Bind("reviewTwo") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                      <ItemTemplate>
                                         <asp:Label ID="reviewtwoLabel" runat="server" Text='<%# Bind("reviewTwo") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Presentation">
+                                <asp:TemplateField HeaderText="Presentation(20%)">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editPreTB" CssClass="form-control" runat="server" Text='<%# Bind("presentation") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="presentationLabel" runat="server" Text='<%# Bind("presentation") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Test">
+                                <asp:TemplateField HeaderText="Test(20%)">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editTestTB" CssClass="form-control" runat="server" Text='<%# Bind("test") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="testLabel" runat="server" Text='<%# Bind("test") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="SDL">
+                                <asp:TemplateField HeaderText="SDL(10%)">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editsdlTB" CssClass="form-control" runat="server" Text='<%# Bind("sdl") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="sdlLabel" runat="server" Text='<%# Bind("sdl") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Participation">
+                                <asp:TemplateField HeaderText="Participation(10%)">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editPartTB" CssClass="form-control" runat="server" Text='<%# Bind("participation") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="particationLabel" runat="server" Text='<%# Bind("participation") %>'></asp:Label>
                                     </ItemTemplate>
