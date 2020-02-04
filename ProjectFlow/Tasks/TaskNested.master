@@ -135,7 +135,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <asp:Label CssClass="control-label" Text="Priority:" AssociatedControlID="fPriorityListBox" runat="server" />
-                                    <asp:ListBox ID="fPriorityListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                    <asp:ListBox ID="fPriorityListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server"></asp:ListBox>
                                 </div>
                             </div>                        
                         
@@ -143,7 +143,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="fStatusListBox" runat="server" />
-                                    <asp:ListBox ID="fStatusListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                    <asp:ListBox ID="fStatusListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server"></asp:ListBox>
                                 </div>
                             </div>      
                         

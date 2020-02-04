@@ -71,6 +71,7 @@ namespace ProjectFlow.Tasks
             return projectFlowIdentity;
         }
 
+        // Apply Filter to DataSources
         public IEnumerable<object> ApplyFilters(List<Task> data)
         {
             if (Session[FilterType.KEYWORD] != null)
@@ -128,7 +129,6 @@ namespace ProjectFlow.Tasks
         {
             if (!IsPostBack)
             {
-
                 // Set title
                 (this.Master as ServicesWithContent).Header = "Task Management";
 
@@ -187,6 +187,9 @@ namespace ProjectFlow.Tasks
                 milestoneDDL.DataValueField = "milestoneID";
 
                 milestoneDDL.DataBind();
+
+                // Update Filter Toolbox
+                UpdateFiltersToolBox();
             }
 
             if (GetCurrentIdentiy().IsTutor)
@@ -315,6 +318,7 @@ namespace ProjectFlow.Tasks
 
         }
 
+        // Create and add buttons to filter panel
         private void AddFilterButtonsToPanel(string sessionName)
         {
             List<string> filters = (Session[sessionName] as Dictionary<int, string>).Values.ToList();
@@ -341,6 +345,49 @@ namespace ProjectFlow.Tasks
                 }
 
                 currentFiltersPanel.Controls.Add(linkButton);
+            }
+        }
+
+
+        private void UpdateFiltersToolBox()
+        {
+            fTaskNameTxt.Text = string.Empty;
+            if (Session[FilterType.KEYWORD] !=  null)
+            {
+                fTaskNameTxt.Text = Session[FilterType.KEYWORD].ToString();
+            }
+
+            fPriorityListBox.ClearSelection();
+            if (Session[FilterType.PRIORITY] != null)
+            {
+                Dictionary<int, string> priorityDict = (Session[FilterType.PRIORITY] as Dictionary<int, string>);
+
+                foreach (var priority in priorityDict)
+                {
+                    fPriorityListBox.SelectedValue = priority.Key.ToString();
+                }
+            }
+
+            fStatusListBox.ClearSelection();
+            if (Session[FilterType.STATUS] != null)
+            {
+                Dictionary<int, string> statusDict = (Session[FilterType.STATUS] as Dictionary<int, string>);
+
+                foreach (var status in statusDict)
+                {
+                    fStatusListBox.SelectedValue = status.Key.ToString();
+                }
+            }
+
+            fAllocationListBox.ClearSelection();
+            if (Session[FilterType.ALLOCATION] !=  null)
+            {
+                Dictionary<int, string> allocationDict = (Session[FilterType.ALLOCATION] as Dictionary<int, string>);
+
+                foreach (var allocation in allocationDict)
+                {
+                    fAllocationListBox.SelectedValue = allocation.Key.ToString();
+                }
             }
         }
 
@@ -382,6 +429,7 @@ namespace ProjectFlow.Tasks
                 Session[sessionName] = null;
 
             refreshGrid?.Invoke(this, EventArgs.Empty);
+            UpdateFiltersToolBox();
         }
 
         // Keyword
@@ -391,7 +439,9 @@ namespace ProjectFlow.Tasks
             currentFiltersPanel.Controls.Remove(linkButton);
 
             Session[FilterType.KEYWORD] = null;
+
             refreshGrid?.Invoke(this, EventArgs.Empty);
+            UpdateFiltersToolBox();
         }
 
         // Allocation
