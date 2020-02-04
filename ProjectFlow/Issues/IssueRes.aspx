@@ -94,12 +94,11 @@
                     </div>
                     <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion" style="height: 300px;">
                         <br>
-                        <div class="row justify-content-between">
-                            <div class="col-xl-5 col-12 align-self-end">
-                                hello
-                            </div>
-                            <div class="col-xl-3 col-12 text-right">
-                                <asp:Button Text="Edit Issue" CssClass="btn btn-primary" runat="server" ID="editIssueBtn" CausesValidation="False" OnClick="edit_click"/>
+                        <div class="">
+                            <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                
+                            <div class="text-right">
+                            <asp:Button ID="editIssueBtn" CssClass="btn btn-primary px-4 mt-3" runat="server" Text="Edit" CausesValidation="False" OnClick="edit_click"/>
                             </div>
                         </div>
                     </div>

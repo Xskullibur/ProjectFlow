@@ -243,7 +243,10 @@ namespace ProjectFlow.Issues
 
         protected void edit_click(object sender, EventArgs e)
         {
-
+            int idIssue = (int)Session["SSIId"];
+            IssueBLL issuebll = new IssueBLL();
+            string conclusion = issuebll.getConclusion(idIssue);
+            TextBox2.Text = conclusion;
         }
     }
 }

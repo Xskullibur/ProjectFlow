@@ -320,5 +320,36 @@ namespace ProjectFlow.BLL
                 }
             }
         }
+
+        /// <summary>
+        /// Get Issue Conclusion
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns></returns>
+        public string getConclusion(int iID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    var conclusion = dbContext.Issues
+                        .First(x => x.issueID == iID)
+                        .Conclusion;
+                    if (conclusion != null)
+                    {
+                        return conclusion;
+                    }
+                    else
+                    {
+                        return null;
+                    }  
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Retrieving Issue conclusion: {e.Message}");
+                    return null;
+                }
+            }
+        }
     }
 }
