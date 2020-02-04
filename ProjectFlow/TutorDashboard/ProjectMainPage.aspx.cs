@@ -22,7 +22,6 @@ namespace ProjectFlow
                     InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
                                      + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Team Members)";
                     ShowMember();
-                    PageSelectDP.SelectedIndex = 0;
                     this.SetHeader("Team Members that are in this team");
                 }
                 else
@@ -170,10 +169,7 @@ namespace ProjectFlow
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(PageSelectDP.SelectedIndex == 1)
-            {
-                Response.Redirect("addMilestone.aspx");
-            }
+            
         }
 
         private void ClearModel()

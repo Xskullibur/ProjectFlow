@@ -90,13 +90,7 @@
                 </div>
             </div>
             <br>
-            <div class="row mb-3">
-                <div class="col-2">
-                    <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
-                        <asp:ListItem Value="0">Add Members</asp:ListItem>
-                        <asp:ListItem Value="1">Add MileStone</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
+            <div class="row mb-3">               
                 <div class="col-2">
                     <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" AllowPaging="True" PageSize="4" />
                 </div>

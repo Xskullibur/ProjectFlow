@@ -408,7 +408,7 @@
                             
                                 <asp:BoundField DataField="open" HeaderText="Unlocked" />
                             
-                                <asp:CommandField ButtonType="Button" SelectText="View Member" ShowSelectButton="True">
+                                <asp:CommandField ButtonType="Button" SelectText="Dash Board" ShowSelectButton="True">
                                     <ControlStyle CssClass="btn btn-success" />
                                 </asp:CommandField>
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">

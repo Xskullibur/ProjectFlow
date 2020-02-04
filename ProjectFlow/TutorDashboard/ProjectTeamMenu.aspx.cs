@@ -135,7 +135,7 @@ namespace ProjectFlow.DashBoard
             Session["CurrentProjectTeam"] = projectTeam;
             // Alson Edit Ends
 
-            Response.Redirect("ProjectMainPage.aspx");
+            Response.Redirect("../ProjectDashboard/ProjectTeamDashboard.aspx");
         }
 
         protected void TeamGV_RowEditing(object sender, GridViewEditEventArgs e)

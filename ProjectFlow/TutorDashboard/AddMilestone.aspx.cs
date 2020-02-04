@@ -24,7 +24,6 @@ namespace ProjectFlow.DashBoard
                                      + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Milestones)";
                     ShowMilestone();
                     this.SetHeader("Milestone belonging to this team");
-                    PageSelectDP.SelectedIndex = 1;
                 }
                 else
                 {
@@ -69,10 +68,7 @@ namespace ProjectFlow.DashBoard
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (PageSelectDP.SelectedIndex == 0)
-            {
-                Response.Redirect("ProjectMainPage.aspx");
-            }
+           
         }
 
         protected void MilestoneGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

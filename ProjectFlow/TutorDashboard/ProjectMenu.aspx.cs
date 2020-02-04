@@ -22,11 +22,7 @@ namespace ProjectFlow.DashBoard
             {
                 if (!IsPostBack)
                 {
-                    Session["TutorID"] = identity.Tutor.UserId.ToString();
-                    Session["PassProjectID"] = null;
-                    Session["PassProjectName"] = null;
-                    Session["PassTeamID"] = null;
-                    Session["PassTeamName"] = null;
+                    Session["TutorID"] = identity.Tutor.UserId.ToString();                   
                     this.SetHeader("Modules that I teach");
                     ShowProject();
                 }
