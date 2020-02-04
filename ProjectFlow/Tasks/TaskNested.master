@@ -109,7 +109,7 @@
 
         </div>
 
-        <%--Filter Panel--%>
+        <%--Filter Toolbox--%>
         <div class="row">
             <div class="col">
                 <div class="collapse mt-3 mb-2" id="filterDiv">
