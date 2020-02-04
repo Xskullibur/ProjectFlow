@@ -21,7 +21,7 @@ namespace ProjectFlow.Issues
             int idIssue = (int)Session["SSIId"];
             if (!IsPostBack)
             {
-                
+                //Databinding non responsive elements
                 IssueBLL issueBLL = new IssueBLL();
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
 
@@ -37,6 +37,7 @@ namespace ProjectFlow.Issues
                 StatusBLL status = new StatusBLL();
                 Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
                 IssueStatus.Text = currentstat.status1;
+                lbConclusion.Text = updated_issue.Conclusion;
 
                 ispublic = updated_issue.votePublic.ToString();
                 check();
@@ -246,13 +247,46 @@ namespace ProjectFlow.Issues
             int idIssue = (int)Session["SSIId"];
             IssueBLL issuebll = new IssueBLL();
             string conclusion = issuebll.getConclusion(idIssue);
-            TextBox2.Text = conclusion;
+
         }
 
         // Add Task OnClick Event
         protected void showTaskModal_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
+
+            int idIssue = (int)Session["SSIId"];
+            IssueBLL issueBLL = new IssueBLL();
+            Issue updated_issue = issueBLL.GetIssueByID(idIssue);
+            //Databinding the modal form
+            tNameTxt.Text = updated_issue.title;
+            tDescTxt.Text = updated_issue.description;
+
+            //check if public
+            if (updated_issue.votePublic == true)
+            {
+                cbPublic.Checked = true;
+            }
+            else
+            {
+                cbPublic.Checked = false;
+            }
+
+
+            //Set Dropdownlist Datasource
+            StatusBLL statusBLL = new StatusBLL();
+            Dictionary<int, string> statusDict = statusBLL.Get();
+
+            IssueStatusDLL.DataSource = statusDict;
+            IssueStatusDLL.DataTextField = "Value";
+            IssueStatusDLL.DataValueField = "Key";
+            IssueStatusDLL.DataBind();
+
+            //Set Inital Value 
+            StatusBLL status = new StatusBLL();
+            Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
+            string statusVal = currentstat.status1;
+            IssueStatusDLL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
         }
 
         private void hideModal()
@@ -266,7 +300,66 @@ namespace ProjectFlow.Issues
         }
         protected void addTask_Click(object sender, EventArgs e)
         {
-            hideModal();
+            if (Page.IsValid)
+            {
+                // Verify Task ID
+                IssueBLL issueBLL = new IssueBLL();
+                int id = (int)Session["SSIId"];
+
+                Issue updated_issue = issueBLL.GetIssueByID(id);
+
+                if (updated_issue == null)
+                {
+                    // TODO: Error Message Task ID Not Found
+                }
+                else
+                {
+                    // Attributes
+                    string name = tNameTxt.Text;
+                    string desc = tDescTxt.Text;
+                    int statusId = Convert.ToInt32(IssueStatusDLL.SelectedValue);
+                    bool IsPublic = checkCB();
+                    string conclusion = tConcText.Text;
+
+                    /**
+                     * UPDATE TASK
+                     **/
+
+                    // Update Task
+
+                    updated_issue.title = name;
+                    updated_issue.description = desc;
+                    updated_issue.statusID = statusId;
+                    updated_issue.votePublic = IsPublic;
+                    updated_issue.Conclusion = conclusion;
+
+                    // Update Task and Allocations
+                    if (issueBLL.Update(updated_issue))
+                    {
+                        //NotificationHelper.Default_TaskUpdate_Setup(id);
+                        this.Master.ShowAlertWithTiming("Issue Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
+                    }
+                    else
+                    {
+                        this.Master.ShowAlert("Failed to Update Issue!", BootstrapAlertTypes.DANGER);
+                    }
+
+                    //hide moda;
+                    hideModal();
+                }     
+            }
+        }
+
+        protected bool checkCB()
+        {
+            if (cbPublic.Checked == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -181,7 +181,6 @@ namespace ProjectFlow.Issues
             // Verify Task ID
             IssueBLL issueBLL = new IssueBLL();
 
-            TaskBLL taskBLL = new TaskBLL();
             //int id = Convert.ToInt32(row.Cells[0].Text);
             int id = int.Parse(row.Cells[0].Text);
 

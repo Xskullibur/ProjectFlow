@@ -11,7 +11,7 @@
                         <ContentTemplate>
                             <div class="card-body">
                                 <asp:Label ID="lbMember" runat="server"></asp:Label>  
-                                <asp:Label ID="lbIssue" runat="server" Text=""></asp:Label>
+                                <asp:Label ID="lbIssue" runat="server"></asp:Label>
                             </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -95,15 +95,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion" style="height: 300px;">
+                    <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion">
                         <br>
-                        <div class="">
-                            <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
-                
-                            <div class="text-right">
-                            <asp:Button ID="editIssueBtn" CssClass="btn btn-primary px-4 mt-3" runat="server" Text="Edit" CausesValidation="False" OnClick="edit_click"/>
-                            </div>
-                        </div>
+                        <asp:Label ID="lbConclusion" runat="server"></asp:Label>
                     </div>
                 </div>
             </div>
@@ -148,15 +142,6 @@
                                 <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
-
-                            <%--Task--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Task Name:" AssociatedControlID="TaskIdDLL" runat="server" />
-                                <asp:DropDownList ID="TaskIdDLL" CssClass="form-control" runat="server"></asp:DropDownList>
-
-                                <asp:Label ID="taskIdErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="TaskIdDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                            </div>
                             
                             <%--Status--%>
                             <div class="form-group">
@@ -167,22 +152,21 @@
                                 <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
 
-                            <%--Resolution method--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Resolution method:" AssociatedControlID="DropDownList1" runat="server" />
-                                <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server"></asp:DropDownList>
-
-                                <asp:Label ID="resolutionErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                            </div>
-
-
                             <%--Public--%>
                             <div class="form-group">
                                 <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
                                 <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
 
                                 <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                
+                            </div>
+
+                            <%--Conclusion--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Conclusion:" AssociatedControlID="tConcText" runat="server" />
+                                <asp:TextBox ID="tConcText" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tConcText" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 
                             </div>
                         </div>

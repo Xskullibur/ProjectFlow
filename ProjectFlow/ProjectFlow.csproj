@@ -359,7 +359,6 @@
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
     <Content Include="ProjectDashboard\Web.config" />
-    <Content Include="Issues\IssueResNested.master" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -441,12 +440,6 @@
     </Compile>
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueResNested.master.cs">
-      <DependentUpon>IssueResNested.master</DependentUpon>
-    </Compile>
-    <Compile Include="Issues\IssueResNested.master.designer.cs">
-      <DependentUpon>IssueResNested.master</DependentUpon>
     </Compile>
     <Compile Include="Milestone.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
