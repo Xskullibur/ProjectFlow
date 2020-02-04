@@ -32,7 +32,8 @@ namespace ProjectFlow
         }
         public int GetTeamID()
         {
-            return int.Parse(Session["PassTeamID"].ToString());
+            // return int.Parse(Session["PassTeamID"].ToString());
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void ShowMember()

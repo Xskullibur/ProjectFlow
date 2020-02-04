@@ -135,6 +135,8 @@ namespace ProjectFlow.DashBoard
             Session["CurrentProjectTeam"] = projectTeam;
             // Alson Edit Ends
 
+
+            (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(Convert.ToInt32(row.Cells[0].Text)));
             Response.Redirect("../ProjectDashboard/ProjectTeamDashboard.aspx");
         }
 

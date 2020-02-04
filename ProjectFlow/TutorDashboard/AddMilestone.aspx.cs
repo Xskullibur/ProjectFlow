@@ -34,12 +34,14 @@ namespace ProjectFlow.DashBoard
 
         public string GetProjectID()
         {
-            return Session["PassProjectID"].ToString();
+            //return Session["PassProjectID"].ToString();
+            return (Master as ServicesWithContent).CurrentProject.projectID;
         }
 
         public int GetTeamID()
         {
-            return int.Parse(Session["PassTeamID"].ToString());
+            //return int.Parse(Session["PassTeamID"].ToString());
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void OpenModel()
