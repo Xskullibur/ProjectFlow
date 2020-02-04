@@ -248,5 +248,25 @@ namespace ProjectFlow.Issues
             string conclusion = issuebll.getConclusion(idIssue);
             TextBox2.Text = conclusion;
         }
+
+        // Add Task OnClick Event
+        protected void showTaskModal_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
+        }
+
+        private void hideModal()
+        {
+            // Clear Fields
+            tNameTxt.Text = string.Empty;
+            tDescTxt.Text = string.Empty;
+
+            // Hide Modal
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('hide')", true);
+        }
+        protected void addTask_Click(object sender, EventArgs e)
+        {
+            hideModal();
+        }
     }
 }

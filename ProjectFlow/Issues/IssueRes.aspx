@@ -43,7 +43,9 @@
                 </div>&nbsp;
                 <asp:Button ID="btnRandom" CssClass ="btn btn-outline-secondary" runat="server" Text="&#127922;" OnClick="btnRandom_Click" />
             </div>
-            
+            <div class="col-xl-3 col-12 text-right">
+                <asp:Button Text="Edit Issue" CssClass="btn btn-primary" runat="server" ID="Button1" OnClick="showTaskModal_Click" />
+            </div>
         </div>
 
         <hr/>
@@ -76,6 +78,7 @@
                                                 <HeaderTemplate>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
+                                                    <br>
                                                     </br>
                                                     <div class="mdc-card">
                                                         <div class="card-body">
@@ -107,5 +110,96 @@
         </div>
         
 
+    </div>
+    <div class="container">
+        <!-- Add Modal -->
+        <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+
+                <div class="modal-content">
+
+                    <%--Main Content--%>
+                    <div class="modal-header">
+                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Issue" runat="server" />
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <%--Body--%>
+                    <div class="modal-body">
+                            
+                        <div class="container-fluid" runat="server">
+
+                            <%--Name--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Issue Name:" AssociatedControlID="tNameTxt" runat="server" />
+                                <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Issue Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Description--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
+                                <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
+
+                                <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Task--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Task Name:" AssociatedControlID="TaskIdDLL" runat="server" />
+                                <asp:DropDownList ID="TaskIdDLL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:Label ID="taskIdErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="TaskIdDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+                            
+                            <%--Status--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:DropDownList ID="IssueStatusDLL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+                            <%--Resolution method--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Resolution method:" AssociatedControlID="DropDownList1" runat="server" />
+                                <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:Label ID="resolutionErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
+
+
+                            <%--Public--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
+                                <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
+
+                                <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                
+                            </div>
+                        </div>
+
+                        <%--Error Summary--%>
+                        <asp:ValidationSummary ID="addTaskSummaryValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ValidationGroup="AddTask" ShowMessageBox="True" ShowSummary="False" />
+
+                    </div>
+
+                    <%--Footer--%>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" ValidationGroup="AddTask" OnClick="addTask_Click"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </asp:Content>
