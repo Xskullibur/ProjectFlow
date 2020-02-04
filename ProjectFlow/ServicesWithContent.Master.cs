@@ -121,6 +121,82 @@ namespace ProjectFlow
         }
 
         /// <summary>
+        /// Change the currently selected project team, 
+        /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc.
+        /// Setting this with null will clear the project team
+        /// </summary>
+        public void SetCurrentProjectTeam(ProjectTeam projectTeam)
+        {
+
+            //Check if setting project team to null
+            if (projectTeam == null)
+            {
+                //Clear the session
+                Session["CurrentProjectTeam"] = null;
+                Session["CurrentProject"] = null;
+                return;
+            }
+
+
+            //Check for access right into the project
+            var user = HttpContext.Current.User;
+            if (user.Identity.IsAuthenticated)
+            {
+                var projectFlowIdentity = user.Identity as ProjectFlowIdentity;
+                if (projectFlowIdentity.IsStudent)
+                {
+                    var student = projectFlowIdentity.Student;
+
+                    StudentBLL studentBLL = new StudentBLL();
+                    if (studentBLL.HaveProjectTeam(student, projectTeam))
+                    {
+
+                        ProjectBLL projectBLL = new ProjectBLL();
+                        Project project = projectBLL.GetProjectByProjectId(projectTeam.projectID);
+
+                        Session["CurrentProjectTeam"] = projectTeam;
+
+                        //Set the session of the current projects
+                        Session["CurrentProject"] = project;
+
+                        //Inject ID into html
+                        InjectHTMLForProjectTeamAndProject(project, projectTeam);
+
+                    }
+                    else
+                    {
+                        Response.Redirect("InvalidRequest.aspx");
+                    }
+                }
+                else if (projectFlowIdentity.IsTutor)
+                {
+                    var tutor = projectFlowIdentity.Tutor;
+                    TutorBLL tutorBLL = new TutorBLL();
+                    if (tutorBLL.HaveProjectTeam(tutor, projectTeam))
+                    {
+
+                        ProjectBLL projectBLL = new ProjectBLL();
+                        Project project = projectBLL.GetProjectByProjectId(projectTeam.projectID);
+
+                        Session["CurrentProjectTeam"] = projectTeam;
+
+                        //Set the session of the current projects
+                        Session["CurrentProject"] = project;
+
+
+                        //Inject html for project
+                        InjectHTMLForProjectTeamAndProject(project, null);
+
+                    }
+                    else
+                    {
+                        Response.Redirect("InvalidRequest.aspx");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Change the currently selected project, 
         /// all view should reponse accordingly and reflect on the changes such as the project tasks, etc.
         /// Setting this with null will clear the project
