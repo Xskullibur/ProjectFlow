@@ -23,8 +23,10 @@ namespace ProjectFlow
         public Nullable<double> test { get; set; }
         public Nullable<double> sdl { get; set; }
         public Nullable<double> participation { get; set; }
-        public Nullable<int> memberID { get; set; }
+        public System.Guid UserId { get; set; }
+        public string projectID { get; set; }
     
-        public virtual TeamMember TeamMember { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

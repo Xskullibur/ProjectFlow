@@ -23,8 +23,8 @@ namespace ProjectFlow.TutorDashboard
 
         private void ShowGrade()
         {
-            List<TeamMember> studentList = teamMemberBLL.GetUserGradesByTeamID(GetTeamID());
-            gradeGV.DataSource = studentList;
+            //List<TeamMember> studentList = teamMemberBLL.GetUserGradesByTeamID(GetTeamID());
+            //gradeGV.DataSource = studentList;
             gradeGV.DataBind();
         }
 

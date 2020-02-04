@@ -21,7 +21,6 @@ namespace ProjectFlow
             this.Issues = new HashSet<Issue>();
             this.Pollings = new HashSet<Polling>();
             this.TaskAllocations = new HashSet<TaskAllocation>();
-            this.Scores = new HashSet<Score>();
         }
     
         public int memberID { get; set; }
@@ -41,7 +40,5 @@ namespace ProjectFlow
         public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskAllocation> TaskAllocations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Score> Scores { get; set; }
     }
 }

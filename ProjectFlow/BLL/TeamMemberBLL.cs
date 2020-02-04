@@ -36,15 +36,7 @@ namespace ProjectFlow.BLL
                 return users;
             }
         }
-
-        public List<TeamMember> GetUserGradesByTeamID(int TeamID)
-        {
-            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
-            {
-                return dbContext.TeamMembers.Include(x => x.Student).Include(x => x.Scores).Where(x => x.teamID == TeamID).ToList();
-            }
-        }
-
+     
         public void DeleteMember(int MemberID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
