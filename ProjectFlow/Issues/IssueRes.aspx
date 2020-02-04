@@ -44,7 +44,16 @@
                 <asp:Button ID="btnRandom" CssClass ="btn btn-outline-secondary" runat="server" Text="&#127922;" OnClick="btnRandom_Click" />
             </div>
             <div class="col-xl-3 col-12 text-right">
-                <asp:Button Text="Edit Issue" CssClass="btn btn-primary" runat="server" ID="Button1" OnClick="showTaskModal_Click" />
+                <div class="dropdown">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                        Edit
+                    </button>
+
+                    <div class="dropdown-menu">
+                        <asp:Button Text="Edit Issue" CssClass="dropdown-item" runat="server" ID="updateIssueBtn" OnClick="showTaskModal_Click" />
+                        <asp:Button Text="Drop Issue" CssClass="dropdown-item" runat="server" ID="dropIssueBtn" OnClick="IssueDelete" />
+                    </div>
+                </div>
             </div>
         </div>
 

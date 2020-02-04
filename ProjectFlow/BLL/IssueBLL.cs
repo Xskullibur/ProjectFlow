@@ -202,7 +202,7 @@ namespace ProjectFlow.BLL
         /// </summary>
         /// <param name="issue"></param>
         /// <returns>Boolean</returns>
-        public bool Drop(int id, int UserId)
+        public bool Drop(int id)
         {
             Issue issue = GetIssueByID(id);
 
@@ -210,19 +210,13 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
-                    if (issue.createdBy == UserId)
-                    {
-                        issue.active = false;
-                        dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
-                        dbContext.SaveChanges();
 
-                        return true;
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine($"wrong user dropping task");
-                        return false;
-                    }
+                    issue.active = false;
+                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+
                 }
                 catch (Exception e)
                 {

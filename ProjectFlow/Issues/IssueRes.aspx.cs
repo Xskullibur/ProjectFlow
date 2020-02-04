@@ -55,6 +55,14 @@ namespace ProjectFlow.Issues
             return projectFlowIdentity;
         }
 
+        // Get Current Project
+        public ProjectTeam GetCurrentProjectTeam()
+        {
+            ServicesWithContent servicesWithContent = Master as ServicesWithContent;
+
+            return servicesWithContent.CurrentProjectTeam;
+        }
+
         protected void btnYes_Click(object sender, EventArgs e)
         {
             vote(true);
@@ -231,6 +239,11 @@ namespace ProjectFlow.Issues
             else
             {
                 disablecomments();
+                dropIssueBtn.Enabled = false;
+                btnYes.Enabled = false;
+                btnNo.Enabled = false;
+                btnRandom.Enabled = false;
+                this.Master.ShowAlert("Issue has been dropped", BootstrapAlertTypes.DANGER);
             }
         }
 
@@ -347,6 +360,30 @@ namespace ProjectFlow.Issues
                     //hide moda;
                     hideModal();
                 }     
+            }
+        }
+
+        protected void IssueDelete(object sender, EventArgs e)
+        {
+
+            // Get Current Project Team
+            ProjectTeam currentTeam = GetCurrentProjectTeam();
+
+            // Selected Issue ID
+            int id = (int)Session["SSIId"];
+
+            // Delete Task
+            IssueBLL issueBLL = new IssueBLL();
+            bool result = issueBLL.Drop(id);
+
+            if (result)
+            {
+                Response.Redirect("../Issues/iAllView.aspx");
+                //this.Master.Master.ShowAlertWithTiming("Issue Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
+            }
+            else
+            {
+                this.Master.ShowAlert("Failed to Drop Task", BootstrapAlertTypes.DANGER);
             }
         }
 

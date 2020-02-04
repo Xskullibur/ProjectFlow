@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ProjectFlow.BLL;
 using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
@@ -16,18 +16,6 @@ namespace ProjectFlow.Issues
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (Master.GetCurrentProjectTeam() == null)
-            {
-                if (Master.GetCurrentIdentiy().IsTutor)
-                {
-                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
-                }
-                else if (Master.GetCurrentIdentiy().IsStudent)
-                {
-                    Response.Redirect("/StudentDashboard/studentProject.aspx");
-                }
-            }
-
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
 
@@ -83,18 +71,18 @@ namespace ProjectFlow.Issues
             // Get Current Project Team
             ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            // Selected Task ID
+            // Selected Issue ID
             int id = Convert.ToInt32(IssueView.Rows[e.RowIndex].Cells[0].Text);
 
             // Delete Task
             IssueBLL issueBLL = new IssueBLL();
-            bool result = issueBLL.Drop(id, currentTeam.teamID);
+            bool result = issueBLL.Drop(id);
 
             refreshData();
 
             if (result)
             {
-                NotificationHelper.Task_Drop_Setup(id);
+                //NotificationHelper.Task_Drop_Setup(id);
                 this.Master.Master.ShowAlertWithTiming("Task Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else

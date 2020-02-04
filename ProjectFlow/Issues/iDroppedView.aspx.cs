@@ -15,19 +15,7 @@ namespace ProjectFlow.Issues
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (Master.GetCurrentProjectTeam() == null)
-            {
-                if (Master.GetCurrentIdentiy().IsTutor)
-                {
-                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
-                }
-                else if (Master.GetCurrentIdentiy().IsStudent)
-                {
-                    Response.Redirect("/StudentDashboard/studentProject.aspx");
-                }
-            }
-
-            //Master.refreshGrid += new EventHandler(refreshBtn_Click);
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -60,6 +48,12 @@ namespace ProjectFlow.Issues
                 IssueView.UseAccessibleHeader = true;
             }
         }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData();
+        }
+
         protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 

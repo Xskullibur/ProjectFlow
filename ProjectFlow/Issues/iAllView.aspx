@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container py-2 w-100 h-100">
+    <div class="container-fluid py-2 w-100 h-100">
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">

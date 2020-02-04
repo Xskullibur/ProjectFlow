@@ -11,7 +11,6 @@ namespace ProjectFlow.Issues
 {
     public partial class iAllView : System.Web.UI.Page
     {
-        private const int TEST_TEAM_ID = 2;
         protected void Page_PreInit(object sender, EventArgs e)
         {
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
@@ -21,14 +20,18 @@ namespace ProjectFlow.Issues
             if (!IsPostBack)
             {
                 Master.changeSelectedView(IssueNested.IssueViews.iAllView);
-                refreshData(TEST_TEAM_ID);
+                refreshData();
             }
+            IssueView.Font.Size = 11;
         }
-        private void refreshData(int id)
+        private void refreshData()
         {
             IssueBLL issueBLL = new IssueBLL();
 
-            IssueView.DataSource = issueBLL.GetAllIssuesByTeamId(id);
+            // Get Current Project Team
+            ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
+
+            IssueView.DataSource = issueBLL.GetAllIssuesByTeamId(currentTeam.teamID);
             IssueView.DataBind();
 
             if (IssueView.Rows.Count > 0)
@@ -42,14 +45,25 @@ namespace ProjectFlow.Issues
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if (e.Row.Cells[5].Text == "False")//orderstatus index
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
                 {
-                    //e.Row.Enabled = false;
-                }
 
+                }
                 else
                 {
-                    e.Row.Enabled = true;
+                    if (e.Row.RowType == DataControlRowType.DataRow)
+                    {
+                        TableCell PublicCell = e.Row.Cells[6];
+                        if (PublicCell.Text == "True")
+                        {
+                            PublicCell.Text = "<i class='fa fa-check-circle fa-lg text-success'></i>";
+                        }
+
+                        else
+                        {
+                            PublicCell.Text = "<i class='fa fa-times-circle fa-lg text-danger'></i>";
+                        }
+                    }
                 }
             }
         }
@@ -66,7 +80,7 @@ namespace ProjectFlow.Issues
 
         protected void IssueView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
+            /*
             // Selected Task ID
             int id = Convert.ToInt32(IssueView.Rows[e.RowIndex].Cells[0].Text);
 
@@ -74,7 +88,7 @@ namespace ProjectFlow.Issues
             IssueBLL issueBLL = new IssueBLL();
             bool result = issueBLL.Drop(id, TEST_TEAM_ID);
 
-            refreshData(TEST_TEAM_ID);
+            refreshData();
 
             if (result)
             {
@@ -83,19 +97,19 @@ namespace ProjectFlow.Issues
             else
             {
                 //TODO: Notify Delete Failed
-            }
+            }*/
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
-            refreshData(TEST_TEAM_ID);
+            refreshData();
         }
 
         //Pagination
         protected void IssueView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             IssueView.PageIndex = e.NewPageIndex;
-            //refreshData();
+            refreshData();
         }
     }
 }
