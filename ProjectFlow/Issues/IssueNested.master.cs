@@ -97,6 +97,12 @@ namespace ProjectFlow.Issues
                 IssueStatusDLL.DataBind();
 
             }
+
+            if (GetCurrentIdentiy().IsTutor)
+            {
+                addTaskBtn.Visible = false;
+            }
+
         }
 
         // Add Task OnClick Event
