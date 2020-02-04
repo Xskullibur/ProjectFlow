@@ -21,20 +21,74 @@
             <div class="row mb-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="MemberGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging" AllowPaging="True" PageSize="4">
+                        <asp:GridView ID="gradeGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowEditing="gradeGV_RowEditing" OnRowUpdating="gradeGV_RowUpdating" AllowPaging="True" PageSize="4" OnSelectedIndexChanging="gradeGV_SelectedIndexChanging">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
-                                <asp:BoundField HeaderText="ScoreID" />
-                                <asp:BoundField HeaderText="Name" />
-                                <asp:TemplateField HeaderText="Proposal"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="Report"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="1st Review"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="2nd Review"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="Presentation"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="test"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="sdl"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="partication"></asp:TemplateField>
-                                <asp:TemplateField HeaderText="Total"></asp:TemplateField>
+                                <asp:TemplateField HeaderText="ID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.scoreID") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Name">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Proposal">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.proposal") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Report">
+                                    <ItemTemplate>
+                                        <asp:Label ID="reportLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.report") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="1st Review">
+                                    <ItemTemplate>
+                                        <asp:Label ID="reviewoneLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.reviewOne") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="2nd Review">
+                                     <ItemTemplate>
+                                        <asp:Label ID="reviewtwoLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.reviewTwo") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Presentation">
+                                    <ItemTemplate>
+                                        <asp:Label ID="presentationLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.presentation") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Test">
+                                    <ItemTemplate>
+                                        <asp:Label ID="testLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.test") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="SDL">
+                                    <ItemTemplate>
+                                        <asp:Label ID="sdlLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.sdl") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Participation">
+                                    <ItemTemplate>
+                                        <asp:Label ID="particationLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Score.participation") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Total">
+
+                                </asp:TemplateField>
+
+                                <asp:CommandField ButtonType="Button" ShowEditButton="True" />
                             </Columns>
                             <EmptyDataTemplate>
                                 <div class="jumbotron jumbotron-fluid">
@@ -52,7 +106,7 @@
             <br>
             <div class="row mb-3">
                 <div class="col">
-                    <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
+                    <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click"/>
                 </div>
             </div>
         </div>

@@ -184,6 +184,8 @@
                                                 </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>
+                                                <mio:SidebarItem ItemText="Grade" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
+                                                </mio:SidebarItem>
                                             </SidebarItems>
                                         </mio:SidebarGroup>
                                         <mio:SidebarGroup SubHeaderText="Issues">
