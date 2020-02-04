@@ -348,7 +348,7 @@ namespace ProjectFlow.Tasks
             }
         }
 
-
+        // Update values based on filters applied
         private void UpdateFiltersToolBox()
         {
             fTaskNameTxt.Text = string.Empty;
