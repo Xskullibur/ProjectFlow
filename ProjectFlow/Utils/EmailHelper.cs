@@ -31,11 +31,7 @@ namespace ProjectFlow.Utils
                 string milestone = "-";
 
                 List<string> allocations = task.TaskAllocations.Select(x => x.TeamMember.Student.firstName + " " + x.TeamMember.Student.lastName).ToList();
-
-                if (task.milestoneID != null)
-                {
-                    milestone = milestoneBLL.GetMilestoneByID(task.milestoneID).milestoneName;
-                }
+                milestone = milestoneBLL.GetMilestoneByID(task.milestoneID).milestoneName;
 
                 using (StreamReader streamReader = new StreamReader(templateDir))
                 {
