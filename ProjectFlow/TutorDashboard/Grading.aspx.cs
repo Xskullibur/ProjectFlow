@@ -47,7 +47,7 @@ namespace ProjectFlow.TutorDashboard
 
         public string CheckFailure(double score)
         {
-            if(score > 10)
+            if(score > 50)
             {
                 return "<i style=\"color: green;\" class=\"fas fa-lg fa-trophy\"></i>";
             }

@@ -115,8 +115,16 @@
                                             (
 
                                             (double)Eval("participation") +
-                                            (double)Eval("sdl") + (double)Eval("test")
-
+                                            (double)Eval("sdl") + 
+                                            (double)Eval("test") +
+                                            (double)Eval("presentation") +
+                                            (double)Eval("reviewTwo") +
+                                            (double)Eval("reviewOne") +
+                                            (double)Eval("report") +
+                                            (double)Eval("proposal") +
+                                            (double)Eval("reportG") +
+                                            (double)Eval("presentationG") +
+                                            (double)Eval("proposalG")
                                             ).ToString()
                                             %>'></asp:Label>
                                     </ItemTemplate>
@@ -127,7 +135,15 @@
                                         <%# CheckFailure(
                                          (double)Eval("participation") +
                                          (double)Eval("sdl") + 
-                                         (double)Eval("test")
+                                         (double)Eval("test") +
+                                         (double)Eval("presentation") +
+                                         (double)Eval("reviewTwo") +
+                                         (double)Eval("reviewOne") +
+                                         (double)Eval("report") +
+                                         (double)Eval("proposal") +
+                                         (double)Eval("reportG") +
+                                         (double)Eval("presentationG") +
+                                         (double)Eval("proposalG")
                                         ) %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
