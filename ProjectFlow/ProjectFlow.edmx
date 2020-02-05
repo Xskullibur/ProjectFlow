@@ -415,6 +415,10 @@
           <Property Name="participation" Type="float" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="teamID" Type="int" />
+          <Property Name="proposalG" Type="float" />
+          <Property Name="reportG" Type="float" />
+          <Property Name="presentationG" Type="float" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -1076,6 +1080,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Score_FK_team">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProjectFlowModelStoreContainer">
           <EntitySet Name="aspnet_Applications" EntityType="Self.aspnet_Applications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_Membership" EntityType="Self.aspnet_Membership" Schema="dbo" store:Type="Tables" />
@@ -1305,6 +1321,10 @@
           </AssociationSet>
           <AssociationSet Name="Score_FK_1" Association="Self.Score_FK_1">
             <End Role="Student" EntitySet="Student" />
+            <End Role="Score" EntitySet="Score" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK_team" Association="Self.Score_FK_team">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
             <End Role="Score" EntitySet="Score" />
           </AssociationSet>
         </EntityContainer>
@@ -1566,6 +1586,7 @@
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK_team" FromRole="ProjectTeam" ToRole="Score" />
         </EntityType>
         <EntityType Name="QRTZ_BLOB_TRIGGERS">
           <Key>
@@ -1778,7 +1799,12 @@
           <Property Name="participation" Type="Double" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="teamID" Type="Int32" />
+          <Property Name="proposalG" Type="Double" />
+          <Property Name="reportG" Type="Double" />
+          <Property Name="presentationG" Type="Double" />
           <NavigationProperty Name="Project" Relationship="Self.Score_FK" FromRole="Score" ToRole="Project" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.Score_FK_team" FromRole="Score" ToRole="ProjectTeam" />
           <NavigationProperty Name="Student" Relationship="Self.Score_FK_1" FromRole="Score" ToRole="Student" />
         </EntityType>
         <EntityType Name="Status">
@@ -2254,6 +2280,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Score_FK_team">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
           <End Role="QRTZ_TRIGGERS" Type="Self.QRTZ_TRIGGERS" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2613,6 +2651,10 @@
           <AssociationSet Name="FK_TeamMember_ProjectTeam" Association="Self.FK_TeamMember_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK_team" Association="Self.Score_FK_team">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="Score" EntitySet="Scores" />
           </AssociationSet>
           <AssociationSet Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
             <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
@@ -3096,6 +3138,10 @@
                 <ScalarProperty Name="participation" ColumnName="participation" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="proposalG" ColumnName="proposalG" />
+                <ScalarProperty Name="reportG" ColumnName="reportG" />
+                <ScalarProperty Name="presentationG" ColumnName="presentationG" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
