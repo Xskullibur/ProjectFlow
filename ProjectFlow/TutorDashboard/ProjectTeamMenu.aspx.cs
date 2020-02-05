@@ -18,13 +18,15 @@ namespace ProjectFlow.DashBoard
         {
             if (!IsPostBack)
             {
-                if (Session["PassProjectID"] != null)
+                if (GetProjectID() != null)
                 {
                     Session["PassTeamID"] = null;
                     Session["PassTeamName"] = null;
                     ShowTeam();
-                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Select)";
+                    InfoLabel.Text = "Module: (" + GetProjectID() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Select)";
                     this.SetHeader("Teams that are in this Module");
+
+                    
                 }
                 else
                 {
@@ -34,7 +36,7 @@ namespace ProjectFlow.DashBoard
         }
         public string GetProjectID()
         {
-            return Session["PassProjectID"].ToString();
+            return (Master as ServicesWithContent).CurrentProject.projectID;
         }
 
         private void OpenModel()
@@ -263,5 +265,6 @@ namespace ProjectFlow.DashBoard
             Master.ShowAlert("Team open for people to join", BootstrapAlertTypes.SUCCESS);
             ShowTeam();
         }
+
     }
 }

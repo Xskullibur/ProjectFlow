@@ -280,7 +280,9 @@
                             </td>
                             <td class="auto-style14">
                                 <br />
-                                <asp:Button ID="lockBtn" runat="server" CssClass="btn btn-primary" OnClick="lockBtn_Click" Text="Lock" />
+                                <asp:LinkButton ID="lockBtn" runat="server" CssClass="btn btn-primary" OnClick="lockBtn_Click">
+                                    <i style="color: white;" class="fas fa-lg fa-lock"></i>
+                                </asp:LinkButton>
 &nbsp;&nbsp;
                                 <asp:Button ID="unlockDP" runat="server" CssClass="btn btn-primary" OnClick="unlockDP_Click" Text="Unlock" />
                             </td>
