@@ -784,12 +784,10 @@
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\ChartJS\ChartUtils.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
-    <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\NotificationHelper.cs" />
     <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="Utils\SemanticsParsing.cs" />
-    <Compile Include="Utils\SmsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
