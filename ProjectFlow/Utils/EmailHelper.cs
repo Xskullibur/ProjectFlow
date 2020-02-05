@@ -17,6 +17,52 @@ namespace ProjectFlow.Utils
         string smtp= ConfigurationManager.AppSettings["SMTP"].ToString();
         int portNo = Convert.ToInt32(ConfigurationManager.AppSettings["PortNo"].ToString());
 
+        public static string GetTaskNotificationTemplate(string templateDir, string url, string title, Task task)
+        {
+            try
+            {
+                StatusBLL statusBLL = new StatusBLL();
+                MilestoneBLL milestoneBLL = new MilestoneBLL();
+
+                string status = statusBLL.GetStatusByID(task.statusID).status1;
+                string milestone = "-";
+
+                List<string> allocations = task.TaskAllocations.Select(x => x.TeamMember.Student.firstName + " " + x.TeamMember.Student.lastName).ToList();
+                milestone = milestoneBLL.GetMilestoneByID(task.milestoneID).milestoneName;
+
+                using (StreamReader streamReader = new StreamReader(templateDir))
+                {
+                    string textBody = streamReader.ReadToEnd();
+
+                    //Update Template Values
+                    textBody = textBody.Replace("[Title]", title);
+                    textBody = textBody.Replace("[TaskDesc]", task.taskDescription);
+                    textBody = textBody.Replace("[StartDate]", task.startDate.ToString());
+                    textBody = textBody.Replace("[EndDate]", task.endDate.ToString());
+                    textBody = textBody.Replace("[Milestone]", milestone);
+                    textBody = textBody.Replace("[Priority]", task.Priority.priority1);
+                    textBody = textBody.Replace("[Status]", status);
+                    textBody = textBody.Replace("[TaskDirectory]", url);
+
+                    if (allocations == null)
+                    {
+                        textBody = textBody.Replace("[Allocations]", "-");
+                    }
+                    else
+                    {
+                        textBody = textBody.Replace("[Allocations]", string.Join(", ", allocations));
+                    }
+
+                    return textBody;
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
         public static string GetTaskNotificationTemplate(string title, Task task)
         {
 
