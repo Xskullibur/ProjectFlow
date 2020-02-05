@@ -783,7 +783,6 @@
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\ChartJS\ChartUtils.cs" />
-    <Compile Include="Utils\Filter\Filter.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
     <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
