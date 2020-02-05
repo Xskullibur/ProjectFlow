@@ -109,7 +109,17 @@
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Total">
+                                    <ItemTemplate>
+                                        <asp:Label ID="totalLabel" runat="server" Text='<%#
 
+                                            (
+
+                                            (double)Eval("participation") +
+                                            (double)Eval("sdl") + (double)Eval("test")
+
+                                            ).ToString()
+                                            %>'></asp:Label>
+                                    </ItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True">
