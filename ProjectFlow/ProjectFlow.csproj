@@ -349,7 +349,9 @@
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
+    <Content Include="Scripts\ProjectFlow\whiteboard.js" />
     <Content Include="Services\Christina\CreateRoom.aspx" />
+    <Content Include="Services\Whiteboard\Whiteboard.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -527,6 +529,14 @@
     <Compile Include="Services\Christina\CreateRoom.aspx.designer.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Whiteboard\Whiteboard.aspx.cs">
+      <DependentUpon>Whiteboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Whiteboard\Whiteboard.aspx.designer.cs">
+      <DependentUpon>Whiteboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Whiteboard\WhiteboardHub.cs" />
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
