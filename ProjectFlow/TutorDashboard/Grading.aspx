@@ -122,9 +122,20 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <%# CheckFailure(
+                                         (double)Eval("participation") +
+                                         (double)Eval("sdl") + 
+                                         (double)Eval("test")
+                                        ) %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True">
                                     <ControlStyle CssClass="btn btn-warning" />
                                 </asp:CommandField>
+                               
                             </Columns>
                             <EmptyDataTemplate>
                                 <div class="jumbotron jumbotron-fluid">

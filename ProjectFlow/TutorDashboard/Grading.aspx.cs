@@ -45,6 +45,18 @@ namespace ProjectFlow.TutorDashboard
             gradeGV.DataBind();
         }
 
+        public string CheckFailure(double score)
+        {
+            if(score > 10)
+            {
+                return "<i style=\"color: green;\" class=\"fas fa-lg fa-trophy\"></i>";
+            }
+            else
+            {
+                return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
+            }
+        }
+
         protected void MemberGV_RowEditing(object sender, GridViewEditEventArgs e)
         {
 
@@ -76,6 +88,6 @@ namespace ProjectFlow.TutorDashboard
             gradeGV.EditIndex = -1;
             ShowGrade();
         }
-      
+            
     }
 }
