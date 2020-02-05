@@ -37,7 +37,15 @@ namespace ProjectFlow.Issues
                 StatusBLL status = new StatusBLL();
                 Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
                 IssueStatus.Text = currentstat.status1;
-                lbConclusion.Text = updated_issue.Conclusion;
+
+                if (updated_issue.Conclusion!=null)
+                {
+                    lbConclusion.Text = updated_issue.Conclusion;
+                } else
+                {
+                    lblErrorMsgcomment.Visible = true;
+                }
+                
 
                 ispublic = updated_issue.votePublic.ToString();
                 check();
@@ -255,19 +263,9 @@ namespace ProjectFlow.Issues
             btnComment.Enabled = false;
         }
 
-        protected void edit_click(object sender, EventArgs e)
-        {
-            int idIssue = (int)Session["SSIId"];
-            IssueBLL issuebll = new IssueBLL();
-            string conclusion = issuebll.getConclusion(idIssue);
-
-        }
-
         // Add Task OnClick Event
         protected void showTaskModal_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show')", true);
-
             int idIssue = (int)Session["SSIId"];
             IssueBLL issueBLL = new IssueBLL();
             Issue updated_issue = issueBLL.GetIssueByID(idIssue);
@@ -300,6 +298,8 @@ namespace ProjectFlow.Issues
             Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
             string statusVal = currentstat.status1;
             IssueStatusDLL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal1", "$('#taskModal1').modal('show')", true);
         }
 
         private void hideModal()
@@ -309,7 +309,7 @@ namespace ProjectFlow.Issues
             tDescTxt.Text = string.Empty;
 
             // Hide Modal
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('hide')", true);
+            //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal1", "$('#taskModal1').modal('hide')", true);
         }
         protected void addTask_Click(object sender, EventArgs e)
         {
@@ -357,9 +357,9 @@ namespace ProjectFlow.Issues
                         this.Master.ShowAlert("Failed to Update Issue!", BootstrapAlertTypes.DANGER);
                     }
 
-                    //hide moda;
-                    hideModal();
                 }     
+                //hide moda;
+                hideModal();
             }
         }
 
@@ -396,6 +396,25 @@ namespace ProjectFlow.Issues
             else
             {
                 return false;
+            }
+        }
+
+        protected void Repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            //Repeater rptDemo = sender as Repeater; // Get the Repeater control object.
+
+            // If the Repeater contains no data.
+            if (Repeater1 != null && Repeater1.Items.Count < 1)
+            {
+                if (e.Item.ItemType == ListItemType.Footer)
+                {
+                    // Show the Error Label (if no data is present).
+                    Label lblErrorMsg = e.Item.FindControl("lblErrorMsg") as Label;
+                    if (lblErrorMsg != null)
+                    {
+                        lblErrorMsg.Visible = true;
+                    }
+                }
             }
         }
     }

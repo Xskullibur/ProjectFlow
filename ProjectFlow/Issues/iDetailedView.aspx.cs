@@ -141,12 +141,12 @@ namespace ProjectFlow.Issues
                         TableCell PublicCell = e.Row.Cells[5];
                         if (PublicCell.Text == "True")
                         {
-                            PublicCell.Text = "<i class='fa fa-check-circle fa-lg text-success'></i>";
+                            PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
                         }
 
                         else
                         {
-                            PublicCell.Text = "<i class='fa fa-times-circle fa-lg text-danger'></i>";
+                            PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
                         }
                     }
                 }

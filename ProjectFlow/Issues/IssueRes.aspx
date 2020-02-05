@@ -2,32 +2,32 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+    <ContentTemplate>
     <div class="container py-2">
-
+    
         <div class="row">
-            <div class="col-sm-12 col-lg-8 p-3">
-                <div class="card h-100">
-                    <asp:UpdatePanel runat="server">
-                        <ContentTemplate>
-                            <div class="card-body">
-                                <asp:Label ID="lbMember" runat="server"></asp:Label>  
-                                <asp:Label ID="lbIssue" runat="server"></asp:Label>
-                            </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
-            </div>
-            <div class="col-lg-4 p-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Issue Info:</h6>
-                        <div class=""><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i><label>Active:&nbsp;</label><asp:Label ID="IssueActive" runat="server" Text=""></asp:Label></div>
-                        <div class=""><i class="fa fa-exclamation-circle" aria-hidden="true">&nbsp;</i><label>Status:&nbsp;</label><asp:Label ID="IssueStatus" runat="server" Text=""></asp:Label></div>
-                        <div class=""><i class="fa fa-eye" aria-hidden="true">&nbsp;</i><label>Public:&nbsp;</label><asp:Label ID="IssuePublic" runat="server" Text=""></asp:Label></div>
-                        <div class=""><i class="fa fa-smile-o" aria-hidden="true">&nbsp;</i><label>Raised by:&nbsp;</label><asp:Label ID="IssueRaisedBy" runat="server" Text=""></asp:Label></div>
+                <div class="col-sm-12 col-lg-8 p-3">
+                    <div class="card h-100">
+                    
+                                <div class="card-body">
+                                    <asp:Label ID="lbMember" runat="server"></asp:Label>  
+                                    <asp:Label ID="lbIssue" runat="server"></asp:Label>
+                                </div>
+
                     </div>
                 </div>
-            </div>
+                <div class="col-lg-4 p-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Issue Info:</h6>
+                            <div class=""><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i><label>Active:&nbsp;</label><asp:Label ID="IssueActive" runat="server" Text=""></asp:Label></div>
+                            <div class=""><i class="fa fa-exclamation-circle" aria-hidden="true">&nbsp;</i><label>Status:&nbsp;</label><asp:Label ID="IssueStatus" runat="server" Text=""></asp:Label></div>
+                            <div class=""><i class="fa fa-eye" aria-hidden="true">&nbsp;</i><label>Public:&nbsp;</label><asp:Label ID="IssuePublic" runat="server" Text=""></asp:Label></div>
+                            <div class=""><i class="fa fa-smile-o" aria-hidden="true">&nbsp;</i><label>Raised by:&nbsp;</label><asp:Label ID="IssueRaisedBy" runat="server" Text=""></asp:Label></div>
+                        </div>
+                    </div>
+                </div>
         </div>
 
 
@@ -72,8 +72,7 @@
                     <div class="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments">
                         <div class="row pd-2">
                             <div class="col-12">
-                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                    <ContentTemplate>
+
                                         <br>
                                         <div class="">
                                             <asp:TextBox ID="tbComments" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
@@ -83,7 +82,7 @@
                                             </div>
                                         </div>
                                         <div class ="col">
-                                            <asp:Repeater ID="Repeater1" runat="server">
+                                            <asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="Repeater_ItemDataBound">
                                                 <HeaderTemplate>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
@@ -96,27 +95,33 @@
                                                         </div>
                                                     </div>
                                   
-                                                </ItemTemplate>     
+                                                </ItemTemplate> 
+                                                <FooterTemplate>
+                                                    <%-- Label used for showing Error Message --%>
+                                                    <asp:Label ID="lblErrorMsg" runat="server" CssClass="align-middle font-weight-light" Text="There are no comments to show" Visible="false">
+                                                    </asp:Label>
+                                                </FooterTemplate>
                                             </asp:Repeater>
                                         </div>
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion">
                         <br>
+                        <%-- Label used for showing Error Message --%>
+                        <asp:Label ID="lblErrorMsgcomment" runat="server" CssClass="align-middle font-weight-light" Text="There is no conclusion to show" Visible="false"></asp:Label>
+
                         <asp:Label ID="lbConclusion" runat="server"></asp:Label>
                     </div>
                 </div>
             </div>
         </div>
-        
 
     </div>
+    
     <div class="container">
         <!-- Add Modal -->
-        <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal fade" id="taskModal1" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
 
                 <div class="modal-content">
@@ -188,11 +193,13 @@
                     <%--Footer--%>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" ValidationGroup="AddTask" OnClick="addTask_Click"/>
+                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" ValidationGroup="AddTask" OnClientClick="$('#taskModal1').modal('hide'); return true;"  OnClick="addTask_Click" AutoPostBack="true"/>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+    </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>
