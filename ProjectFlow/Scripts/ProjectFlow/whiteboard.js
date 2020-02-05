@@ -17,6 +17,7 @@ $(function () {
     var penWidth = 1; penColor = 0;
     var xOffset, yOffset;
     var colors = ["#000", "#f00", "#ff7f00", "#ff0", "#0f0", "#00f", "#4b0082", "#8f00ff", "#fff"];
+    
 
     //Get Hub Instance
     var hub = $.connection.Whiteboard
@@ -87,10 +88,29 @@ $(function () {
         hubConnected = true;
 
         canvasEvents();
+
+        initDrawboard();
+
     })
 
     hub.client.DrawMove = function (p) {
         DrawMove(p);
+    }
+
+    function initDrawboard() {
+        ctx.beginPath();
+        ctx.fillStyle = 'white';
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.fill();
+    }
+
+
+    function DrawFromPoints(points) {
+
+    }
+
+    function Point(x, y, color) {
+
     }
 
     function DrawMove(p) {

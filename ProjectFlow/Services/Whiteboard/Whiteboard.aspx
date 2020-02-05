@@ -23,13 +23,16 @@
                     <%--Controls--%>
                     <div class="row">
                         <div class="col">
-                            
+                            <button type="button" class="btn btn-primary" onclick="requestFullScreen()">
+                                <i class="fas fa-compress"></i>
+                            </button>
                         </div>
 
                     </div>
+
                     <div class="row">
-                        <div class="col">
-                            <canvas id="board" class="center-block" width="1000" height="800">
+                        <div class="col p-4">
+                            <canvas id="board" class="d-block mx-auto" width="1000" height="800">
                             </canvas>
                         </div>
                     </div>
