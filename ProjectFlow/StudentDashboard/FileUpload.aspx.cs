@@ -280,7 +280,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
-                return path;
+                return path.Replace("(PLAIN)", "");
             }
         }
 
@@ -302,6 +302,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
+                fileName = "(PLAIN)" + fileName;
                 File.Delete(storagePath + fileName);
             }
             DisplayFile();
@@ -320,6 +321,22 @@ namespace ProjectFlow.DashBoard
         protected void showAllBtn_Click(object sender, EventArgs e)
         {
             DisplayFile();
+        }
+
+        public string ShowIcon(string input)
+        {
+            if (input.Equals("Encrypted"))
+            {
+                return "<i style=\"color: red;\" class=\"fas fa-lg fa-lock\"></i>";
+            }
+            else if (input.Equals("Encrypted With Key"))
+            {
+                return "<i style=\"color: red; \" class=\"fas fa-lg fa-key\"></i>";
+            }
+            else
+            {
+                return "<i style=\"color: red;\" class=\"fas fa-lg fa-lock-open\"></i>";
+            }
         }
     }
 }

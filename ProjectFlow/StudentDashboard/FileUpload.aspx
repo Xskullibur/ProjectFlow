@@ -84,6 +84,11 @@
                                 <asp:BoundField DataField="Name" HeaderText="File" />
                                 <asp:BoundField DataField="Size" HeaderText="Size" />
                                 <asp:BoundField DataField="Status" HeaderText="Status" />
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>                                      
+                                        <%# ShowIcon((string)Eval("Status")) %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:BoundField DataField="Date" HeaderText="Date" />
                                 <asp:TemplateField HeaderText="Key">
                                     <ItemTemplate>

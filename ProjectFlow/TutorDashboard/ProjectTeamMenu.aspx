@@ -405,8 +405,12 @@
                                         <asp:Label ID="groupLabel" runat="server" Text='<%# Bind("group") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                            
-                                <asp:BoundField DataField="open" HeaderText="Unlocked" />
+                                                          
+                                 <asp:TemplateField HeaderText="Joinable">                                   
+                                    <ItemTemplate>
+                                        <%# (bool)Eval("open")? "<i style=\"color: green;\" class=\"fas fa-lg fa-lock-open\"></i>" : "<i style=\"color: red;\" class=\"fas fa-lg fa-lock\"></i>"%>                                        
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             
                                 <asp:CommandField ButtonType="Button" SelectText="Dash Board" ShowSelectButton="True">
                                     <ControlStyle CssClass="btn btn-success" />
