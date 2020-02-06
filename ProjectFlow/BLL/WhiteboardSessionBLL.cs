@@ -29,15 +29,6 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public void SaveStokePathToWhiteboardSession(WhiteboardSession session, string strokePath)
-        {
-            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
-            {
-                dbContext.WhiteboardSessions.Find(session.sessionID).strokesJsonPath = strokePath;
-                dbContext.SaveChanges();
-            }
-       }
-
 
         public WhiteboardSession GetWhiteboardSessionFromSessonId(Guid guid)
         {
