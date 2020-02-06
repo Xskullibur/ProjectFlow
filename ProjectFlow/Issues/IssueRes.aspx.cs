@@ -39,15 +39,7 @@ namespace ProjectFlow.Issues
                 StatusBLL status = new StatusBLL();
                 Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
                 IssueStatus.Text = currentstat.status1;
-
-                if (updated_issue.Conclusion!=null)
-                {
-                    lbConclusion.Text = updated_issue.Conclusion;
-                } else
-                {
-                    lblErrorMsgcomment.Visible = true;
-                }
-                
+               
 
                 ispublic = updated_issue.votePublic.ToString();
                 check();
