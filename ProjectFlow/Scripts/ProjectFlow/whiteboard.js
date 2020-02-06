@@ -236,6 +236,10 @@ function changeColor(color) {
     penColor = color;
 }
 
+function changeSize(size) {
+    penWidth = size
+}
+
 $(document).on('hidden.bs.toast', '.toast', function (e) {
     $(this).remove();
 });

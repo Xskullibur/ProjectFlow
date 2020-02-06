@@ -6,6 +6,9 @@
             width: 800px;
             height: auto;
         }
+        .btn-outline-secondary:not(:disabled):not(.disabled).active{
+            background-color: rgba(108, 117, 125, 0.3)!important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -46,6 +49,20 @@
                                     <label class="btn btn-outline-secondary" onclick="changeColor('#17a2b8')">
                                         <input type="radio" /><i class="fas fa-tint text-info"></i>
                                     </label>                                                                        
+
+                                </div>   
+
+                                <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                                                                        
+                                    <label class="btn btn-outline-secondary active" onclick="changeSize(1)">
+                                        <input type="radio"/><i class="fas fa-pen fa-xs text-dark"></i>
+                                    </label>                                                                           
+                                    <label class="btn btn-outline-secondary" onclick="changeSize(3)">
+                                        <input type="radio"/><i class="fas fa-pen fa-sm text-dark"></i>
+                                    </label>                                                                           
+                                    <label class="btn btn-outline-secondary" onclick="changeSize(7)">
+                                        <input type="radio"/><i class="fas fa-pen fa-lg text-dark"></i>
+                                    </label>                                                                                                                                           
 
                                 </div>   
 
