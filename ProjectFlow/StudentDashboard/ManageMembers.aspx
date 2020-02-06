@@ -75,4 +75,19 @@
             </div>
         </div>
     </div>
+    <div class="card card-body projectflow-card-shadow container mt-3">
+        <div class="container">
+            <div class="row mb-3 mt-3">
+                <div class="col-1">                    
+                     <asp:Label ID="justLabel" runat="server">Team Name:</asp:Label>                   
+                </div>
+                <div class="col-3">
+                    <asp:TextBox ID="NameTB" CssClass="form-control" placeholder="Required, max 255" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-1">
+                    <asp:Button ID="changeButton" CssClass="btn btn-primary" runat="server" Text="Change" OnClick="changeButton_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>

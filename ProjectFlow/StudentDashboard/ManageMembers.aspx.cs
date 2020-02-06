@@ -55,7 +55,9 @@ namespace ProjectFlow.StudentDashboard
             if (member.roleID == 1)
             {
                 yourStatus.Text = "Status : Leader";
-                STbtn.Enabled = true;                
+                STbtn.Enabled = true;
+                NameTB.ReadOnly = false;
+                changeButton.Enabled = true;
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
@@ -66,7 +68,9 @@ namespace ProjectFlow.StudentDashboard
             else
             {
                 yourStatus.Text = "Status : Member";
-                STbtn.Enabled = false;               
+                STbtn.Enabled = false;
+                NameTB.ReadOnly = true;
+                changeButton.Enabled = false;
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
@@ -79,7 +83,8 @@ namespace ProjectFlow.StudentDashboard
             {
                 leaderBtn.Enabled = false;
             }
-            
+
+            NameTB.Text = teamMemberBLL.FindTeam(GetTeamID()).teamName;
         }
 
         public int GetTeamID()
@@ -167,6 +172,15 @@ namespace ProjectFlow.StudentDashboard
             TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             teamMemberBLL.RemoveMember(member.memberID);
             Response.Redirect("StudentProject.aspx");
+        }
+
+        protected void changeButton_Click(object sender, EventArgs e)
+        {
+            if (!NameTB.Text.Equals(""))
+            {
+                teamMemberBLL.UpdateTeamName(GetTeamID(), NameTB.Text);
+                Master.ShowAlert("Name changed successfully", BootstrapAlertTypes.SUCCESS);
+            }
         }
     }
 }

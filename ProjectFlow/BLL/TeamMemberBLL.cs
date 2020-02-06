@@ -193,5 +193,18 @@ namespace ProjectFlow.BLL
                 return dbContext.ProjectTeams.Find(TeamID);              
             }
         }
+
+        public void UpdateTeamName(int TeamID, string name)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var team = dbContext.ProjectTeams.Find(TeamID);
+                if(team != null)
+                {
+                    team.teamName = name;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
     }
 }

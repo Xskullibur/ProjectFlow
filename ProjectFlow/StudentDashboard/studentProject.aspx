@@ -2,7 +2,7 @@
 <%@ MasterType VirtualPath="/ServicesWithContent.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">   
     <div class="card card-body projectflow-card-shadow container">
         <div class="container">
             <div class="row p-3 mx-auto">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
     <script>
         hideSidebar();    
         $(document).ready(function () {
