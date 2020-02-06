@@ -40,9 +40,17 @@ namespace ProjectFlow.TutorDashboard
 
         private void ShowGrade()
         {
-            List<Score> studentList = teamMemberBLL.GetGradeByProjectID(GetProjectD());
+            List<Score> studentList = teamMemberBLL.GetGradeByTeamID(GetTeamID());
             gradeGV.DataSource = studentList;
             gradeGV.DataBind();
+
+            GroupScoreGV.DataSource = studentList;
+            GroupScoreGV.DataBind();
+            for(int i = 1; i < studentList.Count; i++)
+            {
+                GridViewRow row = GroupScoreGV.Rows[i];
+                row.Visible = false;
+            }
         }
 
         public string CheckFailure(double score)

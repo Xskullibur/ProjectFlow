@@ -36,7 +36,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Proposal (10%)">
+                                <asp:TemplateField HeaderText="Proposal (5%)">
                                     <ItemTemplate>
                                         <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("proposal") %>'></asp:Label>
                                     </ItemTemplate>
@@ -45,7 +45,7 @@
                                     </EditItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Report (10%)">
+                                <asp:TemplateField HeaderText="Report (5%)">
                                     <ItemTemplate>
                                         <asp:Label ID="reportLabel" runat="server" Text='<%# Bind("report") %>'></asp:Label>
                                     </ItemTemplate>
@@ -81,7 +81,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Test (20%)">
+                                <asp:TemplateField HeaderText="Test (15%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editTestTB" CssClass="form-control" runat="server" Text='<%# Bind("test") %>'></asp:TextBox>
                                     </EditItemTemplate>
@@ -170,6 +170,58 @@
             <div class="row mb-3">
                 <div class="col">
                     <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-body projectflow-card-shadow container mt-3">
+        <div class="container-fluid">                       
+            <div class="row mb-3 mt-3">
+                <div class="col">
+                    <div style="overflow-x: auto;">
+                        <asp:GridView ID="GroupScoreGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px">
+                            <HeaderStyle CssClass="thead-light" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="Proposal Group (5%)">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("proposalG") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Report Group (5%)">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("reportG") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Presentation Group (5%)">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("presentationG") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                
+                                <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                                    <ControlStyle CssClass="btn btn-warning" />
+                                </asp:CommandField>
+                               
+                            </Columns>
+                            <EmptyDataTemplate>
+                                <div class="jumbotron jumbotron-fluid">
+                                    <div class="container">
+                                        <h1 class="display-4">Seem Empty, add some members now!</h1>
+                                        <p>Members not showing?   
+                                            <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                    </div>
+                                </div>
+                            </EmptyDataTemplate>
+                        </asp:GridView>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row mb-3">
+                <div class="col">
+                    <asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click"/>
                 </div>
             </div>
         </div>

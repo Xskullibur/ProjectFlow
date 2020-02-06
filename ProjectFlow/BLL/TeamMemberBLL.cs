@@ -128,6 +128,13 @@ namespace ProjectFlow.BLL
                 return dbContext.Scores.Include(x => x.Student).Where(x => x.projectID.Equals(ProjectID)).ToList();
             }
         }
-      
+
+        public List<Score> GetGradeByTeamID(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Scores.Include(x => x.Student).Where(x => x.teamID == TeamID).ToList();
+            }
+        }      
     }
 }

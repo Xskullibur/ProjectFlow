@@ -452,7 +452,18 @@ namespace ProjectFlow.BLL
                 var score = new Score()
                 {
                     projectID = ProjectID,
-                    UserId = UserID
+                    UserId = UserID,
+                    proposal = 0,
+                    report = 0,
+                    reviewOne = 0,
+                    reviewTwo = 0,
+                    presentation = 0,
+                    test = 0,
+                    sdl = 0,
+                    participation = 0,
+                    proposalG = 0,
+                    reportG = 0,
+                    presentationG = 0                   
                 };
                 dbContext.Scores.Add(score);
                 dbContext.SaveChanges();
