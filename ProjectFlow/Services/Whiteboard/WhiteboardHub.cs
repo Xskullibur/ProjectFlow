@@ -32,7 +32,8 @@ namespace ProjectFlow.Services.Whiteboard
                     Global.Redis.GetDatabase().SetAdd(sessionId.ToString() + "-connected", student.UserId.ToString());
 
                     //Response to the client when it has successfully joined the session
-                    this.Clients.Caller.JoinWhiteboardSessionComplete();
+                    var listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
+                    this.Clients.Caller.JoinWhiteboardSessionComplete(listOfPoints);
                 }
                 else
                 {
@@ -134,7 +135,7 @@ namespace ProjectFlow.Services.Whiteboard
                 if (WhiteboardHubUtils.CheckHaveAccessFromRedis(sessionId, student))
                 {
                     //Get the list of points inside redis
-                    Global.Redis.GetDatabase().ListRightPush(sessionIdAsString, $"{{'points': [{string.Join(",", p)}], 'strokeColor': '{strokeColor}' }}");
+                    Global.Redis.GetDatabase().ListRightPush(sessionIdAsString, $"{{\"points\": [{string.Join(",", p)}], \"strokeColor\": \"{strokeColor}\" }}");
 
                     Clients.OthersInGroup(sessionIdAsString).DrawMove(p, strokeColor);
                 }
@@ -145,7 +146,7 @@ namespace ProjectFlow.Services.Whiteboard
 
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 this.Clients.Caller.UnableToReadSessionId();
             }

@@ -33,7 +33,9 @@ namespace ProjectFlow.Services.Whiteboard
             var projectTeam = (Master as ServicesWithContent).CurrentProjectTeam;
 
             WhiteboardSessionBLL sessionBLL = new WhiteboardSessionBLL();
-            List<WhiteboardSession> sessions = sessionBLL.GetWhiteboardSessionsByTeamID(projectTeam.teamID);
+            List<WhiteboardSession> sessions = sessionBLL.GetWhiteboardSessionsByTeamID(projectTeam.teamID)
+                .OrderByDescending(x => x.creationDateTime)
+                .ToList();
 
             sessionGrid.DataSource = sessions;
             sessionGrid.DataBind();
@@ -53,8 +55,7 @@ namespace ProjectFlow.Services.Whiteboard
             var whiteboardSession = Board_Sessions[index + (sessionGrid.PageIndex * sessionGrid.PageSize)];
 
             // Navigate to Whiteboard
-            Session["WhiteboardSession"] = whiteboardSession.sessionID;
-            Response.Redirect("Whiteboard.aspx");
+            Response.Redirect("Whiteboard.aspx/?Action=Join&SessionID=" + whiteboardSession.sessionID);
         }
 
         protected void sessionGrid_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -69,20 +70,8 @@ namespace ProjectFlow.Services.Whiteboard
 
         protected void createBtn_Click(object sender, EventArgs e)
         {
-            var projectTeam = (Master as ServicesWithContent).CurrentProjectTeam;
-
-            WhiteboardSessionBLL sessionBLL = new WhiteboardSessionBLL();
-            WhiteboardSession whiteboardSession = new WhiteboardSession
-            {
-                groupName = sessionNameTxt.Text,
-                creationDateTime = DateTime.Now,
-                teamID = projectTeam.teamID
-            };
-
-            sessionBLL.CreateNewSession(whiteboardSession);
-
-            Session["WhiteboardSession"] = whiteboardSession.sessionID;
-            Response.Redirect("Whiteboard.aspx");
+            string groupName = sessionNameTxt.Text;
+            Response.Redirect("Whiteboard.aspx/?Action=Create&GroupName=" + groupName);
         }
     }
 }

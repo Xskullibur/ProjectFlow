@@ -2,7 +2,7 @@
  * Note Server Functions Called With Lowercase
  **/
 
-$(function () {
+$(document).ready(function () {
 
     //Server session variables
     var sessionId;
@@ -24,7 +24,6 @@ $(function () {
 
     //Get Hub Instance
     var hub = $.connection.Whiteboard
-    hub.logging = true;
 
     /**
      * Canvas Events
@@ -89,16 +88,6 @@ $(function () {
         }
     }
 
-    $.connection.hub.start().done(function () {
-        hubConnected = true;
-
-        initDrawboard();
-        canvasEvents();
-
-        //Create new whiteboard session
-        hub.server.startNewWhiteboardGroup("test", $('#TeamID').val());
-    })
-
     hub.client.drawMove = function (p, color) {
         DrawMove(p, color);
     }
@@ -106,6 +95,54 @@ $(function () {
     hub.client.createdWhiteboardSessionComplete = function (_sessionId) {
         sessionId = _sessionId;
     }
+
+    hub.client.joinWhiteboardSessionComplete = function (listOfPoints) {
+        for (var i = 0; i < listOfPoints.length; i++) {
+            var point = JSON.parse(listOfPoints[i]);
+            DrawMove(point.points, point.strokeColor);
+        }
+    }
+
+    hub.client.whiteboardSaveSuccessful = function () {
+
+    }
+
+    //Errors
+
+    hub.client.illegalAccess = function () {
+
+    }
+
+    hub.client.unableToReadSessionId = function () {
+
+    }
+
+    $.connection.hub.start().done(function () {
+        hubConnected = true;
+
+        initDrawboard();
+        canvasEvents();
+
+        //Create new whiteboard session
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('Action') === 'Create') {
+            const groupName = urlParams.get('GroupName');
+            if (groupName != null) {
+                hub.server.startNewWhiteboardGroup(groupName, $('#TeamID').val());
+            }
+
+        } else if (urlParams.get('Action') === 'Join') {
+            const sessionID = urlParams.get('SessionID');
+            if (sessionID != null) {
+                sessionId = sessionID;
+                hub.server.joinWhiteboardGroup(sessionID);
+            }
+        }
+    })
+
+    
+
+    //End of errors
 
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect(),
@@ -162,4 +199,3 @@ function requestFullScreen() {
         canvas.msRequestFullscreen();
     }
 }
-
