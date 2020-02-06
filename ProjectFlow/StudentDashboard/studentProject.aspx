@@ -44,6 +44,16 @@
                     </div>
                 </div>
                 <br>                
+                
+            </div>
+        </div>
+    </div>
+    <div class="card card-body projectflow-card-shadow container mt-3 mb-3">
+        <div class="container">
+            <div class="row mb-3 mt-3">
+                <asp:Label ID="Label13" runat="server" text="Available Team to Join"></asp:Label>
+            </div>
+            <div class="row mb-3">
                 <div class="row mb-3">
                     <div class="col">
                         <div style="overflow-x: auto;">
@@ -58,20 +68,21 @@
                                     </asp:CommandField>
                                 </Columns>
                                 <EmptyDataTemplate>
-                                   <div class="jumbotron jumbotron-fluid">
+                                    <div class="jumbotron jumbotron-fluid">
                                         <div class="container">
-                                            <h1 class="display-4">No Available team to join at this time</h1>                                          
-                                            <p>Projects not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                            <h1 class="display-4">No Available team to join at this time</h1>
+                                            <p>Projects not showing?   
+                                                <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
                                         </div>
-                                   </div>
-                               </EmptyDataTemplate>
+                                    </div>
+                                </EmptyDataTemplate>
                             </asp:GridView>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <script>
         hideSidebar();    
         $(document).ready(function () {
