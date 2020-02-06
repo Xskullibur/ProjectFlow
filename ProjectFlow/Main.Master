@@ -4,7 +4,7 @@
 
 <html>
     <head runat="server">
-        <title></title>
+        <title>ProjectFlow - Login</title>
 
         <asp:PlaceHolder runat="server">
             <%: Styles.Render("~/Content/css") %>
