@@ -35,7 +35,8 @@ namespace ProjectFlow.StudentDashboard
 
         private string getStudentID()
         {
-            return Session["StudentID"].ToString();
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            return identity.Student.UserId.ToString();
         }
 
         private void showTeam()
@@ -127,7 +128,7 @@ namespace ProjectFlow.StudentDashboard
             }
             else
             {
-                Master.ShowAlert("Only Leaded allowed to make changes", BootstrapAlertTypes.SUCCESS);
+                Master.ShowAlert("Only Leader allowed to make changes", BootstrapAlertTypes.DANGER);
             }          
             showTeam();
         }
@@ -142,7 +143,7 @@ namespace ProjectFlow.StudentDashboard
             }
             else
             {
-                Master.ShowAlert("Only Leaded allowed to make changes", BootstrapAlertTypes.SUCCESS);
+                Master.ShowAlert("Only Leader allowed to make changes", BootstrapAlertTypes.DANGER);
             }
             
             showTeam();
@@ -159,6 +160,13 @@ namespace ProjectFlow.StudentDashboard
             {
                 lockStatus.Text = "Status : Unlock";
             }
+        }
+
+        protected void leaveBtn_Click(object sender, EventArgs e)
+        {
+            TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
+            teamMemberBLL.RemoveMember(member.memberID);
+            Response.Redirect("StudentProject.aspx");
         }
     }
 }

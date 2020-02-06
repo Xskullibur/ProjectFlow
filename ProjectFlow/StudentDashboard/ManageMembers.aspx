@@ -27,6 +27,9 @@
                         <i style="color: white;" class="fas fa-lg fa-unlock"></i>
                     </asp:LinkButton>
                 </div>
+                <div class="col-2">
+                     <asp:Button ID="leaveBtn" runat="server" CssClass="btn btn-danger" Text="Leave" OnClientClick="return confirm('Are you sure to Leave?');" OnClick="leaveBtn_Click" />
+                </div>
             </div>
             <br>
             <div class="row mb-3">
