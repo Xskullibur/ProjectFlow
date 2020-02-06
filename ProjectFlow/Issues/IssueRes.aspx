@@ -2,6 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+    <%-- <asp:ScriptManager ID="ScriptManager1" runat="server" /> --%>
+    
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
     <ContentTemplate>
     <div class="container py-2">

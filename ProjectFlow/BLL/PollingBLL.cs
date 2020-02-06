@@ -57,6 +57,36 @@ namespace ProjectFlow.BLL
             return result;
         }
 
+        /// <summary>
+        /// Gets Issues By ID
+        /// </summary>
+        /// <param name="tID"></param>
+        /// <returns>Anonymous Object</returns>
+        /// 
+        /// (ID, Task, Description, IdTask)
+        public Polling GetVoteByID(int iID, int vID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+
+                try
+                {
+                    Polling polling = dbContext.Pollings
+                        .Where(x => x.issueID == iID)
+                        .First(x => x.voterID == vID);
+                    return polling;
+
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return null;
+                }
+
+
+            }
+        }
+
         public IEnumerable<int> GetPollByID(int vID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -135,6 +165,33 @@ namespace ProjectFlow.BLL
                 {
                     Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
                     return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// updates vote
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns>Boolean</returns>
+        public bool Update(Polling vote)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    // Update 
+                    dbContext.Entry(vote).State = System.Data.Entity.EntityState.Modified;
+
+                    // Save Changes
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating Task: {e.Message}");
+                    return false;
                 }
             }
         }

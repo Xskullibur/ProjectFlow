@@ -169,7 +169,7 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
-        /// Gets Issues By taskID
+        /// Gets Issues By ID
         /// </summary>
         /// <param name="tID"></param>
         /// <returns>Anonymous Object</returns>
@@ -274,7 +274,7 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
-                    // Update Task
+                    // Update 
                     dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
 
                     // Save Changes

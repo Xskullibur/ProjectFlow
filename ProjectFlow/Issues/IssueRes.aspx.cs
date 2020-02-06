@@ -18,7 +18,9 @@ namespace ProjectFlow.Issues
         string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScriptManager scriptMan = ScriptManager.GetCurrent(this);
             int idIssue = (int)Session["SSIId"];
+            //ScriptManager1.RegisterAsyncPostBackControl(tSaveBtn);
             if (!IsPostBack)
             {
                 //Databinding non responsive elements
@@ -73,14 +75,22 @@ namespace ProjectFlow.Issues
 
         protected void btnYes_Click(object sender, EventArgs e)
         {
-            vote(true);
+            bool vote_check = vote(true);
+            if (vote_check == false)
+            {
+                update(true);
+            }
             check();
             isPublic(ispublic);
         }
 
         protected void btnNo_Click(object sender, EventArgs e)
         {
-            vote(false);
+            bool vote_check = vote(false);
+            if (vote_check == false)
+            {
+                update(false);
+            }
             check();
             isPublic(ispublic);
         }
@@ -90,20 +100,51 @@ namespace ProjectFlow.Issues
             Random rnd = new Random();
             int decision = rnd.Next(10);
             if (decision > 5) {
-                vote(true);
+                bool vote_check = vote(true);
+                if (vote_check == false)
+                {
+                    update(true);
+                }
                 check();
                 isPublic(ispublic);
             }
             else
             {
 
-                vote(false);
+                bool vote_check = vote(false);
+                if (vote_check == false)
+                {
+                    update(false);
+                }
                 check();
                 isPublic(ispublic);
             }
         }
+        
+        protected void update(bool choice)
+        {
+            if (Page.IsValid)
+            {
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
-        protected void vote(bool choice)
+                // Create Task Object
+                /*Polling newPoll = new Polling();
+                newPoll.issueID = (int)Session["SSIId"];
+                newPoll.voterID = voterId;
+                newPoll.vote = choice;*/
+
+                // Submit Query
+                PollingBLL pollingBLL = new PollingBLL();
+                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], voterId);
+                newPoll.vote = choice;
+                bool result = pollingBLL.Update(newPoll);
+            }
+        }
+
+        protected bool vote(bool choice)
         {
             if (Page.IsValid)
             {
@@ -114,14 +155,19 @@ namespace ProjectFlow.Issues
 
                 // Create Task Object
                 Polling newPoll = new Polling();
-                newPoll.issueID = (int)Session["SSIId"];    
-                newPoll.voterID = voterId;    
-                newPoll.vote = choice;      
+                newPoll.issueID = (int)Session["SSIId"];
+                newPoll.voterID = voterId;
+                newPoll.vote = choice;
 
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
                 bool result = pollingBLL.Add(newPoll);
+                return result;
             }
+            else
+            {
+                return false;
+            }            
         }
 
         protected void check()
@@ -149,9 +195,9 @@ namespace ProjectFlow.Issues
 
                 if (checking == true)
                 {
-                    btnYes.Enabled = false;
-                    btnNo.Enabled = false;
-                    btnRandom.Enabled = false;
+                    //btnYes.Enabled = false;
+                    //btnNo.Enabled = false;
+                    //btnRandom.Enabled = false;
                     this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
                 }
                 else
