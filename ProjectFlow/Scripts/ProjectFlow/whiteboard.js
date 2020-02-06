@@ -34,6 +34,8 @@ $(document).ready(function () {
 
             // Common mousedown
             function start(e) {
+                if (window.fullscreen) return;
+
                 clicked = 1;
                 var pos = getMousePos(canvas, e);
                 oldX = pos.x;
@@ -107,6 +109,16 @@ $(document).ready(function () {
             title: 'Alert!',
             content: name + ' has Joined',
             type: 'info',
+            delay: 3000,
+            pause_on_hover: false
+        });
+    }
+
+    hub.client.alertUserLeave = function (name) {
+        $.toast({
+            title: 'Alert!',
+            content: name + ' has Left',
+            type: 'danger',
             delay: 3000,
             pause_on_hover: false
         });
@@ -217,6 +229,13 @@ $(document).ready(function () {
         docLoaded = true;
         canvasEvents();
     })
+
+
+    window.onbeforeunload = function () {
+        
+        hub.server.leaveWhiteboardGroup();
+        window.onbeforeunload = null;
+    }
 
 })
 

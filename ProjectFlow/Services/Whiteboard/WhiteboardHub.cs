@@ -18,6 +18,24 @@ namespace ProjectFlow.Services.Whiteboard
     public class WhiteboardHub : Hub
     {
 
+        public void LeaveWhiteboardGroup()
+        {
+            try
+            {
+                string sessionIdAsString = WhiteboardHubUtils.GetSessionIdFromConnectionId(Context.ConnectionId);
+                Guid sessionId = Guid.Parse(sessionIdAsString);
+                Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
+                //Check if session exist and have access
+                if (WhiteboardHubUtils.CheckHaveAccess(sessionId, student))
+                {
+                    Global.Redis.GetDatabase().SetRemove(sessionId.ToString() + "-connected", student.UserId.ToString());
+
+                    this.Clients.Group(sessionIdAsString).AlertUserLeave($"{student.firstName} {student.lastName}");
+                }
+            }
+            catch (Exception) { }
+        }
+
         public void JoinWhiteboardGroup(string sessionIdAsString)
         {
             try
@@ -27,12 +45,13 @@ namespace ProjectFlow.Services.Whiteboard
                 //Check if session exist and have access
                 if (WhiteboardHubUtils.CheckHaveAccess(sessionId, student))
                 {
+                    WhiteboardHubUtils.BindConnectionIdToSessionId(Context.ConnectionId, sessionId.ToString());
                     //Add the current connection to the group
                     this.Groups.Add(Context.ConnectionId, sessionId.ToString());
 
                     //Add the new connection to the redis
                     //Store currently joined clients inside redis
-                    Global.Redis.GetDatabase().SetAdd(sessionId.ToString() + "-connected", student.UserId.ToString());
+                    Global.Redis.GetDatabase().SetAdd("connected-" + sessionId.ToString(), student.UserId.ToString());
 
                     //Response to the client when it has successfully joined the session
                     var listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
@@ -97,15 +116,18 @@ namespace ProjectFlow.Services.Whiteboard
                     Guid sessionId = whiteboardSession.sessionID;
 
                     //Store currently joined clients inside redis
-                    Global.Redis.GetDatabase().SetAdd(sessionId.ToString() + "-connected", student.UserId.ToString());
+                    Global.Redis.GetDatabase().SetAdd("connected-" + sessionId.ToString(), student.UserId.ToString());
+
+                    WhiteboardHubUtils.BindConnectionIdToSessionId(Context.ConnectionId, sessionId.ToString());
+                    //Add the current connection to the group
+                    this.Groups.Add(Context.ConnectionId, sessionId.ToString());
 
                     //Response to the client when it has successfully created the session
                     this.Clients.Caller.CreatedWhiteboardSessionComplete(sessionId.ToString());
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-
-                    Console.WriteLine();
+                    this.Clients.Caller.IllegalAccess();
                 }
                 
             }
@@ -217,6 +239,25 @@ namespace ProjectFlow.Services.Whiteboard
     /// </summary>
     public class WhiteboardHubUtils
     {
+
+        public static bool BindConnectionIdToSessionId(string connectionId, string sessionId)
+        {
+            return Global.Redis.GetDatabase().StringSet("connection-" + connectionId, sessionId);
+        }
+
+        public static string GetSessionIdFromConnectionId(string connectionId)
+        {
+            var value = Global.Redis.GetDatabase().StringGet("connection-" + connectionId);
+            if (value.HasValue)
+            {
+                return value.ToString();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public static bool CheckHaveAccess(Guid sessionId, Student student)
         {
             WhiteboardSessionBLL whiteboardSessionBLL = new WhiteboardSessionBLL();
@@ -244,7 +285,7 @@ namespace ProjectFlow.Services.Whiteboard
         public static bool CheckHaveAccessFromRedis(Guid sessionId, Student student)
         {
             //Sets contains is O(1) checking
-            return Global.Redis.GetDatabase().SetContains(sessionId.ToString() + "-connected", student.UserId.ToString());
+            return Global.Redis.GetDatabase().SetContains("connected-" + sessionId.ToString(), student.UserId.ToString());
         }
 
     }
