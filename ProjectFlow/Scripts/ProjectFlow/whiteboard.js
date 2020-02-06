@@ -2,6 +2,12 @@
  * Note Server Functions Called With Lowercase
  **/
 
+// Default Variables
+var docLoaded = false, hubConnected = false, canvasInitialized = false
+var penWidth = 1;
+var penColor = '#000';
+var oldX, oldY;
+
 $(document).ready(function () {
 
     //Server session variables
@@ -14,13 +20,6 @@ $(document).ready(function () {
     ctx.lineJoin = "round";
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 1;
-
-    // Default Variables
-    var docLoaded = false, hubConnected = false, canvasInitialized = false
-    var penWidth = 1;
-    var penColor = '#000';
-    var oldX, oldY;
-    
 
     //Get Hub Instance
     var hub = $.connection.Whiteboard
@@ -198,4 +197,8 @@ function requestFullScreen() {
     } else if (canvas.msRequestFullscreen) { /* IE/Edge */
         canvas.msRequestFullscreen();
     }
+}
+
+function changeColor(color) {
+    penColor = color;
 }

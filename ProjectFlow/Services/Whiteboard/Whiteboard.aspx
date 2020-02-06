@@ -26,16 +26,24 @@
 
                         <div class="col">
                             <div class="btn-toolbar">
-                                <div class="btn-group mr-2">
-                                    <button type="button" class="btn" onclick="saveCanvas()">
-                                        <i class="fas fa-tint"></i>
-                                    </button>
-                                    <button type="button" class="btn" onclick="saveCanvas()">
-                                        <i class="fas fa-tint"></i>
-                                    </button>
-                                    <button type="button" class="btn" onclick="saveCanvas()">
-                                        <i class="fas fa-tint"></i>
-                                    </button>
+                                <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                                                                        
+                                    <label class="btn btn-outline-secondary active" onclick="changeColor('#000')">
+                                        <input type="radio"/><i class="fas fa-tint text-dark"></i>
+                                    </label>                                                                        
+                                    <label class="btn btn-outline-secondary" onclick="changeColor('#28a745')">
+                                        <input type="radio"/><i class="fas fa-tint text-success"></i>
+                                    </label>                                                                        
+                                    <label class="btn btn-outline-secondary" onclick="changeColor('#ffc107')">
+                                        <input type="radio" /><i class="fas fa-tint text-warning"></i>
+                                    </label>                                                                        
+                                    <label class="btn btn-outline-secondary" onclick="changeColor('#dc3545')">
+                                        <input type="radio" /><i class="fas fa-tint text-danger"></i>
+                                    </label>                                                                        
+                                    <label class="btn btn-outline-secondary" onclick="changeColor('#17a2b8')">
+                                        <input type="radio" /><i class="fas fa-tint text-info"></i>
+                                    </label>                                                                        
+
                                 </div>   
 
                                 <div class="btn-group mr-2">
