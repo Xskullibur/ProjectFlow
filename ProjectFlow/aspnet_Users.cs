@@ -18,9 +18,11 @@ namespace ProjectFlow
         public aspnet_Users()
         {
             this.aspnet_PersonalizationPerUser = new HashSet<aspnet_PersonalizationPerUser>();
+            this.aspnet_PersonalizationPerUser1 = new HashSet<aspnet_PersonalizationPerUser>();
+            this.aspnet_UsersInRoles = new HashSet<aspnet_UsersInRoles>();
+            this.aspnet_UsersInRoles1 = new HashSet<aspnet_UsersInRoles>();
             this.Attendees = new HashSet<Attendee>();
             this.Transcripts = new HashSet<Transcript>();
-            this.aspnet_Roles = new HashSet<aspnet_Roles>();
         }
     
         public System.Guid ApplicationId { get; set; }
@@ -33,17 +35,24 @@ namespace ProjectFlow
         public string ProfileImagePath { get; set; }
     
         public virtual aspnet_Applications aspnet_Applications { get; set; }
+        public virtual aspnet_Applications aspnet_Applications1 { get; set; }
         public virtual aspnet_Membership aspnet_Membership { get; set; }
+        public virtual aspnet_Membership aspnet_Membership1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser1 { get; set; }
         public virtual aspnet_Profile aspnet_Profile { get; set; }
+        public virtual aspnet_Profile aspnet_Profile1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<aspnet_UsersInRoles> aspnet_UsersInRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<aspnet_UsersInRoles> aspnet_UsersInRoles1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendee> Attendees { get; set; }
         public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transcript> Transcripts { get; set; }
         public virtual Tutor Tutor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<aspnet_Roles> aspnet_Roles { get; set; }
     }
 }

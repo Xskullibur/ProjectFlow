@@ -12,16 +12,13 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class aspnet_PersonalizationPerUser
+    public partial class aspnet_UsersInRoles
     {
-        public System.Guid Id { get; set; }
-        public Nullable<System.Guid> PathId { get; set; }
-        public Nullable<System.Guid> UserId { get; set; }
-        public byte[] PageSettings { get; set; }
-        public System.DateTime LastUpdatedDate { get; set; }
+        public System.Guid UserId { get; set; }
+        public System.Guid RoleId { get; set; }
     
-        public virtual aspnet_Paths aspnet_Paths { get; set; }
-        public virtual aspnet_Paths aspnet_Paths1 { get; set; }
+        public virtual aspnet_Roles aspnet_Roles { get; set; }
+        public virtual aspnet_Roles aspnet_Roles1 { get; set; }
         public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual aspnet_Users aspnet_Users1 { get; set; }
     }

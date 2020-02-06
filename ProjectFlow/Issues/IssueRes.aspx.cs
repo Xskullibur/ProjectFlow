@@ -40,13 +40,6 @@ namespace ProjectFlow.Issues
                 Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
                 IssueStatus.Text = currentstat.status1;
 
-                if (updated_issue.Conclusion!=null)
-                {
-                    lbConclusion.Text = updated_issue.Conclusion;
-                } else
-                {
-                    lblErrorMsgcomment.Visible = true;
-                }
                 
 
                 ispublic = updated_issue.votePublic.ToString();
@@ -155,7 +148,7 @@ namespace ProjectFlow.Issues
 
                 // Create Task Object
                 Polling newPoll = new Polling();
-                newPoll.issueID = (int)Session["SSIId"];
+                newPoll.solutionID = (int)Session["SSIId"];
                 newPoll.voterID = voterId;
                 newPoll.vote = choice;
 
@@ -390,7 +383,6 @@ namespace ProjectFlow.Issues
                     updated_issue.description = desc;
                     updated_issue.statusID = statusId;
                     updated_issue.votePublic = IsPublic;
-                    updated_issue.Conclusion = conclusion;
 
                     // Update Task and Allocations
                     if (issueBLL.Update(updated_issue))

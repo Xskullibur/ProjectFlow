@@ -14,7 +14,7 @@ namespace ProjectFlow.BLL
                 // Check if object exist
                 if (vote != null)
                 {
-                    bool preCheck = Check(vote.issueID, vote.voterID);
+                    bool preCheck = Check(vote.solutionID, vote.voterID);
                     if (preCheck != true)
                     {
                         try
@@ -72,7 +72,7 @@ namespace ProjectFlow.BLL
                 try
                 {
                     Polling polling = dbContext.Pollings
-                        .Where(x => x.issueID == iID)
+                        .Where(x => x.solutionID == iID)
                         .First(x => x.voterID == vID);
                     return polling;
 
@@ -98,7 +98,7 @@ namespace ProjectFlow.BLL
                         .Where(x => x.voterID == vID)
                         .Select(y =>
 
-                            y.issueID
+                            y.solutionID
                         ).ToList();
 
                     return list;
@@ -119,13 +119,13 @@ namespace ProjectFlow.BLL
                 try
                 {
                     int upvote = dbContext.Pollings
-                        .Where(x => x.issueID == iID)
+                        .Where(x => x.solutionID == iID)
                         .Where(x => x.vote == true)
                         .Select(y => y
                         ).Count();
 
                     int downvote = dbContext.Pollings
-                        .Where(x => x.issueID == iID)
+                        .Where(x => x.solutionID == iID)
                         .Where(x => x.vote == false)
                         .Select(y => y
                         ).Count(); ;
@@ -152,7 +152,7 @@ namespace ProjectFlow.BLL
                 try
                 {
                     var count = dbContext.Pollings.Include("TeamMembers.Student")
-                        .Where(x => x.issueID == iID)
+                        .Where(x => x.solutionID == iID)
                         .Where(x => x.vote == selection)
                         .Select(y => y.TeamMember.Student.aspnet_Users.UserName
                         ).ToList();
