@@ -166,22 +166,22 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
         
         /// <summary>
-        /// Button1 control.
+        /// lblErrorMsgcomment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Label lblErrorMsgcomment;
         
         /// <summary>
-        /// solutionView control.
+        /// lbConclusion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView solutionView;
+        protected global::System.Web.UI.WebControls.Label lbConclusion;
         
         /// <summary>
         /// tTitleLbl control.

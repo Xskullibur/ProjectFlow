@@ -89,7 +89,6 @@
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_Task" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.aspnet_UsersInRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectFlowModel.FK_Issue_Tutor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

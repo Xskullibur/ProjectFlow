@@ -109,11 +109,11 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion">
-                        <asp:Button Text="Add solution" CssClass="btn btn-outline-primary dropdown-toggle" runat="server" ID="Button1" OnClick="showTaskModal_Click" />
                         <br>
-                        <asp:GridView ID="solutionView" runat="server">
+                        <%-- Label used for showing Error Message --%>
+                        <asp:Label ID="lblErrorMsgcomment" runat="server" CssClass="align-middle font-weight-light" Text="There is no conclusion to show" Visible="false"></asp:Label>
 
-                        </asp:GridView>
+                        <asp:Label ID="lbConclusion" runat="server"></asp:Label>
                     </div>
                 </div>
             </div>
