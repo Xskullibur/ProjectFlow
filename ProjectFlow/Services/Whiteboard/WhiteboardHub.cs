@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using ProjectFlow;
 using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectFlow.Services.Whiteboard
 {
@@ -33,7 +36,29 @@ namespace ProjectFlow.Services.Whiteboard
 
                     //Response to the client when it has successfully joined the session
                     var listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
+
+                    if(listOfPoints.Length == 0)
+                    {
+                        //If there is no any value take from file instead
+                        string path = HostingEnvironment.MapPath("~/Services/Whiteboard/StrokesPath/" + sessionIdAsString + ".json");
+
+                        if (File.Exists(path))
+                        {
+                            string json = File.ReadAllText(path);
+                            JObject dataPoints = JObject.Parse(json);
+                            foreach (var points in dataPoints.Value<JArray>("data-points"))
+                            {
+                                Global.Redis.GetDatabase().ListRightPush(sessionIdAsString, points.ToString());
+                            }
+                            //Retrieve the data from redis again
+                            listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
+                        }
+
+                    }
+
+
                     this.Clients.Caller.JoinWhiteboardSessionComplete(listOfPoints);
+
                 }
                 else
                 {
@@ -100,12 +125,20 @@ namespace ProjectFlow.Services.Whiteboard
                 Guid sessionId = Guid.Parse(sessionIdAsString);
 
                 //Check if session exist and have access
-                if (WhiteboardHubUtils.CheckHaveAccess(sessionId, new Student()))
+                if (WhiteboardHubUtils.CheckHaveAccess(sessionId, student))
                 {
                     //Get the list of points inside redis
                     var listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
                     //Save to file located in ~/StrokePath
+                    string points = $"{{ \"data-points\": [{string.Join(",", listOfPoints)}] }}";
 
+
+                    WhiteboardSessionBLL whiteboardSessionBLL = new WhiteboardSessionBLL();
+                    WhiteboardSession whiteboardSession = whiteboardSessionBLL.GetWhiteboardSessionFromSessonId(sessionId);
+
+                    string path = HostingEnvironment.MapPath("~/Services/Whiteboard/StrokesPath/" + sessionIdAsString + ".json");
+
+                    File.WriteAllText(path, points);
 
                     //Tell the client save is successful
                     this.Clients.Caller.WhiteboardSaveSuccessful();

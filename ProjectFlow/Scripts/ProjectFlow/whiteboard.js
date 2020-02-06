@@ -8,10 +8,13 @@ var penWidth = 1;
 var penColor = '#000';
 var oldX, oldY;
 
-$(document).ready(function () {
+//Server session variables
+var sessionId;
 
-    //Server session variables
-    var sessionId;
+//Get Hub Instance
+var hub = $.connection.Whiteboard
+
+$(document).ready(function () {
 
     // Setup Pen
     var canvas = document.getElementById('board')
@@ -20,9 +23,6 @@ $(document).ready(function () {
     ctx.lineJoin = "round";
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 1;
-
-    //Get Hub Instance
-    var hub = $.connection.Whiteboard
 
     /**
      * Canvas Events
@@ -185,6 +185,11 @@ $(document).ready(function () {
     })
 
 })
+
+
+function saveCanvas() {
+    hub.server.save(sessionId);
+}
 
 function requestFullScreen() {
     const canvas = document.getElementById('board');
