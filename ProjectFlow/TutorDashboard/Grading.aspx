@@ -42,6 +42,7 @@
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editProposalTB" CssClass="form-control" runat="server" Text='<%# Bind("proposal") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editProposalRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editProposalTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
 
@@ -51,12 +52,14 @@
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editReportTB" CssClass="form-control" runat="server" Text='<%# Bind("report") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editReportRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editReportTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="1st Review (5%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editReviewOneTB" CssClass="form-control" runat="server" Text='<%# Bind("reviewOne") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editReviewOneRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editReviewOneTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="reviewoneLabel" runat="server" Text='<%# Bind("reviewOne") %>'></asp:Label>
@@ -66,24 +69,27 @@
                                 <asp:TemplateField HeaderText="2nd Review (15%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editReviewTwoTB" CssClass="form-control" runat="server" Text='<%# Bind("reviewTwo") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editReviewTwoRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[1-9]|1[0-5])\b" ControlToValidate="editReviewTwoTB" ErrorMessage="0-15 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                      <ItemTemplate>
                                         <asp:Label ID="reviewtwoLabel" runat="server" Text='<%# Bind("reviewTwo") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Presentation (20%)">
+                                <asp:TemplateField HeaderText="Presentation (15%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editPreTB" CssClass="form-control" runat="server" Text='<%# Bind("presentation") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editPreTBTwoRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[1-9]|1[0-5])\b" ControlToValidate="editPreTB" ErrorMessage="0-15 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="presentationLabel" runat="server" Text='<%# Bind("presentation") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Test (15%)">
+                                <asp:TemplateField HeaderText="Test (20%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editTestTB" CssClass="form-control" runat="server" Text='<%# Bind("test") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editTestTBTwoRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[1-9]|1[0-9]|2[0-0])\b" ControlToValidate="editTestTB" ErrorMessage="0-20 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="testLabel" runat="server" Text='<%# Bind("test") %>'></asp:Label>
@@ -93,6 +99,7 @@
                                 <asp:TemplateField HeaderText="SDL (10%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editsdlTB" CssClass="form-control" runat="server" Text='<%# Bind("sdl") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editsdlTBTwoRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[1-9]|1[0-0])\b" ControlToValidate="editsdlTB" ErrorMessage="0-10 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="sdlLabel" runat="server" Text='<%# Bind("sdl") %>'></asp:Label>
@@ -102,6 +109,7 @@
                                 <asp:TemplateField HeaderText="Participation (10%)">
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editPartTB" CssClass="form-control" runat="server" Text='<%# Bind("participation") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editPartRegexValidator" runat="server" ValidationGroup="studentScoreValidation" validationexpression="\b(0?[1-9]|1[0-0])\b" ControlToValidate="editPartTB" ErrorMessage="0-10 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="particationLabel" runat="server" Text='<%# Bind("participation") %>'></asp:Label>
@@ -148,7 +156,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="studentScoreValidation">
                                     <ControlStyle CssClass="btn btn-warning" />
                                 </asp:CommandField>
                                
@@ -188,6 +196,7 @@
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editProposalGTB" CssClass="form-control" runat="server" Text='<%# Bind("proposalG") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editProposalGRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editProposalGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
 
@@ -197,6 +206,7 @@
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editReportGTB" CssClass="form-control" runat="server" Text='<%# Bind("reportG") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editReportGRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editReportGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
 
@@ -206,10 +216,11 @@
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editPreGTB" CssClass="form-control" runat="server" Text='<%# Bind("presentationG") %>'></asp:TextBox>
+                                        <asp:RegularExpressionValidator ID="editPreGTBRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editPreGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True">
+                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="groupScoreValidation">
                                     <ControlStyle CssClass="btn btn-warning" />
                                 </asp:CommandField>
                                
