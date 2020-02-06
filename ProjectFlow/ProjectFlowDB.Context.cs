@@ -65,5 +65,7 @@ namespace ProjectFlow
         public virtual DbSet<Transcript> Transcripts { get; set; }
         public virtual DbSet<Tutor> Tutors { get; set; }
         public virtual DbSet<VoiceRecording> VoiceRecordings { get; set; }
+        public virtual DbSet<Score> Scores { get; set; }
+        public virtual DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
     }
 }

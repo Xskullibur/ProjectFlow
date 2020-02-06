@@ -15,7 +15,7 @@ $(function () {
     // Default Variables
     var docLoaded = false, hubConnected = false, canvasInitialized = false
     var penWidth = 1; penColor = 0;
-    var xOffset, yOffset;
+    var oldX, oldY;
     var colors = ["#000", "#f00", "#ff7f00", "#ff0", "#0f0", "#00f", "#4b0082", "#8f00ff", "#fff"];
     
 
@@ -33,29 +33,31 @@ $(function () {
             // Common mousedown
             function start(e) {
                 clicked = 1;
-                xOffset = e.offsetX;
-                yOffset = e.offsetY;
-                DrawMove([xOffset, yOffset, xOffset - 1, yOffset - 1, penWidth, penColor]);
-                hub.server.drawMove([xOffset, yOffset, xOffset - 1, yOffset - 1, penWidth, penColor]);
+                var pos = getMousePos(canvas, e);
+                oldX = pos.x;
+                oldY = pos.y;
+                DrawMove([oldX, oldY, oldX - 1, oldY - 1, penWidth, penColor]);
+                hub.server.drawMove([oldX, oldY, oldX - 1, oldY - 1, penWidth, penColor]);
             };
             function touchStart(e) {
                 var touchEvent = e.originalEvent.changedTouches[0];
                 e.preventDefault();
-                xOffset = touchEvent.clientX - touchEvent.target.offsetLeft;
-                yOffset = touchEvent.clientY - touchEvent.target.offsetTop;
-                DrawMove([xOffset, yOffset, xOffset - 1, yOffset - 1, penWidth, penColor]);
-                hub.server.drawMove([xOffset, yOffset, xOffset - 1, yOffset - 1, penWidth, penColor]);
+                oldX = touchEvent.clientX - touchEvent.target.offsetLeft;
+                oldY = touchEvent.clientY - touchEvent.target.offsetTop;
+                DrawMove([oldX, oldY, oldX - 1, oldY - 1, penWidth, penColor]);
+                hub.server.drawMove([oldX, oldY, oldX - 1, oldY - 1, penWidth, penColor]);
             };
 
             // Common mousemove
             function move(e) {
                 if (clicked) {
-                    x = e.offsetX;
-                    y = e.offsetY;
-                    DrawMove([xOffset, yOffset, x, y, penWidth, penColor]);
-                    hub.server.drawMove([xOffset, yOffset, x, y, penWidth, penColor]);
-                    xOffset = x;
-                    yOffset = y;
+                    var pos = getMousePos(canvas, e);
+                    x = pos.x;
+                    y = pos.y;
+                    DrawMove([oldX, oldY, x, y, penWidth, penColor]);
+                    hub.server.drawMove([oldX, oldY, x, y, penWidth, penColor]);
+                    oldX = x;
+                    oldY = y;
                 }
             };
             function touchMove(e) {
@@ -63,10 +65,10 @@ $(function () {
                 e.preventDefault();
                 x = touchEvent.clientX - touchEvent.target.offsetLeft;
                 y = touchEvent.clientY - touchEvent.target.offsetTop;
-                DrawMove([xOffset, yOffset, x, y, penWidth, penColor]);
-                hub.server.drawMove([xOffset, yOffset, x, y, penWidth, penColor]);
-                xOffset = x;
-                yOffset = y;
+                DrawMove([oldX, oldY, x, y, penWidth, penColor]);
+                hub.server.drawMove([oldX, oldY, x, y, penWidth, penColor]);
+                oldX = x;
+                oldY = y;
             };
 
             // Mouse only control
@@ -75,8 +77,8 @@ $(function () {
             };
 
             // Canvas EventListeners
-            $(canvas).on("mousedown", start);
-            $(canvas).on("mousemove", move);
+            canvas.addEventListener("mousedown", start, false);
+            canvas.addEventListener("mousemove", move, false);
             $(canvas).on("touchstart", touchStart);
             $(canvas).on("touchmove", touchMove);
             $(this).on("mouseup", stop);
@@ -87,14 +89,32 @@ $(function () {
         hub.server.startUp("Hello World");
         hubConnected = true;
 
-        canvasEvents();
-
         initDrawboard();
-
+        canvasEvents();
     })
 
     hub.client.DrawMove = function (p) {
         DrawMove(p);
+    }
+
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect(),
+            scaleX = canvas.width / rect.width,  
+            scaleY = canvas.height / rect.height; 
+
+        return {
+            x: (evt.clientX - rect.left) * scaleX,  
+            y: (evt.clientY - rect.top) * scaleY
+        }
+    }
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
 
     function initDrawboard() {

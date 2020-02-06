@@ -20,12 +20,14 @@ namespace ProjectFlow
             this.Rooms = new HashSet<Room>();
             this.TeamMembers = new HashSet<TeamMember>();
             this.VoiceRecordings = new HashSet<VoiceRecording>();
+            this.Scores = new HashSet<Score>();
         }
     
         public string studentID { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public System.Guid UserId { get; set; }
+        public Nullable<int> group { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -34,5 +36,7 @@ namespace ProjectFlow
         public virtual ICollection<TeamMember> TeamMembers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VoiceRecording> VoiceRecordings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Score> Scores { get; set; }
     }
 }

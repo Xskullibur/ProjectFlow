@@ -19,6 +19,7 @@ namespace ProjectFlow
         {
             this.Milestones = new HashSet<Milestone>();
             this.ProjectTeams = new HashSet<ProjectTeam>();
+            this.Scores = new HashSet<Score>();
         }
     
         public string projectID { get; set; }
@@ -27,11 +28,14 @@ namespace ProjectFlow
         public System.Guid UserId { get; set; }
         public bool dropped { get; set; }
         public System.DateTime createDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Milestone> Milestones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectTeam> ProjectTeams { get; set; }
         public virtual Tutor Tutor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Score> Scores { get; set; }
     }
 }

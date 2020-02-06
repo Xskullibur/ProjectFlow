@@ -437,6 +437,7 @@
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\AttendeeBLL.cs" />
+    <Compile Include="BLL\WhiteboardSessionBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -522,6 +523,9 @@
     <Compile Include="RoomActionItem.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Score.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\Christina\CreateRoom.aspx.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -561,6 +565,9 @@
     <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhiteboardSession.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Content Include="App_Code\CalendarEvent.cs" />
@@ -833,6 +840,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="FileManagement\FileStorage\" />
     <Folder Include="FileManagement\Temp\" />
+    <Folder Include="Services\Whiteboard\StrokesPath\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

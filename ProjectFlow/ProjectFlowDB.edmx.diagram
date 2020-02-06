@@ -89,6 +89,12 @@
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_Task" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.aspnet_UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectFlowModel.Score" Width="1.5" PointX="22.25" PointY="24.75" />
+        <AssociationConnector Association="ProjectFlowModel.Score_FK" />
+        <AssociationConnector Association="ProjectFlowModel.Score_FK_team" />
+        <AssociationConnector Association="ProjectFlowModel.Score_FK_1" />
+        <EntityTypeShape EntityType="ProjectFlowModel.WhiteboardSession" Width="1.5" PointX="17.25" PointY="42.375" />
+        <AssociationConnector Association="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
