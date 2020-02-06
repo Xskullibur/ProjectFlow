@@ -22,6 +22,15 @@ namespace ProjectFlow.StudentDashboard {
         protected global::System.Web.UI.WebControls.Label yourStatus;
         
         /// <summary>
+        /// lockStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lockStatus;
+        
+        /// <summary>
         /// leaderBtn control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,24 @@ namespace ProjectFlow.StudentDashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button STbtn;
+        
+        /// <summary>
+        /// lockBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lockBtn;
+        
+        /// <summary>
+        /// unlockBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton unlockBtn;
         
         /// <summary>
         /// MemberGV control.

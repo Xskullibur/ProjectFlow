@@ -171,5 +171,27 @@ namespace ProjectFlow.BLL
                 dbContext.SaveChanges();
             }
         }
+
+        public void RemovieMember(int MemberID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Find(MemberID);
+                if(member != null)
+                {
+                    member.dropped = true;
+                    member.roleID = 2;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public ProjectTeam FindTeam(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Find(TeamID);              
+            }
+        }
     }
 }

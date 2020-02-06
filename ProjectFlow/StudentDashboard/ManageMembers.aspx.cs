@@ -16,6 +16,7 @@ namespace ProjectFlow.StudentDashboard
     {
         StudentBLL studentBLL = new StudentBLL();
         TeamMemberBLL teamMemberBLL = new TeamMemberBLL();
+        ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (GetTeamID().ToString() != null)
@@ -48,11 +49,12 @@ namespace ProjectFlow.StudentDashboard
 
             TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             int totalRow = MemberGV.Rows.Count;
+            CheckStatus();
 
             if (member.roleID == 1)
             {
                 yourStatus.Text = "Status : Leader";
-                STbtn.Enabled = true;
+                STbtn.Enabled = true;                
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
@@ -63,7 +65,7 @@ namespace ProjectFlow.StudentDashboard
             else
             {
                 yourStatus.Text = "Status : Member";
-                STbtn.Enabled = false;
+                STbtn.Enabled = false;               
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
@@ -102,6 +104,50 @@ namespace ProjectFlow.StudentDashboard
             showTeam();
             leaderBtn.Enabled = true;
             Master.ShowAlert("Successfully Stepped down", BootstrapAlertTypes.SUCCESS);
+        }
+
+        protected void lockBtn_Click(object sender, EventArgs e)
+        {
+            TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
+            if (member.roleID == 1)
+            {
+                projectTeamBLL.lockOneTeam(true, GetTeamID());
+                Master.ShowAlert("Team is closed", BootstrapAlertTypes.SUCCESS);
+            }
+            else
+            {
+                Master.ShowAlert("Only Leaded allowed to make changes", BootstrapAlertTypes.SUCCESS);
+            }          
+            showTeam();
+        }
+
+        protected void unlockBtn_Click(object sender, EventArgs e)
+        {
+            TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
+            if(member.roleID == 1)
+            {
+                projectTeamBLL.lockOneTeam(false, GetTeamID());
+                Master.ShowAlert("Team is open to new members", BootstrapAlertTypes.SUCCESS);
+            }
+            else
+            {
+                Master.ShowAlert("Only Leaded allowed to make changes", BootstrapAlertTypes.SUCCESS);
+            }
+            
+            showTeam();
+        }
+
+        public void CheckStatus()
+        {
+            ProjectTeam team = teamMemberBLL.FindTeam(GetTeamID());
+            if (team.open == false)
+            {
+                lockStatus.Text = "Status : Lock";
+            }           
+            else
+            {
+                lockStatus.Text = "Status : Unlock";
+            }
         }
     }
 }

@@ -5,14 +5,27 @@
     <div class="card card-body projectflow-card-shadow container">
         <div class="container">            
             <div class="row mb-3 mt-3">
-                <div class="col-3">
+                <div class="col-2">
                     <asp:Label ID="yourStatus" runat="server"></asp:Label>
+                </div>
+                <div class="col-2">
+                     <asp:Label ID="lockStatus" runat="server"></asp:Label>
                 </div>
                 <div class="col-2">
                     <asp:Button ID="leaderBtn" runat="server" CssClass="btn btn-primary" Text="Become Leader" OnClick="leaderBtn_Click" OnClientClick="return confirm('Are you sure to become leader?');" />
                 </div>
                 <div class="col-2">
                     <asp:Button ID="STbtn" runat="server" CssClass="btn btn-primary" OnClick="STbtn_Click" Text="Step Down" OnClientClick="return confirm('Are you sure to step down?');" />
+                </div>
+                <div class="col-1">
+                    <asp:LinkButton ID="lockBtn" runat="server" CssClass="btn btn-primary" OnClick="lockBtn_Click">
+                        <i style="color: white;" class="fas fa-lg fa-lock"></i>
+                    </asp:LinkButton>
+                </div>
+                <div class="col-1">
+                    <asp:LinkButton ID="unlockBtn" runat="server" CssClass="btn btn-primary" OnClick="unlockBtn_Click">
+                        <i style="color: white;" class="fas fa-lg fa-unlock"></i>
+                    </asp:LinkButton>
                 </div>
             </div>
             <br>

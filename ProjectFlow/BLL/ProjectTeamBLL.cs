@@ -143,5 +143,26 @@ namespace ProjectFlow.BLL
                 }
             }
         }
+
+        public void lockOneTeam(bool status, int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var team = dbContext.ProjectTeams.Find(TeamID);
+                
+                if (team != null)
+                {
+                    if (status)
+                    {
+                        team.open = false;
+                    }
+                    else
+                    {
+                        team.open = true;
+                    }
+                    dbContext.SaveChanges();
+                }
+            }
+        }
     }
 }
