@@ -135,6 +135,41 @@ namespace ProjectFlow.BLL
             {
                 return dbContext.Scores.Include(x => x.Student).Where(x => x.teamID == TeamID).ToList();
             }
-        }      
+        }
+        
+        public void UpdateScore(int scoreID, float Proposal, float Report, float ReviewOne, float ReviewTwo, float Presentation, float Test, float SDL, float Participation)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var score = dbContext.Scores.Find(scoreID);
+                if(score != null)
+                {
+                    score.proposal = Proposal;
+                    score.report = Report;
+                    score.reviewOne = ReviewOne;
+                    score.reviewTwo = ReviewTwo;
+                    score.presentation = Presentation;
+                    score.test = Test;
+                    score.sdl = SDL;
+                    score.participation = Participation;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateGroupScore(int TeamID, double Proposal, double Report, double Presentation)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                List<Score> scoreList = dbContext.Scores.Where(x => x.teamID == TeamID).ToList();
+                foreach(Score s in scoreList)
+                {
+                    s.presentationG = Presentation;
+                    s.reportG = Report;
+                    s.proposalG = Proposal;
+                }
+                dbContext.SaveChanges();
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
                                     <ItemTemplate>
-                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("scoreID") %>'></asp:Label>
+                                        <asp:Label ID="scoreLabel" runat="server" Text='<%# Bind("scoreID") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -108,7 +108,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Total">
+                                <asp:TemplateField HeaderText="Total (100%)">
                                     <ItemTemplate>
                                         <asp:Label ID="totalLabel" runat="server" Text='<%#
 
@@ -179,25 +179,34 @@
             <div class="row mb-3 mt-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="GroupScoreGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px">
+                        <asp:GridView ID="GroupScoreGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="GroupScoreGV_RowCancelingEdit" OnRowEditing="GroupScoreGV_RowEditing" OnRowUpdating="GroupScoreGV_RowUpdating">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
                                 <asp:TemplateField HeaderText="Proposal Group (5%)">
                                     <ItemTemplate>
                                         <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("proposalG") %>'></asp:Label>
                                     </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editProposalGTB" CssClass="form-control" runat="server" Text='<%# Bind("proposalG") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Report Group (5%)">
                                     <ItemTemplate>
                                         <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("reportG") %>'></asp:Label>
                                     </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editReportGTB" CssClass="form-control" runat="server" Text='<%# Bind("reportG") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Presentation Group (5%)">
                                     <ItemTemplate>
                                         <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("presentationG") %>'></asp:Label>
                                     </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editPreGTB" CssClass="form-control" runat="server" Text='<%# Bind("presentationG") %>'></asp:TextBox>
+                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True">
@@ -219,10 +228,7 @@
                 </div>
             </div>
             <br>
-            <div class="row mb-3">
-                <div class="col">
-                    <asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click"/>
-                </div>
+            <div class="row mb-3">               
             </div>
         </div>
     </div>   
