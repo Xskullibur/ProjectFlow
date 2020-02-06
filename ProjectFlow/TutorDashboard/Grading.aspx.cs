@@ -85,6 +85,7 @@ namespace ProjectFlow.TutorDashboard
         protected void gradeGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = gradeGV.Rows[e.RowIndex];
+            bool status = true;
 
             TextBox editProposalTB = (TextBox)row.FindControl("editProposalTB");
             TextBox editReportTB = (TextBox)row.FindControl("editReportTB");
@@ -96,21 +97,76 @@ namespace ProjectFlow.TutorDashboard
             TextBox editPartTB = (TextBox)row.FindControl("editPartTB");
             Label scoreLabel = (Label)row.FindControl("scoreLabel");
 
-            int id = int.Parse(scoreLabel.Text);
-            float proposal = float.Parse(editProposalTB.Text);
-            float report = float.Parse(editReportTB.Text);
-            float reviewOne = float.Parse(editReviewOneTB.Text);
-            float reviewTwo = float.Parse(editReviewTwoTB.Text);
-            float pre = float.Parse(editPreTB.Text);
-            float test = float.Parse(editTestTB.Text);
-            float sdl = float.Parse(editsdlTB.Text);
-            float part = float.Parse(editPartTB.Text);
+            try
+            {
+                int id = int.Parse(scoreLabel.Text);
+                float proposal = float.Parse(editProposalTB.Text);
+                float report = float.Parse(editReportTB.Text);
+                float reviewOne = float.Parse(editReviewOneTB.Text);
+                float reviewTwo = float.Parse(editReviewTwoTB.Text);
+                float pre = float.Parse(editPreTB.Text);
+                float test = float.Parse(editTestTB.Text);
+                float sdl = float.Parse(editsdlTB.Text);
+                float part = float.Parse(editPartTB.Text);
 
-            teamMemberBLL.UpdateScore(id, proposal, report, reviewOne, reviewTwo, pre, test, sdl, part);
+                if (proposal < 0 || proposal > 5)
+                {
+                    status = false;
+                }
 
-            gradeGV.EditIndex = -1;
-            ShowGrade();
-            Master.ShowAlert("Student Score Updated Successfully", BootstrapAlertTypes.SUCCESS);
+                if (report < 0 || report > 5)
+                {
+                    status = false;
+                }
+
+                if (reviewOne < 0 || reviewOne > 5)
+                {
+                    status = false;
+                }
+
+                if (reviewTwo < 0 || reviewTwo > 15)
+                {
+                    status = false;
+                }
+
+                if (pre < 0 || proposal > 15)
+                {
+                    status = false;
+                }
+
+                if (test < 0 || test > 20)
+                {
+                    status = false;
+                }
+
+                if (sdl < 0 || sdl > 10)
+                {
+                    status = false;
+                }
+
+                if (part < 0 || part > 10)
+                {
+                    status = false;
+                }
+
+                if (status == true)
+                {
+                    teamMemberBLL.UpdateScore(id, proposal, report, reviewOne, reviewTwo, pre, test, sdl, part);
+                    Master.ShowAlert("Student Score Updated Successfully", BootstrapAlertTypes.SUCCESS);
+                }
+                else
+                {
+                    Master.ShowAlert("value must be in range", BootstrapAlertTypes.DANGER);
+                }
+                gradeGV.EditIndex = -1;
+                ShowGrade();
+               
+            }catch(System.FormatException exception)
+            {
+                gradeGV.EditIndex = -1;
+                ShowGrade();
+                Master.ShowAlert("value must be a number", BootstrapAlertTypes.DANGER);
+            }
         }
 
         protected void gradeGV_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
@@ -144,20 +200,52 @@ namespace ProjectFlow.TutorDashboard
         protected void GroupScoreGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GroupScoreGV.Rows[e.RowIndex];
+            bool status = true;
 
             TextBox editProposalGlTB = (TextBox)row.FindControl("editProposalGTB");
             TextBox editReportGTB = (TextBox)row.FindControl("editReportGTB");
             TextBox editPreGTB = (TextBox)row.FindControl("editPreGTB");
-                      
-            float proposal = float.Parse(editProposalGlTB.Text);
-            float report = float.Parse(editReportGTB.Text);
-            float pre = float.Parse(editPreGTB.Text);
 
-            teamMemberBLL.UpdateGroupScore(GetTeamID(), proposal, report, pre);
+            try
+            {
+                float proposal = float.Parse(editProposalGlTB.Text);
+                float report = float.Parse(editReportGTB.Text);
+                float pre = float.Parse(editPreGTB.Text);
 
-            GroupScoreGV.EditIndex = -1;
-            ShowGrade();
-            Master.ShowAlert("Group Score Updated Successfully", BootstrapAlertTypes.SUCCESS);
+                if (proposal < 0 || proposal > 5)
+                {
+                    status = false;
+                }
+
+                if (report < 0 || report > 5)
+                {
+                    status = false;
+                }
+
+                if (pre < 0 || pre > 5)
+                {
+                    status = false;
+                }
+
+                if (status == true)
+                {
+                    teamMemberBLL.UpdateGroupScore(GetTeamID(), proposal, report, pre);
+                    Master.ShowAlert("Group Score Updated Successfully", BootstrapAlertTypes.SUCCESS);
+                }
+                else
+                {
+                    Master.ShowAlert("value must be in range", BootstrapAlertTypes.DANGER);
+                }
+
+                GroupScoreGV.EditIndex = -1;
+                ShowGrade();
+                
+            }catch(System.FormatException exception)
+            {
+                GroupScoreGV.EditIndex = -1;
+                ShowGrade();
+                Master.ShowAlert("value must be a number", BootstrapAlertTypes.DANGER);
+            }
         }              
     }
 }
