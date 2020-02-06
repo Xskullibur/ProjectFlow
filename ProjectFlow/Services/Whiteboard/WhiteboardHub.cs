@@ -118,6 +118,28 @@ namespace ProjectFlow.Services.Whiteboard
 
         }
 
+        public void Clear(string sessionIdAsString)
+        {
+            Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
+            try
+            {
+                Guid sessionId = Guid.Parse(sessionIdAsString);
+
+                //Check if session exist and have access
+                if (WhiteboardHubUtils.CheckHaveAccess(sessionId, student))
+                {
+                    //Delete from redis
+                    Global.Redis.GetDatabase().KeyDelete(sessionIdAsString);
+
+                    this.Clients.Group(sessionIdAsString).Clear();
+                }
+            }
+            catch (Exception)
+            {
+                this.Clients.Caller.UnableToReadSessionId();
+            }
+        }
+
         public void Save(string sessionIdAsString)
         {
             Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
@@ -157,7 +179,6 @@ namespace ProjectFlow.Services.Whiteboard
             }
 
         }
-
 
         public void DrawMove(string sessionIdAsString, string strokeColor, float[] p)
         {
