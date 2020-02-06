@@ -53,6 +53,9 @@
                                     <button type="button" class="btn btn-primary" onclick="saveCanvas()">
                                         <i class="fas fa-save"></i>
                                     </button>
+                                    <button type="button" class="btn btn-primary" onclick="clearCanvas()">
+                                        <i class="fas fa-eraser"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

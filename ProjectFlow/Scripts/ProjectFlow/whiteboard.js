@@ -144,6 +144,10 @@ $(document).ready(function () {
         });
     }
 
+    hub.client.clear = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
     $.connection.hub.start().done(function () {
         hubConnected = true;
 
@@ -191,6 +195,8 @@ $(document).ready(function () {
         return color;
     }
 
+    
+
     function initDrawboard() {
         ctx.beginPath();
         ctx.fillStyle = 'white';
@@ -214,6 +220,9 @@ $(document).ready(function () {
 
 })
 
+function clearCanvas() {
+    hub.server.clear(sessionId);
+}
 
 function saveCanvas() {
     hub.server.save(sessionId);
