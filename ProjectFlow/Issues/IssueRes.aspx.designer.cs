@@ -166,22 +166,22 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
         
         /// <summary>
-        /// lblErrorMsgcomment control.
+        /// btnAddSolution control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorMsgcomment;
+        protected global::System.Web.UI.WebControls.Button btnAddSolution;
         
         /// <summary>
-        /// lbConclusion control.
+        /// solutionView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbConclusion;
+        protected global::System.Web.UI.WebControls.GridView solutionView;
         
         /// <summary>
         /// tTitleLbl control.
@@ -245,69 +245,6 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator tDescRequiredValidator;
-        
-        /// <summary>
-        /// IssueStatusDLL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList IssueStatusDLL;
-        
-        /// <summary>
-        /// statusErrorLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label statusErrorLbl;
-        
-        /// <summary>
-        /// statusRequiredValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator statusRequiredValidator;
-        
-        /// <summary>
-        /// cbPublic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbPublic;
-        
-        /// <summary>
-        /// checkBoxErrorLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label checkBoxErrorLbl;
-        
-        /// <summary>
-        /// tConcText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tConcText;
-        
-        /// <summary>
-        /// RegularExpressionValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
         
         /// <summary>
         /// addTaskSummaryValidator control.

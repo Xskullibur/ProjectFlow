@@ -180,6 +180,7 @@
     <Content Include="Issues\iDetailedView.aspx" />
     <Content Include="Issues\iDroppedView.aspx" />
     <Content Include="Issues\IssueRes.aspx" />
+    <Content Include="Issues\IssueSolutions.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Profile\Profile.aspx" />
     <Content Include="Profile\ProfileImages\default-picture.png" />
@@ -438,11 +439,19 @@
       <DependentUpon>ProjectFlow1.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\AttendeeBLL.cs" />
+    <Compile Include="BLL\SolutionBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlow1.tt</DependentUpon>
     </Compile>
     <Compile Include="Issue.cs">
       <DependentUpon>ProjectFlow1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Issues\IssueSolutions.aspx.cs">
+      <DependentUpon>IssueSolutions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\IssueSolutions.aspx.designer.cs">
+      <DependentUpon>IssueSolutions.aspx</DependentUpon>
     </Compile>
     <Compile Include="Milestone.cs">
       <DependentUpon>ProjectFlow1.tt</DependentUpon>

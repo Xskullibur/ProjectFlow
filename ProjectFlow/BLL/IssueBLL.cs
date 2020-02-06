@@ -28,7 +28,7 @@ namespace ProjectFlow.BLL
                     }
                     catch (Exception e)
                     {
-                        Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                        Console.Error.WriteLine($"Error While Adding issue: {e.Message}");
                         return false;
                     }
                 }
@@ -171,7 +171,7 @@ namespace ProjectFlow.BLL
         /// <summary>
         /// Gets Issues By ID
         /// </summary>
-        /// <param name="tID"></param>
+        /// <param name="id"></param>
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, IdTask)

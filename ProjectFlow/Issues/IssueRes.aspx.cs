@@ -47,7 +47,9 @@ namespace ProjectFlow.Issues
                 refreshCommentData(idIssue);
                 isActive(updated_issue.active);
                 isPublic(ispublic);
+                refreshData();
             }
+            solutionView.Font.Size = 11;
         }
 
         // Get Current User
@@ -146,7 +148,7 @@ namespace ProjectFlow.Issues
                 Guid Uid = identity.Student.aspnet_Users.UserId;
                 int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
-                // Create Task Object
+                // Creaddte Task Object
                 Polling newPoll = new Polling();
                 newPoll.solutionID = (int)Session["SSIId"];
                 newPoll.voterID = voterId;
@@ -290,6 +292,7 @@ namespace ProjectFlow.Issues
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
+                btnAddSolution.Enabled = false;
                 this.Master.ShowAlert("Issue has been dropped", BootstrapAlertTypes.DANGER);
             }
         }
@@ -305,39 +308,6 @@ namespace ProjectFlow.Issues
         // Add Task OnClick Event
         protected void showTaskModal_Click(object sender, EventArgs e)
         {
-            int idIssue = (int)Session["SSIId"];
-            IssueBLL issueBLL = new IssueBLL();
-            Issue updated_issue = issueBLL.GetIssueByID(idIssue);
-            //Databinding the modal form
-            tNameTxt.Text = updated_issue.title;
-            tDescTxt.Text = updated_issue.description;
-
-            //check if public
-            if (updated_issue.votePublic == true)
-            {
-                cbPublic.Checked = true;
-            }
-            else
-            {
-                cbPublic.Checked = false;
-            }
-
-
-            //Set Dropdownlist Datasource
-            StatusBLL statusBLL = new StatusBLL();
-            Dictionary<int, string> statusDict = statusBLL.Get();
-
-            IssueStatusDLL.DataSource = statusDict;
-            IssueStatusDLL.DataTextField = "Value";
-            IssueStatusDLL.DataValueField = "Key";
-            IssueStatusDLL.DataBind();
-
-            //Set Inital Value 
-            StatusBLL status = new StatusBLL();
-            Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
-            string statusVal = currentstat.status1;
-            IssueStatusDLL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
-
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal1", "$('#taskModal1').modal('show')", true);
         }
 
@@ -354,51 +324,64 @@ namespace ProjectFlow.Issues
         {
             if (Page.IsValid)
             {
-                // Verify Task ID
-                IssueBLL issueBLL = new IssueBLL();
+                // calling various stuff
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                SolutionBLL solutionBLL = new SolutionBLL();
+
+                // getting data
+                string title = tNameTxt.Text;
+                string description = tDescTxt.Text;
                 int id = (int)Session["SSIId"];
+                DateTime currentTime = DateTime.Now;
+                Guid Uid = identity.Student.aspnet_Users.UserId;
 
-                Issue updated_issue = issueBLL.GetIssueByID(id);
+                // bind date to new solution
+                Solution new_solution = new Solution();
+                new_solution.title = title;
+                new_solution.description = description;
+                new_solution.issueId = id;
+                new_solution.startdate = currentTime;
+                new_solution.createdBy = Uid;
 
-                if (updated_issue == null)
+                // clear error messages
+                // TODO
+
+                // submit solution
+                bool submission = solutionBLL.Add(new_solution);
+
+                // alert
+                if (submission)
                 {
-                    // TODO: Error Message Task ID Not Found
+                    //NotificationHelper.Default_TaskUpdate_Setup(id);
+                    this.Master.ShowAlertWithTiming("Solution Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
                 }
                 else
                 {
-                    // Attributes
-                    string name = tNameTxt.Text;
-                    string desc = tDescTxt.Text;
-                    int statusId = Convert.ToInt32(IssueStatusDLL.SelectedValue);
-                    bool IsPublic = checkCB();
-                    string conclusion = tConcText.Text;
+                    this.Master.ShowAlert("Failed to add Solution!", BootstrapAlertTypes.DANGER);
+                }
 
-                    /**
-                     * UPDATE TASK
-                     **/
-
-                    // Update Task
-
-                    updated_issue.title = name;
-                    updated_issue.description = desc;
-                    updated_issue.statusID = statusId;
-                    updated_issue.votePublic = IsPublic;
-
-                    // Update Task and Allocations
-                    if (issueBLL.Update(updated_issue))
-                    {
-                        //NotificationHelper.Default_TaskUpdate_Setup(id);
-                        this.Master.ShowAlertWithTiming("Issue Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
-                    }
-                    else
-                    {
-                        this.Master.ShowAlert("Failed to Update Issue!", BootstrapAlertTypes.DANGER);
-                    }
-
-                }     
-                //hide moda;
+                // hide modal;
                 hideModal();
+                refreshData();
             }
+        }
+
+        private void refreshData()
+        {
+            // calling various stuff
+            int issueId = (int)Session["SSIId"];
+            SolutionBLL solutionBLL = new SolutionBLL();
+
+            // binding data to table
+            solutionView.DataSource = solutionBLL.GetSolutionByIssueId(issueId);
+            solutionView.DataBind();
+        }
+
+        protected void showSolution_click(object sender, EventArgs e)
+        {
+            GridViewRow row = solutionView.SelectedRow;
+            Session["SSSId"] = int.Parse(row.Cells[0].Text);
+            Response.Redirect("../Issues/IssueSolutions.aspx");
         }
 
         protected void IssueDelete(object sender, EventArgs e)
@@ -422,18 +405,6 @@ namespace ProjectFlow.Issues
             else
             {
                 this.Master.ShowAlert("Failed to Drop Task", BootstrapAlertTypes.DANGER);
-            }
-        }
-
-        protected bool checkCB()
-        {
-            if (cbPublic.Checked == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 

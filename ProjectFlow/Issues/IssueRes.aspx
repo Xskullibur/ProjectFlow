@@ -66,7 +66,7 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-meeting-logger-table-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-meeting-logger-table" aria-selected="true">Comments</a>
                     <a class="nav-item nav-link" id="nav-christina-tab" data-toggle="tab" href="#nav-conclusion" role="tab" aria-controls="nav-christina" aria-selected="false">
-                        Conclusion
+                        Solution
                     </a>
                     </div>
                 </nav>
@@ -109,11 +109,35 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion">
-                        <br>
-                        <%-- Label used for showing Error Message --%>
-                        <asp:Label ID="lblErrorMsgcomment" runat="server" CssClass="align-middle font-weight-light" Text="There is no conclusion to show" Visible="false"></asp:Label>
+                        <br />
+                        <div>
+                            <asp:Button Text="Add solution" CssClass="btn btn-outline-primary dropdown-toggle" runat="server" ID="btnAddSolution" OnClick="showTaskModal_Click"/>
+                        </div>
+                       
+                        <div>
+                            <asp:GridView ID="solutionView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnSelectedIndexChanged="showSolution_click">
+                                <HeaderStyle CssClass="thead-light" />   
+                                <Columns>
+                                    <asp:BoundField DataField="solutionId" HeaderText="Solution Id" />
+                                    <asp:BoundField DataField="Title" HeaderText="Solution Name" />
+                                    <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
+                                    <asp:CommandField ShowSelectButton="True" ButtonType="Button">
+                                        <ControlStyle CssClass="btn btn-success mb-2" />
+                                    </asp:CommandField>
+                                </Columns>
+                                <EmptyDataTemplate>
+                                    <div class="jumbotron jumbotron-fluid">
+                                        <div class="container">
+                                            <h1 class="display-4">Freedoommm!</h1>
+                                            <p class="load">No Solutions Found!</p>
+                                            <hr class="my-4" />
+                                            <p>If Solutions are expected but not shown please contact us <asp:HyperLink ID="emailLink" Text="here" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink>.</p>
+                                        </div>
+                                    </div>
+                                </EmptyDataTemplate>
+                            </asp:GridView>
+                        </div>
 
-                        <asp:Label ID="lbConclusion" runat="server"></asp:Label>
                     </div>
                 </div>
             </div>
@@ -146,7 +170,7 @@
                                 <asp:Label CssClass="control-label" Text="Issue Name:" AssociatedControlID="tNameTxt" runat="server" />
                                 <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
 
-                                <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 50 Characters!" ValidationExpression="^[\s\S]{1,50}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Issue Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
 
@@ -155,36 +179,10 @@
                                 <asp:Label CssClass="control-label" Text="Description:" AssociatedControlID="tDescTxt" runat="server" />
                                 <asp:TextBox ID="tDescTxt" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
 
-                                <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
+                                <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 500 Characters!" ValidationExpression="^[\s\S]{1,500}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
                             
-                            <%--Status--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="IssueStatusDLL" runat="server" />
-                                <asp:DropDownList ID="IssueStatusDLL" CssClass="form-control" runat="server"></asp:DropDownList>
-
-                                <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
-                            </div>
-
-                            <%--Public--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
-                                <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
-
-                                <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                
-                            </div>
-
-                            <%--Conclusion--%>
-                            <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Conclusion:" AssociatedControlID="tConcText" runat="server" />
-                                <asp:TextBox ID="tConcText" CssClass="form-control" runat="server" TextMode="MultiLine" ValidationGroup="AddTask" />
-
-                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tConcText" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
-                                
-                            </div>
                         </div>
 
                         <%--Error Summary--%>
