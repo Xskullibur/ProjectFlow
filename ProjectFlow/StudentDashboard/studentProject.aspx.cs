@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -21,6 +22,7 @@ namespace ProjectFlow.DashBoard
             {
                 Session["StudentID"] = identity.Student.UserId.ToString();
                 Session["Student"] = identity.Student.studentID.ToString();
+                this.SetHeader("Project I am a part of");
                 ShowProject();
             }            
         }
