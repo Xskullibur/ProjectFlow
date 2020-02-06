@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectFlow.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,7 @@ namespace ProjectFlow.Services.Whiteboard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            this.SetHeader("Whiteboard");
         }
     }
 }

@@ -7,7 +7,7 @@ var docLoaded = false, hubConnected = false, canvasInitialized = false
 var penWidth = 1;
 var penColor = '#000';
 var oldX, oldY;
-
+ 
 //Server session variables
 var sessionId;
 

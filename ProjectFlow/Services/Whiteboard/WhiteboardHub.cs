@@ -158,7 +158,6 @@ namespace ProjectFlow.Services.Whiteboard
 
         }
 
-
         public void DrawMove(string sessionIdAsString, string strokeColor, float[] p)
         {
             Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
