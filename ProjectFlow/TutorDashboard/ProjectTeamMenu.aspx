@@ -40,7 +40,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="modal fade" id="CreateTeam" role="dialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <asp:Label ID="Label4" runat="server" Text="Create Team"></asp:Label>
@@ -141,7 +141,7 @@
         </div>
     </div>
     <div class="modal fade" id="BulkCreateTeam" role="dialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <asp:Label ID="Label6" runat="server" Text="Bulk Create"></asp:Label>
@@ -247,7 +247,7 @@
                              
                         <tr>
                             <td class="auto-style15">
-                                Team<br />
+                                Group<br />
                                 <br />
                             </td>
                             <td class="auto-style14">
@@ -336,7 +336,7 @@
                     <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary mr-3" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />
                 </div>
                 <div class="col-2">
-                    <asp:Button ID="control" runat="server" Text="Open Team" CssClass="btn btn-primary mr-3" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#controlModel"/>
+                    <asp:Button ID="control" runat="server" Text="Release Team" CssClass="btn btn-primary mr-3" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#controlModel"/>
                 </div> 
                 <div class="col-3">
                      <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark mr-3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">

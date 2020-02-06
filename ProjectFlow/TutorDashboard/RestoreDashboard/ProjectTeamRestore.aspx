@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="card card-body projectflow-card-shadow container">
         <div class="container">          
-            <div class="row mb-3">
+            <div class="row mb-3 mt-3">
                 <div class="col">
                     <h3>
                         <asp:Label ID="InfoLabel" runat="server" Font-Size="Medium"></asp:Label>
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col">
                     <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
                 </div>

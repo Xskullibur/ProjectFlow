@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <div class="card card-body projectflow-card-shadow container">       
-            <div class="row mb-3">
+            <div class="row mb-3 mt-3">
                 <div class="col-3">
                     <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
                         <asp:ListItem Value="0">Avaliable</asp:ListItem>
