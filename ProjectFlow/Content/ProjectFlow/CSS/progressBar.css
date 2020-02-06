@@ -1,0 +1,32 @@
+﻿.cdt-step-progressbar.horizontal li .indicator {
+    z-index: 2;
+}
+
+.cdt-step-progressbar.horizontal li.active .indicator {
+    border-color: #28a745;
+    background-color: #28a745;
+    color: white;
+}
+
+.cdt-step-progressbar.horizontal li.active .title {
+    color: black;
+}
+
+.cdt-step-progressbar.horizontal li.active:before {
+    background-color: #28a745;
+}
+
+.cdt-step-progressbar.horizontal li:before {
+    height: 5px;
+    z-index: 1;
+}
+
+.cdt-step-progressbar li .indicator {
+    width: 40px;
+    height: 40px;
+    border-width: 2.5px;
+}
+
+body {
+    font-size: 1rem;
+}
