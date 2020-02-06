@@ -352,6 +352,7 @@
     <Content Include="Scripts\ProjectFlow\whiteboard.js" />
     <Content Include="Services\Christina\CreateRoom.aspx" />
     <Content Include="Services\Whiteboard\Whiteboard.aspx" />
+    <Content Include="Services\Whiteboard\WhiteboardList.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -541,6 +542,13 @@
       <DependentUpon>Whiteboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\Whiteboard\WhiteboardHub.cs" />
+    <Compile Include="Services\Whiteboard\WhiteboardList.aspx.cs">
+      <DependentUpon>WhiteboardList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Whiteboard\WhiteboardList.aspx.designer.cs">
+      <DependentUpon>WhiteboardList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>

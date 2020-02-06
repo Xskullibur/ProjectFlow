@@ -82,7 +82,7 @@ namespace ProjectFlow.Services.Whiteboard
                 Guid sessionId = Guid.Parse(sessionIdAsString);
 
                 //Check if session exist and have access
-                if (WhiteboardHubUtils.CheckHaveAccess(sessionId, student))
+                if (WhiteboardHubUtils.CheckHaveAccess(sessionId, new Student()))
                 {
                     //Get the list of points inside redis
 
