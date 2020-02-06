@@ -50,25 +50,13 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <%--Public--%>
-                            <asp:BoundField DataField="IsPublic" HeaderText="Public vote" ReadOnly="True" />
-                            <asp:CommandField ShowSelectButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-success mb-2" />
-                            </asp:CommandField>
-
                             <%--Action Settings--%>
                             <asp:TemplateField ShowHeader="false">
-                                <ItemTemplate>
-                                    <div class="dropdown mb-2">
-                                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            Edit
-                                        </button>
-
-                                        <div class="dropdown-menu">
-                                            <asp:Button Text="Edit Details" CssClass="dropdown-item" CommandName="Edit" runat="server" />
-                                            <asp:Button ID="updateStatusBtn" Text="Update Status" CssClass="dropdown-item" CommandName="UpdateStatus" runat="server" />
-                                        </div>
+                                <ItemTemplate>  
+                                    <div class="mb-2">
+                                        <asp:Button Text="Edit" CssClass="btn btn-sm btn-primary dropdown-toggle" CommandName="Edit" runat="server" />
                                     </div>
+                                    
                                     <asp:Button ID="DeleteButton" Text="Drop" runat="server" 
                                         CssClass="btn btn-sm btn-danger"
                                         data-toggle="confirmation"

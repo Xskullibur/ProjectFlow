@@ -81,7 +81,7 @@ namespace ProjectFlow.BLL
 
                 try
                 {
-                    var list = dbContext.Solutions.Include("TeamMembers.Student")
+                    var list = dbContext.Solutions.Include("aspnet_Users")
                         .Where(x => x.issueId == id)
                         .Select(y => new
                         {
@@ -89,7 +89,7 @@ namespace ProjectFlow.BLL
                             Title = y.title,
                             Description = y.description,
                             startDate = y.startdate,
-                            CreatedBy = y.createdBy
+                            CreatedBy = y.aspnet_Users.UserName
                         }).ToList();
 
                     return list;

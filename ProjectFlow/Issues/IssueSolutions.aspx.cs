@@ -70,7 +70,7 @@ namespace ProjectFlow.Issues
                     // other checks
 
                     check();
-                    isPublic();
+                    isPublic(current_solution.votePublic);
 
                     if (Uid == current_solution.createdBy || GetCurrentIdentiy().IsTutor)
                     {
@@ -88,7 +88,6 @@ namespace ProjectFlow.Issues
                 update(true);
             }
             check();
-            isPublic();
         }
 
         protected void btnNo_Click(object sender, EventArgs e)
@@ -99,7 +98,6 @@ namespace ProjectFlow.Issues
                 update(false);
             }
             check();
-            isPublic();
         }
 
         protected void btnRandom_Click(object sender, EventArgs e)
@@ -114,7 +112,6 @@ namespace ProjectFlow.Issues
                     update(true);
                 }
                 check();
-                isPublic();
             }
             else
             {
@@ -125,7 +122,6 @@ namespace ProjectFlow.Issues
                     update(false);
                 }
                 check();
-                isPublic();
             }
         }
 
@@ -181,11 +177,15 @@ namespace ProjectFlow.Issues
             return combindString;
         }
 
-        protected void isPublic()
+        protected void isPublic(bool choice)
         {
-            int idIssue = (int)Session["SSSId"];
-            btnNo.ToolTip = getUserbySelection(idIssue, false);
-            btnYes.ToolTip = getUserbySelection(idIssue, true);
+            if (choice)
+            {
+                int idIssue = (int)Session["SSSId"];
+                btnNo.ToolTip = getUserbySelection(idIssue, false);
+                btnYes.ToolTip = getUserbySelection(idIssue, true);
+            }
+            
         }
 
         protected void check()

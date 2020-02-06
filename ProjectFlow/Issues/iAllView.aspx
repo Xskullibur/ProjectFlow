@@ -16,7 +16,6 @@
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
                             <asp:BoundField DataField="Active" HeaderText="Active" />
                             <asp:BoundField DataField="Status" HeaderText="Status" />
-                            <asp:BoundField DataField="IsPublic" HeaderText="Public vote" />
                             <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success mb-2" />
                             </asp:CommandField>

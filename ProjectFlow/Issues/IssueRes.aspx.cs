@@ -170,14 +170,11 @@ namespace ProjectFlow.Issues
             int iID = (int)Session["SSIId"];
             PollingBLL pollingBLL = new PollingBLL();
             List<int> result = pollingBLL.GetResult(iID);
-            btnYesCount.Text = result[0].ToString();
-            btnNoCount.Text = result[1].ToString();
+
 
             if (GetCurrentIdentiy().IsTutor)
             {
-                btnYes.Enabled = false;
-                btnNo.Enabled = false;
-                btnRandom.Enabled = false;
+
             }
             else
             {               
@@ -271,8 +268,7 @@ namespace ProjectFlow.Issues
             int idIssue = (int)Session["SSIId"];
             if (choice == "True")
             {
-                btnNo.ToolTip = getUserbySelection(idIssue, false);
-                btnYes.ToolTip = getUserbySelection(idIssue, true);
+
             } else
             {
 
@@ -288,11 +284,7 @@ namespace ProjectFlow.Issues
             else
             {
                 disablecomments();
-                dropIssueBtn.Enabled = false;
-                btnYes.Enabled = false;
-                btnNo.Enabled = false;
-                btnRandom.Enabled = false;
-                btnAddSolution.Enabled = false;
+
                 this.Master.ShowAlert("Issue has been dropped", BootstrapAlertTypes.DANGER);
             }
         }
@@ -320,6 +312,19 @@ namespace ProjectFlow.Issues
             // Hide Modal
             //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal1", "$('#taskModal1').modal('hide')", true);
         }
+
+        protected bool checkCB()
+        {
+            if (cbPublic.Checked == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         protected void addTask_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -342,6 +347,7 @@ namespace ProjectFlow.Issues
                 new_solution.issueId = id;
                 new_solution.startdate = currentTime;
                 new_solution.createdBy = Uid;
+                new_solution.votePublic = checkCB();
 
                 // clear error messages
                 // TODO
@@ -426,5 +432,16 @@ namespace ProjectFlow.Issues
                 }
             }
         }
+
+        protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            //Make gridview row clickable
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(solutionView, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Go to this room";
+            }
+        }
+
     }
 }

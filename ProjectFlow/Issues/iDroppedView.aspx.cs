@@ -57,29 +57,7 @@ namespace ProjectFlow.Issues
         protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
-                {
-
-                }
-                else
-                {
-                    if (e.Row.RowType == DataControlRowType.DataRow)
-                    {
-                        TableCell PublicCell = e.Row.Cells[5];
-                        if (PublicCell.Text == "True")
-                        {
-                            PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
-                        }
-
-                        else
-                        {
-                            PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
-                        }
-                    }
-                }
-            }
+            
 
         }
 

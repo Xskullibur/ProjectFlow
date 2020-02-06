@@ -43,38 +43,15 @@ namespace ProjectFlow.Issues
 
         protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
-                {
-
-                }
-                else
-                {
-                    if (e.Row.RowType == DataControlRowType.DataRow)
-                    {
-                        TableCell PublicCell = e.Row.Cells[6];
-                        if (PublicCell.Text == "True")
-                        {
-                            PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
-                        }
-
-                        else
-                        {
-                            PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
-                        }
-                    }
-                }
-            }
+ 
         }
 
         protected void IssueView_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = IssueView.SelectedRow;
-            Session["SSName"] = row.Cells[2].Text;
-            Session["SSDesc"] = row.Cells[3].Text;
+
             Session["SSIId"] = int.Parse(row.Cells[0].Text);
-            Session["SSIsPublic"] = row.Cells[7].Text;
+
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 

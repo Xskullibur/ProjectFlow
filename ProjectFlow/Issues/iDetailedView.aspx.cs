@@ -58,10 +58,9 @@ namespace ProjectFlow.Issues
         protected void IssueView_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = IssueView.SelectedRow;
-            Session["SSName"] = row.Cells[2].Text;
-            Session["SSDesc"] = row.Cells[3].Text;
+
             Session["SSIId"] = int.Parse(row.Cells[0].Text);
-            Session["SSIsPublic"] = row.Cells[7].Text;
+
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 
@@ -133,22 +132,6 @@ namespace ProjectFlow.Issues
                     string statusVal = DataBinder.Eval(rowItems, "Status").ToString();
                     editStatusDDL.SelectedValue = statusDict.First(x => x.Value == statusVal).Key.ToString();
 
-                }
-                else
-                {
-                    if (e.Row.RowType == DataControlRowType.DataRow)
-                    {
-                        TableCell PublicCell = e.Row.Cells[5];
-                        if (PublicCell.Text == "True")
-                        {
-                            PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
-                        }
-
-                        else
-                        {
-                            PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
-                        }
-                    }
                 }
             }
 

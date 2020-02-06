@@ -32,33 +32,6 @@
                 </div>
         </div>
 
-
-        <div class ="row justify-content-between">    
-            <div class="col-xl-5 col-12 align-self-end">
-                <div class="btn-group ">
-                    <asp:Button ID="btnYes" CssClass ="btn btn-outline-secondary" runat="server" Text="&#128077;" OnClick="btnYes_Click" />
-                    <asp:Button ID="btnYesCount" CssClass ="btn btn-outline-secondary" runat="server" Text="" enabled="false"/>
-                </div>&nbsp;
-                <div class="btn-group ">
-                    <asp:Button ID="btnNo" CssClass ="btn btn-outline-secondary" runat="server" Text="&#128078;" OnClick="btnNo_Click" />
-                    <asp:Button ID="btnNoCount" CssClass ="btn btn-outline-secondary" runat="server" Text="" enabled="false"/>
-                </div>&nbsp;
-                <asp:Button ID="btnRandom" CssClass ="btn btn-outline-secondary" runat="server" Text="&#127922;" OnClick="btnRandom_Click" />
-            </div>
-            <div class="col-xl-3 col-12 text-right">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
-                        Edit
-                    </button>
-
-                    <div class="dropdown-menu">
-                        <asp:Button Text="Edit Issue" CssClass="dropdown-item" runat="server" ID="updateIssueBtn" OnClick="showTaskModal_Click" />
-                        <asp:Button Text="Drop Issue" CssClass="dropdown-item" runat="server" ID="dropIssueBtn" OnClick="IssueDelete" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <hr/>
         <div class="card card-body projectflow-card-shadow row py-3 px-0">
             <div class="col-12">
@@ -110,12 +83,12 @@
                     </div>
                     <div class="tab-pane fade" id="nav-conclusion" role="tabpanel" aria-labelledby="nav-conclusion">
                         <br />
-                        <div>
+                        <div class="mb-2">
                             <asp:Button Text="Add solution" CssClass="btn btn-outline-primary dropdown-toggle" runat="server" ID="btnAddSolution" OnClick="showTaskModal_Click"/>
                         </div>
                        
                         <div>
-                            <asp:GridView ID="solutionView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnSelectedIndexChanged="showSolution_click">
+                            <asp:GridView ID="solutionView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnSelectedIndexChanged="showSolution_click" OnRowDataBound="OnRowDataBound">
                                 <HeaderStyle CssClass="thead-light" />   
                                 <Columns>
                                     <asp:BoundField DataField="solutionId" HeaderText="Solution Id" />
@@ -183,6 +156,15 @@
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
                             
+                            <%--Public--%>
+                            <div>
+                                <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
+                                <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
+
+                                <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                
+                            </div>
+
                         </div>
 
                         <%--Error Summary--%>

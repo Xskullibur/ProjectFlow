@@ -15,7 +15,6 @@
                             <asp:BoundField DataField="Description" HeaderText="Description" />
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
                             <asp:BoundField DataField="Status" HeaderText="Status" />
-                            <asp:BoundField DataField="IsPublic" HeaderText="Public Cote" />
 
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
