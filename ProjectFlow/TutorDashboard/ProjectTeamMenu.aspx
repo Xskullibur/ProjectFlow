@@ -234,7 +234,7 @@
         </div>
     </div>
     <div class="modal fade" id="controlModel" role="dialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <asp:Label ID="Label7" runat="server" Text="Access Control"></asp:Label>
@@ -284,7 +284,9 @@
                                     <i style="color: white;" class="fas fa-lg fa-lock"></i>
                                 </asp:LinkButton>
 &nbsp;&nbsp;
-                                <asp:Button ID="unlockDP" runat="server" CssClass="btn btn-primary" OnClick="unlockDP_Click" Text="Unlock" />
+                                <asp:LinkButton ID="unlockDP" runat="server" CssClass="btn btn-primary" OnClick="unlockDP_Click">
+                                    <i style="color: white;" class="fas fa-lg fa-unlock"></i>
+                                </asp:LinkButton>
                             </td>
                             <td class="auto-style17">
                               
@@ -334,7 +336,7 @@
                     <asp:Button ID="CreateTeamBtn" CssClass="btn btn-primary mr-3" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateTeam" Text="Create Team" />
                 </div>
                 <div class="col-2">
-                    <asp:Button ID="control" runat="server" Text="Control" CssClass="btn btn-primary mr-3" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#controlModel"/>
+                    <asp:Button ID="control" runat="server" Text="Open Team" CssClass="btn btn-primary mr-3" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#controlModel"/>
                 </div> 
                 <div class="col-3">
                      <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark mr-3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">

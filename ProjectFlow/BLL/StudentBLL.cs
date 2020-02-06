@@ -249,7 +249,7 @@ namespace ProjectFlow.BLL
                 {
                     if(!ContainsProject(student, p))
                     {
-                        teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID)).ToList();
+                        teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID) && x.group == student.group).ToList();
                     }
                 }
 
