@@ -362,5 +362,11 @@ namespace ProjectFlow.DashBoard
             deKeyTB.Text = "";
             HideDecryptionModel();
         }
+
+        protected void FileGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            FileGV.PageIndex = e.NewPageIndex;
+            DisplayFile();
+        }
     }
 }

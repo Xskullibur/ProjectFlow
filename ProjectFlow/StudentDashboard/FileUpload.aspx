@@ -103,7 +103,7 @@
             <div class="row mb-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="FileGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged" OnRowDeleting="FileGV_RowDeleting">
+                        <asp:GridView ID="FileGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged" OnRowDeleting="FileGV_RowDeleting" OnPageIndexChanging="FileGV_PageIndexChanging">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
                                 <asp:BoundField DataField="Name" HeaderText="File" />
