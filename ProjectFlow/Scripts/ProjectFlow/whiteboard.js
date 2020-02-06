@@ -102,18 +102,46 @@ $(document).ready(function () {
         }
     }
 
-    hub.client.whiteboardSaveSuccessful = function () {
+    hub.client.alertUserJoin = function(name) {
+        $.toast({
+            title: 'Alert!',
+            content: name + ' has Joined',
+            type: 'info',
+            delay: 3000,
+            pause_on_hover: false
+        });
+    }
 
+    hub.client.whiteboardSaveSuccessful = function () {
+        $.toast({
+            title: 'Saved!',
+            content: 'Board Successfully Saved',
+            type: 'success',
+            delay: 3000,
+            pause_on_hover: false
+        });
     }
 
     //Errors
 
     hub.client.illegalAccess = function () {
-
+        $.toast({
+            title: 'Illegal Access!',
+            content: 'You are not invited!',
+            type: 'danger',
+            delay: 3000,
+            pause_on_hover: false
+        });
     }
 
     hub.client.unableToReadSessionId = function () {
-
+        $.toast({
+            title: 'Oops!',
+            content: 'Something has gone wrong, please try again.',
+            type: 'danger',
+            delay: 3000,
+            pause_on_hover: false
+        });
     }
 
     $.connection.hub.start().done(function () {
@@ -207,3 +235,7 @@ function requestFullScreen() {
 function changeColor(color) {
     penColor = color;
 }
+
+$(document).on('hidden.bs.toast', '.toast', function (e) {
+    $(this).remove();
+});

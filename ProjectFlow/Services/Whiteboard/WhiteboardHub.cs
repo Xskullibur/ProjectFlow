@@ -59,6 +59,7 @@ namespace ProjectFlow.Services.Whiteboard
 
                     this.Clients.Caller.JoinWhiteboardSessionComplete(listOfPoints);
 
+                    this.Clients.Group(sessionIdAsString).AlertUserJoin($"{student.firstName} {student.lastName}");
                 }
                 else
                 {

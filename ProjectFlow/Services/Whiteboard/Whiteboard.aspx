@@ -15,6 +15,9 @@
     <script type="text/javascript" src="/signalr/hubs"></script>
     <script type="text/javascript" src="/Scripts/ProjectFlow/whiteboard.js"></script>
 
+    <link href="/Content/bootstrap-toast/toast.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/bootstrap-toast/toast.min.js"></script>
+
     <div class="container">
 
         <div class="row">
