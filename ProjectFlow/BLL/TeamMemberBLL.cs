@@ -172,7 +172,7 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public void RemovieMember(int MemberID)
+        public void RemoveMember(int MemberID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {

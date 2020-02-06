@@ -53,7 +53,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Kick" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
+                                        <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Select" Text="Kick" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

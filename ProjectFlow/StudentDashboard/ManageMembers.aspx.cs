@@ -88,7 +88,18 @@ namespace ProjectFlow.StudentDashboard
 
         protected void MemberGV_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            GridViewRow row = MemberGV.SelectedRow;
+            TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
+            if(int.Parse(row.Cells[0].Text) == member.memberID)
+            {
+                Master.ShowAlert("You cannot kick yourselft", BootstrapAlertTypes.DANGER);               
+            }
+            else
+            {
+                teamMemberBLL.RemoveMember(int.Parse(row.Cells[0].Text));
+                Master.ShowAlert("Successfully kicked member", BootstrapAlertTypes.SUCCESS);
+                showTeam();
+            }
         }
 
         protected void leaderBtn_Click(object sender, EventArgs e)
