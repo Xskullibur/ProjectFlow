@@ -246,21 +246,30 @@ namespace ProjectFlow.BLL
                 var student = dbContext.Students.Single(x => x.studentID.Equals(studentID));
                 var member = dbContext.TeamMembers.Where(x => x.dropped == true && x.UserId == student.UserId);
 
-                foreach(Project p in project)
+                foreach (Project p in project)
                 {
-                    if(dbContext.TeamMembers.Where(x => x.dropped == true && x.UserId == student.UserId).Select(x => x.ProjectTeam).Any(x => x.dropped == false))
+                    var teams = dbContext.ProjectTeams.Where(x => x.projectID == p.projectID && x.group == student.group).ToList();
+
+                    if (!ContainsProject(student, p))
                     {
                         teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID) && x.group == student.group).ToList();
                     }
                     else
                     {
-                        if (!ContainsProject(student, p))
+                        bool status = true;
+                        foreach (ProjectTeam t in teams)
+                        {
+                            if ((dbContext.TeamMembers.Count(x => x.dropped == false && x.UserId == student.UserId && x.teamID == t.teamID) > 0)){
+                                status = false;
+                            }
+                        }
+
+                        if(status == true)
                         {
                             teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID) && x.group == student.group).ToList();
                         }
-                    }                   
+                    }
                 }
-
                 return teamList;
             }
         }

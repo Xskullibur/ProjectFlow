@@ -422,25 +422,42 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public bool ContainsProject(Student student, Project project)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Students.Find(student.UserId).TeamMembers.Select(tm => tm.ProjectTeam.Project.projectID).Contains(project.projectID);
+            }
+        }
+
         public void InsertMember(string StudentID, int TeamID, int RoleID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
                 var project = dbContext.ProjectTeams.Find(TeamID);
+                var memberFound = dbContext.TeamMembers.Any(x => x.UserId == student.UserId && x.teamID == TeamID);
 
-                var member = new TeamMember()
+                if (memberFound == true)
                 {
-                    UserId = student.UserId,
-                    teamID = TeamID,
-                    roleID = RoleID
-                };
-                if(project != null)
-                {
-                    insertScore(student.UserId, project.projectID);
+                    var memberToAdd = dbContext.TeamMembers.First(x => x.UserId == student.UserId && x.teamID == TeamID);
+                    memberToAdd.dropped = false;
                 }
+                else
+                {
+                    var member = new TeamMember()
+                    {
+                        UserId = student.UserId,
+                        teamID = TeamID,
+                        roleID = RoleID
+                    };
+                    if (project != null)
+                    {
+                        insertScore(student.UserId, project.projectID);
+                    }
 
-                dbContext.TeamMembers.Add(member);
+                    dbContext.TeamMembers.Add(member);
+                }               
                 dbContext.SaveChanges();
             }
         }
