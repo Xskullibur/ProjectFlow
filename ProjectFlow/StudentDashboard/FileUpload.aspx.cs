@@ -20,7 +20,7 @@ namespace ProjectFlow.DashBoard
             {
                 CheckFolderExist();
                 DisplayFile();
-                this.SetHeader("File Sharing");
+                this.SetHeader("Encrypted File Sharing");
             }               
         }
 
