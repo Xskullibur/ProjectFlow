@@ -55,6 +55,31 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="decryptionModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <asp:Label ID="Label1" runat="server" Text="Key Decryption"></asp:Label>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                     <div class="container">        
+                        <div class="row">            
+                            <div class="col">
+                                 <asp:TextBox ID="deKeyTB" CssClass="form-control" runat="server" Visible="True"></asp:TextBox>
+                            </div>
+                            <div class="col">
+                                 <asp:Button ID="keyDownloadBtn" CssClass="btn btn-primary" runat="server" Text="Download" OnClick="keyDownloadBtn_Click" />
+                            </div>
+                        </div>
+                        <br>                                                                      
+                    </div>                   
+                </div>           
+            </div>
+        </div>
+    </div>
     <div class="card card-body projectflow-card-shadow container">
         <div class="container">           
             <div class="row mb-3 mt-3">
@@ -89,12 +114,7 @@
                                         <%# ShowIcon((string)Eval("Status")) %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Date" HeaderText="Date" />
-                                <asp:TemplateField HeaderText="Key">
-                                    <ItemTemplate>
-                                        <asp:TextBox ID="tableKeyTB" CssClass="form-control" runat="server" Visible="True"></asp:TextBox>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                                <asp:BoundField DataField="Date" HeaderText="Date" />                              
                                 <asp:CommandField ButtonType="Button" SelectText="Download" ShowSelectButton="True">
                                     <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>

@@ -48,6 +48,16 @@ namespace ProjectFlow.DashBoard
             Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
         }
 
+        private void ShowDecryptionModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#decryptionModal').modal('show')", true);
+        }
+
+        private void HideDecryptionModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#decryptionModal').modal('hide')", true);
+        }
+
         protected void UploadBtn_Click(object sender, EventArgs e)
         {
             if (FileUploadControl.HasFile)
@@ -171,32 +181,22 @@ namespace ProjectFlow.DashBoard
           
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {
-                if(key.Text.Length == 32)
-                {
-                    fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
-                    string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
-                    
-                    string theFile = storagePath + fileName;
-                    string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
+                fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
+                string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
 
-                    string newFileName = RemoveAdditionalInfo(fileName, 1);
+                string theFile = storagePath + fileName;
+                string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
 
-                    Directory.CreateDirectory(destinationFolder); 
-                    File.Copy(theFile, destinationFolder + newFileName);
-                    try
-                    {
-                        decryption.DecryptFileWithKey(destinationFolder + newFileName, key.Text);
-                        DownloadFile(newFileName, destinationFolder);
-                    }
-                    catch (System.Security.Cryptography.CryptographicException exception)
-                    {
-                        Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
-                    }                   
-                }                
-                else
-                {
-                    Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
-                }               
+                string newFileName = RemoveAdditionalInfo(fileName, 1);
+
+                Directory.CreateDirectory(destinationFolder);
+                File.Copy(theFile, destinationFolder + newFileName);
+
+                ViewState["destinationFolder"] = destinationFolder;
+                ViewState["newFileName"] = newFileName;
+
+                ShowDecryptionModel();
+
             }
             else if (row.Cells[2].Text.StartsWith("Encrypted"))
             {
@@ -337,6 +337,30 @@ namespace ProjectFlow.DashBoard
             {
                 return "<i style=\"color: red;\" class=\"fas fa-lg fa-lock-open\"></i>";
             }
+        }
+
+        protected void keyDownloadBtn_Click(object sender, EventArgs e)
+        {
+            Encryption encryption = new Encryption();
+            Decryption decryption = new Decryption();
+            if (deKeyTB.Text.Length == 32)
+            {                
+                try
+                {
+                    decryption.DecryptFileWithKey(ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString(), deKeyTB.Text);
+                    DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString());
+                }
+                catch (System.Security.Cryptography.CryptographicException exception)
+                {
+                    Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
+                }
+            }
+            else
+            {
+                Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
+            }
+            deKeyTB.Text = "";
+            HideDecryptionModel();
         }
     }
 }
