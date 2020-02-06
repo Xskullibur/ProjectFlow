@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using ProjectFlow;
 using ProjectFlow.BLL;
 using ProjectFlow.Login;
 
@@ -27,10 +28,11 @@ namespace ProjectFlow.Services.Whiteboard
                     this.Groups.Add(Context.ConnectionId, sessionId.ToString());
 
                     //Add the new connection to the redis
+                    //Store currently joined clients inside redis
+                    Global.Redis.GetDatabase().SetAdd(sessionId.ToString() + "-connected", student.UserId.ToString());
 
-
-                    //Response to the client the it has successfully joined the session
-                    this.Clients.Caller.JoinWhiteboardGroupComplete();
+                    //Response to the client when it has successfully joined the session
+                    this.Clients.Caller.JoinWhiteboardSessionComplete();
                 }
                 else
                 {
@@ -48,23 +50,37 @@ namespace ProjectFlow.Services.Whiteboard
             Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
             if (WhiteboardHubUtils.CheckIfStudentBelongsToTeam(student, teamID))
             {
-                //Create a new session
-                WhiteboardSessionBLL whiteboardSessionBLL = new WhiteboardSessionBLL();
-
-                WhiteboardSession whiteboardSession = new WhiteboardSession
+                try
                 {
-                    groupName = groupName,
-                    creationDateTime = new DateTime(),
-                    teamID = teamID
-                };
+                    //Create a new session
+                    WhiteboardSessionBLL whiteboardSessionBLL = new WhiteboardSessionBLL();
 
-                whiteboardSessionBLL.CreateNewSession(whiteboardSession);
+                    WhiteboardSession whiteboardSession = new WhiteboardSession
+                    {
+                        groupName = groupName,
+                        creationDateTime = DateTime.Now,
+                        teamID = teamID,
+                        sessionID = Guid.NewGuid(),
+                        strokesJsonPath = null
+                    };
 
-                //Get newly generated session id
-                Guid sessionId = whiteboardSession.sessionID;
+                    whiteboardSessionBLL.CreateNewSession(whiteboardSession);
 
-                //Store currently joined clients inside redis
+                    //Get newly generated session id
+                    Guid sessionId = whiteboardSession.sessionID;
 
+                    //Store currently joined clients inside redis
+                    Global.Redis.GetDatabase().SetAdd(sessionId.ToString() + "-connected", student.UserId.ToString());
+
+                    //Response to the client when it has successfully created the session
+                    this.Clients.Caller.CreatedWhiteboardSessionComplete(sessionId.ToString());
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine();
+                }
+                
             }
             else
             {
@@ -77,6 +93,7 @@ namespace ProjectFlow.Services.Whiteboard
 
         public void Save(string sessionIdAsString)
         {
+            Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
             try
             {
                 Guid sessionId = Guid.Parse(sessionIdAsString);
@@ -85,8 +102,9 @@ namespace ProjectFlow.Services.Whiteboard
                 if (WhiteboardHubUtils.CheckHaveAccess(sessionId, student))
                 {
                     //Get the list of points inside redis
-
+                    var listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
                     //Save to file located in ~/StrokePath
+
 
                     //Tell the client save is successful
                     this.Clients.Caller.WhiteboardSaveSuccessful();
@@ -106,11 +124,37 @@ namespace ProjectFlow.Services.Whiteboard
         }
 
 
-        public void DrawMove(int[] p)
+        public void DrawMove(string sessionIdAsString, string strokeColor, float[] p)
         {
-            Clients.OthersInGroup("group1").DrawMove(p);
+            Student student = (Context.User.Identity as ProjectFlowIdentity).Student;
+            try
+            {
+                Guid sessionId = Guid.Parse(sessionIdAsString);
+                //Check if session exist and have access
+                if (WhiteboardHubUtils.CheckHaveAccessFromRedis(sessionId, student))
+                {
+                    //Get the list of points inside redis
+                    Global.Redis.GetDatabase().ListRightPush(sessionIdAsString, $"{{'points': [{string.Join(",", p)}], 'strokeColor': '{strokeColor}' }}");
+
+                    Clients.OthersInGroup(sessionIdAsString).DrawMove(p, strokeColor);
+                }
+                else
+                {
+                    this.Clients.Caller.IllegalAccess();
+                }
+
+
+            }
+            catch (Exception)
+            {
+                this.Clients.Caller.UnableToReadSessionId();
+            }
+
         }
+        
+        
     }
+
     
     /// <summary>
     /// A utils class for helping to write DRY codes
@@ -140,12 +184,13 @@ namespace ProjectFlow.Services.Whiteboard
             }
             return true;
         }
-    }
 
-    public class Point {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public string Color { get; set; }
+        public static bool CheckHaveAccessFromRedis(Guid sessionId, Student student)
+        {
+            //Sets contains is O(1) checking
+            return Global.Redis.GetDatabase().SetContains(sessionId.ToString() + "-connected", student.UserId.ToString());
+        }
+
     }
 
 }
