@@ -22,76 +22,13 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
-        /// taskViewDDL control.
+        /// taskModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList taskViewDDL;
-        
-        /// <summary>
-        /// addTaskBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button addTaskBtn;
-        
-        /// <summary>
-        /// fTaskNameTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox fTaskNameTxt;
-        
-        /// <summary>
-        /// fPriorityListBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox fPriorityListBox;
-        
-        /// <summary>
-        /// fStatusListBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox fStatusListBox;
-        
-        /// <summary>
-        /// fAllocationListBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox fAllocationListBox;
-        
-        /// <summary>
-        /// filterBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button filterBtn;
-        
-        /// <summary>
-        /// currentFiltersPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel currentFiltersPanel;
+        protected global::System.Web.UI.WebControls.Panel taskModal;
         
         /// <summary>
         /// modalUpdatePanel control.
@@ -346,13 +283,13 @@ namespace ProjectFlow.Tasks {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator priorityRequiredValidator;
         
         /// <summary>
-        /// addTaskSummaryValidator control.
+        /// alertLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary addTaskSummaryValidator;
+        protected global::System.Web.UI.WebControls.Label alertLbl;
         
         /// <summary>
         /// tSaveBtn control.
@@ -371,6 +308,78 @@ namespace ProjectFlow.Tasks {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button tSaveAnotherBtn;
+        
+        /// <summary>
+        /// taskViewDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList taskViewDDL;
+        
+        /// <summary>
+        /// addTaskBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTaskBtn;
+        
+        /// <summary>
+        /// fTaskNameTxt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox fTaskNameTxt;
+        
+        /// <summary>
+        /// fPriorityListBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox fPriorityListBox;
+        
+        /// <summary>
+        /// fStatusListBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox fStatusListBox;
+        
+        /// <summary>
+        /// fAllocationListBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox fAllocationListBox;
+        
+        /// <summary>
+        /// filterBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button filterBtn;
+        
+        /// <summary>
+        /// currentFiltersPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel currentFiltersPanel;
         
         /// <summary>
         /// MainContent control.

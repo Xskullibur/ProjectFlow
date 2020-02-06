@@ -172,6 +172,7 @@
     <Content Include="Content\ProjectFlow\CSS\christina.css" />
     <Content Include="Content\ProjectFlow\CSS\effect\live-ring.css" />
     <Content Include="Content\ProjectFlow\CSS\main.css" />
+    <Content Include="Content\ProjectFlow\CSS\pagination.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
     <Content Include="Global.asax" />

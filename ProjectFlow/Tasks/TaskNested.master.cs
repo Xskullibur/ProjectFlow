@@ -15,22 +15,28 @@ namespace ProjectFlow.Tasks
 {
     public partial class TaskNested : MasterPage
     {
-        // Public Attributes and Methods
-        public event EventHandler refreshGrid;
-        public enum TaskViews
-        {
-            OngoingTaskView,
-            DroppedTaskView,
-            Calendar,
-            Swimlane
-        }
+        /**
+         * Public Attributes and Methods
+         **/
 
+        // Event Handler to refresh grid
+        public event EventHandler refreshGrid;
+
+        // Types of Task Filters
         private struct FilterType
         {
             public static string KEYWORD = "filterTaskName";
             public static string PRIORITY = "filterPriority";
             public static string STATUS = "filterStatus";
             public static string ALLOCATION = "filterAllocation";
+        }
+
+        // Types of Views
+        public enum TaskViews
+        {
+            OngoingTaskView,
+            DroppedTaskView,
+            Calendar
         }
 
         // Change Selected Task View
@@ -47,14 +53,10 @@ namespace ProjectFlow.Tasks
                 case TaskViews.Calendar:
                     taskViewDDL.SelectedIndex = 2;
                     break;
-                case TaskViews.Swimlane:
-                    taskViewDDL.SelectedIndex = 3;
-                    break;
                 default:
                     break;
             }
         }
-        
         // Get Current Project
         public ProjectTeam GetCurrentProjectTeam()
         {
@@ -125,12 +127,21 @@ namespace ProjectFlow.Tasks
          * Main Program
          **/
 
+        // On Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Set title
+                /**
+                 * Page Header
+                 **/
+
                 (this.Master as ServicesWithContent).Header = "Task Management";
+
+
+                /**
+                 * Input Setup
+                 **/
 
                 // Current Team
                 ProjectTeam currentTeam = GetCurrentProjectTeam();
@@ -195,19 +206,18 @@ namespace ProjectFlow.Tasks
             if (GetCurrentIdentiy().IsTutor)
             {
                 addTaskBtn.Visible = false;
+                taskModal.Visible = false;
             }
 
-            updateCurrentFilterPanel();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
+            UpdateCurrentFilterPanel();
         }
 
-        // Switch Views
+        // Switch Task Views
         protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             switch (taskViewDDL.SelectedIndex)
             {
-
                 case 0:
                     Response.Redirect("OngoingTaskView.aspx");
                     break;
@@ -222,7 +232,6 @@ namespace ProjectFlow.Tasks
 
                 default:
                     break;
-
             }
         }
 
@@ -234,7 +243,7 @@ namespace ProjectFlow.Tasks
         // Filter Add Event
         protected void filterBtn_Click(object sender, EventArgs e)
         {
-            // Remove All Controls From Panel
+            // Remove All Controls From Filter Panel
             currentFiltersPanel.Controls.Clear();
 
             // Check Keyword Fiter
@@ -245,53 +254,20 @@ namespace ProjectFlow.Tasks
             }
 
             // Check Priority Filter
-            if (fPriorityListBox.GetSelectedIndices().Length != 0)
-            {
-                Dictionary<int, string> priorityFilters = new Dictionary<int, string>();
-
-                foreach (int index in fPriorityListBox.GetSelectedIndices())
-                {
-                    var item = fPriorityListBox.Items[index];
-                    priorityFilters.Add(Convert.ToInt32(item.Value), item.Text);
-                }
-
-                Session[FilterType.PRIORITY] = priorityFilters;
-            }
+            CheckFiltersInListBox(fPriorityListBox, FilterType.PRIORITY);
 
             // Status Filter
-            if (fStatusListBox.GetSelectedIndices().Length != 0)
-            {
-                Dictionary<int, string> statusFilters = new Dictionary<int, string>();
-
-                foreach (int index in fStatusListBox.GetSelectedIndices())
-                {
-                    var item = fStatusListBox.Items[index];
-                    statusFilters.Add(Convert.ToInt32(item.Value), item.Text);
-                }
-
-                Session[FilterType.STATUS] = statusFilters;
-            }
+            CheckFiltersInListBox(fStatusListBox, FilterType.STATUS);
 
             // Allocation Filter
-            if (fAllocationListBox.GetSelectedIndices().Length != 0)
-            {
-                Dictionary<int, string> allocationFilters = new Dictionary<int, string>();
+            CheckFiltersInListBox(fAllocationListBox, FilterType.ALLOCATION);
 
-                foreach (int index in fAllocationListBox.GetSelectedIndices())
-                {
-                    var item = fAllocationListBox.Items[index];
-                    allocationFilters.Add(Convert.ToInt32(item.Value), item.Text);
-                }
-
-                Session[FilterType.ALLOCATION] = allocationFilters;
-            }
-
-            updateCurrentFilterPanel();
+            UpdateCurrentFilterPanel();
             refreshGrid?.Invoke(this, EventArgs.Empty);
         }
-
-        // Update Filter Panel
-        private void updateCurrentFilterPanel()
+        
+        // Update Filter Panel (Check for filters and Add Button to Panel)
+        private void UpdateCurrentFilterPanel()
         {
             if (Session[FilterType.KEYWORD] != null)
             {
@@ -345,6 +321,23 @@ namespace ProjectFlow.Tasks
                 }
 
                 currentFiltersPanel.Controls.Add(linkButton);
+            }
+        }
+
+        // Check ListBox for Filters
+        private void CheckFiltersInListBox(ListBox listBox, string filterType)
+        {
+            if (listBox.GetSelectedIndices().Length != 0)
+            {
+                Dictionary<int, string> currrentFilters = new Dictionary<int, string>();
+
+                foreach (int index in listBox.GetSelectedIndices())
+                {
+                    var item = listBox.Items[index];
+                    currrentFilters.Add(Convert.ToInt32(item.Value), item.Text);
+                }
+
+                Session[filterType] = currrentFilters;
             }
         }
 
@@ -467,17 +460,13 @@ namespace ProjectFlow.Tasks
          * MODAL MANIPULATION
          **/
 
-        // Add Task OnClick Event
-        protected void showTaskModal_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#taskModal').modal('show');", true);
-        }
-
         // On UpdatePanel Init
         protected void modalUpdatePanel_Init(object sender, EventArgs e)
         {
             // Init SelectPicker And DateTimePicker
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "init_pickers", "$('.selectpicker').selectpicker();", true);
+            alertLbl.Visible = false;
+            alertLbl.Text = string.Empty;
         }
 
         // Clear Input
@@ -491,6 +480,7 @@ namespace ProjectFlow.Tasks
             statusDDL.ClearSelection();
             priorityDDL.ClearSelection();
         }
+
 
         /**
          * TASK MANIPULATION
@@ -728,6 +718,16 @@ namespace ProjectFlow.Tasks
                 if (result)
                 {
                     ClearModalInputs();
+
+                    alertLbl.Visible = true;
+                    alertLbl.Text = "Successfully Added!";
+                    alertLbl.CssClass = "text-success";
+                }
+                else
+                {
+                    alertLbl.Visible = true;
+                    alertLbl.Text = "Failed to Add Task, Please try again later!";
+                    alertLbl.CssClass = "text-danger";
                 }
             }
 
