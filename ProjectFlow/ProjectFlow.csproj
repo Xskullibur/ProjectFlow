@@ -356,6 +356,7 @@
     <Content Include="Services\Whiteboard\Whiteboard.aspx" />
     <Content Include="Services\Whiteboard\WhiteboardList.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
+    <Content Include="ProjectDashboard\Web.config" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
@@ -363,7 +364,6 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="ProjectDashboard\Web.config" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

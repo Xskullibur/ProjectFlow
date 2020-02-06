@@ -74,6 +74,9 @@
                                         <i class="fas fa-eraser"></i>
                                     </button>
                                 </div>
+                                <div id="connected_users" class="btn-group mr-2">
+                                    <b>Also editing this whiteboard:</b> &nbsp;
+                                </div>
                             </div>
                         </div>
 

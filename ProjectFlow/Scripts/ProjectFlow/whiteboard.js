@@ -10,6 +10,7 @@ var oldX, oldY;
  
 //Server session variables
 var sessionId;
+var connected_users = [];
 
 //Get Hub Instance
 var hub = $.connection.Whiteboard
@@ -97,14 +98,25 @@ $(document).ready(function () {
         sessionId = _sessionId;
     }
 
-    hub.client.joinWhiteboardSessionComplete = function (listOfPoints) {
+    hub.client.joinWhiteboardSessionComplete = function (listOfPoints, editingUsers) {
         for (var i = 0; i < listOfPoints.length; i++) {
             var point = JSON.parse(listOfPoints[i]);
             DrawMove(point.points, point.strokeColor);
         }
+
+        for (var i = 0; i < editingUsers.length; i++) {
+            addUserName(editingUsers[i]);
+        }
+
     }
 
-    hub.client.alertUserJoin = function(name) {
+    function addUserName(name) {
+        var nospace_name = name.replace(/\s/g, '');
+        $('#connected_users').append(`<span id='user-${nospace_name}'>${name}</span>&nbsp;`);
+    }
+
+    hub.client.alertUserJoin = function (name) {
+        addUserName(name);
         $.toast({
             title: 'Alert!',
             content: name + ' has Joined',
@@ -115,6 +127,8 @@ $(document).ready(function () {
     }
 
     hub.client.alertUserLeave = function (name) {
+        var nospace_name = name.replace(/\s/g, '');
+        $(`#user-${nospace_name}`).remove();
         $.toast({
             title: 'Alert!',
             content: name + ' has Left',

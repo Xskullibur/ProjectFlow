@@ -57,6 +57,7 @@ namespace ProjectFlow
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomActionItem> RoomActionItems { get; set; }
+        public virtual DbSet<Score> Scores { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
@@ -65,7 +66,6 @@ namespace ProjectFlow
         public virtual DbSet<Transcript> Transcripts { get; set; }
         public virtual DbSet<Tutor> Tutors { get; set; }
         public virtual DbSet<VoiceRecording> VoiceRecordings { get; set; }
-        public virtual DbSet<Score> Scores { get; set; }
         public virtual DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
     }
 }

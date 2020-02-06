@@ -75,8 +75,14 @@ namespace ProjectFlow.Services.Whiteboard
 
                     }
 
+                    //Get currently connected users
+                    StudentBLL studentBLL = new StudentBLL();
+                    var users = Global.Redis.GetDatabase().SetMembers("connected-" + sessionId.ToString()).Select(user => Guid.Parse(user.ToString())).ToList();
+                    var names = users.Select(userId => studentBLL.GetStudentByStudentID(userId))
+                        .Where(_student => _student.studentID != student.studentID)//Do not send the creater name, since it will be added ltr via alert
+                        .Select(_student => _student.firstName + " " + _student.lastName).ToList();
+                    this.Clients.Caller.JoinWhiteboardSessionComplete(listOfPoints, names);
 
-                    this.Clients.Caller.JoinWhiteboardSessionComplete(listOfPoints);
 
                     this.Clients.Group(sessionIdAsString).AlertUserJoin($"{student.firstName} {student.lastName}");
                 }
@@ -85,7 +91,7 @@ namespace ProjectFlow.Services.Whiteboard
                     this.Clients.Caller.IllegalAccess();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 this.Clients.Caller.UnableToReadSessionId();
             }
@@ -106,8 +112,7 @@ namespace ProjectFlow.Services.Whiteboard
                         groupName = groupName,
                         creationDateTime = DateTime.Now,
                         teamID = teamID,
-                        sessionID = Guid.NewGuid(),
-                        strokesJsonPath = null
+                        sessionID = Guid.NewGuid()
                     };
 
                     whiteboardSessionBLL.CreateNewSession(whiteboardSession);

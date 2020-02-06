@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -166,6 +166,7 @@
           <Property Name="active" Type="bit" Nullable="false" />
           <Property Name="statusID" Type="int" />
           <Property Name="votePublic" Type="bit" />
+          <Property Name="Conclusion" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Milestone">
           <Key>
@@ -502,7 +503,6 @@
           <Property Name="groupName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="creationDateTime" Type="datetime" Nullable="false" />
-          <Property Name="strokesJsonPath" Type="varchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK__aspnet_Me__Appli__03F0984C">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
@@ -1355,7 +1355,8 @@
             <End Role="Score" EntitySet="Score" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1540,6 +1541,7 @@
           <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="statusID" Type="Int32" />
           <Property Name="votePublic" Type="Boolean" />
+          <Property Name="Conclusion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_Issue" FromRole="Issue" ToRole="CommentForIssue" />
           <NavigationProperty Name="Status" Relationship="Self.FK_Issue_Status" FromRole="Issue" ToRole="Status" />
           <NavigationProperty Name="Task" Relationship="Self.FK_Issue_Task" FromRole="Issue" ToRole="Task" />
@@ -1590,11 +1592,11 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="dropped" Type="Boolean" Nullable="false" />
           <Property Name="createDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_Project" FromRole="Project" ToRole="Milestone" />
           <NavigationProperty Name="ProjectTeams" Relationship="Self.FK_ProjectTeam_Project" FromRole="Project" ToRole="ProjectTeam" />
           <NavigationProperty Name="Tutor" Relationship="Self.PK_Project_Tutor" FromRole="Project" ToRole="Tutor" />
-          <Property Name="endDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Scores" Relationship="ProjectFlowModel.Score_FK" FromRole="Project" ToRole="Score" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK" FromRole="Project" ToRole="Score" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -1612,8 +1614,8 @@
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
-          <NavigationProperty Name="Scores" Relationship="ProjectFlowModel.Score_FK_team" FromRole="ProjectTeam" ToRole="Score" />
-          <NavigationProperty Name="WhiteboardSessions" Relationship="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" FromRole="ProjectTeam" ToRole="WhiteboardSession" />
+          <NavigationProperty Name="WhiteboardSessions" Relationship="Self.FK_WhiteboardSession_ProjectTeam" FromRole="ProjectTeam" ToRole="WhiteboardSession" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK_team" FromRole="ProjectTeam" ToRole="Score" />
         </EntityType>
         <EntityType Name="QRTZ_BLOB_TRIGGERS">
           <Key>
@@ -1811,6 +1813,29 @@
           <Property Name="roomID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Room" Relationship="Self.FK_RoomActionItem_Room" FromRole="RoomActionItem" ToRole="Room" />
         </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="scoreID" />
+          </Key>
+          <Property Name="scoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal" Type="Double" />
+          <Property Name="report" Type="Double" />
+          <Property Name="reviewOne" Type="Double" />
+          <Property Name="reviewTwo" Type="Double" />
+          <Property Name="presentation" Type="Double" />
+          <Property Name="test" Type="Double" />
+          <Property Name="sdl" Type="Double" />
+          <Property Name="participation" Type="Double" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="teamID" Type="Int32" />
+          <Property Name="proposalG" Type="Double" />
+          <Property Name="reportG" Type="Double" />
+          <Property Name="presentationG" Type="Double" />
+          <NavigationProperty Name="Project" Relationship="Self.Score_FK" FromRole="Score" ToRole="Project" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.Score_FK_team" FromRole="Score" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Student" Relationship="Self.Score_FK_1" FromRole="Score" ToRole="Student" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="ID" />
@@ -1828,12 +1853,12 @@
           <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="group" Type="Int32" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Student_aspnet_Users" FromRole="Student" ToRole="aspnet_Users" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_Student" FromRole="Student" ToRole="Room" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK_1" FromRole="Student" ToRole="Score" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Student" FromRole="Student" ToRole="TeamMember" />
           <NavigationProperty Name="VoiceRecordings" Relationship="Self.FK_VoiceRecording_Student" FromRole="Student" ToRole="VoiceRecording" />
-          <Property Name="group" Type="Int32" />
-          <NavigationProperty Name="Scores" Relationship="ProjectFlowModel.Score_FK_1" FromRole="Student" ToRole="Score" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -1911,6 +1936,16 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="recordingName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_VoiceRecording_Student" FromRole="VoiceRecording" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="WhiteboardSession">
+          <Key>
+            <PropertyRef Name="sessionID" />
+          </Key>
+          <Property Name="sessionID" Type="Guid" Nullable="false" />
+          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="creationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_WhiteboardSession_ProjectTeam" FromRole="WhiteboardSession" ToRole="ProjectTeam" />
         </EntityType>
         <Association Name="FK__aspnet_Me__Appli__03F0984C">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
@@ -2236,6 +2271,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Score_FK">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Room_ProjectTeam">
           <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
           <End Role="Room" Type="Self.Room" Multiplicity="*" />
@@ -2268,6 +2315,30 @@
               <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="TeamMember">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WhiteboardSession_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="WhiteboardSession" Type="Self.WhiteboardSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="WhiteboardSession">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Score_FK_team">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Score">
               <PropertyRef Name="teamID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2390,6 +2461,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Score_FK_1">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -2487,6 +2570,7 @@
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="RoomActionItems" EntityType="Self.RoomActionItem" />
+          <EntitySet Name="Scores" EntityType="Self.Score" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
@@ -2495,6 +2579,7 @@
           <EntitySet Name="Transcripts" EntityType="Self.Transcript" />
           <EntitySet Name="Tutors" EntityType="Self.Tutor" />
           <EntitySet Name="VoiceRecordings" EntityType="Self.VoiceRecording" />
+          <EntitySet Name="WhiteboardSessions" EntityType="Self.WhiteboardSession" />
           <AssociationSet Name="FK__aspnet_Me__Appli__03F0984C" Association="Self.FK__aspnet_Me__Appli__03F0984C">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
@@ -2603,6 +2688,10 @@
             <End Role="Tutor" EntitySet="Tutors" />
             <End Role="Project" EntitySet="Projects" />
           </AssociationSet>
+          <AssociationSet Name="Score_FK" Association="Self.Score_FK">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Score" EntitySet="Scores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Room_ProjectTeam" Association="Self.FK_Room_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="Room" EntitySet="Rooms" />
@@ -2614,6 +2703,14 @@
           <AssociationSet Name="FK_TeamMember_ProjectTeam" Association="Self.FK_TeamMember_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WhiteboardSession_ProjectTeam" Association="Self.FK_WhiteboardSession_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="WhiteboardSession" EntitySet="WhiteboardSessions" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK_team" Association="Self.Score_FK_team">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="Score" EntitySet="Scores" />
           </AssociationSet>
           <AssociationSet Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
             <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
@@ -2647,6 +2744,10 @@
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Transcript" EntitySet="Transcripts" />
           </AssociationSet>
+          <AssociationSet Name="Score_FK_1" Association="Self.Score_FK_1">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Score" EntitySet="Scores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Status" Association="Self.FK_Task_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="Task" EntitySet="Tasks" />
@@ -2671,107 +2772,7 @@
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <EntitySet Name="Scores" EntityType="ProjectFlowModel.Score" />
-          <AssociationSet Name="Score_FK" Association="ProjectFlowModel.Score_FK">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="Score" EntitySet="Scores" />
-          </AssociationSet>
-          <AssociationSet Name="Score_FK_team" Association="ProjectFlowModel.Score_FK_team">
-            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
-            <End Role="Score" EntitySet="Scores" />
-          </AssociationSet>
-          <AssociationSet Name="Score_FK_1" Association="ProjectFlowModel.Score_FK_1">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="Score" EntitySet="Scores" />
-          </AssociationSet>
-          <EntitySet Name="WhiteboardSessions" EntityType="ProjectFlowModel.WhiteboardSession" />
-          <AssociationSet Name="FK_WhiteboardSession_ProjectTeam" Association="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam">
-            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
-            <End Role="WhiteboardSession" EntitySet="WhiteboardSessions" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Score">
-          <Key>
-            <PropertyRef Name="scoreID" />
-          </Key>
-          <Property Name="scoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal" Type="Double" />
-          <Property Name="report" Type="Double" />
-          <Property Name="reviewOne" Type="Double" />
-          <Property Name="reviewTwo" Type="Double" />
-          <Property Name="presentation" Type="Double" />
-          <Property Name="test" Type="Double" />
-          <Property Name="sdl" Type="Double" />
-          <Property Name="participation" Type="Double" />
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="projectID" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="teamID" Type="Int32" />
-          <Property Name="proposalG" Type="Double" />
-          <Property Name="reportG" Type="Double" />
-          <Property Name="presentationG" Type="Double" />
-          <NavigationProperty Name="Project" Relationship="ProjectFlowModel.Score_FK" FromRole="Score" ToRole="Project" />
-          <NavigationProperty Name="ProjectTeam" Relationship="ProjectFlowModel.Score_FK_team" FromRole="Score" ToRole="ProjectTeam" />
-          <NavigationProperty Name="Student" Relationship="ProjectFlowModel.Score_FK_1" FromRole="Score" ToRole="Student" />
-        </EntityType>
-        <Association Name="Score_FK">
-          <End Type="ProjectFlowModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="ProjectFlowModel.Score" Role="Score" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="projectID" />
-            </Principal>
-            <Dependent Role="Score">
-              <PropertyRef Name="projectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Score_FK_team">
-          <End Type="ProjectFlowModel.ProjectTeam" Role="ProjectTeam" Multiplicity="0..1" />
-          <End Type="ProjectFlowModel.Score" Role="Score" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectTeam">
-              <PropertyRef Name="teamID" />
-            </Principal>
-            <Dependent Role="Score">
-              <PropertyRef Name="teamID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Score_FK_1">
-          <End Type="ProjectFlowModel.Student" Role="Student" Multiplicity="1" />
-          <End Type="ProjectFlowModel.Score" Role="Score" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Score">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="WhiteboardSession">
-          <Key>
-            <PropertyRef Name="sessionID" />
-          </Key>
-          <Property Name="sessionID" Type="Guid" Nullable="false" />
-          <Property Name="groupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="teamID" Type="Int32" Nullable="false" />
-          <Property Name="creationDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="strokesJsonPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ProjectTeam" Relationship="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" FromRole="WhiteboardSession" ToRole="ProjectTeam" />
-        </EntityType>
-        <Association Name="FK_WhiteboardSession_ProjectTeam">
-          <End Type="ProjectFlowModel.ProjectTeam" Role="ProjectTeam" Multiplicity="1" />
-          <End Type="ProjectFlowModel.WhiteboardSession" Role="WhiteboardSession" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectTeam">
-              <PropertyRef Name="teamID" />
-            </Principal>
-            <Dependent Role="WhiteboardSession">
-              <PropertyRef Name="teamID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2941,6 +2942,7 @@
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
                 <ScalarProperty Name="votePublic" ColumnName="votePublic" />
+                <ScalarProperty Name="Conclusion" ColumnName="Conclusion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2978,13 +2980,13 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectFlowModel.Project">
               <MappingFragment StoreEntitySet="Project">
-                <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="projectID" ColumnName="projectID" />
                 <ScalarProperty Name="projectName" ColumnName="projectName" />
                 <ScalarProperty Name="projectDescription" ColumnName="projectDescription" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3179,6 +3181,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Scores">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Score">
+              <MappingFragment StoreEntitySet="Score">
+                <ScalarProperty Name="scoreID" ColumnName="scoreID" />
+                <ScalarProperty Name="proposal" ColumnName="proposal" />
+                <ScalarProperty Name="report" ColumnName="report" />
+                <ScalarProperty Name="reviewOne" ColumnName="reviewOne" />
+                <ScalarProperty Name="reviewTwo" ColumnName="reviewTwo" />
+                <ScalarProperty Name="presentation" ColumnName="presentation" />
+                <ScalarProperty Name="test" ColumnName="test" />
+                <ScalarProperty Name="sdl" ColumnName="sdl" />
+                <ScalarProperty Name="participation" ColumnName="participation" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="proposalG" ColumnName="proposalG" />
+                <ScalarProperty Name="reportG" ColumnName="reportG" />
+                <ScalarProperty Name="presentationG" ColumnName="presentationG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="ProjectFlowModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -3190,11 +3213,11 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="ProjectFlowModel.Student">
               <MappingFragment StoreEntitySet="Student">
-                <ScalarProperty Name="group" ColumnName="group" />
                 <ScalarProperty Name="studentID" ColumnName="studentID" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="group" ColumnName="group" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3261,6 +3284,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WhiteboardSessions">
+            <EntityTypeMapping TypeName="ProjectFlowModel.WhiteboardSession">
+              <MappingFragment StoreEntitySet="WhiteboardSession">
+                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="creationDateTime" ColumnName="creationDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="ProjectFlowModel.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
             <EndProperty Name="aspnet_Roles">
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -3269,38 +3302,6 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Scores">
-            <EntityTypeMapping TypeName="ProjectFlowModel.Score">
-              <MappingFragment StoreEntitySet="Score">
-                <ScalarProperty Name="presentationG" ColumnName="presentationG" />
-                <ScalarProperty Name="reportG" ColumnName="reportG" />
-                <ScalarProperty Name="proposalG" ColumnName="proposalG" />
-                <ScalarProperty Name="teamID" ColumnName="teamID" />
-                <ScalarProperty Name="projectID" ColumnName="projectID" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="participation" ColumnName="participation" />
-                <ScalarProperty Name="sdl" ColumnName="sdl" />
-                <ScalarProperty Name="test" ColumnName="test" />
-                <ScalarProperty Name="presentation" ColumnName="presentation" />
-                <ScalarProperty Name="reviewTwo" ColumnName="reviewTwo" />
-                <ScalarProperty Name="reviewOne" ColumnName="reviewOne" />
-                <ScalarProperty Name="report" ColumnName="report" />
-                <ScalarProperty Name="proposal" ColumnName="proposal" />
-                <ScalarProperty Name="scoreID" ColumnName="scoreID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WhiteboardSessions">
-            <EntityTypeMapping TypeName="ProjectFlowModel.WhiteboardSession">
-              <MappingFragment StoreEntitySet="WhiteboardSession">
-                <ScalarProperty Name="strokesJsonPath" ColumnName="strokesJsonPath" />
-                <ScalarProperty Name="creationDateTime" ColumnName="creationDateTime" />
-                <ScalarProperty Name="teamID" ColumnName="teamID" />
-                <ScalarProperty Name="groupName" ColumnName="groupName" />
-                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
