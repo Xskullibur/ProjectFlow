@@ -18,29 +18,18 @@ namespace ProjectFlow.DashBoard
         {
             if (Page.IsPostBack == false)
             {
-                if (Session["PassProjectID"] != null && Session["PassTeamID"] != null)
-                {
-                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
-                                     + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Milestones)";
-                    ShowMilestone();
-                    this.SetHeader("Milestone belonging to this team");
-                }
-                else
-                {
-                    Response.Redirect("ProjectTeamMenu.aspx");
-                }
+                ShowMilestone();
+                this.SetHeader("Milestone belonging to this team");
             }
         }
 
         public string GetProjectID()
-        {
-            //return Session["PassProjectID"].ToString();
+        {            
             return (Master as ServicesWithContent).CurrentProject.projectID;
         }
 
         public int GetTeamID()
-        {
-            //return int.Parse(Session["PassTeamID"].ToString());
+        {           
             return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 

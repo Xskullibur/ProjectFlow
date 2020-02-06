@@ -18,20 +18,8 @@ namespace ProjectFlow.DashBoard
         {
             if (!IsPostBack)
             {
-                if (GetProjectID() != null)
-                {
-                    Session["PassTeamID"] = null;
-                    Session["PassTeamName"] = null;
-                    ShowTeam();
-                    InfoLabel.Text = "Module: (" + GetProjectID() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Select)";
-                    this.SetHeader("Teams that are in this Module");
-
-                    
-                }
-                else
-                {
-                    Response.Redirect("ProjectMenu.aspx");
-                }
+                ShowTeam();
+                this.SetHeader("Teams that are in this Module");
             }              
         }
         public string GetProjectID()
