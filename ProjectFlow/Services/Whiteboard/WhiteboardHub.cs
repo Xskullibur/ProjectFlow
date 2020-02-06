@@ -34,6 +34,8 @@ namespace ProjectFlow.Services.Whiteboard
                     //Response to the client when it has successfully joined the session
                     var listOfPoints = Global.Redis.GetDatabase().ListRange(sessionIdAsString);
                     this.Clients.Caller.JoinWhiteboardSessionComplete(listOfPoints);
+
+                    this.Clients.Group(sessionIdAsString).AlertUserJoin($"{student.firstName} {student.lastName}");
                 }
                 else
                 {
