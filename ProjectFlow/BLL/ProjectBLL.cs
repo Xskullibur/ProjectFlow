@@ -418,7 +418,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {                
-                return dbContext.TeamMembers.Include(x => x.Student).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
+                return dbContext.TeamMembers.Include(x => x.Student).Include(x => x.Role).Where(x => x.teamID == TeamID && x.dropped == false).ToList();
             }
         }
 
