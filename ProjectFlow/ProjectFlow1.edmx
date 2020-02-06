@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -427,7 +427,8 @@
           <Property Name="success" Type="bit" Nullable="false" />
           <Property Name="issueId" Type="int" Nullable="false" />
           <Property Name="startdate" Type="datetime" />
-          <Property Name="createdBy" Type="uniqueidentifier" />
+          <Property Name="createdBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="votePublic" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -1039,6 +1040,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Solutions_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Solutions" Type="Self.Solutions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Solutions">
+              <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Solutions_Issue">
           <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
           <End Role="Solutions" Type="Self.Solutions" Multiplicity="*" />
@@ -1468,6 +1481,10 @@
             <End Role="Room" EntitySet="Room" />
             <End Role="RoomActionItem" EntitySet="RoomActionItem" />
           </AssociationSet>
+          <AssociationSet Name="FK_Solutions_aspnet_Users" Association="Self.FK_Solutions_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Solutions" EntitySet="Solutions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Solutions_Issue" Association="Self.FK_Solutions_Issue">
             <End Role="Issue" EntitySet="Issue" />
             <End Role="Solutions" EntitySet="Solutions" />
@@ -1541,7 +1558,8 @@
             <End Role="Score" EntitySet="Score" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1689,6 +1707,7 @@
           <NavigationProperty Name="aspnet_UsersInRoles" Relationship="Self.FK__aspnet_Us__UserI__245D67DE" FromRole="aspnet_Users" ToRole="aspnet_UsersInRoles" />
           <NavigationProperty Name="aspnet_UsersInRoles1" Relationship="Self.FK__aspnet_Us__UserI__39237A9A" FromRole="aspnet_Users" ToRole="aspnet_UsersInRoles" />
           <NavigationProperty Name="Attendees" Relationship="Self.FK_Attendee_aspnet_Users" FromRole="aspnet_Users" ToRole="Attendee" />
+          <NavigationProperty Name="Solutions" Relationship="Self.FK_Solutions_aspnet_Users" FromRole="aspnet_Users" ToRole="Solutions" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_aspnet_Users" FromRole="aspnet_Users" ToRole="Student" />
           <NavigationProperty Name="Transcripts" Relationship="Self.FK_Transcript_aspnet_Users" FromRole="aspnet_Users" ToRole="Transcript" />
           <NavigationProperty Name="Tutor" Relationship="Self.FK_Tutor_aspnet_Users" FromRole="aspnet_Users" ToRole="Tutor" />
@@ -2051,13 +2070,15 @@
           <Key>
             <PropertyRef Name="solutionID" />
           </Key>
-          <Property Name="solutionID" Type="Int32" Nullable="false" />
+          <Property Name="solutionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="success" Type="Boolean" Nullable="false" />
           <Property Name="issueId" Type="Int32" Nullable="false" />
           <Property Name="startdate" Type="DateTime" Precision="3" />
-          <Property Name="createdBy" Type="Guid" />
+          <Property Name="createdBy" Type="Guid" Nullable="false" />
+          <Property Name="votePublic" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Solutions_aspnet_Users" FromRole="Solutions" ToRole="aspnet_Users" />
           <NavigationProperty Name="Issue" Relationship="Self.FK_Solutions_Issue" FromRole="Solutions" ToRole="Issue" />
           <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_Solutions" FromRole="Solutions" ToRole="Polling" />
         </EntityType>
@@ -2446,6 +2467,18 @@
             </Principal>
             <Dependent Role="Attendee">
               <PropertyRef Name="attendeeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Solutions_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Solutions" Type="Self.Solution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Solutions">
+              <PropertyRef Name="createdBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3052,6 +3085,10 @@
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Attendee" EntitySet="Attendees" />
           </AssociationSet>
+          <AssociationSet Name="FK_Solutions_aspnet_Users" Association="Self.FK_Solutions_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Solutions" EntitySet="Solutions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Student_aspnet_Users" Association="Self.FK_Student_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Student" EntitySet="Students" />
@@ -3644,6 +3681,7 @@
                 <ScalarProperty Name="issueId" ColumnName="issueId" />
                 <ScalarProperty Name="startdate" ColumnName="startdate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="votePublic" ColumnName="votePublic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

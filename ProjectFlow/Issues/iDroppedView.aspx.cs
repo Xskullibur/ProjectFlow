@@ -56,9 +56,7 @@ namespace ProjectFlow.Issues
 
         protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
             
-
         }
 
         protected void IssueView_RowDeleting(object sender, GridViewDeleteEventArgs e)

@@ -25,7 +25,6 @@
                             <h6 class="card-subtitle mb-2 text-muted">Issue Info:</h6>
                             <div class=""><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i><label>Active:&nbsp;</label><asp:Label ID="IssueActive" runat="server" Text=""></asp:Label></div>
                             <div class=""><i class="fa fa-exclamation-circle" aria-hidden="true">&nbsp;</i><label>Status:&nbsp;</label><asp:Label ID="IssueStatus" runat="server" Text=""></asp:Label></div>
-                            <div class=""><i class="fa fa-eye" aria-hidden="true">&nbsp;</i><label>Public:&nbsp;</label><asp:Label ID="IssuePublic" runat="server" Text=""></asp:Label></div>
                             <div class=""><i class="fa fa-smile-o" aria-hidden="true">&nbsp;</i><label>Raised by:&nbsp;</label><asp:Label ID="IssueRaisedBy" runat="server" Text=""></asp:Label></div>
                         </div>
                     </div>
@@ -94,6 +93,7 @@
                                     <asp:BoundField DataField="solutionId" HeaderText="Solution Id" />
                                     <asp:BoundField DataField="Title" HeaderText="Solution Name" />
                                     <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
+                                    <asp:BoundField DataField="privacy" HeaderText="Privacy" />
                                     <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                         <ControlStyle CssClass="btn btn-success mb-2" />
                                     </asp:CommandField>

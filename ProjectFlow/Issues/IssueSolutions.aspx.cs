@@ -58,12 +58,16 @@ namespace ProjectFlow.Issues
                 SolutionBLL solutionBLL = new SolutionBLL();
                 Solution current_solution = solutionBLL.GetSolutionByID(idSolution);
 
+                // get username
+                aspnet_UsersBLL user = new aspnet_UsersBLL();
+                aspnet_Users current_user = user.Getaspnet_UsersByUserId(current_solution.createdBy);
+
                 if (current_solution != null)
                 {
                     // feed data to the controls
                     DateTime startDate = Convert.ToDateTime(current_solution.startdate);
 
-                    lbSolutionInfo.Text = "Created on " + startDate.Date.ToString("yyyy-MM-dd") + " by " + current_solution.createdBy.ToString();
+                    lbSolutionInfo.Text = "Created on " + startDate.Date.ToString("yyyy-MM-dd") + " by " + current_user.UserName.ToString();
                     lbSolutionTitle.Text = "<h3>" + current_solution.title + "</h3>";
                     lbSolutionDesc.Text = current_solution.description;
 
@@ -198,9 +202,15 @@ namespace ProjectFlow.Issues
 
             if (GetCurrentIdentiy().IsTutor)
             {
+                // disables voting buttons if isTutor
                 btnYes.Enabled = false;
                 btnNo.Enabled = false;
                 btnRandom.Enabled = false;
+                btnYes.Visible = false;
+                btnYesCount.Visible = false;
+                btnNo.Visible = false;
+                btnNoCount.Visible = false;
+                btnRandom.Visible = false;
             }
             else
             {

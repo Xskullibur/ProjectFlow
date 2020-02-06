@@ -26,8 +26,10 @@ namespace ProjectFlow
         public bool success { get; set; }
         public int issueId { get; set; }
         public Nullable<System.DateTime> startdate { get; set; }
-        public Nullable<System.Guid> createdBy { get; set; }
+        public System.Guid createdBy { get; set; }
+        public bool votePublic { get; set; }
     
+        public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual Issue Issue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Polling> Pollings { get; set; }

@@ -58,15 +58,6 @@ namespace ProjectFlow.Issues {
         protected global::System.Web.UI.WebControls.Label IssueStatus;
         
         /// <summary>
-        /// IssuePublic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IssuePublic;
-        
-        /// <summary>
         /// IssueRaisedBy control.
         /// </summary>
         /// <remarks>

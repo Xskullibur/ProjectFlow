@@ -33,7 +33,6 @@ namespace ProjectFlow.Issues
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;
                 IssueActive.Text = updated_issue.active.ToString();
-                IssuePublic.Text = updated_issue.votePublic.ToString();
                 TeamMemberBLL teammember = new TeamMemberBLL();
                 IssueRaisedBy.Text = teammember.GetUsernamebyMID(updated_issue.createdBy);
                 StatusBLL status = new StatusBLL();
@@ -43,10 +42,10 @@ namespace ProjectFlow.Issues
                 
 
                 ispublic = updated_issue.votePublic.ToString();
-                check();
+
                 refreshCommentData(idIssue);
                 isActive(updated_issue.active);
-                isPublic(ispublic);
+ 
                 refreshData();
             }
             solutionView.Font.Size = 11;
@@ -68,53 +67,6 @@ namespace ProjectFlow.Issues
             return servicesWithContent.CurrentProjectTeam;
         }
 
-        protected void btnYes_Click(object sender, EventArgs e)
-        {
-            bool vote_check = vote(true);
-            if (vote_check == false)
-            {
-                update(true);
-            }
-            check();
-            isPublic(ispublic);
-        }
-
-        protected void btnNo_Click(object sender, EventArgs e)
-        {
-            bool vote_check = vote(false);
-            if (vote_check == false)
-            {
-                update(false);
-            }
-            check();
-            isPublic(ispublic);
-        }
-
-        protected void btnRandom_Click(object sender, EventArgs e)
-        {
-            Random rnd = new Random();
-            int decision = rnd.Next(10);
-            if (decision > 5) {
-                bool vote_check = vote(true);
-                if (vote_check == false)
-                {
-                    update(true);
-                }
-                check();
-                isPublic(ispublic);
-            }
-            else
-            {
-
-                bool vote_check = vote(false);
-                if (vote_check == false)
-                {
-                    update(false);
-                }
-                check();
-                isPublic(ispublic);
-            }
-        }
         
         protected void update(bool choice)
         {
@@ -136,66 +88,6 @@ namespace ProjectFlow.Issues
                 Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], voterId);
                 newPoll.vote = choice;
                 bool result = pollingBLL.Update(newPoll);
-            }
-        }
-
-        protected bool vote(bool choice)
-        {
-            if (Page.IsValid)
-            {
-                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
-                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-                Guid Uid = identity.Student.aspnet_Users.UserId;
-                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
-
-                // Creaddte Task Object
-                Polling newPoll = new Polling();
-                newPoll.solutionID = (int)Session["SSIId"];
-                newPoll.voterID = voterId;
-                newPoll.vote = choice;
-
-                // Submit Query
-                PollingBLL pollingBLL = new PollingBLL();
-                bool result = pollingBLL.Add(newPoll);
-                return result;
-            }
-            else
-            {
-                return false;
-            }            
-        }
-
-        protected void check()
-        {
-            int iID = (int)Session["SSIId"];
-            PollingBLL pollingBLL = new PollingBLL();
-            List<int> result = pollingBLL.GetResult(iID);
-
-
-            if (GetCurrentIdentiy().IsTutor)
-            {
-
-            }
-            else
-            {               
-                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
-                TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-                Guid Uid = identity.Student.aspnet_Users.UserId;
-                //the above only checks for the user id if it is a student, tutors must also be accounted for
-                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
-                bool checking = pollingBLL.Check(iID, voterId);
-
-                if (checking == true)
-                {
-                    //btnYes.Enabled = false;
-                    //btnNo.Enabled = false;
-                    //btnRandom.Enabled = false;
-                    this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
-                }
-                else
-                {
-
-                }
             }
         }
 
@@ -263,17 +155,6 @@ namespace ProjectFlow.Issues
             return combindString;
         }
 
-        protected void isPublic(string choice)
-        {
-            int idIssue = (int)Session["SSIId"];
-            if (choice == "True")
-            {
-
-            } else
-            {
-
-            }
-        }
 
         protected void isActive(bool active)
         {
@@ -295,6 +176,8 @@ namespace ProjectFlow.Issues
             tbComments.Enabled = false;
             btnComment.Visible = false;
             btnComment.Enabled = false;
+            btnAddSolution.Visible = false;
+            btnAddSolution.Enabled = false;
         }
 
         // Add Task OnClick Event
@@ -440,6 +323,17 @@ namespace ProjectFlow.Issues
             {
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(solutionView, "Select$" + e.Row.RowIndex);
                 e.Row.ToolTip = "Go to this room";
+
+                TableCell PublicCell = e.Row.Cells[3];
+                if (PublicCell.Text == "True")
+                {
+                    PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
+                }
+
+                else
+                {
+                    PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
+                }
             }
         }
 

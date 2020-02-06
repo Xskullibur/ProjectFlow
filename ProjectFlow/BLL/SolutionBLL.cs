@@ -89,7 +89,8 @@ namespace ProjectFlow.BLL
                             Title = y.title,
                             Description = y.description,
                             startDate = y.startdate,
-                            CreatedBy = y.aspnet_Users.UserName
+                            CreatedBy = y.aspnet_Users.UserName,
+                            privacy = y.votePublic
                         }).ToList();
 
                     return list;
