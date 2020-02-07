@@ -42,11 +42,11 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var member = dbContext.TeamMembers.Find(MemberID);
-                if(member != null)
+                if (member != null)
                 {
-                    dbContext.TeamMembers.Remove(member);
+                    member.dropped = true;
                     dbContext.SaveChanges();
-                }              
+                }
             }
         }
 
@@ -87,11 +87,123 @@ namespace ProjectFlow.BLL
                 var MID = dbContext.TeamMembers
                     .First(x => x.UserId == Uid)
                     .memberID;
-                    
+
 
                 //int MID = int.Parse(student);
 
                 return MID;
+            }
+        }
+
+        public void ToLeader(Guid userID, int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == teamID);
+                if (member != null)
+                {
+                    member.roleID = 1;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void ToMember(Guid userID, int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == teamID);
+                if (member != null)
+                {
+                    member.roleID = 2;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public List<Score> GetGradeByProjectID(string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Scores.Include(x => x.Student).Where(x => x.projectID.Equals(ProjectID)).ToList();
+            }
+        }
+
+        public List<Score> GetGradeByTeamID(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Scores.Include(x => x.Student).Where(x => x.teamID == TeamID).ToList();
+            }
+        }
+
+        public void UpdateScore(int scoreID, float Proposal, float Report, float ReviewOne, float ReviewTwo, float Presentation, float Test, float SDL, float Participation)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var score = dbContext.Scores.Find(scoreID);
+                if (score != null)
+                {
+                    score.proposal = Proposal;
+                    score.report = Report;
+                    score.reviewOne = ReviewOne;
+                    score.reviewTwo = ReviewTwo;
+                    score.presentation = Presentation;
+                    score.test = Test;
+                    score.sdl = SDL;
+                    score.participation = Participation;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateGroupScore(int TeamID, double Proposal, double Report, double Presentation)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                List<Score> scoreList = dbContext.Scores.Where(x => x.teamID == TeamID).ToList();
+                foreach (Score s in scoreList)
+                {
+                    s.presentationG = Presentation;
+                    s.reportG = Report;
+                    s.proposalG = Proposal;
+                }
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void RemoveMember(int MemberID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var member = dbContext.TeamMembers.Find(MemberID);
+                if (member != null)
+                {
+                    member.dropped = true;
+                    member.roleID = 2;
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public ProjectTeam FindTeam(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.ProjectTeams.Find(TeamID);
+            }
+        }
+
+        public void UpdateTeamName(int TeamID, string name)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var team = dbContext.ProjectTeams.Find(TeamID);
+                if (team != null)
+                {
+                    team.teamName = name;
+                    dbContext.SaveChanges();
+                }
             }
         }
 
@@ -110,5 +222,6 @@ namespace ProjectFlow.BLL
 
             }
         }
+
     }
 }

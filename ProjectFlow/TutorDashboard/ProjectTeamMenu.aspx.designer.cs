@@ -217,7 +217,7 @@ namespace ProjectFlow.DashBoard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lockBtn;
+        protected global::System.Web.UI.WebControls.LinkButton lockBtn;
         
         /// <summary>
         /// unlockDP control.
@@ -226,7 +226,7 @@ namespace ProjectFlow.DashBoard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button unlockDP;
+        protected global::System.Web.UI.WebControls.LinkButton unlockDP;
         
         /// <summary>
         /// Label13 control.
@@ -236,15 +236,6 @@ namespace ProjectFlow.DashBoard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label13;
-        
-        /// <summary>
-        /// Label3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
         /// InfoLabel control.

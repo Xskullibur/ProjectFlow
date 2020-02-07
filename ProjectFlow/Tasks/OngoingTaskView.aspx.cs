@@ -44,33 +44,14 @@ namespace ProjectFlow.Tasks
             // Get Current Project Team
             ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
+            // Ongoing Tasks
+            List<Task> ongoingTasks = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
+
             // Check for filters
-            if (Session["filterTaskName"] != null)
-            {
-                // Task Name Filter
-                string filterTaskName = Session["filterTaskName"].ToString();
+            var ds = Master.ApplyFilters(ongoingTasks);
 
-                List<Task> ongoingTasks = taskBLL.GetOngoingTasksByTeamId(currentTeam.teamID);
-                List<Task> filteredTasks = ongoingTasks.Where(x => x.taskName.ToLower().Contains(filterTaskName.ToLower()))
-                    .ToList();
-
-                taskGrid.DataSource = taskBLL.ConvertToDataSource(filteredTasks);
-                taskGrid.DataBind();
-            }
-            else if (Master.PersonalTaskSelected)
-            {
-                // Personal Task Filter
-                Student currentUser = Master.GetCurrentIdentiy().Student;
-                taskGrid.DataSource = taskBLL.GetOngoingTasksByTeamIdWithStudent(currentTeam.teamID, currentUser);
-                taskGrid.DataBind();
-            }
-            else
-            {
-                // No Filter
-                taskGrid.DataSource = taskBLL.GetOngoingDataSource(currentTeam.teamID);
-                taskGrid.DataBind();
-            }
-
+            taskGrid.DataSource = ds;
+            taskGrid.DataBind();
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)
@@ -530,7 +511,7 @@ namespace ProjectFlow.Tasks
         {
 
             // Selected Task ID
-            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[0].Text);
+            int id = Convert.ToInt32(taskGrid.Rows[e.RowIndex].Cells[1].Text);
 
             // Delete Task
             TaskBLL taskBLL = new TaskBLL();
@@ -588,14 +569,22 @@ namespace ProjectFlow.Tasks
 
                         if (result)
                         {
+                            string templateDir = HttpContext.Current.Server.MapPath("~/Utils/EmailTemplates/TaskNotification.html");
+                            string url = HttpContext.Current.Request.Url.AbsoluteUri;
 
                             if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.VERIFICATON)
                             {
-                                NotificationHelper.Send_Verification_Email(taskID);
+                                System.Threading.Tasks.Task.Run(() =>
+                                {
+                                    NotificationHelper.Send_Verification_Email(templateDir, url, taskID);
+                                });
                             }
                             else if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.COMPLETED)
                             {
-                                NotificationHelper.Send_Complete_Email(taskID);
+                                System.Threading.Tasks.Task.Run(() =>
+                                {
+                                    NotificationHelper.Send_Complete_Email(templateDir, url, taskID);
+                                });
                             }
 
                             Master.Master.ShowAlert("Successfully Updated Status", BootstrapAlertTypes.SUCCESS);

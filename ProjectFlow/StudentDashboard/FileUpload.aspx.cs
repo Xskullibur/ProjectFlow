@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.FileManagement;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -18,7 +19,8 @@ namespace ProjectFlow.DashBoard
             if (!IsPostBack)
             {
                 CheckFolderExist();
-                DisplayFile();                                   
+                DisplayFile();
+                this.SetHeader("Encrypted File Sharing");
             }               
         }
 
@@ -44,6 +46,16 @@ namespace ProjectFlow.DashBoard
         private void ShowModel()
         {
             Page.ClientScript.RegisterStartupScript(this.GetType(), "", "$('#uploadModal').modal('show');", true);
+        }
+
+        private void ShowDecryptionModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#decryptionModal').modal('show')", true);
+        }
+
+        private void HideDecryptionModel()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal", "$('#decryptionModal').modal('hide')", true);
         }
 
         protected void UploadBtn_Click(object sender, EventArgs e)
@@ -169,32 +181,23 @@ namespace ProjectFlow.DashBoard
           
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {
-                if(key.Text.Length == 32)
-                {
-                    fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
-                    string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
-                    
-                    string theFile = storagePath + fileName;
-                    string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
+                fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
+                string tempPath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\Temp\\";
 
-                    string newFileName = RemoveAdditionalInfo(fileName, 1);
+                string theFile = storagePath + fileName;
+                string destinationFolder = tempPath + encryption.GenerateKey(256).Substring(0, 8) + "\\";
 
-                    Directory.CreateDirectory(destinationFolder); 
-                    File.Copy(theFile, destinationFolder + newFileName);
-                    try
-                    {
-                        decryption.DecryptFileWithKey(destinationFolder + newFileName, key.Text);
-                        DownloadFile(newFileName, destinationFolder);
-                    }
-                    catch (System.Security.Cryptography.CryptographicException exception)
-                    {
-                        Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
-                    }                   
-                }                
-                else
-                {
-                    Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
-                }               
+                string newFileName = RemoveAdditionalInfo(fileName, 1);
+
+                Directory.CreateDirectory(destinationFolder);
+                //File.Copy(theFile, destinationFolder + newFileName);
+
+                ViewState["theFile"] = theFile;
+                ViewState["destinationFolder"] = destinationFolder;
+                ViewState["newFileName"] = newFileName;
+
+                ShowDecryptionModel();
+
             }
             else if (row.Cells[2].Text.StartsWith("Encrypted"))
             {
@@ -254,6 +257,8 @@ namespace ProjectFlow.DashBoard
             Response.ContentType = "application/octect-stream";
             Response.AddHeader("Content-Disposition", "filename=" + FileName);
             Response.TransmitFile(Path + FileName);
+            Response.Flush();
+            File.Delete(Path + FileName);
             Response.End();
         }
 
@@ -278,7 +283,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
-                return path;
+                return path.Replace("(PLAIN)", "");
             }
         }
 
@@ -300,6 +305,7 @@ namespace ProjectFlow.DashBoard
             }
             else
             {
+                fileName = "(PLAIN)" + fileName;
                 File.Delete(storagePath + fileName);
             }
             DisplayFile();
@@ -317,6 +323,53 @@ namespace ProjectFlow.DashBoard
 
         protected void showAllBtn_Click(object sender, EventArgs e)
         {
+            DisplayFile();
+        }
+
+        public string ShowIcon(string input)
+        {
+            if (input.Equals("Encrypted"))
+            {
+                return "<i style=\"color: red;\" class=\"fas fa-lg fa-lock\"></i>";
+            }
+            else if (input.Equals("Encrypted With Key"))
+            {
+                return "<i style=\"color: red; \" class=\"fas fa-lg fa-key\"></i>";
+            }
+            else
+            {
+                return "<i style=\"color: red;\" class=\"fas fa-lg fa-lock-open\"></i>";
+            }
+        }
+
+        protected void keyDownloadBtn_Click(object sender, EventArgs e)
+        {
+            Encryption encryption = new Encryption();
+            Decryption decryption = new Decryption();
+            if (deKeyTB.Text.Length == 32)
+            {                
+                try
+                {
+                    File.Copy(ViewState["theFile"].ToString(), ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString());
+                    decryption.DecryptFileWithKey(ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString(), deKeyTB.Text);
+                    DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString());
+                }
+                catch (System.Security.Cryptography.CryptographicException exception)
+                {
+                    Master.ShowAlert("Key Is Wrong, decryption failed", BootstrapAlertTypes.DANGER);
+                }
+            }
+            else
+            {
+                Master.ShowAlert("Key must have 32 characters", BootstrapAlertTypes.DANGER);
+            }
+            deKeyTB.Text = "";
+            HideDecryptionModel();
+        }
+
+        protected void FileGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            FileGV.PageIndex = e.NewPageIndex;
             DisplayFile();
         }
     }

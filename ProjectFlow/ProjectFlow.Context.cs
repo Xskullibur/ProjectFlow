@@ -30,10 +30,12 @@ namespace ProjectFlow
         public virtual DbSet<aspnet_Paths> aspnet_Paths { get; set; }
         public virtual DbSet<aspnet_PersonalizationAllUsers> aspnet_PersonalizationAllUsers { get; set; }
         public virtual DbSet<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser { get; set; }
+        public virtual DbSet<aspnet_Profile> aspnet_Profile { get; set; }
         public virtual DbSet<aspnet_Roles> aspnet_Roles { get; set; }
         public virtual DbSet<aspnet_SchemaVersions> aspnet_SchemaVersions { get; set; }
         public virtual DbSet<aspnet_Users> aspnet_Users { get; set; }
         public virtual DbSet<aspnet_WebEvent_Events> aspnet_WebEvent_Events { get; set; }
+        public virtual DbSet<Attendee> Attendees { get; set; }
         public virtual DbSet<CommentForIssue> CommentForIssues { get; set; }
         public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<Milestone> Milestones { get; set; }
@@ -55,6 +57,7 @@ namespace ProjectFlow
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomActionItem> RoomActionItems { get; set; }
+        public virtual DbSet<Score> Scores { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
@@ -63,7 +66,6 @@ namespace ProjectFlow
         public virtual DbSet<Transcript> Transcripts { get; set; }
         public virtual DbSet<Tutor> Tutors { get; set; }
         public virtual DbSet<VoiceRecording> VoiceRecordings { get; set; }
-        public virtual DbSet<Priority> Priorities { get; set; }
-        public virtual DbSet<aspnet_Profile> aspnet_Profile { get; set; }
+        public virtual DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
     }
 }

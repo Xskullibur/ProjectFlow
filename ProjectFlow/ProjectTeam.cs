@@ -21,6 +21,8 @@ namespace ProjectFlow
             this.Rooms = new HashSet<Room>();
             this.Tasks = new HashSet<Task>();
             this.TeamMembers = new HashSet<TeamMember>();
+            this.Scores = new HashSet<Score>();
+            this.WhiteboardSessions = new HashSet<WhiteboardSession>();
         }
     
         public int teamID { get; set; }
@@ -40,5 +42,9 @@ namespace ProjectFlow
         public virtual ICollection<Task> Tasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamMember> TeamMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Score> Scores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WhiteboardSession> WhiteboardSessions { get; set; }
     }
 }

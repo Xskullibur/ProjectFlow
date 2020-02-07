@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -16,22 +17,12 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
         ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                if (Session["PassProjectID"] != null)
-                {                   
-                    DisplayTeam();
-                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Restore)";
-                }
-                else
-                {
-                    Response.Redirect("../ProjectMenu.aspx");
-                }
-            }
+            DisplayTeam();
+            this.SetHeader("Teams that I can Restore");
         }
         public string GetProjectID()
         {
-            return Session["PassProjectID"].ToString();
+            return (Master as ServicesWithContent).CurrentProject.projectID;
         }
 
         private void DisplayTeam()

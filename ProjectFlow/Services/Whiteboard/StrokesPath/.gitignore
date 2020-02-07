@@ -1,0 +1,4 @@
+# Ignore json files
+*.json
+
+!.gitkeep 

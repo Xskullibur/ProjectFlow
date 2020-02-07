@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -17,22 +18,13 @@ namespace ProjectFlow.DashBoard
         {
             if (!IsPostBack)
             {
-                if (Session["PassProjectID"] != null)
-                {
-                    Session["PassTeamID"] = null;
-                    Session["PassTeamName"] = null;
-                    ShowTeam();
-                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString() + " >>> (Team Select)";
-                }
-                else
-                {
-                    Response.Redirect("ProjectMenu.aspx");
-                }
+                ShowTeam();
+                this.SetHeader("Teams that are in this Module");
             }              
         }
         public string GetProjectID()
         {
-            return Session["PassProjectID"].ToString();
+            return (Master as ServicesWithContent).CurrentProject.projectID;
         }
 
         private void OpenModel()
@@ -133,7 +125,9 @@ namespace ProjectFlow.DashBoard
             Session["CurrentProjectTeam"] = projectTeam;
             // Alson Edit Ends
 
-            Response.Redirect("ProjectMainPage.aspx");
+
+            (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(Convert.ToInt32(row.Cells[0].Text)));
+            Response.Redirect("../ProjectDashboard/ProjectTeamDashboard.aspx");
         }
 
         protected void TeamGV_RowEditing(object sender, GridViewEditEventArgs e)
@@ -259,5 +253,6 @@ namespace ProjectFlow.DashBoard
             Master.ShowAlert("Team open for people to join", BootstrapAlertTypes.SUCCESS);
             ShowTeam();
         }
+
     }
 }

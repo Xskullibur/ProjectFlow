@@ -158,6 +158,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-toast\toast.min.css" />
     <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.css" />
     <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -171,7 +172,10 @@
     <Content Include="Content\ProjectFlow\CSS\christina.css" />
     <Content Include="Content\ProjectFlow\CSS\effect\live-ring.css" />
     <Content Include="Content\ProjectFlow\CSS\main.css" />
+    <Content Include="Content\ProjectFlow\CSS\pagination.css" />
+    <Content Include="Content\ProjectFlow\CSS\progressBar.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
+    <Content Include="Content\ProjectFlow\Images\ProjectFlow.png" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
     <Content Include="Global.asax" />
     <Content Include="identity.aspx" />
@@ -185,19 +189,20 @@
     <Content Include="Profile\Profile.aspx" />
     <Content Include="Profile\ProfileImages\default-picture.png" />
     <Content Include="ProjectDashboard\ProjectTeamDashboard.aspx" />
-    <Content Include="ProjectFlow1.Context.tt">
+    <Content Include="ProjectFlowDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectFlow1.edmx</DependentUpon>
-      <LastGenOutput>ProjectFlow1.Context.cs</LastGenOutput>
+      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
+      <LastGenOutput>ProjectFlowDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ProjectFlow1.tt">
+    <Content Include="ProjectFlowDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectFlow1.edmx</DependentUpon>
-      <LastGenOutput>ProjectFlow1.cs</LastGenOutput>
+      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
+      <LastGenOutput>ProjectFlowDB.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
+    <Content Include="Scripts\bootstrap-toast\toast.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -350,15 +355,20 @@
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
+    <Content Include="Scripts\ProjectFlow\TeamDashboard.js" />
+    <Content Include="Scripts\ProjectFlow\whiteboard.js" />
     <Content Include="Services\Christina\CreateRoom.aspx" />
+    <Content Include="Services\Whiteboard\Whiteboard.aspx" />
+    <Content Include="Services\Whiteboard\WhiteboardList.aspx" />
+    <Content Include="StudentDashboard\ManageMembers.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
     <Content Include="ProjectDashboard\Web.config" />
-    <EntityDeploy Include="ProjectFlow1.edmx">
+    <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProjectFlow1.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="ProjectFlow1.edmx.diagram">
-      <DependentUpon>ProjectFlow1.edmx</DependentUpon>
+    <Content Include="ProjectFlowDB.edmx.diagram">
+      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -392,6 +402,7 @@
     <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="TutorDashboard\AddMilestone.aspx" />
     <Content Include="StudentDashboard\FileUpload.aspx" />
+    <Content Include="TutorDashboard\Grading.aspx" />
     <Content Include="TutorDashboard\ProjectMainPage.aspx" />
     <Content Include="TutorDashboard\ProjectMenu.aspx" />
     <Content Include="TutorDashboard\ProjectTeamMenu.aspx" />
@@ -403,48 +414,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="aspnet_Applications.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_Membership.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_Paths.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_PersonalizationAllUsers.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_PersonalizationPerUser.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_Profile.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_Roles.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_SchemaVersions.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_Users.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="aspnet_UsersInRoles.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="aspnet_WebEvent_Events.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Attendee.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\AttendeeBLL.cs" />
     <Compile Include="BLL\SolutionBLL.cs" />
+    <Compile Include="BLL\WhiteboardSessionBLL.cs" />
     <Compile Include="CommentForIssue.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Issue.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Issues\IssueSolutions.aspx.cs">
       <DependentUpon>IssueSolutions.aspx</DependentUpon>
@@ -454,16 +463,16 @@
       <DependentUpon>IssueSolutions.aspx</DependentUpon>
     </Compile>
     <Compile Include="Milestone.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Polling.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Priority.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Project.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.cs">
       <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
@@ -472,68 +481,68 @@
     <Compile Include="ProjectDashboard\ProjectTeamDashboard.aspx.designer.cs">
       <DependentUpon>ProjectTeamDashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ProjectFlow1.Context.cs">
+    <Compile Include="ProjectFlowDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlow1.Context.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProjectFlow1.cs">
+    <Compile Include="ProjectFlowDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProjectFlow1.Designer.cs">
+    <Compile Include="ProjectFlowDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectFlow1.edmx</DependentUpon>
+      <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="ProjectTeam.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_BLOB_TRIGGERS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_CALENDARS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_CRON_TRIGGERS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_FIRED_TRIGGERS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_JOB_DETAILS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_LOCKS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_PAUSED_TRIGGER_GRPS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_SCHEDULER_STATE.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_SIMPLE_TRIGGERS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_SIMPROP_TRIGGERS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="QRTZ_TRIGGERS.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Room.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="RoomActionItem.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Score.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\Christina\CreateRoom.aspx.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
@@ -542,37 +551,69 @@
     <Compile Include="Services\Christina\CreateRoom.aspx.designer.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Whiteboard\Whiteboard.aspx.cs">
+      <DependentUpon>Whiteboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Whiteboard\Whiteboard.aspx.designer.cs">
+      <DependentUpon>Whiteboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Whiteboard\WhiteboardHub.cs" />
+    <Compile Include="Services\Whiteboard\WhiteboardList.aspx.cs">
+      <DependentUpon>WhiteboardList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Whiteboard\WhiteboardList.aspx.designer.cs">
+      <DependentUpon>WhiteboardList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Solution.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Status.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Student.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StudentDashboard\ManageMembers.aspx.cs">
+      <DependentUpon>ManageMembers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard\ManageMembers.aspx.designer.cs">
+      <DependentUpon>ManageMembers.aspx</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Task.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TaskAllocation.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TeamMember.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Transcript.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Tutor.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\Grading.aspx.cs">
+      <DependentUpon>Grading.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\Grading.aspx.designer.cs">
+      <DependentUpon>Grading.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
-      <DependentUpon>ProjectFlow1.tt</DependentUpon>
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhiteboardSession.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Content Include="App_Code\CalendarEvent.cs" />
     <Content Include="App_Code\EventDAO.cs" />
@@ -804,14 +845,11 @@
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\ChartJS\ChartUtils.cs" />
-    <Compile Include="Utils\Filter\Filter.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
-    <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\NotificationHelper.cs" />
     <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="Utils\SemanticsParsing.cs" />
-    <Compile Include="Utils\SmsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -847,6 +885,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="FileManagement\FileStorage\" />
     <Folder Include="FileManagement\Temp\" />
+    <Folder Include="Services\Whiteboard\StrokesPath\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
