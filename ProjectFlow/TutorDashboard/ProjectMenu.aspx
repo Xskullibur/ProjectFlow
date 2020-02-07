@@ -124,14 +124,8 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>
-                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Module Select"></asp:Label>
-                </h1>
-            </div>            
-        </div>
+    <div class="card card-body projectflow-card-shadow container">
+        <div class="container">        
         <br>
         <div class="row">
             <div class="col-2">
@@ -159,7 +153,7 @@
         <div class="row">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="projectGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging" OnRowDeleting="projectGV_RowDeleting">
+                    <asp:GridView ID="projectGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="projectGV_SelectedIndexChanged" Width="1056px" OnRowCancelingEdit="projectGV_RowCancelingEdit" OnRowEditing="projectGV_RowEditing" OnRowUpdating="projectGV_RowUpdating" AllowPaging="True" PageSize="4" OnPageIndexChanging="projectGV_PageIndexChanging" OnRowDeleting="projectGV_RowDeleting">
                         <HeaderStyle CssClass="thead-light"/>
                         <Columns>
                             <asp:BoundField DataField="projectID" HeaderText="Module ID" ReadOnly="true"/>    
@@ -213,12 +207,13 @@
                 </div>
             </div>
              <br>
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col">
                     <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
                 </div>
             </div>
         </div>
+    </div> 
     <script>
         hideSidebar(); 
         $(document).ready(function () {

@@ -218,7 +218,7 @@ namespace ProjectFlow.BLL
                 List<ProjectTeam> emptyList = new List<ProjectTeam> { };
                 if(student != null)
                 {
-                    return student.TeamMembers.Select(x => x.ProjectTeam).Where(x => x.dropped == false).ToList();
+                    return student.TeamMembers.Where(x => x.dropped == false).Select(x => x.ProjectTeam).Where(x => x.dropped == false).ToList();
                 }
                 else
                 {
@@ -244,14 +244,66 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public IEnumerable<ProjectTeam> ShowAvailbleProject()
+        public IEnumerable<ProjectTeam> ShowAvailbleProject(string studentID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                var team = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true).ToList();
-                return team;
+                List<ProjectTeam> teamList = new List<ProjectTeam> { };
+
+                var project = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true).Select(x => x.Project).ToList();
+                var student = dbContext.Students.Single(x => x.studentID.Equals(studentID));
+                var member = dbContext.TeamMembers.Where(x => x.dropped == true && x.UserId == student.UserId);
+
+                foreach (Project p in project)
+                {
+                    var teams = dbContext.ProjectTeams.Where(x => x.projectID == p.projectID && x.group == student.group).ToList();
+
+                    if (!ContainsProject(student, p))
+                    {
+                        teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID) && x.group == student.group).ToList();
+                    }
+                    else
+                    {
+                        bool status = true;
+                        foreach (ProjectTeam t in teams)
+                        {
+                            if ((dbContext.TeamMembers.Count(x => x.dropped == false && x.UserId == student.UserId && x.teamID == t.teamID) > 0)){
+                                status = false;
+                            }
+                        }
+
+                        if(status == true)
+                        {
+                            teamList = dbContext.ProjectTeams.Where(x => x.dropped == false && x.open == true && x.projectID.Equals(p.projectID) && x.group == student.group).ToList();
+                        }
+                    }
+                }
+                return teamList;
             }
         }
 
+        public TeamMember getMemberByAdmin(Guid userID, int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.TeamMembers.Single(x => x.UserId == userID && x.teamID == TeamID);
+            }
+        }
+
+        public bool gotLeader(int teamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                List<TeamMember> memberList = dbContext.TeamMembers.Where(x => x.teamID == teamID && x.roleID == 1).ToList();
+                foreach(TeamMember m in memberList)
+                {
+                    if (m.roleID == 1)
+                    {
+                        return true;
+                    }                    
+                }
+                return false;
+            }
+        }
     }
 }

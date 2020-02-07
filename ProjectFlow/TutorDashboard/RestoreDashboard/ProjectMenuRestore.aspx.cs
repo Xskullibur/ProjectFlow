@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -23,14 +24,21 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
                 {
                     Session["TutorID"] = identity.Tutor.UserId.ToString();
                     DisplayProject();
+                    this.SetHeader("Module that I can Restore");
                 }
             }
+        }
+
+        public Guid GetTutorID()
+        {
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            return identity.Tutor.UserId;
         }
 
         private void DisplayProject()
         {
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.GetDeletedProjectTutor(Guid.Parse(Session["TutorID"].ToString()));
+            projectList = projectBLL.GetDeletedProjectTutor(GetTutorID());
             projectRestoreGV.DataSource = projectList;
             projectRestoreGV.DataBind();
             PageSelectDP.SelectedIndex = 1;
@@ -39,7 +47,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
         private void SearchProject(string search)
         {
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.SearchDeleteProject(Guid.Parse(Session["TutorID"].ToString()), search);
+            projectList = projectBLL.SearchDeleteProject(GetTutorID(), search);
             projectRestoreGV.DataSource = projectList;
             projectRestoreGV.DataBind();
         }

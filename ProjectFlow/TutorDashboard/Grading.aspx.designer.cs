@@ -7,46 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.DashBoard {
+namespace ProjectFlow.TutorDashboard {
     
     
-    public partial class studentProject {
+    public partial class Grading {
         
         /// <summary>
-        /// SearchTB control.
+        /// InfoLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchTB;
+        protected global::System.Web.UI.WebControls.Label InfoLabel;
         
         /// <summary>
-        /// searchBtn control.
+        /// exportBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button searchBtn;
+        protected global::System.Web.UI.WebControls.Button exportBtn;
         
         /// <summary>
-        /// showAllBtn control.
+        /// gradeGV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button showAllBtn;
-        
-        /// <summary>
-        /// ProjectGV control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ProjectGV;
+        protected global::System.Web.UI.WebControls.GridView gradeGV;
         
         /// <summary>
         /// refreshBtn control.
@@ -58,33 +49,12 @@ namespace ProjectFlow.DashBoard {
         protected global::System.Web.UI.WebControls.Button refreshBtn;
         
         /// <summary>
-        /// Label13 control.
+        /// GroupScoreGV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
-        
-        /// <summary>
-        /// availableGV control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView availableGV;
-        
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new ProjectFlow.ServicesWithContent Master {
-            get {
-                return ((ProjectFlow.ServicesWithContent)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.WebControls.GridView GroupScoreGV;
     }
 }

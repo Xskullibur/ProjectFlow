@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -17,28 +18,19 @@ namespace ProjectFlow.DashBoard
         {
             if (Page.IsPostBack == false)
             {
-                if (Session["PassProjectID"] != null && Session["PassTeamID"] != null)
-                {
-                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
-                                     + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Milestones)";
-                    ShowMilestone();
-                    PageSelectDP.SelectedIndex = 1;
-                }
-                else
-                {
-                    Response.Redirect("ProjectTeamMenu.aspx");
-                }
+                ShowMilestone();
+                this.SetHeader("Milestone belonging to this team");
             }
         }
 
         public string GetProjectID()
-        {
-            return Session["PassProjectID"].ToString();
+        {            
+            return (Master as ServicesWithContent).CurrentProject.projectID;
         }
 
         public int GetTeamID()
-        {
-            return int.Parse(Session["PassTeamID"].ToString());
+        {           
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void OpenModel()
@@ -67,10 +59,7 @@ namespace ProjectFlow.DashBoard
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (PageSelectDP.SelectedIndex == 0)
-            {
-                Response.Redirect("ProjectMainPage.aspx");
-            }
+           
         }
 
         protected void MilestoneGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

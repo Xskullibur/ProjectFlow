@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -21,6 +22,7 @@ namespace ProjectFlow.DashBoard
             {
                 Session["StudentID"] = identity.Student.UserId.ToString();
                 Session["Student"] = identity.Student.studentID.ToString();
+                this.SetHeader("Project I am a part of");
                 ShowProject();
             }            
         }
@@ -53,7 +55,9 @@ namespace ProjectFlow.DashBoard
                 ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
                 ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
 
-                (Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
+                //(Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
+                (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(int.Parse(row.Cells[0].Text)));
+                //Session["StudentTeamID"] = row.Cells[0].Text;
 
                 Response.Redirect("/ProjectDashboard/ProjectTeamDashboard.aspx");
             }
@@ -61,7 +65,6 @@ namespace ProjectFlow.DashBoard
             {
                 throw new InvalidOperationException("Invalid team ID given!");
             }
-
         }
 
         protected void ProjectGV_PageIndexChanged(object sender, EventArgs e)
@@ -77,7 +80,7 @@ namespace ProjectFlow.DashBoard
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
 
-            IEnumerable<ProjectTeam> avaliableList = studentBLL.ShowAvailbleProject();
+            IEnumerable<ProjectTeam> avaliableList = studentBLL.ShowAvailbleProject(getStudentID());
             availableGV.DataSource = avaliableList;
             availableGV.DataBind();
         }

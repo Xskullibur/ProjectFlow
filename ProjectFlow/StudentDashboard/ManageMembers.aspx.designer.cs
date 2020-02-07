@@ -7,84 +7,108 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectFlow.DashBoard {
+namespace ProjectFlow.StudentDashboard {
     
     
-    public partial class studentProject {
+    public partial class ManageMembers {
         
         /// <summary>
-        /// SearchTB control.
+        /// yourStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchTB;
+        protected global::System.Web.UI.WebControls.Label yourStatus;
         
         /// <summary>
-        /// searchBtn control.
+        /// lockStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button searchBtn;
+        protected global::System.Web.UI.WebControls.Label lockStatus;
         
         /// <summary>
-        /// showAllBtn control.
+        /// leaderBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button showAllBtn;
+        protected global::System.Web.UI.WebControls.Button leaderBtn;
         
         /// <summary>
-        /// ProjectGV control.
+        /// STbtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ProjectGV;
+        protected global::System.Web.UI.WebControls.Button STbtn;
         
         /// <summary>
-        /// refreshBtn control.
+        /// lockBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button refreshBtn;
+        protected global::System.Web.UI.WebControls.LinkButton lockBtn;
         
         /// <summary>
-        /// Label13 control.
+        /// unlockBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.LinkButton unlockBtn;
         
         /// <summary>
-        /// availableGV control.
+        /// leaveBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView availableGV;
+        protected global::System.Web.UI.WebControls.Button leaveBtn;
         
         /// <summary>
-        /// Master property.
+        /// MemberGV control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated property.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        public new ProjectFlow.ServicesWithContent Master {
-            get {
-                return ((ProjectFlow.ServicesWithContent)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.WebControls.GridView MemberGV;
+        
+        /// <summary>
+        /// justLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label justLabel;
+        
+        /// <summary>
+        /// NameTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NameTB;
+        
+        /// <summary>
+        /// changeButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button changeButton;
     }
 }

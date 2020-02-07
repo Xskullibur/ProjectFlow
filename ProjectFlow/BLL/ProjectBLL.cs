@@ -418,7 +418,15 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {                
-                return dbContext.TeamMembers.Include(x => x.Student).Include(x => x.Role).Where(x => x.teamID == TeamID).ToList();
+                return dbContext.TeamMembers.Include(x => x.Student).Include(x => x.Role).Where(x => x.teamID == TeamID && x.dropped == false).ToList();
+            }
+        }
+
+        public bool ContainsProject(Student student, Project project)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Students.Find(student.UserId).TeamMembers.Select(tm => tm.ProjectTeam.Project.projectID).Contains(project.projectID);
             }
         }
 
@@ -427,14 +435,54 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var student = dbContext.Students.First(x => x.studentID.Equals(StudentID));
+                var project = dbContext.ProjectTeams.Find(TeamID);
+                var memberFound = dbContext.TeamMembers.Any(x => x.UserId == student.UserId && x.teamID == TeamID);
 
-                var member = new TeamMember()
+                if (memberFound == true)
                 {
-                    UserId = student.UserId,
-                    teamID = TeamID,
-                    roleID = RoleID
+                    var memberToAdd = dbContext.TeamMembers.First(x => x.UserId == student.UserId && x.teamID == TeamID);
+                    memberToAdd.dropped = false;
+                }
+                else
+                {
+                    var member = new TeamMember()
+                    {
+                        UserId = student.UserId,
+                        teamID = TeamID,
+                        roleID = RoleID
+                    };
+                    if (project != null)
+                    {
+                        insertScore(student.UserId, project.projectID);
+                    }
+
+                    dbContext.TeamMembers.Add(member);
+                }               
+                dbContext.SaveChanges();
+            }
+        }
+
+        private void insertScore(Guid UserID, string ProjectID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var score = new Score()
+                {
+                    projectID = ProjectID,
+                    UserId = UserID,
+                    proposal = 0,
+                    report = 0,
+                    reviewOne = 0,
+                    reviewTwo = 0,
+                    presentation = 0,
+                    test = 0,
+                    sdl = 0,
+                    participation = 0,
+                    proposalG = 0,
+                    reportG = 0,
+                    presentationG = 0                   
                 };
-                dbContext.TeamMembers.Add(member);
+                dbContext.Scores.Add(score);
                 dbContext.SaveChanges();
             }
         }

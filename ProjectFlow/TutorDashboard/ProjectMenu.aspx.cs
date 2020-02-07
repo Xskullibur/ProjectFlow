@@ -1,5 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -21,14 +22,17 @@ namespace ProjectFlow.DashBoard
             {
                 if (!IsPostBack)
                 {
-                    Session["TutorID"] = identity.Tutor.UserId.ToString();
-                    Session["PassProjectID"] = null;
-                    Session["PassProjectName"] = null;
-                    Session["PassTeamID"] = null;
-                    Session["PassTeamName"] = null;
+                    Session["TutorID"] = identity.Tutor.UserId.ToString();                   
+                    this.SetHeader("Modules that I teach");
                     ShowProject();
                 }
             }                                
+        }
+
+        public Guid GetTutorID()
+        {
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            return identity.Tutor.UserId;
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
@@ -37,9 +41,8 @@ namespace ProjectFlow.DashBoard
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
             string projectDesc = DescTB.Text;
-            Guid tutorID = Guid.Parse(Session["TutorID"].ToString());  
-
-            List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
+              
+            List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, GetTutorID());
 
             if(error.Count > 0)
             {
@@ -67,7 +70,7 @@ namespace ProjectFlow.DashBoard
             ProjectBLL projectBLL = new ProjectBLL();
 
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.GetProjectTutor(Guid.Parse(Session["TutorID"].ToString()));
+            projectList = projectBLL.GetProjectTutor(GetTutorID());
             projectGV.DataSource = projectList;
             projectGV.DataBind();
             PageSelectDP.SelectedIndex = 0;
@@ -78,7 +81,7 @@ namespace ProjectFlow.DashBoard
             ProjectBLL projectBLL = new ProjectBLL();
 
             List<Project> projectList = new List<Project> { };
-            projectList = projectBLL.SearchProject(Guid.Parse(Session["TutorID"].ToString()), search);
+            projectList = projectBLL.SearchProject(GetTutorID(), search);
             projectGV.DataSource = projectList;
             projectGV.DataBind();
             PageSelectDP.SelectedIndex = 0;
@@ -181,10 +184,9 @@ namespace ProjectFlow.DashBoard
             errorLabel.Text = "";
             string projectID = ProjectIdTB.Text;
             string projectName = NameTB.Text;
-            string projectDesc = DescTB.Text;
-            Guid tutorID = Guid.Parse(Session["TutorID"].ToString());
+            string projectDesc = DescTB.Text;           
 
-            List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, tutorID);
+            List<string> error = projectBLL.ValidateProject(projectID, projectName, projectDesc, GetTutorID());
 
             if (error.Count > 0)
             {

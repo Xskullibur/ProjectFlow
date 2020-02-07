@@ -1,4 +1,5 @@
 ﻿using ProjectFlow.BLL;
+using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -17,21 +18,13 @@ namespace ProjectFlow
         {
             if (Page.IsPostBack == false)
             {
-                if (Session["PassProjectID"] != null && Session["PassTeamID"] != null) {
-                    InfoLabel.Text = "Module: (" + Session["PassProjectID"].ToString() + ") " + Session["PassProjectName"].ToString()
-                                     + " >>> Team: (" + Session["PassTeamName"].ToString() + ") >>> (Team Members)";
-                    ShowMember();
-                    PageSelectDP.SelectedIndex = 0;
-                }
-                else
-                {
-                    Response.Redirect("ProjectTeamMenu.aspx");
-                }
+                ShowMember();
+                this.SetHeader("Team Members that are in this team");
             }
         }
         public int GetTeamID()
-        {
-            return int.Parse(Session["PassTeamID"].ToString());
+        {            
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
         public void ShowMember()
@@ -168,10 +161,7 @@ namespace ProjectFlow
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(PageSelectDP.SelectedIndex == 1)
-            {
-                Response.Redirect("addMilestone.aspx");
-            }
+            
         }
 
         private void ClearModel()

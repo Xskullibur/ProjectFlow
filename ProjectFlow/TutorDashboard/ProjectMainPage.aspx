@@ -80,98 +80,87 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>
-                    <asp:Label ID="Label3" class="label label-primary" runat="server" Text="Team Members"></asp:Label>
-                </h1>
-            </div>            
-        </div>
-        <br>
-        <div class="row">
-            <div class="col">
-                <h3>
-                    <asp:Label ID="InfoLabel" runat="server" Font-Size="Medium"></asp:Label>
-                </h3>
-            </div>            
-        </div>
-        <br>
-        <div class="row">
-            <div class="col">                
-                <asp:DropDownList ID="PageSelectDP" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="PageSelectDP_SelectedIndexChanged">
-                    <asp:ListItem Value="0">Add Members</asp:ListItem>
-                    <asp:ListItem Value="1">Add MileStone</asp:ListItem>
-                </asp:DropDownList>                
+    <div class="card card-body projectflow-card-shadow container">
+        <div class="container-fluid">            
+            <div class="row mb-3">
+                <div class="col">
+                    <h3>
+                        <asp:Label ID="InfoLabel" runat="server" Font-Size="Medium"></asp:Label>
+                    </h3>
+                </div>
             </div>
-            <div class="col">                             
-                <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" AllowPaging="True" PageSize="4"/>
+            <br>
+            <div class="row mb-3">               
+                <div class="col-2">
+                    <asp:Button ID="CreateMemberBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateMember" Text="Add Member" OnClick="CreateMemberBtn_Click" AllowPaging="True" PageSize="4" />
+                </div>
+                <div class="col-2">
+                    <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Student Name" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-1">
+                    <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click" />
+                </div>
+                <div class="col-1">
+                    <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
+                </div>
             </div>
-            <div class="col-3">
-                <asp:TextBox ID="SearchTB" CssClass="form-control" placeholder="Student Name" runat="server"></asp:TextBox>
-            </div>
-            <div class="col-1">
-                <asp:Button ID="searchBtn" CssClass="btn btn-primary" runat="server" Text="Search" OnClick="searchBtn_Click"/>
-            </div> 
-            <div class="col-1">
-                <asp:Button ID="showAllBtn" runat="server" CssClass="btn btn-primary" OnClick="showAllBtn_Click" Text="Show All" />
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col">
-                <div style="overflow-x: auto;">
-                    <asp:GridView ID="MemberGV" CssClass="table table-bordered" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging" AllowPaging="True" PageSize="4" OnRowDeleting="MemberGV_RowDeleting">
-                        <HeaderStyle CssClass="thead-light" />
-                        <Columns>
-                            <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
-                            <asp:TemplateField HeaderText="Student ID">
-                                <ItemTemplate>
-                                    <asp:Label ID="idLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.studentID") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Name">
-                                <ItemTemplate>
-                                    <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField> 
-                            <asp:TemplateField HeaderText="Role">
-                                <EditItemTemplate>
-                                    <asp:DropDownList ID="editRoleDP" CssClass="form-control border border-dark" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>' runat="server">
-                                        <asp:ListItem>Member</asp:ListItem>
-                                        <asp:ListItem>Leader</asp:ListItem>
-                                    </asp:DropDownList>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="roleLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                <ControlStyle CssClass="btn btn-warning" />
-                            </asp:CommandField>
-                            <asp:TemplateField>
-                                <ItemTemplate>                     
-                                    <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                        <EmptyDataTemplate>
-                           <div class="jumbotron jumbotron-fluid">
-                                <div class="container">
-                                    <h1 class="display-4">Seem Empty, add some members now!</h1>                                          
-                                    <p>Members not showing?    <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+            <br>
+            <div class="row mb-3">
+                <div class="col">
+                    <div style="overflow-x: auto;">
+                        <asp:GridView ID="MemberGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="MemberGV_RowCancelingEdit" OnRowEditing="MemberGV_RowEditing" OnRowUpdating="MemberGV_RowUpdating" OnPageIndexChanging="MemberGV_PageIndexChanging" AllowPaging="True" PageSize="4" OnRowDeleting="MemberGV_RowDeleting">
+                            <HeaderStyle CssClass="thead-light" />
+                            <Columns>
+                                <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />
+                                <asp:TemplateField HeaderText="Student ID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="idLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.studentID") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Name">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Role">
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="editRoleDP" CssClass="form-control border border-dark" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>' runat="server">
+                                            <asp:ListItem>Member</asp:ListItem>
+                                            <asp:ListItem>Leader</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="roleLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
+                                    <ControlStyle CssClass="btn btn-warning" />
+                                </asp:CommandField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <EmptyDataTemplate>
+                                <div class="jumbotron jumbotron-fluid">
+                                    <div class="container">
+                                        <h1 class="display-4">Seem Empty, add some members now!</h1>
+                                        <p>Members not showing?   
+                                            <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
+                                    </div>
                                 </div>
-                           </div>
-                       </EmptyDataTemplate>
-                    </asp:GridView>
+                            </EmptyDataTemplate>
+                        </asp:GridView>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row mb-3">
+                <div class="col">
+                    <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
                 </div>
             </div>
         </div>
-         <br>
-        <div class="row">
-            <div class="col">
-                <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
-            </div>
-        </div>
-    </div>
+    </div>   
 </asp:Content>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -137,6 +137,14 @@
           <Property Name="ExceptionType" Type="nvarchar" MaxLength="256" />
           <Property Name="Details" Type="ntext" />
         </EntityType>
+        <EntityType Name="Attendee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roomID" Type="int" Nullable="false" />
+          <Property Name="attendeeUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="CommentForIssue">
           <Key>
             <PropertyRef Name="commentID" />
@@ -156,6 +164,8 @@
           <Property Name="createdBy" Type="int" Nullable="false" />
           <Property Name="taskID" Type="int" Nullable="false" />
           <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="statusID" Type="int" />
+          <Property Name="votePublic" Type="bit" />
         </EntityType>
         <EntityType Name="Milestone">
           <Key>
@@ -195,6 +205,7 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="dropped" Type="bit" Nullable="false" />
           <Property Name="createDate" Type="date" Nullable="false" />
+          <Property Name="endDate" Type="date" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -205,6 +216,8 @@
           <Property Name="teamDescription" Type="varchar" MaxLength="255" />
           <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="dropped" Type="bit" Nullable="false" />
+          <Property Name="open" Type="bit" Nullable="false" />
+          <Property Name="group" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="QRTZ_BLOB_TRIGGERS">
           <Key>
@@ -374,6 +387,8 @@
           <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="accessToken" Type="varbinary" MaxLength="32" Nullable="false" />
+          <Property Name="roomName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="roomDescription" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="RoomActionItem">
           <Key>
@@ -384,6 +399,26 @@
           <Property Name="topic" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="roomID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="scoreID" />
+          </Key>
+          <Property Name="scoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="proposal" Type="float" />
+          <Property Name="report" Type="float" />
+          <Property Name="reviewOne" Type="float" />
+          <Property Name="reviewTwo" Type="float" />
+          <Property Name="presentation" Type="float" />
+          <Property Name="test" Type="float" />
+          <Property Name="sdl" Type="float" />
+          <Property Name="participation" Type="float" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="projectID" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="teamID" Type="int" />
+          <Property Name="proposalG" Type="float" />
+          <Property Name="reportG" Type="float" />
+          <Property Name="presentationG" Type="float" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -400,6 +435,7 @@
           <Property Name="firstName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="lastName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="group" Type="int" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -411,7 +447,7 @@
           <Property Name="startDate" Type="date" Nullable="false" />
           <Property Name="endDate" Type="date" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
-          <Property Name="milestoneID" Type="int" />
+          <Property Name="milestoneID" Type="int" Nullable="false" />
           <Property Name="statusID" Type="int" Nullable="false" />
           <Property Name="priorityID" Type="int" Nullable="false" />
           <Property Name="dropped" Type="bit" Nullable="false" />
@@ -458,7 +494,17 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="recordingName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__Appli__03F0984C">
+        <EntityType Name="WhiteboardSession">
+          <Key>
+            <PropertyRef Name="sessionID" />
+          </Key>
+          <Property Name="sessionID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="groupName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="creationDateTime" Type="datetime" Nullable="false" />
+          <Property Name="strokesJsonPath" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__aspnet_Me__Appli__1CBC4616">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
           <ReferentialConstraint>
@@ -470,7 +516,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Me__UserI__04E4BC85">
+        <Association Name="FK__aspnet_Me__UserI__1DB06A4F">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -482,7 +528,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pa__Appli__05D8E0BE">
+        <Association Name="FK__aspnet_Pa__Appli__1EA48E88">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
           <ReferentialConstraint>
@@ -494,7 +540,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__06CD04F7">
+        <Association Name="FK__aspnet_Pe__PathI__1F98B2C1">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
           <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -506,7 +552,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__07C12930">
+        <Association Name="FK__aspnet_Pe__PathI__208CD6FA">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -518,7 +564,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__UserI__08B54D69">
+        <Association Name="FK__aspnet_Pe__UserI__2180FB33">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -530,7 +576,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pr__UserI__09A971A2">
+        <Association Name="FK__aspnet_Pr__UserI__22751F6C">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -542,7 +588,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Ro__Appli__0A9D95DB">
+        <Association Name="FK__aspnet_Ro__Appli__236943A5">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -554,7 +600,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__Appli__0B91BA14">
+        <Association Name="FK__aspnet_Us__Appli__245D67DE">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -566,7 +612,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__RoleI__0C85DE4D">
+        <Association Name="FK__aspnet_Us__RoleI__25518C17">
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -578,7 +624,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__UserI__0D7A0286">
+        <Association Name="FK__aspnet_Us__UserI__2645B050">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -587,6 +633,30 @@
             </Principal>
             <Dependent Role="aspnet_UsersInRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendee_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="attendeeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendee_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomID" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="roomID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -611,6 +681,18 @@
             </Principal>
             <Dependent Role="CommentForIssue">
               <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="statusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -817,7 +899,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Task_Milestone">
-          <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Milestone">
@@ -972,6 +1054,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WhiteboardSession_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="WhiteboardSession" Type="Self.WhiteboardSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="WhiteboardSession">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="PK_Project_Tutor">
           <End Role="Tutor" Type="Self.Tutor" Multiplicity="1" />
           <End Role="Project" Type="Self.Project" Multiplicity="*" />
@@ -981,6 +1075,42 @@
             </Principal>
             <Dependent Role="Project">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Score_FK">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="projectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Score_FK_1">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Score_FK_team">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="teamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -996,6 +1126,7 @@
           <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_UsersInRoles" EntityType="Self.aspnet_UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendee" EntityType="Self.Attendee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CommentForIssue" EntityType="Self.CommentForIssue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Milestone" EntityType="Self.Milestone" Schema="dbo" store:Type="Tables" />
@@ -1017,6 +1148,7 @@
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomActionItem" EntityType="Self.RoomActionItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Score" EntityType="Self.Score" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
@@ -1025,49 +1157,58 @@
           <EntitySet Name="Transcript" EntityType="Self.Transcript" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VoiceRecording" EntityType="Self.VoiceRecording" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__aspnet_Me__Appli__03F0984C" Association="Self.FK__aspnet_Me__Appli__03F0984C">
+          <EntitySet Name="WhiteboardSession" EntityType="Self.WhiteboardSession" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__aspnet_Me__Appli__1CBC4616" Association="Self.FK__aspnet_Me__Appli__1CBC4616">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Me__UserI__04E4BC85" Association="Self.FK__aspnet_Me__UserI__04E4BC85">
+          <AssociationSet Name="FK__aspnet_Me__UserI__1DB06A4F" Association="Self.FK__aspnet_Me__UserI__1DB06A4F">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pa__Appli__05D8E0BE" Association="Self.FK__aspnet_Pa__Appli__05D8E0BE">
+          <AssociationSet Name="FK__aspnet_Pa__Appli__1EA48E88" Association="Self.FK__aspnet_Pa__Appli__1EA48E88">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__06CD04F7" Association="Self.FK__aspnet_Pe__PathI__06CD04F7">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__1F98B2C1" Association="Self.FK__aspnet_Pe__PathI__1F98B2C1">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__07C12930" Association="Self.FK__aspnet_Pe__PathI__07C12930">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__208CD6FA" Association="Self.FK__aspnet_Pe__PathI__208CD6FA">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__UserI__08B54D69" Association="Self.FK__aspnet_Pe__UserI__08B54D69">
+          <AssociationSet Name="FK__aspnet_Pe__UserI__2180FB33" Association="Self.FK__aspnet_Pe__UserI__2180FB33">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pr__UserI__09A971A2" Association="Self.FK__aspnet_Pr__UserI__09A971A2">
+          <AssociationSet Name="FK__aspnet_Pr__UserI__22751F6C" Association="Self.FK__aspnet_Pr__UserI__22751F6C">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Ro__Appli__0A9D95DB" Association="Self.FK__aspnet_Ro__Appli__0A9D95DB">
+          <AssociationSet Name="FK__aspnet_Ro__Appli__236943A5" Association="Self.FK__aspnet_Ro__Appli__236943A5">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__Appli__0B91BA14" Association="Self.FK__aspnet_Us__Appli__0B91BA14">
+          <AssociationSet Name="FK__aspnet_Us__Appli__245D67DE" Association="Self.FK__aspnet_Us__Appli__245D67DE">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__RoleI__0C85DE4D" Association="Self.FK__aspnet_Us__RoleI__0C85DE4D">
+          <AssociationSet Name="FK__aspnet_Us__RoleI__25518C17" Association="Self.FK__aspnet_Us__RoleI__25518C17">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__UserI__0D7A0286" Association="Self.FK__aspnet_Us__UserI__0D7A0286">
+          <AssociationSet Name="FK__aspnet_Us__UserI__2645B050" Association="Self.FK__aspnet_Us__UserI__2645B050">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendee_aspnet_Users" Association="Self.FK_Attendee_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Attendee" EntitySet="Attendee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendee_Room" Association="Self.FK_Attendee_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Attendee" EntitySet="Attendee" />
           </AssociationSet>
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issue" />
@@ -1076,6 +1217,10 @@
           <AssociationSet Name="FK_CommentForIssue_TeamMember" Association="Self.FK_CommentForIssue_TeamMember">
             <End Role="TeamMember" EntitySet="TeamMember" />
             <End Role="CommentForIssue" EntitySet="CommentForIssue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Status" Association="Self.FK_Issue_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Issue" EntitySet="Issue" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_Task" Association="Self.FK_Issue_Task">
             <End Role="Task" EntitySet="Task" />
@@ -1189,12 +1334,29 @@
             <End Role="Student" EntitySet="Student" />
             <End Role="VoiceRecording" EntitySet="VoiceRecording" />
           </AssociationSet>
+          <AssociationSet Name="FK_WhiteboardSession_ProjectTeam" Association="Self.FK_WhiteboardSession_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+            <End Role="WhiteboardSession" EntitySet="WhiteboardSession" />
+          </AssociationSet>
           <AssociationSet Name="PK_Project_Tutor" Association="Self.PK_Project_Tutor">
             <End Role="Tutor" EntitySet="Tutor" />
             <End Role="Project" EntitySet="Project" />
           </AssociationSet>
+          <AssociationSet Name="Score_FK" Association="Self.Score_FK">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Score" EntitySet="Score" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK_1" Association="Self.Score_FK_1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Score" EntitySet="Score" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK_team" Association="Self.Score_FK_team">
+            <End Role="ProjectTeam" EntitySet="ProjectTeam" />
+            <End Role="Score" EntitySet="Score" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1206,10 +1368,10 @@
           <Property Name="LoweredApplicationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ApplicationId" Type="Guid" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__Appli__7E37BEF6" FromRole="aspnet_Applications" ToRole="aspnet_Membership" />
-          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pa__Appli__00200768" FromRole="aspnet_Applications" ToRole="aspnet_Paths" />
-          <NavigationProperty Name="aspnet_Roles" Relationship="Self.FK__aspnet_Ro__Appli__04E4BC85" FromRole="aspnet_Applications" ToRole="aspnet_Roles" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Us__Appli__05D8E0BE" FromRole="aspnet_Applications" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__Appli__1CBC4616" FromRole="aspnet_Applications" ToRole="aspnet_Membership" />
+          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pa__Appli__1EA48E88" FromRole="aspnet_Applications" ToRole="aspnet_Paths" />
+          <NavigationProperty Name="aspnet_Roles" Relationship="Self.FK__aspnet_Ro__Appli__236943A5" FromRole="aspnet_Applications" ToRole="aspnet_Roles" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Us__Appli__245D67DE" FromRole="aspnet_Applications" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Membership">
           <Key>
@@ -1236,8 +1398,8 @@
           <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
           <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Me__Appli__7E37BEF6" FromRole="aspnet_Membership" ToRole="aspnet_Applications" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Me__UserI__7F2BE32F" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Me__Appli__1CBC4616" FromRole="aspnet_Membership" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Me__UserI__1DB06A4F" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Paths">
           <Key>
@@ -1247,9 +1409,9 @@
           <Property Name="PathId" Type="Guid" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Pa__Appli__00200768" FromRole="aspnet_Paths" ToRole="aspnet_Applications" />
-          <NavigationProperty Name="aspnet_PersonalizationAllUsers" Relationship="Self.FK__aspnet_Pe__PathI__01142BA1" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationAllUsers" />
-          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__PathI__02084FDA" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationPerUser" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Pa__Appli__1EA48E88" FromRole="aspnet_Paths" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_PersonalizationAllUsers" Relationship="Self.FK__aspnet_Pe__PathI__1F98B2C1" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationAllUsers" />
+          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__PathI__208CD6FA" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationPerUser" />
         </EntityType>
         <EntityType Name="aspnet_PersonalizationAllUsers">
           <Key>
@@ -1258,7 +1420,7 @@
           <Property Name="PathId" Type="Guid" Nullable="false" />
           <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__01142BA1" FromRole="aspnet_PersonalizationAllUsers" ToRole="aspnet_Paths" />
+          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__1F98B2C1" FromRole="aspnet_PersonalizationAllUsers" ToRole="aspnet_Paths" />
         </EntityType>
         <EntityType Name="aspnet_PersonalizationPerUser">
           <Key>
@@ -1269,8 +1431,19 @@
           <Property Name="UserId" Type="Guid" />
           <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__02084FDA" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
-          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pe__UserI__02FC7413" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Users" />
+          <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__208CD6FA" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pe__UserI__2180FB33" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Users" />
+        </EntityType>
+        <EntityType Name="aspnet_Profile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="PropertyNames" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PropertyValuesString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PropertyValuesBinary" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pr__UserI__22751F6C" FromRole="aspnet_Profile" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_Roles">
           <Key>
@@ -1281,7 +1454,7 @@
           <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredRoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Ro__Appli__04E4BC85" FromRole="aspnet_Roles" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Ro__Appli__236943A5" FromRole="aspnet_Roles" ToRole="aspnet_Applications" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Roles" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="aspnet_SchemaVersions">
@@ -1304,15 +1477,16 @@
           <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
           <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Us__Appli__05D8E0BE" FromRole="aspnet_Users" ToRole="aspnet_Applications" />
-          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__UserI__7F2BE32F" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
-          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__UserI__02FC7413" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
+          <Property Name="ProfileImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Us__Appli__245D67DE" FromRole="aspnet_Users" ToRole="aspnet_Applications" />
+          <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__UserI__1DB06A4F" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
+          <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__UserI__2180FB33" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
+          <NavigationProperty Name="aspnet_Profile" Relationship="Self.FK__aspnet_Pr__UserI__22751F6C" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
+          <NavigationProperty Name="Attendees" Relationship="Self.FK_Attendee_aspnet_Users" FromRole="aspnet_Users" ToRole="Attendee" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_aspnet_Users" FromRole="aspnet_Users" ToRole="Student" />
           <NavigationProperty Name="Transcripts" Relationship="Self.FK_Transcript_aspnet_Users" FromRole="aspnet_Users" ToRole="Transcript" />
           <NavigationProperty Name="Tutor" Relationship="Self.FK_Tutor_aspnet_Users" FromRole="aspnet_Users" ToRole="Tutor" />
           <NavigationProperty Name="aspnet_Roles" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Users" ToRole="aspnet_Roles" />
-          <Property Name="ProfileImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="aspnet_Profile" Relationship="ProjectFlowModel.FK__aspnet_Pr__UserI__09A971A2" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
         </EntityType>
         <EntityType Name="aspnet_WebEvent_Events">
           <Key>
@@ -1333,6 +1507,16 @@
           <Property Name="RequestUrl" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="ExceptionType" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Attendee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roomID" Type="Int32" Nullable="false" />
+          <Property Name="attendeeUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Attendee_aspnet_Users" FromRole="Attendee" ToRole="aspnet_Users" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_Attendee_Room" FromRole="Attendee" ToRole="Room" />
         </EntityType>
         <EntityType Name="CommentForIssue">
           <Key>
@@ -1355,7 +1539,10 @@
           <Property Name="createdBy" Type="Int32" Nullable="false" />
           <Property Name="taskID" Type="Int32" Nullable="false" />
           <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="statusID" Type="Int32" />
+          <Property Name="votePublic" Type="Boolean" />
           <NavigationProperty Name="CommentForIssues" Relationship="Self.FK_CommentForIssue_Issue" FromRole="Issue" ToRole="CommentForIssue" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Issue_Status" FromRole="Issue" ToRole="Status" />
           <NavigationProperty Name="Task" Relationship="Self.FK_Issue_Task" FromRole="Issue" ToRole="Task" />
           <NavigationProperty Name="TeamMember" Relationship="Self.FK_Issue_TeamMember" FromRole="Issue" ToRole="TeamMember" />
           <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_Issue" FromRole="Issue" ToRole="Polling" />
@@ -1386,6 +1573,14 @@
           <NavigationProperty Name="Issue" Relationship="Self.FK_Polling_Issue" FromRole="Polling" ToRole="Issue" />
           <NavigationProperty Name="TeamMember" Relationship="Self.FK_Polling_voter" FromRole="Polling" ToRole="TeamMember" />
         </EntityType>
+        <EntityType Name="Priority">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="priority1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Priority" FromRole="Priority" ToRole="Task" />
+        </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="projectID" />
@@ -1396,9 +1591,11 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="dropped" Type="Boolean" Nullable="false" />
           <Property Name="createDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_Project" FromRole="Project" ToRole="Milestone" />
           <NavigationProperty Name="ProjectTeams" Relationship="Self.FK_ProjectTeam_Project" FromRole="Project" ToRole="ProjectTeam" />
           <NavigationProperty Name="Tutor" Relationship="Self.PK_Project_Tutor" FromRole="Project" ToRole="Tutor" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK" FromRole="Project" ToRole="Score" />
         </EntityType>
         <EntityType Name="ProjectTeam">
           <Key>
@@ -1409,11 +1606,15 @@
           <Property Name="teamDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="dropped" Type="Boolean" Nullable="false" />
+          <Property Name="open" Type="Boolean" Nullable="false" />
+          <Property Name="group" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Milestones" Relationship="Self.FK_Milestone_ProjectTeam" FromRole="ProjectTeam" ToRole="Milestone" />
           <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTeam_Project" FromRole="ProjectTeam" ToRole="Project" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
+          <NavigationProperty Name="WhiteboardSessions" Relationship="Self.FK_WhiteboardSession_ProjectTeam" FromRole="ProjectTeam" ToRole="WhiteboardSession" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK_team" FromRole="ProjectTeam" ToRole="Score" />
         </EntityType>
         <EntityType Name="QRTZ_BLOB_TRIGGERS">
           <Key>
@@ -1592,6 +1793,9 @@
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
           <Property Name="accessToken" Type="Binary" MaxLength="32" FixedLength="false" Nullable="false" />
+          <Property Name="roomName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roomDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Attendees" Relationship="Self.FK_Attendee_Room" FromRole="Room" ToRole="Attendee" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Room_ProjectTeam" FromRole="Room" ToRole="ProjectTeam" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Room_Student" FromRole="Room" ToRole="Student" />
           <NavigationProperty Name="RoomActionItems" Relationship="Self.FK_RoomActionItem_Room" FromRole="Room" ToRole="RoomActionItem" />
@@ -1608,12 +1812,36 @@
           <Property Name="roomID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Room" Relationship="Self.FK_RoomActionItem_Room" FromRole="RoomActionItem" ToRole="Room" />
         </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="scoreID" />
+          </Key>
+          <Property Name="scoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal" Type="Double" />
+          <Property Name="report" Type="Double" />
+          <Property Name="reviewOne" Type="Double" />
+          <Property Name="reviewTwo" Type="Double" />
+          <Property Name="presentation" Type="Double" />
+          <Property Name="test" Type="Double" />
+          <Property Name="sdl" Type="Double" />
+          <Property Name="participation" Type="Double" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="projectID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="teamID" Type="Int32" />
+          <Property Name="proposalG" Type="Double" />
+          <Property Name="reportG" Type="Double" />
+          <Property Name="presentationG" Type="Double" />
+          <NavigationProperty Name="Project" Relationship="Self.Score_FK" FromRole="Score" ToRole="Project" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.Score_FK_team" FromRole="Score" ToRole="ProjectTeam" />
+          <NavigationProperty Name="Student" Relationship="Self.Score_FK_1" FromRole="Score" ToRole="Student" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="status1" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_Status" FromRole="Status" ToRole="Issue" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Status" FromRole="Status" ToRole="Task" />
         </EntityType>
         <EntityType Name="Student">
@@ -1624,8 +1852,10 @@
           <Property Name="firstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="group" Type="Int32" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Student_aspnet_Users" FromRole="Student" ToRole="aspnet_Users" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_Student" FromRole="Student" ToRole="Room" />
+          <NavigationProperty Name="Scores" Relationship="Self.Score_FK_1" FromRole="Student" ToRole="Score" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_Student" FromRole="Student" ToRole="TeamMember" />
           <NavigationProperty Name="VoiceRecordings" Relationship="Self.FK_VoiceRecording_Student" FromRole="Student" ToRole="VoiceRecording" />
         </EntityType>
@@ -1639,16 +1869,16 @@
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="teamID" Type="Int32" Nullable="false" />
-          <Property Name="milestoneID" Type="Int32" />
+          <Property Name="milestoneID" Type="Int32" Nullable="false" />
           <Property Name="statusID" Type="Int32" Nullable="false" />
+          <Property Name="priorityID" Type="Int32" Nullable="false" />
           <Property Name="dropped" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issue_Task" FromRole="Task" ToRole="Issue" />
           <NavigationProperty Name="Milestone" Relationship="Self.FK_Task_Milestone" FromRole="Task" ToRole="Milestone" />
+          <NavigationProperty Name="Priority" Relationship="Self.FK_Task_Priority" FromRole="Task" ToRole="Priority" />
           <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_Task_ProjectTeam" FromRole="Task" ToRole="ProjectTeam" />
           <NavigationProperty Name="Status" Relationship="Self.FK_Task_Status" FromRole="Task" ToRole="Status" />
           <NavigationProperty Name="TaskAllocations" Relationship="Self.FK_TaskAllocation_Task" FromRole="Task" ToRole="TaskAllocation" />
-          <Property Name="priorityID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Priority" Relationship="ProjectFlowModel.FK_Task_Priority" FromRole="Task" ToRole="Priority" />
         </EntityType>
         <EntityType Name="TaskAllocation">
           <Key>
@@ -1706,7 +1936,18 @@
           <Property Name="recordingName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_VoiceRecording_Student" FromRole="VoiceRecording" ToRole="Student" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__Appli__7E37BEF6">
+        <EntityType Name="WhiteboardSession">
+          <Key>
+            <PropertyRef Name="sessionID" />
+          </Key>
+          <Property Name="sessionID" Type="Guid" Nullable="false" />
+          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="creationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="strokesJsonPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_WhiteboardSession_ProjectTeam" FromRole="WhiteboardSession" ToRole="ProjectTeam" />
+        </EntityType>
+        <Association Name="FK__aspnet_Me__Appli__1CBC4616">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1718,7 +1959,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pa__Appli__00200768">
+        <Association Name="FK__aspnet_Pa__Appli__1EA48E88">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1730,7 +1971,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Ro__Appli__04E4BC85">
+        <Association Name="FK__aspnet_Ro__Appli__236943A5">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1742,7 +1983,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Us__Appli__05D8E0BE">
+        <Association Name="FK__aspnet_Us__Appli__245D67DE">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1754,7 +1995,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Me__UserI__7F2BE32F">
+        <Association Name="FK__aspnet_Me__UserI__1DB06A4F">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1766,7 +2007,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__01142BA1">
+        <Association Name="FK__aspnet_Pe__PathI__1F98B2C1">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
           <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1778,7 +2019,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__PathI__02084FDA">
+        <Association Name="FK__aspnet_Pe__PathI__208CD6FA">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1790,7 +2031,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__aspnet_Pe__UserI__02FC7413">
+        <Association Name="FK__aspnet_Pe__UserI__2180FB33">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1799,6 +2040,30 @@
             </Principal>
             <Dependent Role="aspnet_PersonalizationPerUser">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__aspnet_Pr__UserI__22751F6C">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_Profile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendee_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="attendeeUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1838,6 +2103,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Attendee_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Attendee" Type="Self.Attendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomID" />
+            </Principal>
+            <Dependent Role="Attendee">
+              <PropertyRef Name="roomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CommentForIssue_Issue">
           <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
           <End Role="CommentForIssue" Type="Self.CommentForIssue" Multiplicity="*" />
@@ -1859,6 +2136,18 @@
             </Principal>
             <Dependent Role="CommentForIssue">
               <PropertyRef Name="createdBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issue_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="statusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1923,7 +2212,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Task_Milestone">
-          <End Role="Milestone" Type="Self.Milestone" Multiplicity="0..1" />
+          <End Role="Milestone" Type="Self.Milestone" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Milestone">
@@ -1943,6 +2232,18 @@
             </Principal>
             <Dependent Role="Polling">
               <PropertyRef Name="voterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Priority">
+          <End Role="Priority" Type="Self.Priority" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priority">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="priorityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1967,6 +2268,18 @@
             </Principal>
             <Dependent Role="Project">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Score_FK">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="projectID" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="projectID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2002,6 +2315,30 @@
               <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="TeamMember">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WhiteboardSession_ProjectTeam">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
+          <End Role="WhiteboardSession" Type="Self.WhiteboardSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="WhiteboardSession">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Score_FK_team">
+          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="0..1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="Score">
               <PropertyRef Name="teamID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2124,6 +2461,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Score_FK_1">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Score" Type="Self.Score" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Score">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -2194,14 +2543,17 @@
           <EntitySet Name="aspnet_Paths" EntityType="Self.aspnet_Paths" />
           <EntitySet Name="aspnet_PersonalizationAllUsers" EntityType="Self.aspnet_PersonalizationAllUsers" />
           <EntitySet Name="aspnet_PersonalizationPerUser" EntityType="Self.aspnet_PersonalizationPerUser" />
+          <EntitySet Name="aspnet_Profile" EntityType="Self.aspnet_Profile" />
           <EntitySet Name="aspnet_Roles" EntityType="Self.aspnet_Roles" />
           <EntitySet Name="aspnet_SchemaVersions" EntityType="Self.aspnet_SchemaVersions" />
           <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" />
           <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" />
+          <EntitySet Name="Attendees" EntityType="Self.Attendee" />
           <EntitySet Name="CommentForIssues" EntityType="Self.CommentForIssue" />
           <EntitySet Name="Issues" EntityType="Self.Issue" />
           <EntitySet Name="Milestones" EntityType="Self.Milestone" />
           <EntitySet Name="Pollings" EntityType="Self.Polling" />
+          <EntitySet Name="Priorities" EntityType="Self.Priority" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectTeams" EntityType="Self.ProjectTeam" />
           <EntitySet Name="QRTZ_BLOB_TRIGGERS" EntityType="Self.QRTZ_BLOB_TRIGGERS" />
@@ -2218,6 +2570,7 @@
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="RoomActionItems" EntityType="Self.RoomActionItem" />
+          <EntitySet Name="Scores" EntityType="Self.Score" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
@@ -2226,37 +2579,46 @@
           <EntitySet Name="Transcripts" EntityType="Self.Transcript" />
           <EntitySet Name="Tutors" EntityType="Self.Tutor" />
           <EntitySet Name="VoiceRecordings" EntityType="Self.VoiceRecording" />
-          <AssociationSet Name="FK__aspnet_Me__Appli__7E37BEF6" Association="Self.FK__aspnet_Me__Appli__7E37BEF6">
+          <EntitySet Name="WhiteboardSessions" EntityType="Self.WhiteboardSession" />
+          <AssociationSet Name="FK__aspnet_Me__Appli__1CBC4616" Association="Self.FK__aspnet_Me__Appli__1CBC4616">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pa__Appli__00200768" Association="Self.FK__aspnet_Pa__Appli__00200768">
+          <AssociationSet Name="FK__aspnet_Pa__Appli__1EA48E88" Association="Self.FK__aspnet_Pa__Appli__1EA48E88">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Ro__Appli__04E4BC85" Association="Self.FK__aspnet_Ro__Appli__04E4BC85">
+          <AssociationSet Name="FK__aspnet_Ro__Appli__236943A5" Association="Self.FK__aspnet_Ro__Appli__236943A5">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Us__Appli__05D8E0BE" Association="Self.FK__aspnet_Us__Appli__05D8E0BE">
+          <AssociationSet Name="FK__aspnet_Us__Appli__245D67DE" Association="Self.FK__aspnet_Us__Appli__245D67DE">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Me__UserI__7F2BE32F" Association="Self.FK__aspnet_Me__UserI__7F2BE32F">
+          <AssociationSet Name="FK__aspnet_Me__UserI__1DB06A4F" Association="Self.FK__aspnet_Me__UserI__1DB06A4F">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__01142BA1" Association="Self.FK__aspnet_Pe__PathI__01142BA1">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__1F98B2C1" Association="Self.FK__aspnet_Pe__PathI__1F98B2C1">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__PathI__02084FDA" Association="Self.FK__aspnet_Pe__PathI__02084FDA">
+          <AssociationSet Name="FK__aspnet_Pe__PathI__208CD6FA" Association="Self.FK__aspnet_Pe__PathI__208CD6FA">
             <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__aspnet_Pe__UserI__02FC7413" Association="Self.FK__aspnet_Pe__UserI__02FC7413">
+          <AssociationSet Name="FK__aspnet_Pe__UserI__2180FB33" Association="Self.FK__aspnet_Pe__UserI__2180FB33">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK__aspnet_Pr__UserI__22751F6C" Association="Self.FK__aspnet_Pr__UserI__22751F6C">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendee_aspnet_Users" Association="Self.FK_Attendee_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Attendee" EntitySet="Attendees" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_aspnet_Users" Association="Self.FK_Student_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
@@ -2270,6 +2632,10 @@
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Tutor" EntitySet="Tutors" />
           </AssociationSet>
+          <AssociationSet Name="FK_Attendee_Room" Association="Self.FK_Attendee_Room">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Attendee" EntitySet="Attendees" />
+          </AssociationSet>
           <AssociationSet Name="FK_CommentForIssue_Issue" Association="Self.FK_CommentForIssue_Issue">
             <End Role="Issue" EntitySet="Issues" />
             <End Role="CommentForIssue" EntitySet="CommentForIssues" />
@@ -2277,6 +2643,10 @@
           <AssociationSet Name="FK_CommentForIssue_TeamMember" Association="Self.FK_CommentForIssue_TeamMember">
             <End Role="TeamMember" EntitySet="TeamMembers" />
             <End Role="CommentForIssue" EntitySet="CommentForIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issue_Status" Association="Self.FK_Issue_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Issue" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_Task" Association="Self.FK_Issue_Task">
             <End Role="Task" EntitySet="Tasks" />
@@ -2306,6 +2676,10 @@
             <End Role="TeamMember" EntitySet="TeamMembers" />
             <End Role="Polling" EntitySet="Pollings" />
           </AssociationSet>
+          <AssociationSet Name="FK_Task_Priority" Association="Self.FK_Task_Priority">
+            <End Role="Priority" EntitySet="Priorities" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProjectTeam_Project" Association="Self.FK_ProjectTeam_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
@@ -2313,6 +2687,10 @@
           <AssociationSet Name="PK_Project_Tutor" Association="Self.PK_Project_Tutor">
             <End Role="Tutor" EntitySet="Tutors" />
             <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK" Association="Self.Score_FK">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Score" EntitySet="Scores" />
           </AssociationSet>
           <AssociationSet Name="FK_Room_ProjectTeam" Association="Self.FK_Room_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
@@ -2325,6 +2703,14 @@
           <AssociationSet Name="FK_TeamMember_ProjectTeam" Association="Self.FK_TeamMember_ProjectTeam">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WhiteboardSession_ProjectTeam" Association="Self.FK_WhiteboardSession_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="WhiteboardSession" EntitySet="WhiteboardSessions" />
+          </AssociationSet>
+          <AssociationSet Name="Score_FK_team" Association="Self.Score_FK_team">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="Score" EntitySet="Scores" />
           </AssociationSet>
           <AssociationSet Name="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" Association="Self.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS">
             <End Role="QRTZ_TRIGGERS" EntitySet="QRTZ_TRIGGERS" />
@@ -2358,6 +2744,10 @@
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Transcript" EntitySet="Transcripts" />
           </AssociationSet>
+          <AssociationSet Name="Score_FK_1" Association="Self.Score_FK_1">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Score" EntitySet="Scores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Status" Association="Self.FK_Task_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="Task" EntitySet="Tasks" />
@@ -2382,60 +2772,7 @@
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
-          <EntitySet Name="Priorities" EntityType="ProjectFlowModel.Priority" />
-          <AssociationSet Name="FK_Task_Priority" Association="ProjectFlowModel.FK_Task_Priority">
-            <End Role="Priority" EntitySet="Priorities" />
-            <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
-          <EntitySet Name="aspnet_Profile" EntityType="ProjectFlowModel.aspnet_Profile" />
-          <AssociationSet Name="FK__aspnet_Pr__UserI__09A971A2" Association="ProjectFlowModel.FK__aspnet_Pr__UserI__09A971A2">
-            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
-            <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Priority">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="priority1" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tasks" Relationship="ProjectFlowModel.FK_Task_Priority" FromRole="Priority" ToRole="Task" />
-        </EntityType>
-        <Association Name="FK_Task_Priority">
-          <End Type="ProjectFlowModel.Priority" Role="Priority" Multiplicity="1" />
-          <End Type="ProjectFlowModel.Task" Role="Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Priority">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="priorityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="aspnet_Profile">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="PropertyNames" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PropertyValuesString" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PropertyValuesBinary" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="aspnet_Users" Relationship="ProjectFlowModel.FK__aspnet_Pr__UserI__09A971A2" FromRole="aspnet_Profile" ToRole="aspnet_Users" />
-        </EntityType>
-        <Association Name="FK__aspnet_Pr__UserI__09A971A2">
-          <End Type="ProjectFlowModel.aspnet_Users" Role="aspnet_Users" Multiplicity="1" />
-          <End Type="ProjectFlowModel.aspnet_Profile" Role="aspnet_Profile" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="aspnet_Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="aspnet_Profile">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2509,6 +2846,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="aspnet_Profile">
+            <EntityTypeMapping TypeName="ProjectFlowModel.aspnet_Profile">
+              <MappingFragment StoreEntitySet="aspnet_Profile">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
+                <ScalarProperty Name="PropertyValuesString" ColumnName="PropertyValuesString" />
+                <ScalarProperty Name="PropertyValuesBinary" ColumnName="PropertyValuesBinary" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="aspnet_Roles">
             <EntityTypeMapping TypeName="ProjectFlowModel.aspnet_Roles">
               <MappingFragment StoreEntitySet="aspnet_Roles">
@@ -2532,7 +2880,6 @@
           <EntitySetMapping Name="aspnet_Users">
             <EntityTypeMapping TypeName="ProjectFlowModel.aspnet_Users">
               <MappingFragment StoreEntitySet="aspnet_Users">
-                <ScalarProperty Name="ProfileImagePath" ColumnName="ProfileImagePath" />
                 <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -2540,6 +2887,7 @@
                 <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
                 <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
                 <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="ProfileImagePath" ColumnName="ProfileImagePath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2564,6 +2912,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Attendees">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Attendee">
+              <MappingFragment StoreEntitySet="Attendee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="roomID" ColumnName="roomID" />
+                <ScalarProperty Name="attendeeUserId" ColumnName="attendeeUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CommentForIssues">
             <EntityTypeMapping TypeName="ProjectFlowModel.CommentForIssue">
               <MappingFragment StoreEntitySet="CommentForIssue">
@@ -2583,6 +2940,8 @@
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="votePublic" ColumnName="votePublic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2609,6 +2968,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Priorities">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Priority">
+              <MappingFragment StoreEntitySet="Priority">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="priority1" ColumnName="priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectFlowModel.Project">
               <MappingFragment StoreEntitySet="Project">
@@ -2618,6 +2985,7 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="dropped" ColumnName="dropped" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2629,6 +2997,8 @@
                 <ScalarProperty Name="teamDescription" ColumnName="teamDescription" />
                 <ScalarProperty Name="projectID" ColumnName="projectID" />
                 <ScalarProperty Name="dropped" ColumnName="dropped" />
+                <ScalarProperty Name="open" ColumnName="open" />
+                <ScalarProperty Name="group" ColumnName="group" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2794,6 +3164,8 @@
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="accessToken" ColumnName="accessToken" />
+                <ScalarProperty Name="roomName" ColumnName="roomName" />
+                <ScalarProperty Name="roomDescription" ColumnName="roomDescription" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2805,6 +3177,27 @@
                 <ScalarProperty Name="topic" ColumnName="topic" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="roomID" ColumnName="roomID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scores">
+            <EntityTypeMapping TypeName="ProjectFlowModel.Score">
+              <MappingFragment StoreEntitySet="Score">
+                <ScalarProperty Name="scoreID" ColumnName="scoreID" />
+                <ScalarProperty Name="proposal" ColumnName="proposal" />
+                <ScalarProperty Name="report" ColumnName="report" />
+                <ScalarProperty Name="reviewOne" ColumnName="reviewOne" />
+                <ScalarProperty Name="reviewTwo" ColumnName="reviewTwo" />
+                <ScalarProperty Name="presentation" ColumnName="presentation" />
+                <ScalarProperty Name="test" ColumnName="test" />
+                <ScalarProperty Name="sdl" ColumnName="sdl" />
+                <ScalarProperty Name="participation" ColumnName="participation" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="projectID" ColumnName="projectID" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="proposalG" ColumnName="proposalG" />
+                <ScalarProperty Name="reportG" ColumnName="reportG" />
+                <ScalarProperty Name="presentationG" ColumnName="presentationG" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2823,13 +3216,13 @@
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="group" ColumnName="group" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="ProjectFlowModel.Task">
               <MappingFragment StoreEntitySet="Task">
-                <ScalarProperty Name="priorityID" ColumnName="priorityID" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="taskName" ColumnName="taskName" />
                 <ScalarProperty Name="taskDescription" ColumnName="taskDescription" />
@@ -2838,6 +3231,7 @@
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="milestoneID" ColumnName="milestoneID" />
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="priorityID" ColumnName="priorityID" />
                 <ScalarProperty Name="dropped" ColumnName="dropped" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2889,6 +3283,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WhiteboardSessions">
+            <EntityTypeMapping TypeName="ProjectFlowModel.WhiteboardSession">
+              <MappingFragment StoreEntitySet="WhiteboardSession">
+                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="creationDateTime" ColumnName="creationDateTime" />
+                <ScalarProperty Name="strokesJsonPath" ColumnName="strokesJsonPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="ProjectFlowModel.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
             <EndProperty Name="aspnet_Roles">
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -2897,25 +3302,6 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Priorities">
-            <EntityTypeMapping TypeName="ProjectFlowModel.Priority">
-              <MappingFragment StoreEntitySet="Priority">
-                <ScalarProperty Name="priority1" ColumnName="priority" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="aspnet_Profile">
-            <EntityTypeMapping TypeName="ProjectFlowModel.aspnet_Profile">
-              <MappingFragment StoreEntitySet="aspnet_Profile">
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="PropertyValuesBinary" ColumnName="PropertyValuesBinary" />
-                <ScalarProperty Name="PropertyValuesString" ColumnName="PropertyValuesString" />
-                <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
