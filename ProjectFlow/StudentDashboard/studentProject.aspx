@@ -23,7 +23,7 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="Module ID">
                                         <ItemTemplate>
-                                            <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("projectID") %>'></asp:Label>
+                                            <asp:Label ID="midLabel" runat="server" Text='<%# Bind("projectID") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Module Name">
@@ -70,6 +70,16 @@
                             <asp:GridView ID="availableGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged">
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
+                                    <asp:TemplateField HeaderText="Module ID">
+                                        <ItemTemplate>
+                                            <asp:Label ID="midLabel" runat="server" Text='<%# Bind("projectID") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Module Name">
+                                        <ItemTemplate>
+                                            <asp:Label ID="nameLabel" runat="server" Text='<%# GetProjectName(Eval("projectID").ToString()) %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="teamID" HeaderText="ID" />
                                     <asp:BoundField DataField="teamName" HeaderText="Name" />
                                     <asp:BoundField DataField="teamDescription" HeaderText="Description" />
