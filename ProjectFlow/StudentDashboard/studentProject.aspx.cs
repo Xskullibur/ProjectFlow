@@ -32,6 +32,12 @@ namespace ProjectFlow.DashBoard
             return Session["Student"].ToString();
         }
 
+        public Guid GetUserID()
+        {
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            return identity.Student.UserId;
+        }
+
         protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
         {
             //Make gridview row clickable
@@ -49,15 +55,15 @@ namespace ProjectFlow.DashBoard
             GridViewRow row = ProjectGV.SelectedRow;
             int teamID;
 
-            if(int.TryParse(row.Cells[0].Text, out teamID))
+            if(int.TryParse(row.Cells[2].Text, out teamID))
             {
 
                 ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
                 ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
 
                 //(Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
-                (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(int.Parse(row.Cells[0].Text)));
-                //Session["StudentTeamID"] = row.Cells[0].Text;
+                (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(int.Parse(row.Cells[2].Text)));
+                //Session["StudentTeamID"] = row.Cells[2].Text;
 
                 Response.Redirect("/ProjectDashboard/ProjectTeamDashboard.aspx");
             }
@@ -76,7 +82,7 @@ namespace ProjectFlow.DashBoard
         public void ShowProject()
         {
             StudentBLL studentBLL = new StudentBLL();
-            IEnumerable<ProjectTeam> teamList = studentBLL.GetStudentProject(Guid.Parse(Session["StudentID"].ToString()));
+            IEnumerable<ProjectTeam> teamList = studentBLL.GetStudentProject(GetUserID());
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
 
@@ -85,10 +91,15 @@ namespace ProjectFlow.DashBoard
             availableGV.DataBind();
         }
 
+        public string GetProjectName(string ProjectID)
+        {
+            return projectBLL.GetProjectByProjectId(ProjectID).projectName;
+        }
+
         public void SearchProject(string search)
         {
             StudentBLL studentBLL = new StudentBLL();
-            IEnumerable<ProjectTeam> teamList = studentBLL.SearchStudentProject(Guid.Parse(Session["StudentID"].ToString()), search);
+            IEnumerable<ProjectTeam> teamList = studentBLL.SearchStudentProject(GetUserID(), search);
             ProjectGV.DataSource = teamList;
             ProjectGV.DataBind();
         }
@@ -111,7 +122,7 @@ namespace ProjectFlow.DashBoard
         protected void availableGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = availableGV.SelectedRow;
-            projectBLL.InsertMember(getStudentID(), int.Parse(row.Cells[0].Text), 2);
+            projectBLL.InsertMember(getStudentID(), int.Parse(row.Cells[2].Text), 2);
             Master.ShowAlert("Joined Team", BootstrapAlertTypes.SUCCESS);
             ShowProject();
         }

@@ -214,7 +214,7 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var student = dbContext.Students.Find(UserID);
-                var projectteam = dbContext.ProjectTeams.Where(x => x.dropped == false);
+                var projectteam = dbContext.ProjectTeams.Include(x => x.Project).Where(x => x.dropped == false);
                 List<ProjectTeam> emptyList = new List<ProjectTeam> { };
                 if(student != null)
                 {
