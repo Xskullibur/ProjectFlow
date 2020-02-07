@@ -23,6 +23,7 @@ namespace ProjectFlow.Issues
             //ScriptManager1.RegisterAsyncPostBackControl(tSaveBtn);
             if (!IsPostBack)
             {
+
                 //Databinding non responsive elements
                 IssueBLL issueBLL = new IssueBLL();
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
@@ -45,10 +46,20 @@ namespace ProjectFlow.Issues
 
                 refreshCommentData(idIssue);
                 isActive(updated_issue.active);
- 
+
+                check();
                 refreshData();
             }
             solutionView.Font.Size = 11;
+        }
+
+        private void check()
+        {
+            if (GetCurrentIdentiy().IsTutor)
+            {
+                //disable comments
+                disablecomments();
+            }
         }
 
         // Get Current User
