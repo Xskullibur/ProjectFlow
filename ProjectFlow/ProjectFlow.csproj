@@ -371,11 +371,6 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Data\Services\Whiteboard\StrokesPath\.gitignore" />
-    <Content Include="App_Data\Services\Whiteboard\StrokesPath\.gitkeep" />
-    <Content Include="App_Data\Services\Whiteboard\StrokesPath\5c077d65-308d-4f49-8e2e-5b4b42a3e1ec.json" />
-    <Content Include="App_Data\Services\Whiteboard\StrokesPath\62705cdd-1bee-49a1-b41d-91a37089a010.json" />
-    <Content Include="App_Data\Services\Whiteboard\StrokesPath\793d817b-1079-495f-b6ce-7f1bbf8c674b.json" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -888,8 +883,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="FileManagement\FileStorage\" />
     <Folder Include="FileManagement\Temp\" />
+    <Folder Include="Services\Whiteboard\StrokesPath\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
