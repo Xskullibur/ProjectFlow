@@ -403,6 +403,7 @@
     <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="TutorDashboard\AddMilestone.aspx" />
     <Content Include="StudentDashboard\FileUpload.aspx" />
+    <Content Include="TutorDashboard\AllGrades.aspx" />
     <Content Include="TutorDashboard\Grading.aspx" />
     <Content Include="TutorDashboard\ProjectMainPage.aspx" />
     <Content Include="TutorDashboard\ProjectMenu.aspx" />
@@ -600,6 +601,13 @@
     </Compile>
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\AllGrades.aspx.cs">
+      <DependentUpon>AllGrades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\AllGrades.aspx.designer.cs">
+      <DependentUpon>AllGrades.aspx</DependentUpon>
     </Compile>
     <Compile Include="TutorDashboard\Grading.aspx.cs">
       <DependentUpon>Grading.aspx</DependentUpon>
