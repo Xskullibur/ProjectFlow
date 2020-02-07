@@ -109,7 +109,7 @@
 
         </div>
 
-        <%--Filter Panel--%>
+        <%--Filter Toolbox--%>
         <div class="row">
             <div class="col">
                 <div class="collapse mt-3 mb-2" id="filterDiv">
@@ -135,7 +135,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <asp:Label CssClass="control-label" Text="Priority:" AssociatedControlID="fPriorityListBox" runat="server" />
-                                    <asp:ListBox ID="fPriorityListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                    <asp:ListBox ID="fPriorityListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server"></asp:ListBox>
                                 </div>
                             </div>                        
                         
@@ -143,7 +143,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <asp:Label CssClass="control-label" Text="Status:" AssociatedControlID="fStatusListBox" runat="server" />
-                                    <asp:ListBox ID="fStatusListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server" SelectionMode="Multiple"></asp:ListBox>
+                                    <asp:ListBox ID="fStatusListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server"></asp:ListBox>
                                 </div>
                             </div>      
                         
@@ -293,7 +293,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="addTask_Click" ValidationGroup="AddTask" />
-                                <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary disabled" Text="Save and Add Another Task" Enabled="false" runat="server" />
+                                <asp:Button id="tSaveAnotherBtn" CssClass="btn btn-primary" Text="Save and Add Another Task" runat="server" OnClick="tSaveAnotherBtn_Click" />
                             </div>
                         </div>
 

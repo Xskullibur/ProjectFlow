@@ -68,8 +68,10 @@ namespace ProjectFlow.ProjectTeamDashboard
             string progressBar = startString + endString;
             milestoneLiteral.Text = progressBar;
 
-            int? milestoneID = tasks.GroupBy(x => x.milestoneID)
-                .First(x => x.Count(task => task.Status.status1 == StatusBLL.COMPLETED) != x.Count()).Key;
+            int milestoneID = tasks.GroupBy(x => x.milestoneID)
+                .OrderBy(x => x.First().Milestone.endDate)
+                .First(x => x.Count() != x.Count(task => task.Status.status1 == StatusBLL.COMPLETED))
+                .Key;
 
             int activeIndex = milestones.FindIndex(x => x.milestoneID == milestoneID);
 
