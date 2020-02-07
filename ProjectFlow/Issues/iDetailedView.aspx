@@ -67,7 +67,7 @@
                                         data-btn-ok-icon-class="fa fa-check"
                                         data-btn-cancel-icon-class="fa fa-close"
                                         data-popout="true"
-                                        CommandName="Delete" /> 
+                                        CommandName="Delete" OnClientClick="return confirm('Are you sure to delete?');" /> 
                                 </ItemTemplate>
 
                                 <edititemtemplate>

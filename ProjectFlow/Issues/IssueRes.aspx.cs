@@ -258,6 +258,10 @@ namespace ProjectFlow.Issues
                 new_solution.startdate = currentTime;
                 new_solution.createdBy = Uid;
                 new_solution.votePublic = checkCB();
+                if (GetCurrentIdentiy().IsTutor)
+                {
+                    new_solution.success = true;
+                }
 
                 // clear error messages
                 // TODO
