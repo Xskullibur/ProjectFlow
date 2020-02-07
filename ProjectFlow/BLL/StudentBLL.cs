@@ -18,6 +18,14 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public Student GetStudentByStudentID(Guid userId)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Students.FirstOrDefault(student => student.UserId.Equals(userId));
+            }
+        }
+
         public List<Student> GetStudentsByName(string surname)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

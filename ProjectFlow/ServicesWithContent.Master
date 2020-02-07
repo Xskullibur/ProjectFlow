@@ -87,8 +87,7 @@
         <div class="sticky-top">
             <nav class="navbar content-nav navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="30" height="30" alt="">
-                    ProjectFlow
+                    <img class="pb-2" src="/Content/ProjectFlow/Images/ProjectFlow.png" width="125" height="125" alt="">
                   </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">                        
@@ -142,9 +141,9 @@
                                         <SidebarItems>
                                             <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                             </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                            <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
                                             </mio:SidebarItem>
-                                             <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
+                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
@@ -160,6 +159,12 @@
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
+                                    <mio:SidebarGroup SubHeaderText="Whiteboard">
+                                        <SidebarItems>
+                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" FASLogo="chalkboard-teacher">
+                                            </mio:SidebarItem>
+                                        </SidebarItems>
+                                    </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Meeting Minutes">
                                         <SidebarItems>
                                             <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx" FASLogo="history">
@@ -169,6 +174,7 @@
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
+
                                 </Groups>
                                 </mio:MaterialSidebar>
                             <% }else if(Identity.IsTutor) {  %>
@@ -178,9 +184,9 @@
                                             <SidebarItems>
                                                 <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                                 </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
-                                                </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Members" RedirectionPage="/TutorDashBoard/ProjectMainPage.aspx" FASLogo="address-book">
+                                                </mio:SidebarItem>
+                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>

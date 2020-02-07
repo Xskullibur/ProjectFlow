@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container py-2 w-100 h-100">
+    <div class="container-fluid py-2 w-100 h-100">
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
@@ -11,18 +11,13 @@
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" />
-                            <asp:BoundField DataField="TaskID" HeaderText="Task Id" />
                             <asp:BoundField DataField="Task" HeaderText="Issue Name" />
                             <asp:BoundField DataField="Description" HeaderText="Description" />
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
-                            <asp:BoundField DataField="Active" HeaderText="Active" />
                             <asp:BoundField DataField="Status" HeaderText="Status" />
-                            <asp:BoundField DataField="IsPublic" HeaderText="Public vote" />
+                            <asp:BoundField DataField="Active" HeaderText="Active" />
                             <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-success mb-2" />
-                            </asp:CommandField>
-                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-danger" />
                             </asp:CommandField>
                         </Columns>
                         <EmptyDataTemplate>

@@ -18,7 +18,7 @@ namespace ProjectFlow
         public Issue()
         {
             this.CommentForIssues = new HashSet<CommentForIssue>();
-            this.Pollings = new HashSet<Polling>();
+            this.Solutions = new HashSet<Solution>();
         }
     
         public int issueID { get; set; }
@@ -36,6 +36,6 @@ namespace ProjectFlow
         public virtual Task Task { get; set; }
         public virtual TeamMember TeamMember { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Polling> Pollings { get; set; }
+        public virtual ICollection<Solution> Solutions { get; set; }
     }
 }

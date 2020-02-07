@@ -36,17 +36,17 @@ namespace ProjectFlow.BLL
                 return users;
             }
         }
-     
+
         public void DeleteMember(int MemberID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var member = dbContext.TeamMembers.Find(MemberID);
-                if(member != null)
+                if (member != null)
                 {
                     member.dropped = true;
                     dbContext.SaveChanges();
-                }              
+                }
             }
         }
 
@@ -87,7 +87,7 @@ namespace ProjectFlow.BLL
                 var MID = dbContext.TeamMembers
                     .First(x => x.UserId == Uid)
                     .memberID;
-                    
+
 
                 //int MID = int.Parse(student);
 
@@ -136,13 +136,13 @@ namespace ProjectFlow.BLL
                 return dbContext.Scores.Include(x => x.Student).Where(x => x.teamID == TeamID).ToList();
             }
         }
-        
+
         public void UpdateScore(int scoreID, float Proposal, float Report, float ReviewOne, float ReviewTwo, float Presentation, float Test, float SDL, float Participation)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var score = dbContext.Scores.Find(scoreID);
-                if(score != null)
+                if (score != null)
                 {
                     score.proposal = Proposal;
                     score.report = Report;
@@ -162,7 +162,7 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 List<Score> scoreList = dbContext.Scores.Where(x => x.teamID == TeamID).ToList();
-                foreach(Score s in scoreList)
+                foreach (Score s in scoreList)
                 {
                     s.presentationG = Presentation;
                     s.reportG = Report;
@@ -177,7 +177,7 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var member = dbContext.TeamMembers.Find(MemberID);
-                if(member != null)
+                if (member != null)
                 {
                     member.dropped = true;
                     member.roleID = 2;
@@ -190,7 +190,7 @@ namespace ProjectFlow.BLL
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
-                return dbContext.ProjectTeams.Find(TeamID);              
+                return dbContext.ProjectTeams.Find(TeamID);
             }
         }
 
@@ -199,12 +199,29 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 var team = dbContext.ProjectTeams.Find(TeamID);
-                if(team != null)
+                if (team != null)
                 {
                     team.teamName = name;
                     dbContext.SaveChanges();
                 }
             }
         }
+
+        public String GetUsernamebyMID(int memberId)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var test = dbContext.TeamMembers
+                    .Include("Student.aspnet_Users")
+                    .First(x => x.memberID == memberId)
+                    .Student
+                    .aspnet_Users
+                    .UserName;
+
+                return test;
+
+            }
+        }
+
     }
 }

@@ -7,14 +7,27 @@
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
+                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" OnRowDataBound="IssueView_RowDataBound" OnRowDeleting="IssueView_RowDeleting" PageSize="4">
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" />
-                            <asp:BoundField DataField="TaskID" HeaderText="Task Id" />
                             <asp:BoundField DataField="Task" HeaderText="Issue Name" />
                             <asp:BoundField DataField="Description" HeaderText="Description" />
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
+                            <asp:BoundField DataField="Status" HeaderText="Status" />
+
+                            <asp:TemplateField ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:Button ID="DeleteButton" Text="Restore" runat="server" 
+                                        CssClass="btn btn-primary"
+                                        data-toggle="confirmation"
+                                        data-btn-ok-icon-class="fa fa-check"
+                                        data-btn-cancel-icon-class="fa fa-close"
+                                        data-popout="true"
+                                        CommandName="Delete" />               
+                                </ItemTemplate>
+                            </asp:TemplateField> 
+
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="jumbotron jumbotron-fluid">

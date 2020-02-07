@@ -19,6 +19,7 @@ namespace ProjectFlow
         {
             this.aspnet_PersonalizationPerUser = new HashSet<aspnet_PersonalizationPerUser>();
             this.Attendees = new HashSet<Attendee>();
+            this.Solutions = new HashSet<Solution>();
             this.Transcripts = new HashSet<Transcript>();
             this.aspnet_Roles = new HashSet<aspnet_Roles>();
         }
@@ -39,6 +40,8 @@ namespace ProjectFlow
         public virtual aspnet_Profile aspnet_Profile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendee> Attendees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Solution> Solutions { get; set; }
         public virtual Student Student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transcript> Transcripts { get; set; }

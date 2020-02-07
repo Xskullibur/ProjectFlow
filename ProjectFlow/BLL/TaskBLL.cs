@@ -160,42 +160,6 @@ namespace ProjectFlow.BLL
         }
 
 
-        // Dropped Task DataSource
-        /// <summary>
-        /// Gets all Drropped Task information (incl. Task Allocations) By Team ID
-        /// </summary>
-        /// <param name="teamID"></param>
-        /// <returns>Anonymous Object</returns>
-        /// 
-        /// (ID, Task, Description, Milestone, StartDate, EndDate, Allocations, Status)
-        public IEnumerable<object> GetDroppedTaskDataSource(int teamID)
-        {
-            try
-            {
-                var droppedTask = GetDroppedTasksByTeamID(teamID)
-                    .Select(y => new
-                    {
-                        ID = y.taskID,
-                        Task = y.taskName,
-                        Description = y.taskDescription,
-                        MileStone = y.Milestone.milestoneName,
-                        Start = y.startDate,
-                        End = y.endDate,
-                        Allocation = y.TaskAllocations.Count == 0 ? "-" : y.TaskAllocations.Aggregate("", (a, b) => (a == "" ? "" : a + ", ") + (b.TeamMember.Student.firstName + " " + b.TeamMember.Student.lastName)),
-                        Status = y.Status.status1,
-                        Priority = y.Priority.priority1
-                    }).ToList();
-
-                return droppedTask;
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine($"\n\nError While Retrieving Dropped Task DataSource: {e.Message}\n");
-                return null;
-            }
-        }
-
-
         public IEnumerable<object> ConvertToDataSource(List<Task> tasks)
         {
             var ds = tasks.Select(y => new

@@ -28,7 +28,7 @@ namespace ProjectFlow.BLL
                     }
                     catch (Exception e)
                     {
-                        Console.Error.WriteLine($"Error While Adding Task: {e.Message}");
+                        Console.Error.WriteLine($"Error While Adding issue: {e.Message}");
                         return false;
                     }
                 }
@@ -150,6 +150,9 @@ namespace ProjectFlow.BLL
                             Task = y.title,
                             Description = y.description,
                             CreatedBy = y.TeamMember.Student.aspnet_Users.UserName,
+                            Active = y.active,
+                            Status = y.Status.status1,
+                            IsPublic = y.votePublic
                         }).ToList();
 
                     return list;
@@ -166,9 +169,9 @@ namespace ProjectFlow.BLL
         }
 
         /// <summary>
-        /// Gets Issues By taskID
+        /// Gets Issues By ID
         /// </summary>
-        /// <param name="tID"></param>
+        /// <param name="id"></param>
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, IdTask)
@@ -199,7 +202,7 @@ namespace ProjectFlow.BLL
         /// </summary>
         /// <param name="issue"></param>
         /// <returns>Boolean</returns>
-        public bool Drop(int id, int UserId)
+        public bool Drop(int id)
         {
             Issue issue = GetIssueByID(id);
 
@@ -207,19 +210,13 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
-                    if (issue.createdBy == UserId)
-                    {
-                        issue.active = false;
-                        dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
-                        dbContext.SaveChanges();
 
-                        return true;
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine($"wrong user dropping task");
-                        return false;
-                    }
+                    issue.active = false;
+                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+
                 }
                 catch (Exception e)
                 {
@@ -229,7 +226,12 @@ namespace ProjectFlow.BLL
             }
 
         }
-        
+
+        /// <summary>
+        /// check if Issue is public
+        /// </summary>
+        /// <param name="iTD"></param>
+        /// <returns>Boolean</returns>
         public bool isPublic(int iID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
@@ -261,13 +263,18 @@ namespace ProjectFlow.BLL
             }
         }
 
+        /// <summary>
+        /// updates Issue
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns>Boolean</returns>
         public bool Update(Issue issue)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 try
                 {
-                    // Update Task
+                    // Update 
                     dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
 
                     // Save Changes
@@ -282,5 +289,31 @@ namespace ProjectFlow.BLL
                 }
             }
         }
+
+        /// <summary>
+        /// Restore Issue
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns></returns>
+        public bool Restore(Issue issue)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    issue.active = true;
+                    dbContext.Entry(issue).State = System.Data.Entity.EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Restoring Issue: {e.Message}");
+                    return false;
+                }
+            }
+        }
+
     }
 }
