@@ -190,8 +190,9 @@ namespace ProjectFlow.DashBoard
                 string newFileName = RemoveAdditionalInfo(fileName, 1);
 
                 Directory.CreateDirectory(destinationFolder);
-                File.Copy(theFile, destinationFolder + newFileName);
+                //File.Copy(theFile, destinationFolder + newFileName);
 
+                ViewState["theFile"] = theFile;
                 ViewState["destinationFolder"] = destinationFolder;
                 ViewState["newFileName"] = newFileName;
 
@@ -349,6 +350,7 @@ namespace ProjectFlow.DashBoard
             {                
                 try
                 {
+                    File.Copy(ViewState["theFile"].ToString(), ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString());
                     decryption.DecryptFileWithKey(ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString(), deKeyTB.Text);
                     DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString());
                 }
