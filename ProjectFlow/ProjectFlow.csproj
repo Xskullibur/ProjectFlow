@@ -172,6 +172,8 @@
     <Content Include="Content\ProjectFlow\CSS\christina.css" />
     <Content Include="Content\ProjectFlow\CSS\effect\live-ring.css" />
     <Content Include="Content\ProjectFlow\CSS\main.css" />
+    <Content Include="Content\ProjectFlow\CSS\pagination.css" />
+    <Content Include="Content\ProjectFlow\CSS\progressBar.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
     <Content Include="Global.asax" />
@@ -351,6 +353,7 @@
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
+    <Content Include="Scripts\ProjectFlow\TeamDashboard.js" />
     <Content Include="Scripts\ProjectFlow\whiteboard.js" />
     <Content Include="Services\Christina\CreateRoom.aspx" />
     <Content Include="Services\Whiteboard\Whiteboard.aspx" />

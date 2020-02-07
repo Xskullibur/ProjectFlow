@@ -70,6 +70,10 @@
                                     <button type="button" class="btn btn-primary" onclick="saveCanvas()">
                                         <i class="fas fa-save"></i>
                                     </button>
+                                    <a class="d-none" id="download-link"></a>
+                                    <button type="button" class="btn btn-primary" onclick="downloadImage()">
+                                        <i class="fas fa-download"></i>
+                                    </button>
                                     <button type="button" class="btn btn-primary" onclick="clearCanvas()">
                                         <i class="fas fa-eraser"></i>
                                     </button>
