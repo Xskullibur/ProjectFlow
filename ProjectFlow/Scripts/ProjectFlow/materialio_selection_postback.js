@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     $(document).on('change', id + ' input[type=checkbox].mdc-checkbox__native-control.autoselect', function () {
         selectAll(this.checked);
+        __doPostBack(unique_id, JSON.stringify(getSelectedArray()));
     });
 
     $(document).on('change', id + ' input[type=checkbox].mdc-checkbox__native-control:not(.autoselect)', function () {
@@ -29,3 +30,4 @@ function selectAll(value) {
         $(input).prop('checked', value);
     });
 }
+

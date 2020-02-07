@@ -80,6 +80,12 @@ namespace ProjectFlow.Utils.MaterialIO
         {
             get
             {
+                //if no rows is inserted return an empty array
+                if(_rows == null || _rows.Count == 0)
+                {
+                    return Array.Empty<bool>();
+                }
+
                 bool[] selected = new bool[_rows.Count];
                 if (IsSelectMode)
                 {
@@ -96,14 +102,15 @@ namespace ProjectFlow.Utils.MaterialIO
         {
             if (IsSelectMode) return;
 
-            
-
             IsSelectMode = true;
             this.Headers.Insert(0, new MaterialIOTableRowHeaderCheckbox());
 
-            foreach(var row in this.Rows)
+            if (this.Rows != null)
             {
-                row.Datas.Insert(0, new MaterialIOTableRowCheckbox());
+                foreach(var row in this.Rows)
+                {
+                    row.Datas.Insert(0, new MaterialIOTableRowCheckbox());
+                }
             }
             ViewState["Headers"] = this._headers;
         }
@@ -114,10 +121,14 @@ namespace ProjectFlow.Utils.MaterialIO
             IsSelectMode = false;
             this.Headers.RemoveAt(0);
 
-            foreach (var row in this.Rows)
+            if (this.Rows != null)
             {
-                row.Datas.RemoveAt(0);
+                foreach (var row in this.Rows)
+                {
+                    row.Datas.RemoveAt(0);
+                }
             }
+            
             ViewState["Headers"] = this._headers;
         }
 
@@ -188,12 +199,32 @@ namespace ProjectFlow.Utils.MaterialIO
 
             Table.Body.ClearRows();
 
-            if(Rows != null)
-            for (int i = 0; i < Rows.Count; i++)
+            //check the select all checkbox to true if all is selected
+            if (IsSelectMode)
             {
-                var row = Rows[i];
-                Table.Body.AddRow(row);
+                bool isAllSelected = true;
+                //Check if all rows is selected
+                foreach (var row in _rows)
+                {
+                    if (!(row.Datas[0] as MaterialIOTableRowCheckbox).Checked)
+                    {
+                        isAllSelected = false;
+                        break;
+                    }
+                }
+                (this.Headers[0] as MaterialIOTableRowHeaderCheckbox).Checked = isAllSelected;
+
             }
+
+            if(Rows != null)
+            {
+                for (int i = 0; i < Rows.Count; i++)
+                {
+                    var row = Rows[i];
+                    Table.Body.AddRow(row);
+                }
+            }
+           
 
             output.Write(Table.GetHTML());
         }
@@ -252,6 +283,9 @@ namespace ProjectFlow.Utils.MaterialIO
     [Serializable]
     public class MaterialIOTableRowHeaderCheckbox : MaterialIOTableRowHeaderData
     {
+
+        public bool Checked { get; set; }
+
         public MaterialIOTableRowHeaderCheckbox() : base()
         {
             AddClass(MaterialIODataType.CHECKBOX);
@@ -260,7 +294,7 @@ namespace ProjectFlow.Utils.MaterialIO
         public override void InsertElement(StringBuilder stringBuilder)
         {
             string checkboxHTML = $@"<div class=""mdc-checkbox mdc-data-table__row-checkbox mdc-checkbox--upgraded mdc-ripple-upgraded mdc-ripple-upgraded--unbounded"" style=""--mdc-ripple-fg-size:24px;--mdc-ripple-fg-scale:1.6666666666666667;--mdc-ripple-left:8px;--mdc-ripple-top:8px;"">
-                                             <input type=""checkbox"" class=""mdc-checkbox__native-control autoselect"">
+                                             <input type=""checkbox"" class=""mdc-checkbox__native-control autoselect"" {(Checked ? "checked" : "")}>
                                     <div class=""mdc-checkbox__background"">
                                       <svg class=""mdc-checkbox__checkmark"" viewBox=""0 0 24 24"">
                                         <path class=""mdc-checkbox__checkmark-path"" fill=""none"" d=""M1.73,12.91 8.1,19.28 22.79,4.59""></path>
