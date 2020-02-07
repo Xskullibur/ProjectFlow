@@ -256,6 +256,8 @@ namespace ProjectFlow.DashBoard
             Response.ContentType = "application/octect-stream";
             Response.AddHeader("Content-Disposition", "filename=" + FileName);
             Response.TransmitFile(Path + FileName);
+            Response.Flush();
+            File.Delete(Path + FileName);
             Response.End();
         }
 
