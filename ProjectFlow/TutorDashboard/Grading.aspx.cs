@@ -4,6 +4,7 @@ using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -45,6 +46,7 @@ namespace ProjectFlow.TutorDashboard
             List<Score> studentList = teamMemberBLL.GetGradeByTeamID(GetTeamID());
             gradeGV.DataSource = studentList;
             gradeGV.DataBind();
+            HideGroupScore();
 
             GroupScoreGV.DataSource = studentList;
             GroupScoreGV.DataBind();
@@ -246,6 +248,43 @@ namespace ProjectFlow.TutorDashboard
                 ShowGrade();
                 Master.ShowAlert("value must be a number", BootstrapAlertTypes.DANGER);
             }
-        }              
+        }
+
+        protected void exportBtn_Click(object sender, EventArgs e)
+        {           
+            Response.ClearContent();
+            Response.AppendHeader("content-disposition", "attachment; filename=marks.xls");
+            Response.ContentType = "application/excel";
+
+            StringWriter stringWriter = new StringWriter();
+            HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+
+            ShowGroupScore();
+           
+            gradeGV.RenderControl(htmlTextWriter);
+            Response.Write(stringWriter.ToString());
+            Response.End();
+
+            HideGroupScore();
+        }
+
+        public void HideGroupScore()
+        {
+            gradeGV.Columns[10].Visible = false;
+            gradeGV.Columns[11].Visible = false;
+            gradeGV.Columns[12].Visible = false;
+        }
+
+        public void ShowGroupScore()
+        {
+            gradeGV.Columns[10].Visible = true;
+            gradeGV.Columns[11].Visible = true;
+            gradeGV.Columns[12].Visible = true;
+        }
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            
+        }
     }
 }

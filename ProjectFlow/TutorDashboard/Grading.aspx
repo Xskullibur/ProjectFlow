@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="Grading.aspx.cs" Inherits="ProjectFlow.TutorDashboard.Grading" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="Grading.aspx.cs" Inherits="ProjectFlow.TutorDashboard.Grading" EnableEventValidation="false"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -12,9 +12,9 @@
                 </div>
             </div>
             <br>
-            <div class="row mb-3">                                           
+            <div class="row mb-3">                     
                 <div class="col-1">
-                    <asp:Button ID="exportBtn" CssClass="btn btn-primary" runat="server" Text="Export" />
+                    <asp:Button ID="exportBtn" CssClass="btn btn-primary" runat="server" Text="Export" OnClick="exportBtn_Click" />
                 </div>               
             </div>
             <br>
@@ -115,6 +115,11 @@
                                         <asp:Label ID="particationLabel" runat="server" Text='<%# Bind("participation") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+
+                                <asp:BoundField HeaderText="Proposal Group (5%)" DataField="proposalG" />
+
+                                <asp:BoundField DataField="reportG" HeaderText="Report Group (5%)" />
+                                <asp:BoundField DataField="presentationG" HeaderText="Presentation Group (5%)" />
 
                                 <asp:TemplateField HeaderText="Total (100%)">
                                     <ItemTemplate>
