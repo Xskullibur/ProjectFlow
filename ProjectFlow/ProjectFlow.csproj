@@ -573,6 +573,9 @@
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlow.tt</DependentUpon>
     </Compile>
+    <Compile Include="WhiteboardSession.cs">
+      <DependentUpon>ProjectFlow.tt</DependentUpon>
+    </Compile>
     <Content Include="App_Code\CalendarEvent.cs" />
     <Content Include="App_Code\EventDAO.cs" />
     <Content Include="App_Code\ImproperCalendarEvent.cs" />
