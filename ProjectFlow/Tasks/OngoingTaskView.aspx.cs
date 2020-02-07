@@ -569,14 +569,22 @@ namespace ProjectFlow.Tasks
 
                         if (result)
                         {
+                            string templateDir = HttpContext.Current.Server.MapPath("~/Utils/EmailTemplates/TaskNotification.html");
+                            string url = HttpContext.Current.Request.Url.AbsoluteUri;
 
                             if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.VERIFICATON)
                             {
-                                NotificationHelper.Send_Verification_Email(taskID);
+                                System.Threading.Tasks.Task.Run(() =>
+                                {
+                                    NotificationHelper.Send_Verification_Email(templateDir, url, taskID);
+                                });
                             }
                             else if (StatusBLL.GetNextStatus(currentStatus) == StatusBLL.COMPLETED)
                             {
-                                NotificationHelper.Send_Complete_Email(taskID);
+                                System.Threading.Tasks.Task.Run(() =>
+                                {
+                                    NotificationHelper.Send_Complete_Email(templateDir, url, taskID);
+                                });
                             }
 
                             Master.Master.ShowAlert("Successfully Updated Status", BootstrapAlertTypes.SUCCESS);

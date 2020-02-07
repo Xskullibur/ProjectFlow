@@ -158,6 +158,12 @@
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
+                                    <mio:SidebarGroup SubHeaderText="Whiteboard">
+                                        <SidebarItems>
+                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" FASLogo="history">
+                                            </mio:SidebarItem>
+                                        </SidebarItems>
+                                    </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Meeting Minutes">
                                         <SidebarItems>
                                             <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx" FASLogo="history">
@@ -167,6 +173,7 @@
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
+
                                 </Groups>
                                 </mio:MaterialSidebar>
                             <% }else if(Identity.IsTutor) {  %>

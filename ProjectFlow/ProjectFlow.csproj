@@ -158,6 +158,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-toast\toast.min.css" />
     <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.css" />
     <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -171,6 +172,8 @@
     <Content Include="Content\ProjectFlow\CSS\christina.css" />
     <Content Include="Content\ProjectFlow\CSS\effect\live-ring.css" />
     <Content Include="Content\ProjectFlow\CSS\main.css" />
+    <Content Include="Content\ProjectFlow\CSS\pagination.css" />
+    <Content Include="Content\ProjectFlow\CSS\progressBar.css" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
     <Content Include="Global.asax" />
@@ -197,6 +200,7 @@
     <Content Include="Scripts\bootstrap-confirmation\bootstrap-confirmation.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
+    <Content Include="Scripts\bootstrap-toast\toast.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -349,8 +353,13 @@
     <Content Include="Issues\Web.config" />
     <Content Include="Issues\IssueNested.master" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
+    <Content Include="Scripts\ProjectFlow\TeamDashboard.js" />
+    <Content Include="Scripts\ProjectFlow\whiteboard.js" />
     <Content Include="Services\Christina\CreateRoom.aspx" />
+    <Content Include="Services\Whiteboard\Whiteboard.aspx" />
+    <Content Include="Services\Whiteboard\WhiteboardList.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
+    <Content Include="ProjectDashboard\Web.config" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectFlowDB.Designer.cs</LastGenOutput>
@@ -358,7 +367,6 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
-    <Content Include="ProjectDashboard\Web.config" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -435,6 +443,7 @@
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\AttendeeBLL.cs" />
+    <Compile Include="BLL\WhiteboardSessionBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -520,12 +529,30 @@
     <Compile Include="RoomActionItem.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Score.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\Christina\CreateRoom.aspx.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Services\Christina\CreateRoom.aspx.designer.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Whiteboard\Whiteboard.aspx.cs">
+      <DependentUpon>Whiteboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Whiteboard\Whiteboard.aspx.designer.cs">
+      <DependentUpon>Whiteboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Whiteboard\WhiteboardHub.cs" />
+    <Compile Include="Services\Whiteboard\WhiteboardList.aspx.cs">
+      <DependentUpon>WhiteboardList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services\Whiteboard\WhiteboardList.aspx.designer.cs">
+      <DependentUpon>WhiteboardList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -551,6 +578,9 @@
     <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhiteboardSession.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Content Include="App_Code\CalendarEvent.cs" />
@@ -783,14 +813,11 @@
     </Compile>
     <Compile Include="Utils\Bootstrap.cs" />
     <Compile Include="Utils\ChartJS\ChartUtils.cs" />
-    <Compile Include="Utils\Filter\Filter.cs" />
     <Compile Include="Utils\LoginUtil.cs" />
-    <Compile Include="Utils\DateFormatter.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\NotificationHelper.cs" />
     <Compile Include="Utils\MaterialIO\MaterialIOTableControl.cs" />
     <Compile Include="Utils\SemanticsParsing.cs" />
-    <Compile Include="Utils\SmsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -826,6 +853,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="FileManagement\FileStorage\" />
     <Folder Include="FileManagement\Temp\" />
+    <Folder Include="Services\Whiteboard\StrokesPath\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

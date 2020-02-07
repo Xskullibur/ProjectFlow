@@ -31,14 +31,14 @@ namespace ProjectFlow.Utils
         /// Email Notification When Task Updated to Verification
         /// </summary>
         /// <param name="taskID"></param>
-        public static void Send_Verification_Email(int taskID)
+        public static void Send_Verification_Email(string templateDir, string url, int taskID)
         {
             TaskBLL taskBLL = new TaskBLL();
             Task task = taskBLL.GetTaskByID(taskID);
 
             string title = $"{task.taskName} is up for verification";
             string subject = "Task Verification";
-            string emailTemplate = EmailHelper.GetTaskNotificationTemplate(title, task);
+            string emailTemplate = EmailHelper.GetTaskNotificationTemplate(templateDir, url, title, task);
 
             StudentBLL studentBLL = new StudentBLL();
             List<string> leaderEmail = new List<string> {
@@ -56,14 +56,14 @@ namespace ProjectFlow.Utils
         /// Email Notification When Task Updated to Completed
         /// </summary>
         /// <param name="taskID"></param>
-        public static void Send_Complete_Email(int taskID)
+        public static void Send_Complete_Email(string templateDir, string url, int taskID)
         {
             TaskBLL taskBLL = new TaskBLL();
             Task task = taskBLL.GetTaskByID(taskID);
 
             string title = $"{task.taskName} Completed";
             string subject = "Task Completed";
-            string emailTemplate = EmailHelper.GetTaskNotificationTemplate(title, task);
+            string emailTemplate = EmailHelper.GetTaskNotificationTemplate(templateDir, url, title, task);
 
             StudentBLL studentBLL = new StudentBLL();
             List<string> allocatorsEmail = studentBLL.GetAllocationsByTaskID(task.taskID)
