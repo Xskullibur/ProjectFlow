@@ -34,6 +34,7 @@ namespace ProjectFlow
         public virtual DbSet<aspnet_Roles> aspnet_Roles { get; set; }
         public virtual DbSet<aspnet_SchemaVersions> aspnet_SchemaVersions { get; set; }
         public virtual DbSet<aspnet_Users> aspnet_Users { get; set; }
+        public virtual DbSet<aspnet_UsersInRoles> aspnet_UsersInRoles { get; set; }
         public virtual DbSet<aspnet_WebEvent_Events> aspnet_WebEvent_Events { get; set; }
         public virtual DbSet<Attendee> Attendees { get; set; }
         public virtual DbSet<CommentForIssue> CommentForIssues { get; set; }
@@ -58,14 +59,15 @@ namespace ProjectFlow
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomActionItem> RoomActionItems { get; set; }
         public virtual DbSet<Score> Scores { get; set; }
+        public virtual DbSet<Solution> Solutions { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<TaskAllocation> TaskAllocations { get; set; }
         public virtual DbSet<TeamMember> TeamMembers { get; set; }
         public virtual DbSet<Transcript> Transcripts { get; set; }
         public virtual DbSet<Tutor> Tutors { get; set; }
         public virtual DbSet<VoiceRecording> VoiceRecordings { get; set; }
-        public virtual DbSet<WhiteboardSession> WhiteboardSessions { get; set; }
     }
 }

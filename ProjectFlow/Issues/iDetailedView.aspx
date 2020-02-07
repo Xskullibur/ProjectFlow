@@ -7,11 +7,10 @@
         <div class="row pb-2">
             <div class="col">
                 <div style="overflow-x: auto;">
-                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnRowEditing="taskGrid_RowEditing" OnSelectedIndexChanged="IssueView_SelectedIndexChanged" OnRowDataBound="taskGrid_RowDataBound" OnRowCancelingEdit="taskGrid_RowCancelingEdit" OnRowUpdating="taskGrid_RowUpdating" OnRowDeleting="IssueView_RowDeleting" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
+                    <asp:GridView ID="IssueView" runat="server" CssClass="table table-bordered table-hover table-striped projectflow-table" AutoGenerateColumns="False" OnRowEditing="IssueView_RowEditing" OnSelectedIndexChanged="IssueView_SelectedIndexChanged" OnRowDataBound="IssueView_RowDataBound" OnRowCancelingEdit="IssueView_RowCancelingEdit" OnRowUpdating="IssueView_RowUpdating" OnRowDeleting="IssueView_RowDeleting" AllowPaging="True" OnPageIndexChanging="IssueView_PageIndexChanging" PageSize="4">
                         <HeaderStyle CssClass="thead-light" />   
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Issue Id" ReadOnly="True" />
-                            <asp:BoundField DataField="TaskID" HeaderText="Task Id" ReadOnly="True" />
                             <%--Issue Name--%>
                             <asp:TemplateField HeaderText="Issue Name">
                                 <EditItemTemplate>
@@ -20,7 +19,7 @@
                              
                                 </EditItemTemplate>
                                 <ItemTemplate>
-                                    <asp:Label ID="gridDesc" runat="server" Text='<%# Bind("Task") %>'></asp:Label>
+                                    <asp:Label ID="gridName" runat="server" Text='<%# Bind("Task") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
@@ -37,7 +36,6 @@
                             </asp:TemplateField>
 
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" ReadOnly="True" />
-                            <asp:BoundField DataField="Active" HeaderText="Active" ReadOnly="True" />
 
                             <%--Status--%>
                             <asp:TemplateField HeaderText="Status">
@@ -52,16 +50,28 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:BoundField DataField="IsPublic" HeaderText="Public vote" ReadOnly="True" />
-                            <asp:CommandField ShowSelectButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-success mb-2" />
-                            </asp:CommandField>
-                            <asp:CommandField ShowEditButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-primary mb-2" />
-                            </asp:CommandField>
-                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-danger" />
-                            </asp:CommandField>
+                            <%--Action Settings--%>
+                            <asp:TemplateField ShowHeader="false">
+                                <ItemTemplate>  
+                                    <div class="mb-2">
+                                        <asp:Button Text="Edit" CssClass="btn btn-sm btn-primary dropdown-toggle" CommandName="Edit" runat="server" />
+                                    </div>
+                                    
+                                    <asp:Button ID="DeleteButton" Text="Drop" runat="server" 
+                                        CssClass="btn btn-sm btn-danger"
+                                        data-toggle="confirmation"
+                                        data-btn-ok-icon-class="fa fa-check"
+                                        data-btn-cancel-icon-class="fa fa-close"
+                                        data-popout="true"
+                                        CommandName="Delete" /> 
+                                </ItemTemplate>
+
+                                <edititemtemplate>
+                                    <asp:Button id="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" commandname="Update" text="Update" />
+					                <asp:Button id="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" commandname="Cancel" text="Cancel" />
+                                </edititemtemplate>
+                            </asp:TemplateField>
+
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="jumbotron jumbotron-fluid">

@@ -10,106 +10,88 @@
 namespace ProjectFlow.Issues {
     
     
-    public partial class IssueRes {
+    public partial class IssueSolutions {
         
         /// <summary>
-        /// UpdatePanel2 control.
+        /// lbSolutionInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.WebControls.Label lbSolutionInfo;
         
         /// <summary>
-        /// lbMember control.
+        /// lbSolutionTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbMember;
+        protected global::System.Web.UI.WebControls.Label lbSolutionTitle;
         
         /// <summary>
-        /// lbIssue control.
+        /// lbSolutionDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbIssue;
+        protected global::System.Web.UI.WebControls.Label lbSolutionDesc;
         
         /// <summary>
-        /// IssueActive control.
+        /// btnYes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IssueActive;
+        protected global::System.Web.UI.WebControls.Button btnYes;
         
         /// <summary>
-        /// IssueStatus control.
+        /// btnYesCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IssueStatus;
+        protected global::System.Web.UI.WebControls.Button btnYesCount;
         
         /// <summary>
-        /// IssueRaisedBy control.
+        /// btnNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IssueRaisedBy;
+        protected global::System.Web.UI.WebControls.Button btnNo;
         
         /// <summary>
-        /// tbComments control.
+        /// btnNoCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbComments;
+        protected global::System.Web.UI.WebControls.Button btnNoCount;
         
         /// <summary>
-        /// btnComment control.
+        /// btnRandom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnComment;
+        protected global::System.Web.UI.WebControls.Button btnRandom;
         
         /// <summary>
-        /// Repeater1 control.
+        /// deleteSolutionBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater1;
-        
-        /// <summary>
-        /// btnAddSolution control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddSolution;
-        
-        /// <summary>
-        /// solutionView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView solutionView;
+        protected global::System.Web.UI.WebControls.Button deleteSolutionBtn;
         
         /// <summary>
         /// tTitleLbl control.
@@ -173,24 +155,6 @@ namespace ProjectFlow.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator tDescRequiredValidator;
-        
-        /// <summary>
-        /// cbPublic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbPublic;
-        
-        /// <summary>
-        /// checkBoxErrorLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label checkBoxErrorLbl;
         
         /// <summary>
         /// addTaskSummaryValidator control.

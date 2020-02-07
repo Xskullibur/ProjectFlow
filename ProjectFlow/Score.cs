@@ -25,13 +25,8 @@ namespace ProjectFlow
         public Nullable<double> participation { get; set; }
         public System.Guid UserId { get; set; }
         public string projectID { get; set; }
-        public Nullable<int> teamID { get; set; }
-        public Nullable<double> proposalG { get; set; }
-        public Nullable<double> reportG { get; set; }
-        public Nullable<double> presentationG { get; set; }
     
         public virtual Project Project { get; set; }
-        public virtual ProjectTeam ProjectTeam { get; set; }
         public virtual Student Student { get; set; }
     }
 }

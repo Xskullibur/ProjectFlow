@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ProjectFlow.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ProjectFlow.BLL;
 using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
@@ -16,18 +16,6 @@ namespace ProjectFlow.Issues
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (Master.GetCurrentProjectTeam() == null)
-            {
-                if (Master.GetCurrentIdentiy().IsTutor)
-                {
-                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
-                }
-                else if (Master.GetCurrentIdentiy().IsStudent)
-                {
-                    Response.Redirect("/StudentDashboard/studentProject.aspx");
-                }
-            }
-
             Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
 
@@ -38,7 +26,10 @@ namespace ProjectFlow.Issues
                 Master.changeSelectedView(IssueNested.IssueViews.iDetailedView);
                 refreshData(); 
             }
-
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                IssueView.Columns[IssueView.Columns.Count - 1].Visible = false;
+            }
             IssueView.Font.Size = 11;
         }
 
@@ -67,10 +58,9 @@ namespace ProjectFlow.Issues
         protected void IssueView_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = IssueView.SelectedRow;
-            Session["SSName"] = row.Cells[2].Text;
-            Session["SSDesc"] = row.Cells[3].Text;
+
             Session["SSIId"] = int.Parse(row.Cells[0].Text);
-            Session["SSIsPublic"] = row.Cells[7].Text;
+
             Response.Redirect("../Issues/IssueRes.aspx");
         }
 
@@ -80,18 +70,18 @@ namespace ProjectFlow.Issues
             // Get Current Project Team
             ProjectTeam currentTeam = Master.GetCurrentProjectTeam();
 
-            // Selected Task ID
+            // Selected Issue ID
             int id = Convert.ToInt32(IssueView.Rows[e.RowIndex].Cells[0].Text);
 
             // Delete Task
             IssueBLL issueBLL = new IssueBLL();
-            bool result = issueBLL.Drop(id, currentTeam.teamID);
+            bool result = issueBLL.Drop(id);
 
             refreshData();
 
             if (result)
             {
-                NotificationHelper.Task_Drop_Setup(id);
+                //NotificationHelper.Task_Drop_Setup(id);
                 this.Master.Master.ShowAlertWithTiming("Task Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
             }
             else
@@ -100,13 +90,13 @@ namespace ProjectFlow.Issues
             }
         }
 
-        protected void taskGrid_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void IssueView_RowEditing(object sender, GridViewEditEventArgs e)
         {
             IssueView.EditIndex = e.NewEditIndex;
             refreshData();
         }
 
-        protected void taskGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -147,14 +137,14 @@ namespace ProjectFlow.Issues
 
         }
 
-        protected void taskGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void IssueView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             IssueView.EditIndex = -1;
             refreshData();
         }
 
         // Updating
-        protected void taskGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void IssueView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             // Get Values
             GridViewRow row = IssueView.Rows[e.RowIndex];
@@ -162,7 +152,6 @@ namespace ProjectFlow.Issues
             // Verify Task ID
             IssueBLL issueBLL = new IssueBLL();
 
-            TaskBLL taskBLL = new TaskBLL();
             //int id = Convert.ToInt32(row.Cells[0].Text);
             int id = int.Parse(row.Cells[0].Text);
 

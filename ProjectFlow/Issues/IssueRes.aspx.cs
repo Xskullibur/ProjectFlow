@@ -15,14 +15,15 @@ namespace ProjectFlow.Issues
     public partial class IssueRes : System.Web.UI.Page
     {
         
-        int idIssue;
         string ispublic;
         protected void Page_Load(object sender, EventArgs e)
         {
-            idIssue = (int)Session["SSIId"];
+            ScriptManager scriptMan = ScriptManager.GetCurrent(this);
+            int idIssue = (int)Session["SSIId"];
+            //ScriptManager1.RegisterAsyncPostBackControl(tSaveBtn);
             if (!IsPostBack)
             {
-                
+                //Databinding non responsive elements
                 IssueBLL issueBLL = new IssueBLL();
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
 
@@ -31,56 +32,43 @@ namespace ProjectFlow.Issues
 
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;
-                IssueActive.Text = "";
-                IssuePublic.Text = updated_issue.votePublic.ToString();
-                IssueRaisedBy.Text = updated_issue.createdBy.ToString();
-                IssueStatus.Text = "";
+                IssueActive.Text = updated_issue.active.ToString();
+                TeamMemberBLL teammember = new TeamMemberBLL();
+                IssueRaisedBy.Text = teammember.GetUsernamebyMID(updated_issue.createdBy);
+                StatusBLL status = new StatusBLL();
+                Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
+                IssueStatus.Text = currentstat.status1;
+
                 
 
-                ispublic = (string)Session["SSIsPublic"];
-                check(idIssue);
+                ispublic = updated_issue.votePublic.ToString();
+
                 refreshCommentData(idIssue);
-                //Label1.ToolTip = getUserbySelection(idIssue, false); // this works but needs to be removed
-                isPublic(ispublic);
+                isActive(updated_issue.active);
+ 
+                refreshData();
             }
+            solutionView.Font.Size = 11;
         }
 
-        protected void btnYes_Click(object sender, EventArgs e)
+        // Get Current User
+        public ProjectFlowIdentity GetCurrentIdentiy()
         {
-            idIssue = (int)Session["SSIId"];
+            var projectFlowIdentity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
 
-            vote(true);
-            check(idIssue);
-            isPublic(ispublic);
+            return projectFlowIdentity;
         }
 
-        protected void btnNo_Click(object sender, EventArgs e)
+        // Get Current Project
+        public ProjectTeam GetCurrentProjectTeam()
         {
-            idIssue = (int)Session["SSIId"];
-            vote(false);
-            check(idIssue);
-            isPublic(ispublic);
+            ServicesWithContent servicesWithContent = Master as ServicesWithContent;
+
+            return servicesWithContent.CurrentProjectTeam;
         }
 
-        protected void btnRandom_Click(object sender, EventArgs e)
-        {
-            Random rnd = new Random();
-            int decision = rnd.Next(10);
-            if (decision > 5) {
-                vote(true);
-                check(idIssue);
-                isPublic(ispublic);
-            }
-            else
-            {
-
-                vote(false);
-                check(idIssue);
-                isPublic(ispublic);
-            }
-        }
-
-        protected void vote(bool choice)
+        
+        protected void update(bool choice)
         {
             if (Page.IsValid)
             {
@@ -90,42 +78,16 @@ namespace ProjectFlow.Issues
                 int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
                 // Create Task Object
-                Polling newPoll = new Polling();
-                newPoll.issueID = idIssue;    
-                newPoll.voterID = voterId;    
-                newPoll.vote = choice;      
+                /*Polling newPoll = new Polling();
+                newPoll.issueID = (int)Session["SSIId"];
+                newPoll.voterID = voterId;
+                newPoll.vote = choice;*/
 
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
-                bool result = pollingBLL.Add(newPoll);
-            }
-        }
-
-        protected void check(int iID)
-        {
-            PollingBLL pollingBLL = new PollingBLL();
-            var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
-            TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-            Guid Uid = identity.Student.aspnet_Users.UserId;
-            int voterId = teammemberBLL.GetMemIdbyUID(Uid);
-
-            bool checking = pollingBLL.Check(iID, voterId);
-
-            List<int> result = pollingBLL.GetResult(iID);
-            
-            btnYesCount.Text = result[0].ToString();
-            btnNoCount.Text = result[1].ToString();
-
-            if (checking == true)
-            {
-                btnYes.Enabled = false;
-                btnNo.Enabled = false;
-                btnRandom.Enabled = false;
-                this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
-            }
-            else
-            {
-
+                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], voterId);
+                newPoll.vote = choice;
+                bool result = pollingBLL.Update(newPoll);
             }
         }
 
@@ -140,7 +102,7 @@ namespace ProjectFlow.Issues
 
         protected void addComment()
         {
-
+            int idIssue = (int)Session["SSIId"];
             if (Page.IsValid)
             {
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
@@ -193,18 +155,187 @@ namespace ProjectFlow.Issues
             return combindString;
         }
 
-        protected void isPublic(string choice)
-        {
-            //IssueBLL issueBLL = new IssueBLL();
-            //bool isPub = issueBLL.isPublic(iID);
-            if (choice == "True")
-            {
-                btnNo.ToolTip = getUserbySelection(idIssue, false);
-                btnYes.ToolTip = getUserbySelection(idIssue, true);
-            } else
-            {
 
+        protected void isActive(bool active)
+        {
+            if (active == true)
+            {
+                //todo
+            }
+            else
+            {
+                disablecomments();
+
+                this.Master.ShowAlert("Issue has been dropped", BootstrapAlertTypes.DANGER);
             }
         }
+
+        protected void disablecomments()
+        {
+            tbComments.Visible = false;
+            tbComments.Enabled = false;
+            btnComment.Visible = false;
+            btnComment.Enabled = false;
+            btnAddSolution.Visible = false;
+            btnAddSolution.Enabled = false;
+        }
+
+        // Add Task OnClick Event
+        protected void showTaskModal_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal1", "$('#taskModal1').modal('show')", true);
+        }
+
+        private void hideModal()
+        {
+            // Clear Fields
+            tNameTxt.Text = string.Empty;
+            tDescTxt.Text = string.Empty;
+
+            // Hide Modal
+            //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "taskModal1", "$('#taskModal1').modal('hide')", true);
+        }
+
+        protected bool checkCB()
+        {
+            if (cbPublic.Checked == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected void addTask_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                // calling various stuff
+                var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+                SolutionBLL solutionBLL = new SolutionBLL();
+
+                // getting data
+                string title = tNameTxt.Text;
+                string description = tDescTxt.Text;
+                int id = (int)Session["SSIId"];
+                DateTime currentTime = DateTime.Now;
+                Guid Uid = identity.Student.aspnet_Users.UserId;
+
+                // bind date to new solution
+                Solution new_solution = new Solution();
+                new_solution.title = title;
+                new_solution.description = description;
+                new_solution.issueId = id;
+                new_solution.startdate = currentTime;
+                new_solution.createdBy = Uid;
+                new_solution.votePublic = checkCB();
+
+                // clear error messages
+                // TODO
+
+                // submit solution
+                bool submission = solutionBLL.Add(new_solution);
+
+                // alert
+                if (submission)
+                {
+                    //NotificationHelper.Default_TaskUpdate_Setup(id);
+                    this.Master.ShowAlertWithTiming("Solution Successfully Added!", BootstrapAlertTypes.SUCCESS, 2000);
+                }
+                else
+                {
+                    this.Master.ShowAlert("Failed to add Solution!", BootstrapAlertTypes.DANGER);
+                }
+
+                // hide modal;
+                hideModal();
+                refreshData();
+            }
+        }
+
+        private void refreshData()
+        {
+            // calling various stuff
+            int issueId = (int)Session["SSIId"];
+            SolutionBLL solutionBLL = new SolutionBLL();
+
+            // binding data to table
+            solutionView.DataSource = solutionBLL.GetSolutionByIssueId(issueId);
+            solutionView.DataBind();
+        }
+
+        protected void showSolution_click(object sender, EventArgs e)
+        {
+            GridViewRow row = solutionView.SelectedRow;
+            Session["SSSId"] = int.Parse(row.Cells[0].Text);
+            Response.Redirect("../Issues/IssueSolutions.aspx");
+        }
+
+        protected void IssueDelete(object sender, EventArgs e)
+        {
+
+            // Get Current Project Team
+            ProjectTeam currentTeam = GetCurrentProjectTeam();
+
+            // Selected Issue ID
+            int id = (int)Session["SSIId"];
+
+            // Delete Task
+            IssueBLL issueBLL = new IssueBLL();
+            bool result = issueBLL.Drop(id);
+
+            if (result)
+            {
+                Response.Redirect("../Issues/iAllView.aspx");
+                //this.Master.Master.ShowAlertWithTiming("Issue Successfully Dropped!", BootstrapAlertTypes.SUCCESS, 2000);
+            }
+            else
+            {
+                this.Master.ShowAlert("Failed to Drop Task", BootstrapAlertTypes.DANGER);
+            }
+        }
+
+        protected void Repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            //Repeater rptDemo = sender as Repeater; // Get the Repeater control object.
+
+            // If the Repeater contains no data.
+            if (Repeater1 != null && Repeater1.Items.Count < 1)
+            {
+                if (e.Item.ItemType == ListItemType.Footer)
+                {
+                    // Show the Error Label (if no data is present).
+                    Label lblErrorMsg = e.Item.FindControl("lblErrorMsg") as Label;
+                    if (lblErrorMsg != null)
+                    {
+                        lblErrorMsg.Visible = true;
+                    }
+                }
+            }
+        }
+
+        protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            //Make gridview row clickable
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(solutionView, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Go to this room";
+
+                TableCell PublicCell = e.Row.Cells[3];
+                if (PublicCell.Text == "True")
+                {
+                    PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
+                }
+
+                else
+                {
+                    PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
+                }
+            }
+        }
+
     }
 }

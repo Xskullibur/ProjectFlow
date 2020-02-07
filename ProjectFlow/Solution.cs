@@ -12,23 +12,26 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class Tutor
+    public partial class Solution
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tutor()
+        public Solution()
         {
-            this.Issues = new HashSet<Issue>();
-            this.Projects = new HashSet<Project>();
+            this.Pollings = new HashSet<Polling>();
         }
     
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public System.Guid UserId { get; set; }
+        public int solutionID { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public bool success { get; set; }
+        public int issueId { get; set; }
+        public Nullable<System.DateTime> startdate { get; set; }
+        public System.Guid createdBy { get; set; }
+        public bool votePublic { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
+        public virtual Issue Issue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Issue> Issues { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Polling> Pollings { get; set; }
     }
 }

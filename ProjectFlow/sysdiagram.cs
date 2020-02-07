@@ -12,13 +12,12 @@ namespace ProjectFlow
     using System;
     using System.Collections.Generic;
     
-    public partial class aspnet_PersonalizationAllUsers
+    public partial class sysdiagram
     {
-        public System.Guid PathId { get; set; }
-        public byte[] PageSettings { get; set; }
-        public System.DateTime LastUpdatedDate { get; set; }
-    
-        public virtual aspnet_Paths aspnet_Paths { get; set; }
-        public virtual aspnet_Paths aspnet_Paths1 { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

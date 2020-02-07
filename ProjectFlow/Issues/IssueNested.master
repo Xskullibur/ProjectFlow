@@ -75,30 +75,32 @@
 
         <%--Status--%>
         <div class="row justify-content-between">
-
-            <%--Error Summary--%>
-            <div class="col-xl-3 col-12 align-self-end">
-
-                <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged">
-                    <asp:ListItem Value="All Tasks">All Issues</asp:ListItem>
-                    <asp:ListItem Value="Ongoing Tasks">Ongoing Issues</asp:ListItem>
-                    <asp:ListItem Value="Dropped Tasks">Dropped Issues</asp:ListItem>
+            <div class="col">
+                <div class="row">
+                    <%--Change View DropDownList--%>
+                    <div class="col-3">
+                        
+                        <asp:DropDownList ID="taskViewDDL" CssClass="form-control border border-dark" runat="server" AutoPostBack="True" OnSelectedIndexChanged="taskViewDDL_SelectedIndexChanged">
+                            <asp:ListItem Value="All Tasks">All Issues</asp:ListItem>
+                            <asp:ListItem Value="Ongoing Tasks">Active Issues</asp:ListItem>
+                            <asp:ListItem Value="Dropped Tasks">Dropped Issues</asp:ListItem>
                     
-                </asp:DropDownList>
+                        </asp:DropDownList>
 
+                    </div>
+
+                    <%--Add Issue--%>
+                    <div class="col-1">
+
+                        <!-- Button trigger modal -->
+                        <asp:Button Text="Add Issue" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
+
+                    </div>
+                </div>
             </div>
-
-            <%--Footer--%>
-            <div class="col-xl-3 col-12 text-right">
-
-                <!-- Button trigger modal -->
-                <asp:Button Text="Add Issue" CssClass="btn btn-primary" runat="server" ID="addTaskBtn" OnClick="showTaskModal_Click" CausesValidation="False" />
-
-            </div>
-
         </div>
 
-        <!-- Add Task Modal -->
+        <!-- Add Modal -->
         <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
 
@@ -106,7 +108,7 @@
 
                     <%--Main Content--%>
                     <div class="modal-header">
-                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Task" runat="server" />
+                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Issue" runat="server" />
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -123,7 +125,7 @@
                                 <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
 
                                 <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 255 Characters!" ValidationExpression="^[\s\S]{1,255}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
-                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Task Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Issue Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
 
                             <%--Description--%>
@@ -137,7 +139,7 @@
 
                             <%--Task--%>
                             <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Task Id:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:Label CssClass="control-label" Text="Task Name:" AssociatedControlID="TaskIdDLL" runat="server" />
                                 <asp:DropDownList ID="TaskIdDLL" CssClass="form-control" runat="server"></asp:DropDownList>
 
                                 <asp:Label ID="taskIdErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>

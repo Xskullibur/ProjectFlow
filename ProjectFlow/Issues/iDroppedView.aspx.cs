@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ProjectFlow.BLL;
+using ProjectFlow.Utils;
+using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Bootstrap;
 
 namespace ProjectFlow.Issues
 {
@@ -12,19 +15,7 @@ namespace ProjectFlow.Issues
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (Master.GetCurrentProjectTeam() == null)
-            {
-                if (Master.GetCurrentIdentiy().IsTutor)
-                {
-                    Response.Redirect("/TutorDashboard/ProjectTeamMenu.aspx");
-                }
-                else if (Master.GetCurrentIdentiy().IsStudent)
-                {
-                    Response.Redirect("/StudentDashboard/studentProject.aspx");
-                }
-            }
-
-            //Master.refreshGrid += new EventHandler(refreshBtn_Click);
+            Master.refreshGrid += new EventHandler(refreshBtn_Click);
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,7 +25,10 @@ namespace ProjectFlow.Issues
                 Master.changeSelectedView(IssueNested.IssueViews.iDroppedView);
                 refreshData();
             }
-
+            if (Master.GetCurrentIdentiy().IsTutor)
+            {
+                IssueView.Columns[IssueView.Columns.Count - 1].Visible = false;
+            }
             IssueView.Font.Size = 11;
         }
 
@@ -52,6 +46,37 @@ namespace ProjectFlow.Issues
             {
                 IssueView.HeaderRow.TableSection = TableRowSection.TableHeader;
                 IssueView.UseAccessibleHeader = true;
+            }
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+            refreshData();
+        }
+
+        protected void IssueView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            
+        }
+
+        protected void IssueView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // Selected Task ID
+            int id = Convert.ToInt32(IssueView.Rows[e.RowIndex].Cells[0].Text);
+
+            // Delete Task
+            IssueBLL issueBLL = new IssueBLL();
+            bool result = issueBLL.Restore(issueBLL.GetIssueByID(id));
+            refreshData();
+            //bool result = true;
+            if (result)
+            {
+                //NotificationHelper.Task_Restore_Setup(id);
+                this.Master.Master.ShowAlertWithTiming("Task Successfully Restored !", BootstrapAlertTypes.SUCCESS, 2000);
+            }
+            else
+            {
+                this.Master.Master.ShowAlert("Failed to Restore Task!", BootstrapAlertTypes.DANGER);
             }
         }
 
