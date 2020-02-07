@@ -90,7 +90,8 @@ namespace ProjectFlow.BLL
                             Description = y.description,
                             startDate = y.startdate,
                             CreatedBy = y.aspnet_Users.UserName,
-                            privacy = y.votePublic
+                            privacy = y.votePublic,
+                            votePass = y.success
                         }).ToList();
 
                     return list;
@@ -132,6 +133,75 @@ namespace ProjectFlow.BLL
                 }
                 else
                 {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// see how many votes needed to pass based on team id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Boolean</returns>
+        public bool getPass(int TId, int SId)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    double list = dbContext.Solutions.Include("Issues.TeamMember")
+                        .Where(x => x.Issue.TeamMember.teamID == TId)
+                        .Select(y => y
+                        ).Count();
+
+                    int passnum = (int)Math.Round(list/2);
+
+                    int upvote = dbContext.Pollings
+                        .Where(x => x.solutionID == SId)
+                        .Where(x => x.vote == true)
+                        .Select(y => y
+                        ).Count();
+
+                    if (upvote >= passnum)
+                    {
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"Error While Retrieving Task: {e.Message}");
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// updates solution
+        /// </summary>
+        /// <param name="issue"></param>
+        /// <returns>Boolean</returns>
+        public bool Update(Solution solution)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                try
+                {
+                    // Update 
+                    dbContext.Entry(solution).State = System.Data.Entity.EntityState.Modified;
+
+                    // Save Changes
+                    dbContext.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error While Updating solutions: {e.Message}");
                     return false;
                 }
             }

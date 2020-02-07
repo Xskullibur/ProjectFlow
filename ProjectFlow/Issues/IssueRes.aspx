@@ -94,6 +94,7 @@
                                     <asp:BoundField DataField="Title" HeaderText="Solution Name" />
                                     <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
                                     <asp:BoundField DataField="privacy" HeaderText="Privacy" />
+                                    <asp:BoundField DataField="votePass" HeaderText="Passed" />
                                     <asp:CommandField ShowSelectButton="True" ButtonType="Button">
                                         <ControlStyle CssClass="btn btn-success mb-2" />
                                     </asp:CommandField>
@@ -127,7 +128,7 @@
 
                     <%--Main Content--%>
                     <div class="modal-header">
-                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Issue" runat="server" />
+                        <asp:Label ID="tTitleLbl" CssClass="modal-title" Text="Add Solution" runat="server" />
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -140,11 +141,11 @@
 
                             <%--Name--%>
                             <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Issue Name:" AssociatedControlID="tNameTxt" runat="server" />
+                                <asp:Label CssClass="control-label" Text="Solution Title:" AssociatedControlID="tNameTxt" runat="server" />
                                 <asp:TextBox runat="server" CssClass="form-control" ID="tNameTxt" TextMode="SingleLine" ValidationGroup="AddTask" />
 
                                 <asp:RegularExpressionValidator ID="tNameRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 50 Characters!" ValidationExpression="^[\s\S]{1,50}$" Display="Dynamic" ControlToValidate="tNameTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
-                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Issue Name Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="tNameRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Solution title Field is Required!" ControlToValidate="tNameTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
 
                             <%--Description--%>
