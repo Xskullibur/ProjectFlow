@@ -22,7 +22,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
             {
                 if (!IsPostBack)
                 {
-                    Session["TutorID"] = identity.Tutor.UserId.ToString();
+                    //Session["TutorID"] = identity.Tutor.UserId.ToString();
                     DisplayProject();
                     this.SetHeader("Module that I can Restore");
                 }
