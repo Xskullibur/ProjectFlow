@@ -150,7 +150,7 @@ namespace ProjectFlow.Utils
 
                 NetworkCredential _network = new NetworkCredential(sender, senderPW);
                 _smtp.Credentials = _network;
-
+                _smtp.UseDefaultCredentials = true;
                 _smtp.Send(_mailMessage);
 
                 return true;
