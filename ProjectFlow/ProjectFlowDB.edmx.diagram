@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a7c31e5847884f7ca244302f14640f12" Name="Diagram1">
+      <Diagram DiagramId="a7c31e5847884f7ca244302f14640f12" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Applications" Width="1.5" PointX="0.75" PointY="28.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Membership" Width="1.5" PointX="6" PointY="30.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectFlowModel.aspnet_Paths" Width="1.5" PointX="3" PointY="27.375" IsExpanded="true" />
@@ -48,7 +48,6 @@
         <EntityTypeShape EntityType="ProjectFlowModel.Transcript" Width="1.5" PointX="25.5" PointY="37.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectFlowModel.Tutor" Width="1.5" PointX="10.5" PointY="42.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectFlowModel.VoiceRecording" Width="1.5" PointX="12.75" PointY="52.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectFlowModel.WhiteboardSession" Width="1.5" PointX="17.25" PointY="46.5" IsExpanded="true" />
         <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Me__Appli__1CBC4616" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Pa__Appli__1EA48E88" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK__aspnet_Ro__Appli__236943A5" ManuallyRouted="false" />
@@ -82,7 +81,6 @@
         <AssociationConnector Association="ProjectFlowModel.FK_Room_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_Task_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TeamMember_ProjectTeam" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.Score_FK_team" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS" ManuallyRouted="false" />
@@ -99,6 +97,8 @@
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_Task" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.FK_TaskAllocation_TeamMember" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectFlowModel.aspnet_UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectFlowModel.WhiteboardSession" Width="1.5" PointX="17.25" PointY="46.625" />
+        <AssociationConnector Association="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
