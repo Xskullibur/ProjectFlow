@@ -18,6 +18,7 @@ namespace ProjectFlow
         public string groupName { get; set; }
         public int teamID { get; set; }
         public System.DateTime creationDateTime { get; set; }
+        public string strokesJsonPath { get; set; }
     
         public virtual ProjectTeam ProjectTeam { get; set; }
     }

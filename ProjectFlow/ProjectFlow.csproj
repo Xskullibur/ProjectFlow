@@ -359,6 +359,7 @@
     <Content Include="Services\Christina\CreateRoom.aspx" />
     <Content Include="Services\Whiteboard\Whiteboard.aspx" />
     <Content Include="Services\Whiteboard\WhiteboardList.aspx" />
+    <Content Include="StudentDashboard\ManageMembers.aspx" />
     <Content Include="Tasks\JsonResponse.ashx" />
     <Content Include="ProjectDashboard\Web.config" />
     <EntityDeploy Include="ProjectFlowDB.edmx">
@@ -400,6 +401,7 @@
     <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="TutorDashboard\AddMilestone.aspx" />
     <Content Include="StudentDashboard\FileUpload.aspx" />
+    <Content Include="TutorDashboard\Grading.aspx" />
     <Content Include="TutorDashboard\ProjectMainPage.aspx" />
     <Content Include="TutorDashboard\ProjectMenu.aspx" />
     <Content Include="TutorDashboard\ProjectTeamMenu.aspx" />
@@ -561,6 +563,13 @@
     <Compile Include="Student.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="StudentDashboard\ManageMembers.aspx.cs">
+      <DependentUpon>ManageMembers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentDashboard\ManageMembers.aspx.designer.cs">
+      <DependentUpon>ManageMembers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Task.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -575,6 +584,13 @@
     </Compile>
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\Grading.aspx.cs">
+      <DependentUpon>Grading.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\Grading.aspx.designer.cs">
+      <DependentUpon>Grading.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
