@@ -15,10 +15,12 @@ var connected_users = [];
 //Get Hub Instance
 var hub = $.connection.Whiteboard
 
+var canvas;
+
 $(document).ready(function () {
 
     // Setup Pen
-    var canvas = document.getElementById('board')
+    canvas = document.getElementById('board')
     var ctx = canvas.getContext("2d");
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -47,8 +49,11 @@ $(document).ready(function () {
             function touchStart(e) {
                 var touchEvent = e.originalEvent.changedTouches[0];
                 e.preventDefault();
-                oldX = touchEvent.clientX - touchEvent.target.offsetLeft;
-                oldY = touchEvent.clientY - touchEvent.target.offsetTop;
+                var pos = getMousePos(canvas, touchEvent);
+                oldX = pos.x;
+                oldY = pos.y;
+                //oldX = touchEvent.clientX - touchEvent.target.offsetLeft;
+                //oldY = touchEvent.clientY - touchEvent.target.offsetTop;
                 DrawMove([oldX, oldY, oldX - 1, oldY - 1, penWidth], penColor);
                 hub.server.drawMove(sessionId, penColor, [oldX, oldY, oldX - 1, oldY - 1, penWidth]);
             };
@@ -68,8 +73,11 @@ $(document).ready(function () {
             function touchMove(e) {
                 var touchEvent = e.originalEvent.changedTouches[0];
                 e.preventDefault();
-                x = touchEvent.clientX - touchEvent.target.offsetLeft;
-                y = touchEvent.clientY - touchEvent.target.offsetTop;
+                var pos = getMousePos(canvas, touchEvent);
+                x = pos.x;
+                y = pos.y;
+                //x = touchEvent.clientX - touchEvent.target.offsetLeft;
+                //y = touchEvent.clientY - touchEvent.target.offsetTop;
                 DrawMove([oldX, oldY, x, y, penWidth], penColor);
                 hub.server.drawMove(sessionId, penColor, [oldX, oldY, x, y, penWidth]);
                 oldX = x;
@@ -172,6 +180,7 @@ $(document).ready(function () {
 
     hub.client.clear = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        initDrawboard();
     }
 
     $.connection.hub.start().done(function () {
@@ -259,6 +268,14 @@ function clearCanvas() {
 
 function saveCanvas() {
     hub.server.save(sessionId);
+}
+
+function downloadImage() {
+    var link = document.getElementById('download-link');
+    link.setAttribute('download', 'donwload.png');
+    var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    link.setAttribute('href', image);
+    link.click();
 }
 
 function requestFullScreen() {
