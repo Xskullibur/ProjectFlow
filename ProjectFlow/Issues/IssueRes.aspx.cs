@@ -29,7 +29,7 @@ namespace ProjectFlow.Issues
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
 
                 //Set header
-                this.SetHeader("Issue: " + updated_issue.issueID);
+                this.SetHeader("Issue: " + updated_issue.issueID + " overview");
 
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;

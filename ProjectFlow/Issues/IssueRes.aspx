@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="IssueRes.aspx.cs" Inherits="ProjectFlow.Issues.IssueRes" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="IssueRes.aspx.cs" Inherits="ProjectFlow.Issues.IssueRes" EnableEventValidation="false"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -94,10 +94,8 @@
                                     <asp:BoundField DataField="Title" HeaderText="Solution Name" />
                                     <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
                                     <asp:BoundField DataField="privacy" HeaderText="Privacy" />
-                                    <asp:BoundField DataField="votePass" HeaderText="Passed" />
-                                    <asp:CommandField ShowSelectButton="True" ButtonType="Button">
-                                        <ControlStyle CssClass="btn btn-success mb-2" />
-                                    </asp:CommandField>
+                                    <asp:BoundField DataField="votePass" HeaderText="Recommended" />
+
                                 </Columns>
                                 <EmptyDataTemplate>
                                     <div class="jumbotron jumbotron-fluid">

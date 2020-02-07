@@ -101,6 +101,11 @@ namespace ProjectFlow.Issues
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+
+                // making gridview clickable
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink((GridView)sender, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Go to this";
+
                 if ((e.Row.RowState & DataControlRowState.Edit) > 0)
                 {
                     object rowItems = e.Row.DataItem;
