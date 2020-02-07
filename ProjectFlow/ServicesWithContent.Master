@@ -5,6 +5,11 @@
 <html>
 <head runat="server">
     <title>ProjectFlow</title>
+
+    <link rel="icon" 
+      type="image/png" 
+      href="/Content/ProjectFlow/Images/favicon.png">
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <asp:PlaceHolder runat="server">

@@ -174,6 +174,7 @@
     <Content Include="Content\ProjectFlow\CSS\main.css" />
     <Content Include="Content\ProjectFlow\CSS\pagination.css" />
     <Content Include="Content\ProjectFlow\CSS\progressBar.css" />
+    <Content Include="Content\ProjectFlow\Images\favicon.png" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.png" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
