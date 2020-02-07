@@ -327,12 +327,23 @@ namespace ProjectFlow.Issues
                 TableCell PublicCell = e.Row.Cells[3];
                 if (PublicCell.Text == "True")
                 {
-                    PublicCell.Text = "<i class='fa fa-eye fa-lg text-success'></i>";
+                    PublicCell.Text = "<i class='fa fa-eye fa-lg'></i>";
                 }
 
                 else
                 {
-                    PublicCell.Text = "<i class='fa fa-eye-slash fa-lg text-danger'></i>";
+                    PublicCell.Text = "<i class='fa fa-eye-slash fa-lg'></i>";
+                }
+
+                TableCell SucessCell = e.Row.Cells[4];
+                if (SucessCell.Text == "True")
+                {
+                    SucessCell.Text = " <i class='fa fa-star fa-lg text-warning'></i>";
+                }
+
+                else
+                {
+                    SucessCell.Text = "<i class='fa fa-question fa-lg text-info'></i>";
                 }
             }
         }
