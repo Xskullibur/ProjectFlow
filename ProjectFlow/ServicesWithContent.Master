@@ -87,8 +87,7 @@
         <div class="sticky-top">
             <nav class="navbar content-nav navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="30" height="30" alt="">
-                    ProjectFlow
+                    <img class="pb-2" src="/Content/ProjectFlow/Images/ProjectFlow.png" width="125" height="125" alt="">
                   </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">                        
@@ -160,7 +159,7 @@
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Whiteboard">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" FASLogo="history">
+                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" FASLogo="chalkboard-teacher">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
