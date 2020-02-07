@@ -161,7 +161,7 @@
                                     </mio:SidebarGroup>
                                     <mio:SidebarGroup SubHeaderText="Whiteboard">
                                         <SidebarItems>
-                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" FASLogo="chalkboard-teacher">
+                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" AlsoSelectedForPages="/Services/Whiteboard/Whiteboard.aspx/" FASLogo="chalkboard-teacher">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
