@@ -21,6 +21,5 @@ namespace ProjectFlow
         public System.DateTime LastUpdatedDate { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
-        public virtual aspnet_Users aspnet_Users1 { get; set; }
     }
 }

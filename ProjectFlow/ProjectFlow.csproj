@@ -446,6 +446,7 @@
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\AttendeeBLL.cs" />
+    <Compile Include="BLL\SolutionBLL.cs" />
     <Compile Include="BLL\WhiteboardSessionBLL.cs" />
     <Compile Include="CommentForIssue.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -557,6 +558,9 @@
     <Compile Include="Services\Whiteboard\WhiteboardList.aspx.designer.cs">
       <DependentUpon>WhiteboardList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Solution.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Status.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
@@ -569,6 +573,9 @@
     </Compile>
     <Compile Include="StudentDashboard\ManageMembers.aspx.designer.cs">
       <DependentUpon>ManageMembers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Task.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>

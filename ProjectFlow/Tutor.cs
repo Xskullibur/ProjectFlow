@@ -17,7 +17,6 @@ namespace ProjectFlow
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tutor()
         {
-            this.Issues = new HashSet<Issue>();
             this.Projects = new HashSet<Project>();
         }
     
@@ -26,8 +25,6 @@ namespace ProjectFlow
         public System.Guid UserId { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Issue> Issues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }
     }
