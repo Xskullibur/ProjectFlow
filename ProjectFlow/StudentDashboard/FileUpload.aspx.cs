@@ -291,7 +291,7 @@ namespace ProjectFlow.DashBoard
         {
             GridViewRow row = (GridViewRow)FileGV.Rows[e.RowIndex];
             string fileName = row.Cells[0].Text;
-            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + Session["StudentTeamID"].ToString() + "\\";
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
 
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
             {
