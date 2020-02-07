@@ -59,7 +59,7 @@ namespace ProjectFlow.Services.Whiteboard
                     if(listOfPoints.Length == 0)
                     {
                         //If there is no any value take from file instead
-                        string path = HostingEnvironment.MapPath("~/Services/Whiteboard/StrokesPath/" + sessionIdAsString + ".json");
+                        string path = HostingEnvironment.MapPath("~/App_Data/Services/Whiteboard/StrokesPath/" + sessionIdAsString + ".json");
 
                         if (File.Exists(path))
                         {
@@ -186,7 +186,7 @@ namespace ProjectFlow.Services.Whiteboard
                     WhiteboardSessionBLL whiteboardSessionBLL = new WhiteboardSessionBLL();
                     WhiteboardSession whiteboardSession = whiteboardSessionBLL.GetWhiteboardSessionFromSessonId(sessionId);
 
-                    string path = HostingEnvironment.MapPath("~/Services/Whiteboard/StrokesPath/" + sessionIdAsString + ".json");
+                    string path = HostingEnvironment.MapPath("~/App_Data/Services/Whiteboard/StrokesPath/" + sessionIdAsString + ".json");
 
                     File.WriteAllText(path, points);
 
