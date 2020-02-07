@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-    <title></title>
+    <title>ProjectFlow</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <asp:PlaceHolder runat="server">
@@ -141,9 +141,9 @@
                                         <SidebarItems>
                                             <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                             </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                            <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
                                             </mio:SidebarItem>
-                                             <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
+                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                             </mio:SidebarItem>
                                         </SidebarItems>
                                     </mio:SidebarGroup>
@@ -184,9 +184,9 @@
                                             <SidebarItems>
                                                 <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                                 </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
-                                                </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Members" RedirectionPage="/TutorDashBoard/ProjectMainPage.aspx" FASLogo="address-book">
+                                                </mio:SidebarItem>
+                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -525,7 +525,6 @@
           <Property Name="groupName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="creationDateTime" Type="datetime" Nullable="false" />
-          <Property Name="strokesJsonPath" Type="varchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK__aspnet_Me__Appli__1CBC4616">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
@@ -1412,8 +1411,7 @@
             <End Role="Score" EntitySet="Score" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1671,8 +1669,8 @@
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ProjectTeam" FromRole="ProjectTeam" ToRole="Room" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_ProjectTeam" FromRole="ProjectTeam" ToRole="Task" />
           <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMember_ProjectTeam" FromRole="ProjectTeam" ToRole="TeamMember" />
-          <NavigationProperty Name="WhiteboardSessions" Relationship="Self.FK_WhiteboardSession_ProjectTeam" FromRole="ProjectTeam" ToRole="WhiteboardSession" />
           <NavigationProperty Name="Scores" Relationship="Self.Score_FK_team" FromRole="ProjectTeam" ToRole="Score" />
+          <NavigationProperty Name="WhiteboardSessions" Relationship="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" FromRole="ProjectTeam" ToRole="WhiteboardSession" />
         </EntityType>
         <EntityType Name="QRTZ_BLOB_TRIGGERS">
           <Key>
@@ -2019,17 +2017,6 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="recordingName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_VoiceRecording_Student" FromRole="VoiceRecording" ToRole="Student" />
-        </EntityType>
-        <EntityType Name="WhiteboardSession">
-          <Key>
-            <PropertyRef Name="sessionID" />
-          </Key>
-          <Property Name="sessionID" Type="Guid" Nullable="false" />
-          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="teamID" Type="Int32" Nullable="false" />
-          <Property Name="creationDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="strokesJsonPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ProjectTeam" Relationship="Self.FK_WhiteboardSession_ProjectTeam" FromRole="WhiteboardSession" ToRole="ProjectTeam" />
         </EntityType>
         <Association Name="FK__aspnet_Me__Appli__1CBC4616">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
@@ -2427,18 +2414,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WhiteboardSession_ProjectTeam">
-          <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="1" />
-          <End Role="WhiteboardSession" Type="Self.WhiteboardSession" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectTeam">
-              <PropertyRef Name="teamID" />
-            </Principal>
-            <Dependent Role="WhiteboardSession">
-              <PropertyRef Name="teamID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Score_FK_team">
           <End Role="ProjectTeam" Type="Self.ProjectTeam" Multiplicity="0..1" />
           <End Role="Score" Type="Self.Score" Multiplicity="*" />
@@ -2689,7 +2664,6 @@
           <EntitySet Name="Transcripts" EntityType="Self.Transcript" />
           <EntitySet Name="Tutors" EntityType="Self.Tutor" />
           <EntitySet Name="VoiceRecordings" EntityType="Self.VoiceRecording" />
-          <EntitySet Name="WhiteboardSessions" EntityType="Self.WhiteboardSession" />
           <AssociationSet Name="FK__aspnet_Me__Appli__1CBC4616" Association="Self.FK__aspnet_Me__Appli__1CBC4616">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
@@ -2822,10 +2796,6 @@
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="TeamMember" EntitySet="TeamMembers" />
           </AssociationSet>
-          <AssociationSet Name="FK_WhiteboardSession_ProjectTeam" Association="Self.FK_WhiteboardSession_ProjectTeam">
-            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
-            <End Role="WhiteboardSession" EntitySet="WhiteboardSessions" />
-          </AssociationSet>
           <AssociationSet Name="Score_FK_team" Association="Self.Score_FK_team">
             <End Role="ProjectTeam" EntitySet="ProjectTeams" />
             <End Role="Score" EntitySet="Scores" />
@@ -2890,7 +2860,34 @@
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
           </AssociationSet>
+          <EntitySet Name="WhiteboardSessions" EntityType="ProjectFlowModel.WhiteboardSession" />
+          <AssociationSet Name="FK_WhiteboardSession_ProjectTeam" Association="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam">
+            <End Role="ProjectTeam" EntitySet="ProjectTeams" />
+            <End Role="WhiteboardSession" EntitySet="WhiteboardSessions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="WhiteboardSession">
+          <Key>
+            <PropertyRef Name="sessionID" />
+          </Key>
+          <Property Name="sessionID" Type="Guid" Nullable="false" />
+          <Property Name="groupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="creationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProjectTeam" Relationship="ProjectFlowModel.FK_WhiteboardSession_ProjectTeam" FromRole="WhiteboardSession" ToRole="ProjectTeam" />
+        </EntityType>
+        <Association Name="FK_WhiteboardSession_ProjectTeam">
+          <End Type="ProjectFlowModel.ProjectTeam" Role="ProjectTeam" Multiplicity="1" />
+          <End Type="ProjectFlowModel.WhiteboardSession" Role="WhiteboardSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTeam">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="WhiteboardSession">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3426,17 +3423,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WhiteboardSessions">
-            <EntityTypeMapping TypeName="ProjectFlowModel.WhiteboardSession">
-              <MappingFragment StoreEntitySet="WhiteboardSession">
-                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
-                <ScalarProperty Name="groupName" ColumnName="groupName" />
-                <ScalarProperty Name="teamID" ColumnName="teamID" />
-                <ScalarProperty Name="creationDateTime" ColumnName="creationDateTime" />
-                <ScalarProperty Name="strokesJsonPath" ColumnName="strokesJsonPath" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="ProjectFlowModel.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
             <EndProperty Name="aspnet_Roles">
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -3445,6 +3431,16 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="WhiteboardSessions">
+            <EntityTypeMapping TypeName="ProjectFlowModel.WhiteboardSession">
+              <MappingFragment StoreEntitySet="WhiteboardSession">
+                <ScalarProperty Name="creationDateTime" ColumnName="creationDateTime" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
