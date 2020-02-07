@@ -226,7 +226,8 @@ namespace ProjectFlow.Services.Christina
         {
             List<ActionItem> itemsToBeDeleted = new List<ActionItem>();
             bool[] selectedValues = materialTable.SelectedValues;
-            for (int i = 0; i < selectedValues.Length; i++)
+
+            for (int i = selectedValues.Length - 1; i >= 0; i--)
             {
                 bool value = selectedValues[i];
 
