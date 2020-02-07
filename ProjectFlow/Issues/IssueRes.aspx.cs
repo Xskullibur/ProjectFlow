@@ -78,7 +78,23 @@ namespace ProjectFlow.Issues
             return servicesWithContent.CurrentProjectTeam;
         }
 
-        
+        //get current uder UID
+        protected Guid get_GUID()
+        {
+            Guid Uid;
+            var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+            if (GetCurrentIdentiy().IsStudent)
+            {
+                Uid = identity.Student.aspnet_Users.UserId;
+            }
+            else
+            {
+                Uid = identity.Tutor.aspnet_Users.UserId;
+            }
+            return Uid;
+        }
+
+
         protected void update(bool choice)
         {
             if (Page.IsValid)
@@ -232,7 +248,7 @@ namespace ProjectFlow.Issues
                 string description = tDescTxt.Text;
                 int id = (int)Session["SSIId"];
                 DateTime currentTime = DateTime.Now;
-                Guid Uid = identity.Student.aspnet_Users.UserId;
+                Guid Uid = get_GUID();
 
                 // bind date to new solution
                 Solution new_solution = new Solution();
