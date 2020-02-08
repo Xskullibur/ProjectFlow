@@ -161,6 +161,22 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public bool CheckMilestoneTableIsNotEmpty(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Milestones.Any(x => x.teamID == TeamID && x.dropped == false);
+            }
+        }
+
+        public void CreateTemplateMilestone(string ProjectID, int TeamID)
+        {
+            CreateMilestone("Proposal Presentation & Report", ProjectID, TeamID, DateTime.Now.Date, DateTime.Now.Date.AddDays(14));
+            CreateMilestone("Technical Review 1", ProjectID, TeamID, DateTime.Now.Date.AddDays(14), DateTime.Now.Date.AddDays(6*7));
+            CreateMilestone("Technical Review 2", ProjectID, TeamID, DateTime.Now.Date.AddDays(6*7), DateTime.Now.Date.AddDays(8*7));
+            CreateMilestone("Project Completion", ProjectID, TeamID, DateTime.Now.Date.AddDays(8*7), DateTime.Now.Date.AddDays(70));
+        }
+
         public void UpdateMilestone(int MilestoneID, string Name, DateTime StartDate, DateTime EndDate)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())

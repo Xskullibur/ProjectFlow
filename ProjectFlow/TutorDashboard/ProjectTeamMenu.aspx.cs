@@ -14,6 +14,7 @@ namespace ProjectFlow.DashBoard
     public partial class ProjectTeamMenu : System.Web.UI.Page
     {
         ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
+        MilestoneBLL milestoneBLL = new MilestoneBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -46,7 +47,7 @@ namespace ProjectFlow.DashBoard
             List<string> errorList = new List<string> { };
 
 
-            errorList = bll.InsertProjectTeam(teamName, desc, group, Session["PassProjectID"].ToString());
+            errorList = bll.InsertProjectTeam(teamName, desc, group, GetProjectID());
             if (errorList.Count > 0)
             {
                 string total = "";
@@ -125,6 +126,10 @@ namespace ProjectFlow.DashBoard
             Session["CurrentProjectTeam"] = projectTeam;
             // Alson Edit Ends
 
+            if (milestoneBLL.CheckMilestoneTableIsNotEmpty(Convert.ToInt32(row.Cells[0].Text)))
+            {
+                milestoneBLL.CreateTemplateMilestone(GetProjectID(), Convert.ToInt32(row.Cells[0].Text));
+            }
 
             (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(Convert.ToInt32(row.Cells[0].Text)));
             Response.Redirect("../ProjectDashboard/ProjectTeamDashboard.aspx");
@@ -177,7 +182,7 @@ namespace ProjectFlow.DashBoard
             int group = int.Parse(GroupDP.SelectedValue);
             List<string> errorList = new List<string> { };
 
-            errorList = bll.InsertProjectTeam(teamName, desc, group, Session["PassProjectID"].ToString());
+            errorList = bll.InsertProjectTeam(teamName, desc, group, GetProjectID());
 
             if (errorList.Count > 0)
             {
@@ -234,7 +239,7 @@ namespace ProjectFlow.DashBoard
 
             for(int i = 1; i <= total; i++)
             {
-                List<string> errorList = bll.InsertProjectTeam("team" + i.ToString(), "", group, Session["PassProjectID"].ToString());
+                List<string> errorList = bll.InsertProjectTeam("team" + i.ToString(), "", group, GetProjectID());
             }
             ShowTeam();
             Master.ShowAlert(total + " team add for group "  + group, BootstrapAlertTypes.SUCCESS);
