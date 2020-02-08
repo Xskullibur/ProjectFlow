@@ -73,6 +73,10 @@ namespace ProjectFlow
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     FormsAuthentication.SignOut();
+
+                    //Remove all sessions
+                    Session.Contents.RemoveAll();
+
                     Response.Redirect("~/Login.aspx");
                 }
             }
