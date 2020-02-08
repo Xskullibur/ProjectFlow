@@ -106,7 +106,7 @@ namespace ProjectFlow.Issues
 
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
-                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], voterId);
+                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], Uid);
                 newPoll.vote = choice;
                 bool result = pollingBLL.Update(newPoll);
             }

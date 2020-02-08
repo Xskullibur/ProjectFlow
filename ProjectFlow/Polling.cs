@@ -16,10 +16,10 @@ namespace ProjectFlow
     {
         public int pollingID { get; set; }
         public int solutionID { get; set; }
-        public int voterID { get; set; }
         public Nullable<bool> vote { get; set; }
+        public System.Guid voterID { get; set; }
     
+        public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual Solution Solution { get; set; }
-        public virtual TeamMember TeamMember { get; set; }
     }
 }

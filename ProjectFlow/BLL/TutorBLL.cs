@@ -66,5 +66,20 @@ namespace ProjectFlow.BLL
                     .Any(_projectTeam => _projectTeam.teamID.Equals(projectTeam.teamID)));
             }
         }
+
+        /// <summary>
+        /// Find the Tutor using UID
+        /// </summary>
+        /// <param name="username">username of the Tutor</param>
+        /// <returns>Instance of the found Tutor object, null if username does not exist in the database</returns>
+        public bool CheckTutorByUID(Guid Uid)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var list = dbContext.Tutors.Select(y => y.UserId).ToList();
+                var exist = list.Contains(Uid);
+                return exist;
+            }
+        }
     }
 }

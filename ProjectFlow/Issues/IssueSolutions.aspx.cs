@@ -51,6 +51,9 @@ namespace ProjectFlow.Issues
             int idSolution = (int)Session["SSSId"];
             if (!IsPostBack)
             {
+                // calling tutorbll
+                TutorBLL tutorBLL = new TutorBLL();
+
                 // getting identity
                 Guid Uid = get_GUID();
 
@@ -80,6 +83,12 @@ namespace ProjectFlow.Issues
                     {
                         deleteSolutionBtn.Visible = true;
                         deleteSolutionBtn.Enabled = true;
+                    }
+
+                    if (tutorBLL.CheckTutorByUID(current_solution.createdBy) == true)
+                    {
+                        //disable vote if solution is creaeted by teacher
+                        disable_vote();
                     }
                 }
             }
@@ -139,12 +148,11 @@ namespace ProjectFlow.Issues
             {
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
                 TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-                Guid Uid = identity.Student.aspnet_Users.UserId;
-                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
+                Guid Uid = get_GUID();
 
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
-                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSSId"], voterId);
+                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSSId"], Uid);
                 newPoll.vote = choice;
                 bool result = pollingBLL.Update(newPoll);
             }
@@ -157,12 +165,11 @@ namespace ProjectFlow.Issues
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
                 TeamMemberBLL teammemberBLL = new TeamMemberBLL();
                 Guid Uid = get_GUID();
-                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
                 // Create Task Object
                 Polling newPoll = new Polling();
                 newPoll.solutionID = (int)Session["SSSId"];
-                newPoll.voterID = voterId;
+                newPoll.voterID = Uid;
                 newPoll.vote = choice;
 
                 // Submit Query
@@ -211,7 +218,7 @@ namespace ProjectFlow.Issues
             if (GetCurrentIdentiy().IsTutor)
             {
                 // disables voting buttons if isTutor
-                disable_vote();
+                //disable_vote();
             }
             else
             {
@@ -220,7 +227,7 @@ namespace ProjectFlow.Issues
                 Guid Uid = identity.Student.aspnet_Users.UserId;
                 //the above only checks for the user id if it is a student, tutors must also be accounted for
                 int voterId = teammemberBLL.GetMemIdbyUID(Uid);
-                bool checking = pollingBLL.Check(iID, voterId);
+                bool checking = pollingBLL.Check(iID, Uid);
 
                 if (checking == true)
                 {
