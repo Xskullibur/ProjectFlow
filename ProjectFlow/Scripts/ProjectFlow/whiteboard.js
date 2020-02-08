@@ -272,7 +272,7 @@ function saveCanvas() {
 
 function downloadImage() {
     var link = document.getElementById('download-link');
-    link.setAttribute('download', 'donwload.png');
+    link.setAttribute('download', 'download.png');
     var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     link.setAttribute('href', image);
     link.click();

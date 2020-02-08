@@ -456,6 +456,9 @@ namespace ProjectFlow.Tasks
                      * UPDATE TASK
                      **/
 
+                    // Original Status
+                    int originalStatusID = updated_task.statusID;
+
                     // Update Task
                     updated_task.Status = null;
 
@@ -489,6 +492,31 @@ namespace ProjectFlow.Tasks
                     if (taskBLL.Update(updated_task, updated_Allocations))
                     {
                         NotificationHelper.Default_TaskUpdate_Setup(taskID);
+
+                        // Check Status Updated
+                        if (originalStatusID != updated_task.statusID)
+                        {
+                            string templateDir = HttpContext.Current.Server.MapPath("~/Utils/EmailTemplates/TaskNotification.html");
+                            string url = HttpContext.Current.Request.Url.AbsoluteUri;
+
+                            if (updated_task.statusID == StatusBLL.VERIFICATON_ID)
+                            {
+                                // Updated to Verification
+                                System.Threading.Tasks.Task.Run(() =>
+                                {
+                                    NotificationHelper.Send_Verification_Email(templateDir, url, taskID);
+                                });
+                            }
+                            else if (updated_task.statusID == StatusBLL.COMPLETED_ID)
+                            {
+                                // Updated to Completed
+                                System.Threading.Tasks.Task.Run(() =>
+                                {
+                                    NotificationHelper.Send_Complete_Email(templateDir, url, taskID);
+                                });
+                            }
+                        }
+
                         this.Master.Master.ShowAlertWithTiming("Task Successfully Updated!", BootstrapAlertTypes.SUCCESS, 2000);
                     }
                     else

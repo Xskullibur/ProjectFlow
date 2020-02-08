@@ -14,6 +14,11 @@ namespace ProjectFlow.BLL
         public static string VERIFICATON = "Verification";
         public static string COMPLETED = "Completed";
 
+        public static int PENDING_ID = 1;
+        public static int WORK_IN_PROGRESS_ID = 2;
+        public static int VERIFICATON_ID = 3;
+        public static int COMPLETED_ID = 4;
+
         public static string GetNextStatus(string currentStatus)
         {
             if (currentStatus == PENDING)

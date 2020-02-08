@@ -4,13 +4,15 @@
 
 <html>
     <head runat="server">
-        <title></title>
+        <title>ProjectFlow - Login</title>
+
+        <link rel="icon" 
+          type="image/png" 
+          href="/Content/ProjectFlow/Images/favicon.png">
 
         <asp:PlaceHolder runat="server">
             <%: Styles.Render("~/Content/css") %>
             <%: Styles.Render("~/Content/bootstrap-select.css") %>
-<%--            <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-            <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>--%>
         </asp:PlaceHolder>
 
         <asp:ContentPlaceHolder ID="head" runat="server">

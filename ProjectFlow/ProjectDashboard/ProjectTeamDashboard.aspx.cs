@@ -36,46 +36,70 @@ namespace ProjectFlow.ProjectTeamDashboard
         public void FillMilestoneBar(List<Task> tasks, int teamID)
         {
 
-            string startString = "<ul id='progressbar' class='cdt-step-progressbar horizontal pt-5'>";
-            string endString = "</ul>";
-            int count = 1;
-
-            MilestoneBLL milestoneBLL = new MilestoneBLL();
-            List<Milestone> milestones = milestoneBLL.GetMilestonesByTeamID(teamID)
-                .OrderBy(x => x.endDate)
-                .ToList();
-
-            foreach (Milestone milestone in milestones)
+            if (tasks.Count > 0)
             {
-                List<Task> milestoneTasks = tasks.Where(x => x.milestoneID == milestone.milestoneID)
-                    .ToList();
+                string startString = "<ul id='progressbar' class='cdt-step-progressbar horizontal pt-5'>";
+                string endString = "</ul>";
+                int count = 1;
+            
+                MilestoneBLL milestoneBLL = new MilestoneBLL();
+                List<Milestone> milestones = milestoneBLL.GetMilestonesByTeamID(teamID);
 
-                int totalTasks = milestoneTasks.Count();
-                int completedTasks = milestoneTasks.Count(x => x.Status.status1 == StatusBLL.COMPLETED);
+                if (milestones.Count > 0)
+                {
+                    foreach (Milestone milestone in milestones)
+                    {
+                        List<Task> milestoneTasks = tasks.Where(x => x.milestoneID == milestone.milestoneID)
+                            .ToList();
 
-                string col = $@"
-                    <li class='pb-0'>
-                        <span class='indicator'>{count}</span>
-                        <p class='title font-weight-bold'>{milestone.milestoneName}</p>
-                        <p class='content'>{completedTasks} / {totalTasks} Completed</p>
-                    </li>
-                ";
+                        int totalTasks = milestoneTasks.Count();
+                        int completedTasks = milestoneTasks.Count(x => x.Status.status1 == StatusBLL.COMPLETED);
 
-                startString += col;
-                count++;
+                        string col = $@"
+                            <li class='pb-0'>
+                                <span class='indicator'>{count}</span>
+                                <p class='title font-weight-bold'>{milestone.milestoneName}</p>
+                                <p class='content'>{completedTasks} / {totalTasks} Completed</p>
+                            </li>
+                        ";
+
+                        startString += col;
+                        count++;
+                    }
+
+                    string progressBar = startString + endString;
+                    milestoneLiteral.Text = progressBar;
+
+                    int milestoneID = tasks.GroupBy(x => x.milestoneID)
+                        .OrderBy(x => x.First().Milestone.endDate)
+                        .First(x => x.Count() != x.Count(task => task.Status.status1 == StatusBLL.COMPLETED))
+                        .Key;
+
+                    int activeIndex = milestones.FindIndex(x => x.milestoneID == milestoneID);
+
+                    ClientScript.RegisterStartupScript(this.GetType(), $"milestone_script", $"<script type='text/javascript'>loadProgressBar({activeIndex});</script>");
+                }
+                else
+                {
+                    milestoneLiteral.Text = @"                               
+                                    <div class='jumbotron jumbotron-fluid m-0'>
+                                        <div class='container'>
+                                            <h3 class='m-0'>No milestones to show progress!</h3>
+                                        </div>
+                                    </div>     ";
+                }
+
+            }
+            else
+            {
+                milestoneLiteral.Text = @"                               
+                                    <div class='jumbotron jumbotron-fluid m-0'>
+                                        <div class='container'>
+                                            <h3 class='m-0'>No Tasks to show milestone progress!</h3>
+                                        </div>
+                                    </div>     ";
             }
 
-            string progressBar = startString + endString;
-            milestoneLiteral.Text = progressBar;
-
-            int milestoneID = tasks.GroupBy(x => x.milestoneID)
-                .OrderBy(x => x.First().Milestone.endDate)
-                .First(x => x.Count() != x.Count(task => task.Status.status1 == StatusBLL.COMPLETED))
-                .Key;
-
-            int activeIndex = milestones.FindIndex(x => x.milestoneID == milestoneID);
-
-            ClientScript.RegisterStartupScript(this.GetType(), $"milestone_script", $"<script type='text/javascript'>loadProgressBar({activeIndex});</script>");
         }
 
         public void FillPriorityTasks(List<Task> tasks)
@@ -99,6 +123,17 @@ namespace ProjectFlow.ProjectTeamDashboard
                 panel.CssClass = "col-4 p-0";
 
                 string chartID = $"{priorityName}_chart";
+                string taskTxt;
+
+                // Check if has tasks
+                if (totalTasks > 0)
+                {
+                    taskTxt = $"{completedTasks}/{totalTasks}";
+                }
+                else
+                {
+                    taskTxt = "No Tasks";
+                }
 
                 LiteralControl literalControl = new LiteralControl
                 {
@@ -111,7 +146,7 @@ namespace ProjectFlow.ProjectTeamDashboard
                                 <div class='row'>
                                     <div class='col'>
                                         <canvas id='{chartID}'></canvas>
-                                        {completedTasks}/{totalTasks}
+                                        {taskTxt}
                                     </div>
                                 </div>
                             </div>"
@@ -120,6 +155,7 @@ namespace ProjectFlow.ProjectTeamDashboard
                 panel.Controls.Add(literalControl);
                 TaskPanel.Controls.Add(panel);
 
+                uncompletedTasks = uncompletedTasks == 0 ? 1 : uncompletedTasks;
                 ClientScript.RegisterStartupScript(this.GetType(), $"{chartID}_script", $"<script type='text/javascript'>loadDoughnutChart('{chartID}', {completedTasks}, {uncompletedTasks});</script>");
             }
 

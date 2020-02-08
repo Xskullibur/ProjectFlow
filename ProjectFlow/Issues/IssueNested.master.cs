@@ -127,7 +127,6 @@ namespace ProjectFlow.Issues
 
             if (Page.IsValid)
             {
-                bool IsPublic = checkCB();
                 ProjectTeam currentTeam = GetCurrentProjectTeam();
                 int teamID = currentTeam.teamID;
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
@@ -145,7 +144,6 @@ namespace ProjectFlow.Issues
                     newIssue.createdBy = teammemberBLL.GetMemIdbyUID(Uid);
                     newIssue.active = true;
                     newIssue.statusID = Convert.ToInt32(IssueStatusDLL.SelectedValue);
-                    newIssue.votePublic = IsPublic;
 
                     // Submit Query
                     IssueBLL issueBLL = new IssueBLL();
@@ -200,17 +198,6 @@ namespace ProjectFlow.Issues
             return result;
         }
 
-        protected bool checkCB()
-        {
-            if (cbPublic.Checked == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
         protected void taskViewDDL_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -35,7 +35,7 @@ namespace ProjectFlow.BLL
                         Console.Error.WriteLine("User has already voted");
                         return false;
                     }
-                    
+
                 }
                 else
                 {

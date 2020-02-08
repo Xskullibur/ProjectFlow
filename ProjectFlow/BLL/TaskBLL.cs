@@ -360,6 +360,7 @@ namespace ProjectFlow.BLL
                 try
                 {
                     task.Milestone = null;
+                    task.Priority = null;
                     dbContext.Tasks.Attach(task);
 
                     // Update Task

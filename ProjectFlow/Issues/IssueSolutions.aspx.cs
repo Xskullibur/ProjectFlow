@@ -82,6 +82,9 @@ namespace ProjectFlow.Issues
                     }
                 }
             }
+            
+            // just checking again
+            updateIfPass();
         }
 
         protected void btnYes_Click(object sender, EventArgs e)
@@ -164,7 +167,11 @@ namespace ProjectFlow.Issues
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
                 bool result = pollingBLL.Add(newPoll);
+
+                updateIfPass();
+
                 return result;
+
             }
             else
             {
@@ -261,6 +268,32 @@ namespace ProjectFlow.Issues
             {
                 this.Master.ShowAlert("Enable to delete solution!", BootstrapAlertTypes.DANGER);
             }
+        }
+
+        protected void updateIfPass()
+        {
+            // getting stuff
+            Guid Uid = get_GUID();
+            int idSolution = (int)Session["SSSId"];
+            ProjectTeam currentTeam = GetCurrentProjectTeam();
+            int currentTeamId = currentTeam.teamID;
+
+            SolutionBLL solution = new SolutionBLL();
+            bool votePass = solution.getPass(currentTeamId,idSolution);
+
+            Solution current_solution = solution.GetSolutionByID(idSolution);
+
+
+            if (votePass)
+            {
+                current_solution.success = true;
+                
+            }
+            else
+            {
+                current_solution.success = false;
+            }
+            solution.Update(current_solution);
         }
 
     }

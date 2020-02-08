@@ -416,7 +416,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             
-                                <asp:CommandField ButtonType="Button" SelectText="Dash Board" ShowSelectButton="True">
+                                <asp:CommandField ButtonType="Button" SelectText="Dashboard" ShowSelectButton="True">
                                     <ControlStyle CssClass="btn btn-success" />
                                 </asp:CommandField>
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">

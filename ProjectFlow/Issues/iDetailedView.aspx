@@ -50,6 +50,10 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
+                            <asp:CommandField ShowSelectButton="True" ButtonType="Button" >
+                                <ControlStyle CssClass="btn btn-success mb-2" />
+                            </asp:CommandField>
+
                             <%--Action Settings--%>
                             <asp:TemplateField ShowHeader="false">
                                 <ItemTemplate>  

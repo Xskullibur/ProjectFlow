@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row-fluid my-5">
         <div class="col-12 col-md-5 mx-auto text-center">
-            <img src="Content/ProjectFlow/Images/ProjectFlow.jpg" width="180" alt="logo"/>
+            <img src="/Content/ProjectFlow/Images/ProjectFlow.jpg" width="180" alt="logo"/>
         </div>
         <div class="col-12 col-md-5 mx-auto">
               <div class="form-group">

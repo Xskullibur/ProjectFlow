@@ -1,50 +1,9 @@
-﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ServicesWithContent.master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
+﻿<%@ Master Language="C#" MasterPageFile="~/ServicesWithContentBase.Master" AutoEventWireup="true" CodeBehind="~/ServicesWithContent.Master.cs" Inherits="ProjectFlow.ServicesWithContent" %>
+<%@ MasterType VirtualPath="~/ServicesWithContentBase.Master" %> 
 <%@ Register Assembly="ProjectFlow"  Namespace="ProjectFlow.Utils.MaterialIO"  TagPrefix="mio" %>
-<!DOCTYPE html>
 
-<html>
-<head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-    <asp:PlaceHolder runat="server">
-        <%: Styles.Render("~/Content/css") %>
-        <%: Styles.Render("~/Content/bootstrap-select.css") %>
-        <%: Styles.Render("~/Content/Bootstrap_DateTimePicker/bootstrap-datetimepicker.css") %>
-        <%: Styles.Render("~/Content/Bootstrap_DateTimePicker/bootstrap-datetimepicker.min.css") %>
-        <%: Styles.Render("~/Content/ProjectFlow/CSS/main.css") %>
-
-        <script src="https://kit.fontawesome.com/8861810238.js" crossorigin="anonymous"></script>
-        <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>    
-        <script src="/Scripts/jquery-3.4.1.min.js"></script>
-        <script src="/Scripts/ProjectFlow/materialio_selection_nav_postback.js"></script>
-
-
-        <%-- Alson pls do not put your script here --%>
-        <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
-        <link href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
-
-        <%--ChartJS--%>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    </asp:PlaceHolder>
-
-    <style type="text/css">
-        .auto-style5 {
-            width: 286px;
-        }
-    </style>
-</head>
-<body>
-
+<asp:Content ID="Content1" ContentPlaceHolderID="headBase" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
     <script type="text/javascript">
         //Initialize side bar
         function hideSidebar() {
@@ -55,216 +14,111 @@
             $('#sidebar').show();
             $('#content').addClass('col-md-10');
         }
+        //Nav id setup
+        var nav_id = '#<%=matSidebar.ClientID%>';
     </script>
-
-    <form id="form1" runat="server">
-        <asp:ScriptManager EnablePartialRendering="true" runat="server">
-            <Scripts>
-                <asp:ScriptReference Name="popper" />
-                <asp:ScriptReference Name="bootstrap" />
-                <asp:ScriptReference Name="bootstrap-select" />
-                <asp:ScriptReference Name="bootstrap-datetimepicker" />
-                <asp:ScriptReference Name="bootstrap-confirmation" />
-                <asp:ScriptReference Name="jquery-ui" />
-                <asp:ScriptReference Name="jquery-qtip" />
-                <asp:ScriptReference Name="full-calendar" />
-                <asp:ScriptReference Name="calendarscript" />
-            </Scripts>
-        </asp:ScriptManager>
-
-        <asp:HiddenField ID="ProjectID" runat="server"></asp:HiddenField>
-        <asp:HiddenField ID="TeamID" runat="server"></asp:HiddenField>
-        <script>
-            $(function () {
-                $('.datetimepicker').datetimepicker();
-            });
-
-
-            //Nav id setup
-            var nav_id = '#<%=matSidebar.ClientID%>';
-        </script>
-
-        <div class="sticky-top">
-            <nav class="navbar content-nav navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">
-                    <img class="pb-2" src="/Content/ProjectFlow/Images/ProjectFlow.png" width="125" height="125" alt="">
-                  </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">                        
-                        <li class="nav-item">
-                            <asp:LinkButton ID="ProjectBtn" CssClass="nav-link" runat="server" OnClick="ProjectBtnEvent">Projects</asp:LinkButton>
-                        </li>    
-                    </ul>
-                </div>
-                 <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <asp:Label Class="nav-link" ID="LoginUsernameLbl" runat="server"></asp:Label>
-                        </li>
-                    </ul>
-                     <div class="mdc-card content-profile" id="profile-popper">
-                           <div id="profile-info" class="mdc-card__primary-action" tabindex="0" style="width: 100%;display: flex;flex-direction: row;">
-                                <div class="mdc-card__media mdc-card__media--square content-profile-image" style="background-image: url(&quot;<%= this.ProfileUrl %>&quot;);"></div>
-                                
-                               <div style="padding: 1rem;">
-                                   <asp:Label Class="mdc-typography mdc-typography--headline6" ID="LoginUsernameProfileLbl" runat="server"></asp:Label>
-                                   <asp:Label Class="mdc-typography mdc-typography--subtitle2" ID="LoginEmailProfileLbl" runat="server"></asp:Label>
-                               </div>
-                            </div>
-                           <div class="mdc-card__actions">
-                               <div class="mdc-card__action-buttons">
-                                    <asp:LinkButton runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button px-2" OnClick="LogoutEvent">
-                                        <span runat="server" ClientIDMode="Static" class="mdc-button__ripple"></span>Logout
-                                    </asp:LinkButton>
-                               </div>
-                            </div>
-                   </div>
-                </div>
-            </nav>
-        </div>
-
-        <div class="container-fluid">
-            <div class="row" style="max-width: 100vw;">
-                <div id="sidebar" class="sidebar position-sticky col-xl-2 col-lg-3 col-md-3 px-0" >
-                    <aside class="mdc-drawer content-sidenav sidebar-shadow w-100">
-                        <div class="mdc-drawer__header">
-                             <asp:Label ID="ProjectTitleLbl" CssClass="mdc-drawer__title py-2" runat="server" Text=""></asp:Label>
-                          </div>
-                        <hr class="mdc-list-divider">
-                      <div class="mdc-drawer__content">
-                        <nav class="mdc-list">
-                            <% if(Identity.IsStudent) { %>
-                            <mio:MaterialSidebar ID="matStudentSidebar" runat="server">
-
-                                <Groups>
-                                    <mio:SidebarGroup SubHeaderText="Project">
-                                        <SidebarItems>
-                                            <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
-                                            </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
-                                            </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
-                                            </mio:SidebarItem>
-                                        </SidebarItems>
-                                    </mio:SidebarGroup>
-                                    <mio:SidebarGroup SubHeaderText="Storage">
-                                        <SidebarItems>
-                                            <mio:SidebarItem ItemText="File Storage" RedirectionPage="/StudentDashboard/FileUpload.aspx" FASLogo="file">
-                                            </mio:SidebarItem>
-                                        </SidebarItems>
-                                    </mio:SidebarGroup>
-                                    <mio:SidebarGroup SubHeaderText="Issues">
-                                        <SidebarItems>
-                                            <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
-                                            </mio:SidebarItem>
-                                        </SidebarItems>
-                                    </mio:SidebarGroup>
-                                    <mio:SidebarGroup SubHeaderText="Whiteboard">
-                                        <SidebarItems>
-                                            <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" FASLogo="chalkboard-teacher">
-                                            </mio:SidebarItem>
-                                        </SidebarItems>
-                                    </mio:SidebarGroup>
-                                    <mio:SidebarGroup SubHeaderText="Meeting Minutes">
-                                        <SidebarItems>
-                                            <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx" FASLogo="history">
-                                            </mio:SidebarItem>
-                                            <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/CreateRoom.aspx" AlsoSelectedForPages="/Services/Christina/Christina.aspx" FASLogo="handshake">
-
-                                            </mio:SidebarItem>
-                                        </SidebarItems>
-                                    </mio:SidebarGroup>
-
-                                </Groups>
-                                </mio:MaterialSidebar>
-                            <% }else if(Identity.IsTutor) {  %>
-                                <mio:MaterialSidebar ID="matTutorSidebar" runat="server">
-                                    <Groups>
-                                        <mio:SidebarGroup SubHeaderText="Project">
-                                            <SidebarItems>
-                                                <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
-                                                </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Members" RedirectionPage="/TutorDashBoard/ProjectMainPage.aspx" FASLogo="address-book">
-                                                </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
-                                                </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
-                                                </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
-                                                </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="tasks">
-                                                </mio:SidebarItem>
-                                            </SidebarItems>
-                                        </mio:SidebarGroup>
-                                        <mio:SidebarGroup SubHeaderText="Issues">
-                                            <SidebarItems>
-                                                <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
-                                                </mio:SidebarItem>
-                                            </SidebarItems>
-                                        </mio:SidebarGroup>
-                                    </Groups>
-                                </mio:MaterialSidebar>
-                                <% } %>
-                            
-                        </nav>
-                      </div>
-                    </aside>
-                </div>
-                <div id="content" class="projectflow-body-content col-12 col-md-10">
-                    <div class="row h-100 pt-5" style="vertical-align:top;">
-
-                        <div class="col-12">
-                            <%--Alert Continer--%>
-                            <div class="container" id="alert_container">
-                                <asp:UpdatePanel ID="AlertsUpdatePanel" runat="server">
-                                    <ContentTemplate>
-                                        <asp:Panel ID="AlertsPlaceHolder" runat="server"></asp:Panel>
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
-                            </div>
-                            <div class="container">
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <h1>
-                                            <asp:Label ID="HeaderLbl" runat="server" Font-Size="XX-Large" Text="" Font-Bold="true"></asp:Label>
-                                        </h1>
-                                    </div>            
-                                </div>        
-                            </div>
-                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-                            </asp:ContentPlaceHolder>
-
-                        </div>
-
-                    </div>
-                </div>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="SideNavContentPlaceHolder" runat="server">
+    <div id="sidebar" class="sidebar position-sticky col-xl-2 col-lg-3 col-md-3 px-0" >
+        <aside class="mdc-drawer content-sidenav sidebar-shadow w-100">
+            <div class="mdc-drawer__header">
+                    <asp:Label ID="ProjectTitleLbl" CssClass="mdc-drawer__title py-2" runat="server" Text=""></asp:Label>
             </div>
-        </div>
-    </form>
-    <script type="text/javascript">
-        //Initialize popper
-        var reference = $("#LoginUsernameLbl");
-        var popper = $("#profile-popper");
-        popper.hide();
+            <hr class="mdc-list-divider">
+            <div class="mdc-drawer__content">
+                <nav class="mdc-list">
+                    <% if(Identity.IsStudent) { %>
+                    <mio:MaterialSidebar ID="matStudentSidebar" runat="server">
 
-        $(document).ready(function () {
-            $(document).on('click touchend', function (e) {
-                var target = $(e.target);
-                if (target.is(reference) || target.is(popper)) {
-                    e.preventDefault();
-                    popper.show();
-                    var popperInstance = new Popper(reference, popper, {
-                        placement: 'bottom'
-                    });
-                } else {
-                    popper.hide();
-                }
-                //Click on profile 
-                $('#profile-info').on('click', function () {
-                    window.location.href = "/Profile/Profile.aspx";
-                });
-            });
-        });
-     </script>
-</body>
-</html>
+                        <Groups>
+                            <mio:SidebarGroup SubHeaderText="Project">
+                                <SidebarItems>
+                                    <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
+                                    </mio:SidebarItem>
+                                    <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                    </mio:SidebarItem>
+                                    
+                                </SidebarItems>
+                            </mio:SidebarGroup>
+                            <mio:SidebarGroup SubHeaderText="Team">
+                                    <SidebarItems>
+                                        <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
+                                        </mio:SidebarItem>
+                                    </SidebarItems>
+                            </mio:SidebarGroup>
+                            <mio:SidebarGroup SubHeaderText="Storage">
+                                <SidebarItems>
+                                    <mio:SidebarItem ItemText="File Storage" RedirectionPage="/StudentDashboard/FileUpload.aspx" FASLogo="file">
+                                    </mio:SidebarItem>
+                                </SidebarItems>
+                            </mio:SidebarGroup>
+                            <mio:SidebarGroup SubHeaderText="Issues">
+                                <SidebarItems>
+                                    <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
+                                    </mio:SidebarItem>
+                                </SidebarItems>
+                            </mio:SidebarGroup>
+                            <mio:SidebarGroup SubHeaderText="Whiteboard">
+                                <SidebarItems>
+                                    <mio:SidebarItem ItemText="Whiteboard" RedirectionPage="/Services/Whiteboard/WhiteboardList.aspx" AlsoSelectedForPages="/Services/Whiteboard/Whiteboard.aspx/" FASLogo="chalkboard-teacher">
+                                    </mio:SidebarItem>
+                                </SidebarItems>
+                            </mio:SidebarGroup>
+                            <mio:SidebarGroup SubHeaderText="Meeting Minutes">
+                                <SidebarItems>
+                                    <mio:SidebarItem ItemText="Past Meeting Minutes" RedirectionPage="/Services/Christina/ListOfRooms.aspx" FASLogo="history">
+                                    </mio:SidebarItem>
+                                    <mio:SidebarItem ItemText="Meeting Minutes Logger" RedirectionPage="/Services/Christina/CreateRoom.aspx" AlsoSelectedForPages="/Services/Christina/Christina.aspx" FASLogo="handshake">
+
+                                    </mio:SidebarItem>
+                                </SidebarItems>
+                            </mio:SidebarGroup>
+
+                        </Groups>
+                        </mio:MaterialSidebar>
+                    <% }else if(Identity.IsTutor) {  %>
+                        <mio:MaterialSidebar ID="matTutorSidebar" runat="server">
+                            <Groups>
+                                <mio:SidebarGroup SubHeaderText="Project">
+                                    <SidebarItems>
+                                        <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
+                                        </mio:SidebarItem>
+                                        <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                        </mio:SidebarItem>
+                                        <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
+                                        </mio:SidebarItem>
+                                    </SidebarItems>
+                                </mio:SidebarGroup>
+                                <mio:SidebarGroup SubHeaderText="Team">
+                                    <SidebarItems>
+                                        <mio:SidebarItem ItemText="Members" RedirectionPage="/TutorDashBoard/ProjectMainPage.aspx" FASLogo="address-book">
+                                        </mio:SidebarItem>
+                                    </SidebarItems>
+                                </mio:SidebarGroup>
+                                <mio:SidebarGroup SubHeaderText="Issues">
+                                    <SidebarItems>
+                                        <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
+                                        </mio:SidebarItem>
+                                    </SidebarItems>
+                                </mio:SidebarGroup>
+                                <mio:SidebarGroup SubHeaderText="Grading">
+                                    <SidebarItems>
+                                        <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
+                                        </mio:SidebarItem>
+                                        <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="tasks">
+                                        </mio:SidebarItem>
+                                    </SidebarItems>
+                                </mio:SidebarGroup>
+                            </Groups>
+                        </mio:MaterialSidebar>
+                        <% } %>
+                            
+                </nav>
+            </div>
+        </aside>
+    </div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolderBase" runat="server">
+     <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+     </asp:ContentPlaceHolder>
+</asp:Content>

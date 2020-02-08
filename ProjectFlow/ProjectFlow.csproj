@@ -174,6 +174,7 @@
     <Content Include="Content\ProjectFlow\CSS\main.css" />
     <Content Include="Content\ProjectFlow\CSS\pagination.css" />
     <Content Include="Content\ProjectFlow\CSS\progressBar.css" />
+    <Content Include="Content\ProjectFlow\Images\favicon.png" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.jpg" />
     <Content Include="Content\ProjectFlow\Images\ProjectFlow.png" />
     <Content Include="Content\ProjectFlow\Images\underline.gif" />
@@ -400,7 +401,6 @@
     <Content Include="Tasks\CalendarView.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
-    <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="TutorDashboard\AddMilestone.aspx" />
     <Content Include="StudentDashboard\FileUpload.aspx" />
     <Content Include="TutorDashboard\AllGrades.aspx" />
@@ -546,6 +546,13 @@
     <Compile Include="Score.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ServicesWithContentBase.Master.cs">
+      <DependentUpon>ServicesWithContentBase.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServicesWithContentBase.Master.designer.cs">
+      <DependentUpon>ServicesWithContentBase.Master</DependentUpon>
+    </Compile>
     <Compile Include="Services\Christina\CreateRoom.aspx.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -617,6 +624,7 @@
       <DependentUpon>Grading.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
+    <Compile Include="Utils\ProjectFlowMasterServiceWithContenBase.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -786,13 +794,6 @@
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskHelper.cs" />
-    <Compile Include="Tasks\EmailTest.aspx.cs">
-      <DependentUpon>EmailTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tasks\EmailTest.aspx.designer.cs">
-      <DependentUpon>EmailTest.aspx</DependentUpon>
-    </Compile>
     <Compile Include="TutorDashboard\AddMilestone.aspx.cs">
       <DependentUpon>AddMilestone.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -878,6 +879,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="ServicesWithContentBase.Master" />
     <None Include="Services\Christina\_Keys\salt.bin" />
     <Content Include="Services\Web.config" />
     <Content Include="TutorDashboard\Web.config" />
