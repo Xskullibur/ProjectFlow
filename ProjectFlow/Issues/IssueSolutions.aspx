@@ -14,6 +14,12 @@
                         <hr/>
                         <asp:Label ID="lbSolutionTitle" runat="server" CssClass="card-title"></asp:Label>  
                         <asp:Label ID="lbSolutionDesc" runat="server" CssClass="card-text"></asp:Label>
+
+                        <%--Repuposed Filter Panel--%>
+
+                        <asp:Panel ID="currentFiltersPanel" CssClass="d-flex flex-wrap" runat="server">
+                        </asp:Panel>
+                            
                     </div>
 
                 </div>

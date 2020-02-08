@@ -84,5 +84,17 @@ namespace ProjectFlow.FileManagement
             return fileList;
         }
 
+
+        //get file names
+        public List<string> getfilenames(int TeamID)
+        {
+            List<string> filenamelist = new List<string>();
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\";
+            foreach (string file in Directory.GetFiles(path))
+            {
+                filenamelist.Add(Path.GetFileName(file));
+            }
+            return filenamelist;
+        }
     }
 }

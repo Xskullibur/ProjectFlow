@@ -154,6 +154,15 @@
                                 <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 500 Characters!" ValidationExpression="^[\s\S]{1,500}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
+
+                            <%--File selector--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Files:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:DropDownList ID="IssueStatusDLL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
                             
                             <%--Public--%>
                             <div>

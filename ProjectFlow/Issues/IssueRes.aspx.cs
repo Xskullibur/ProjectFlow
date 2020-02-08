@@ -1,4 +1,6 @@
-﻿using ProjectFlow.BLL;
+﻿using ProjectFlow.FileManagement;
+using System.IO;
+using ProjectFlow.BLL;
 using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
@@ -40,7 +42,16 @@ namespace ProjectFlow.Issues
                 Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
                 IssueStatus.Text = currentstat.status1;
 
-                
+                // Status
+                Info infomation = new Info();
+                List<string> fileList = infomation.getfilenames(GetTeamID());
+                fileList.Add("-");
+
+                IssueStatusDLL.DataSource = fileList;
+
+                IssueStatusDLL.DataBind();
+
+                //
 
                 ispublic = updated_issue.votePublic.ToString();
 
@@ -258,6 +269,11 @@ namespace ProjectFlow.Issues
                 {
                     new_solution.success = true;
                 }
+                if (IssueStatusDLL.Text != "-")
+                {
+                    new_solution.associatedFile = IssueStatusDLL.Text;
+                }
+
 
                 // clear error messages
                 // TODO
@@ -372,6 +388,11 @@ namespace ProjectFlow.Issues
                     SucessCell.Text = "<i class='fa fa-question fa-lg text-info'></i>";
                 }
             }
+        }
+
+        public int GetTeamID()
+        {
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
     }

@@ -28,6 +28,7 @@ namespace ProjectFlow
         public Nullable<System.DateTime> startdate { get; set; }
         public System.Guid createdBy { get; set; }
         public bool votePublic { get; set; }
+        public string associatedFile { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual Issue Issue { get; set; }

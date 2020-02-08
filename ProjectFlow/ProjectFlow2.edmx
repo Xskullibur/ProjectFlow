@@ -432,6 +432,7 @@
           <Property Name="startdate" Type="datetime" />
           <Property Name="createdBy" Type="uniqueidentifier" Nullable="false" />
           <Property Name="votePublic" Type="bit" Nullable="false" />
+          <Property Name="associatedFile" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -1905,6 +1906,7 @@
           <Property Name="startdate" Type="DateTime" Precision="3" />
           <Property Name="createdBy" Type="Guid" Nullable="false" />
           <Property Name="votePublic" Type="Boolean" Nullable="false" />
+          <Property Name="associatedFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_Solutions_aspnet_Users" FromRole="Solutions" ToRole="aspnet_Users" />
           <NavigationProperty Name="Issue" Relationship="Self.FK_Solutions_Issue" FromRole="Solutions" ToRole="Issue" />
           <NavigationProperty Name="Pollings" Relationship="Self.FK_Polling_Solutions" FromRole="Solutions" ToRole="Polling" />
@@ -3328,6 +3330,7 @@
                 <ScalarProperty Name="startdate" ColumnName="startdate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="votePublic" ColumnName="votePublic" />
+                <ScalarProperty Name="associatedFile" ColumnName="associatedFile" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,7 +1,9 @@
-﻿using ProjectFlow.BLL;
+﻿using ProjectFlow.FileManagement;
+using ProjectFlow.BLL;
 using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -73,6 +75,12 @@ namespace ProjectFlow.Issues
                     lbSolutionInfo.Text = "Created on " + startDate.Date.ToString("yyyy-MM-dd") + " by " + current_user.UserName.ToString();
                     lbSolutionTitle.Text = "<h3>" + current_solution.title + "</h3>";
                     lbSolutionDesc.Text = current_solution.description;
+
+                    //creating button for file download
+                    if(current_solution.associatedFile != null)
+                    {
+                        file_link(current_solution.associatedFile);
+                    }
 
                     // other checks
 
@@ -311,5 +319,53 @@ namespace ProjectFlow.Issues
             Response.Redirect("IssueRes.aspx");
         }
 
+        //file download stuff
+
+        private void DownloadFile(string FileName, string Path)
+        {
+            Response.Clear();
+            Response.ContentType = "application/octect-stream";
+            Response.AddHeader("Content-Disposition", "filename=" + FileName);
+            Response.TransmitFile(Path + FileName);
+            Response.Flush();
+            File.Delete(Path + FileName);
+            Response.End();
+        }
+
+        protected void file_download(string fileName)
+        {
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
+            DownloadFile("(PLAIN)" + fileName, storagePath);
+        }
+
+        public int GetTeamID()
+        {
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
+        }
+
+        private Button CreateFilterButton(string filterName, EventHandler eventHandler)
+        {
+            Button linkButton = new Button();
+
+            linkButton.ID = $"filter_{filterName}";
+            linkButton.Text = $"{filterName} <i class='fa fa-close ml-2'></i>";
+            linkButton.CssClass = "btn btn-danger my-4 mr-1";
+            linkButton.Click += eventHandler;
+
+            return linkButton;
+        }
+
+        // this needs to be edited, the download functio does not work
+        private void file_link(string taskName)
+        {
+            Button linkButton = CreateFilterButton(taskName, download_Click);
+            currentFiltersPanel.Controls.Add(linkButton);
+        }
+
+        protected void download_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            file_download(button.Text);
+        }
     }
 }
