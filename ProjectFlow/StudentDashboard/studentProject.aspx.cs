@@ -63,9 +63,9 @@ namespace ProjectFlow.DashBoard
                 int setTeamID = int.Parse(row.Cells[2].Text);
                 string ProjectID = row.Cells[0].Text;
 
-                if (!milestoneBLL.CheckMilestoneTableIsNotEmpty(10))
+                if (!milestoneBLL.CheckMilestoneTableIsNotEmpty(setTeamID))
                 {
-                    milestoneBLL.CreateTemplateMilestone("ITP211", 10);
+                    milestoneBLL.CreateTemplateMilestone(ProjectID, setTeamID);
                 }
 
                 (Master as ServicesWithContent).SetCurrentProject(projectBLL.GetProjectByProjectId(ProjectID));
