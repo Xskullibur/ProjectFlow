@@ -400,7 +400,6 @@
     <Content Include="Tasks\CalendarView.aspx" />
     <Content Include="Tasks\DroppedTaskView.aspx" />
     <Content Include="Tasks\OngoingTaskView.aspx" />
-    <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="TutorDashboard\AddMilestone.aspx" />
     <Content Include="StudentDashboard\FileUpload.aspx" />
     <Content Include="TutorDashboard\Grading.aspx" />
@@ -778,13 +777,6 @@
       <DependentUpon>TaskNested.master</DependentUpon>
     </Compile>
     <Compile Include="Tasks\TaskHelper.cs" />
-    <Compile Include="Tasks\EmailTest.aspx.cs">
-      <DependentUpon>EmailTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tasks\EmailTest.aspx.designer.cs">
-      <DependentUpon>EmailTest.aspx</DependentUpon>
-    </Compile>
     <Compile Include="TutorDashboard\AddMilestone.aspx.cs">
       <DependentUpon>AddMilestone.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
