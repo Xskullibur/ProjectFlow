@@ -126,7 +126,7 @@ namespace ProjectFlow.DashBoard
             Session["CurrentProjectTeam"] = projectTeam;
             // Alson Edit Ends
 
-            if (milestoneBLL.CheckMilestoneTableIsNotEmpty(Convert.ToInt32(row.Cells[0].Text)))
+            if (!milestoneBLL.CheckMilestoneTableIsNotEmpty(Convert.ToInt32(row.Cells[0].Text)))
             {
                 milestoneBLL.CreateTemplateMilestone(GetProjectID(), Convert.ToInt32(row.Cells[0].Text));
             }
