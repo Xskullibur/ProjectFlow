@@ -169,9 +169,9 @@
                                     <div class="jumbotron jumbotron-fluid">
                                         <div class="container">
                                             <h1 class="display-4">Freedoommm!</h1>
-                                            <p class="load">No Ongoing Tasks Found!</p>
+                                            <p class="load">No tasks found, add some to get started!</p>
                                             <hr class="my-4" />
-                                            <p>If ongoing tasks are expected but not shown please contact us <asp:HyperLink ID="emailLink" Text="here" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink>.</p>
+                                            <p>If tasks are expected but not shown please contact us <asp:HyperLink ID="emailLink" Text="here" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink>.</p>
                                         </div>
                                     </div>
                                 </EmptyDataTemplate>

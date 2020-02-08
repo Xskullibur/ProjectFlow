@@ -2,6 +2,8 @@
 
 <%--Main Master Page--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </asp:Content>

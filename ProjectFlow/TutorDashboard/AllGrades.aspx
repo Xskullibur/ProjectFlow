@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="Grading.aspx.cs" Inherits="ProjectFlow.TutorDashboard.Grading" EnableEventValidation="false"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="AllGrades.aspx.cs" Inherits="ProjectFlow.TutorDashboard.AllGrades" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -186,66 +186,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card card-body projectflow-card-shadow container mt-3">
-        <div class="container-fluid">                       
-            <div class="row mb-3 mt-3">
-                <div class="col">
-                    <div style="overflow-x: auto;">
-                        <asp:GridView ID="GroupScoreGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowCancelingEdit="GroupScoreGV_RowCancelingEdit" OnRowEditing="GroupScoreGV_RowEditing" OnRowUpdating="GroupScoreGV_RowUpdating">
-                            <HeaderStyle CssClass="thead-light" />
-                            <Columns>
-                                <asp:TemplateField HeaderText="Proposal Group (5%)">
-                                    <ItemTemplate>
-                                        <asp:Label ID="ProposalLabel" runat="server" Text='<%# Bind("proposalG") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="editProposalGTB" CssClass="form-control" runat="server" Text='<%# Bind("proposalG") %>'></asp:TextBox>
-                                        <asp:RegularExpressionValidator ID="editProposalGRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editProposalGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="Report Group (5%)">
-                                    <ItemTemplate>
-                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("reportG") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="editReportGTB" CssClass="form-control" runat="server" Text='<%# Bind("reportG") %>'></asp:TextBox>
-                                        <asp:RegularExpressionValidator ID="editReportGRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editReportGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="Presentation Group (5%)">
-                                    <ItemTemplate>
-                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("presentationG") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="editPreGTB" CssClass="form-control" runat="server" Text='<%# Bind("presentationG") %>'></asp:TextBox>
-                                        <asp:RegularExpressionValidator ID="editPreGTBRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editPreGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-                                
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="groupScoreValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
-                                </asp:CommandField>
-                               
-                            </Columns>
-                            <EmptyDataTemplate>
-                                <div class="jumbotron jumbotron-fluid">
-                                    <div class="container">
-                                        <h1 class="display-4">Seem Empty, add some members now!</h1>
-                                        <p>Members not showing?   
-                                            <asp:HyperLink ID="emailLink" Text="click here!" NavigateUrl="mailto:projectflow.nyp.eadp@gmail.com" runat="server"></asp:HyperLink></p>
-                                    </div>
-                                </div>
-                            </EmptyDataTemplate>
-                        </asp:GridView>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row mb-3">               
-            </div>
-        </div>
-    </div>   
+    </div>       
 </asp:Content>

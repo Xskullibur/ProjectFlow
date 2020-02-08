@@ -61,7 +61,7 @@
 
                                 <EmptyDataTemplate>
                                     <div class="container text-center">
-                                      <h2>No Tasks Found.</h2><br>
+                                      <h2>No Room Found.</h2><br>
                                       <i class="fas fa-tasks fa-10x"></i>
                                     </div>
                                 </EmptyDataTemplate>

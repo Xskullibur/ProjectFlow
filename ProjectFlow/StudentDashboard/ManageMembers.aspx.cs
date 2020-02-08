@@ -50,14 +50,15 @@ namespace ProjectFlow.StudentDashboard
 
             TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             int totalRow = MemberGV.Rows.Count;
-            CheckStatus();
+            
 
             if (member.roleID == 1)
             {
                 yourStatus.Text = "Status : Leader";
+                CheckStatus(true);
                 STbtn.Enabled = true;
                 NameTB.ReadOnly = false;
-                changeButton.Enabled = true;
+                changeButton.Enabled = true;                
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
@@ -68,9 +69,12 @@ namespace ProjectFlow.StudentDashboard
             else
             {
                 yourStatus.Text = "Status : Member";
+                CheckStatus(false);
                 STbtn.Enabled = false;
                 NameTB.ReadOnly = true;
                 changeButton.Enabled = false;
+                unlockBtn.Visible = false;
+                lockBtn.Visible = false;
                 for (int i = 0; i < totalRow; i++)
                 {
                     GridViewRow row = MemberGV.Rows[i];
@@ -154,16 +158,26 @@ namespace ProjectFlow.StudentDashboard
             showTeam();
         }
 
-        public void CheckStatus()
+        public void CheckStatus(bool IsLeader)
         {
             ProjectTeam team = teamMemberBLL.FindTeam(GetTeamID());
             if (team.open == false)
             {
                 lockStatus.Text = "Status : Lock";
+                if(IsLeader == true)
+                {
+                    unlockBtn.Visible = true;
+                    lockBtn.Visible = false;
+                }               
             }           
             else
             {
                 lockStatus.Text = "Status : Unlock";
+                if (IsLeader == true)
+                {
+                    unlockBtn.Visible = false;
+                    lockBtn.Visible = true;
+                }              
             }
         }
 

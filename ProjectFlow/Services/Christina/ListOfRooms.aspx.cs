@@ -95,6 +95,7 @@ namespace ProjectFlow.Services.Christina
             //Make gridview row clickable
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                e.Row.CssClass += "pointer";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(roomsGridView, "Select$" + e.Row.RowIndex);
                 e.Row.ToolTip = "Go to this room";
             }
