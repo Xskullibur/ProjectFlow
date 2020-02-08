@@ -35,9 +35,9 @@
                                 <SidebarItems>
                                     <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                     </mio:SidebarItem>
-                                    <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
-                                    </mio:SidebarItem>
                                     <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
+                                    </mio:SidebarItem>
+                                    <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
                                     </mio:SidebarItem>
                                 </SidebarItems>
                             </mio:SidebarGroup>
@@ -78,23 +78,27 @@
                                     <SidebarItems>
                                         <mio:SidebarItem ItemText="Home" RedirectionPage="/ProjectDashboard/ProjectTeamDashboard.aspx" FASLogo="home">
                                         </mio:SidebarItem>
-                                        <mio:SidebarItem ItemText="Members" RedirectionPage="/TutorDashBoard/ProjectMainPage.aspx" FASLogo="address-book">
-                                        </mio:SidebarItem>
                                         <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                         </mio:SidebarItem>
                                         <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
                                         </mio:SidebarItem>
-                                        <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
-                                        </mio:SidebarItem>
-                                        <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="tasks">
-                                        </mio:SidebarItem>
                                     </SidebarItems>
+                                </mio:SidebarGroup>
+                                <mio:SidebarGroup SubHeaderText="Team">
+                                    <mio:SidebarItem ItemText="Members" RedirectionPage="/TutorDashBoard/ProjectMainPage.aspx" FASLogo="address-book">
+                                    </mio:SidebarItem>
                                 </mio:SidebarGroup>
                                 <mio:SidebarGroup SubHeaderText="Issues">
                                     <SidebarItems>
                                         <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
                                         </mio:SidebarItem>
                                     </SidebarItems>
+                                </mio:SidebarGroup>
+                                <mio:SidebarGroup SubHeaderText="Grading">
+                                        <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
+                                        </mio:SidebarItem>
+                                        <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="tasks">
+                                        </mio:SidebarItem>
                                 </mio:SidebarGroup>
                             </Groups>
                         </mio:MaterialSidebar>
