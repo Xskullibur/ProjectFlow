@@ -13,11 +13,10 @@
         <div class="row mb-4">
             <div class="col">
 
-                <div class="card card-body projectflow-card-shadow">
-
+                <div class="card card-body projectflow-card-shadow py-3">
                     <asp:Literal ID="milestoneLiteral" runat="server"></asp:Literal>
-
                 </div>
+
             </div>
         </div>
 
@@ -56,6 +55,12 @@
                                     <asp:BoundField DataField="End" DataFormatString="{0:dd/MM/yyyy}" HeaderText="End" />
                                     <asp:BoundField DataField="Status" HeaderText="Status" />
                                 </Columns>
+                                <EmptyDataTemplate>
+                                    <div class="jumbotron jumbotron-fluid m-0 text-center">
+                                        <h2>No Upcoming Tasks</h2><br>
+                                        <i class="fas fa-check-circle fa-5x text-success"></i>
+                                    </div>
+                                </EmptyDataTemplate>
                                 <HeaderStyle CssClass="thead-light" />
                             </asp:GridView>
                         </div>
@@ -83,6 +88,12 @@
                                     <asp:BoundField DataField="TaskID" HeaderText="Task ID" />
                                     <asp:BoundField DataField="Description" HeaderText="Description" />
                                 </Columns>
+                                <EmptyDataTemplate>
+                                    <div class="jumbotron jumbotron-fluid m-0 text-center">
+                                        <h2>No Issues</h2><br>
+                                        <i class="fas fa-check-circle fa-5x text-success"></i>
+                                    </div>
+                                </EmptyDataTemplate>
                                 <HeaderStyle CssClass="thead-light" />
                             </asp:GridView>
                         </div>
@@ -116,6 +127,12 @@
                                     <asp:BoundField DataField="End" DataFormatString="{0:dd/MM/yyyy}" HeaderText="End" />
                                     <asp:BoundField DataField="Status" HeaderText="Status" />
                                 </Columns>
+                                <EmptyDataTemplate>
+                                    <div class="jumbotron jumbotron-fluid m-0 text-center">
+                                        <h2>No Overdue Tasks</h2><br>
+                                        <i class="fas fa-check-circle fa-5x text-success"></i>
+                                    </div>
+                                </EmptyDataTemplate>
                                 <HeaderStyle CssClass="thead-light" />
                             </asp:GridView>
                         </div>
