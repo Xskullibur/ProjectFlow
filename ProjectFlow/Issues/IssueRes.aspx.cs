@@ -104,12 +104,6 @@ namespace ProjectFlow.Issues
                 Guid Uid = identity.Student.aspnet_Users.UserId;
                 int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
-                // Create Task Object
-                /*Polling newPoll = new Polling();
-                newPoll.issueID = (int)Session["SSIId"];
-                newPoll.voterID = voterId;
-                newPoll.vote = choice;*/
-
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
                 Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], voterId);
@@ -141,7 +135,7 @@ namespace ProjectFlow.Issues
                 CommentForIssue newComment = new CommentForIssue();
                 newComment.comment = tbComments.Text;
                 newComment.issueID = idIssue;
-                newComment.createdBy = voterId;    //this is a placeholder  
+                newComment.createdBy = voterId;   
 
                 // Submit Query
                 CommentForIssueBLL commentBLL = new CommentForIssueBLL();
@@ -203,8 +197,8 @@ namespace ProjectFlow.Issues
             tbComments.Enabled = false;
             btnComment.Visible = false;
             btnComment.Enabled = false;
-            btnAddSolution.Visible = false;
-            btnAddSolution.Enabled = false;
+            //btnAddSolution.Visible = false;
+            //btnAddSolution.Enabled = false;
         }
 
         // Add Task OnClick Event
@@ -330,7 +324,6 @@ namespace ProjectFlow.Issues
 
         protected void Repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            //Repeater rptDemo = sender as Repeater; // Get the Repeater control object.
 
             // If the Repeater contains no data.
             if (Repeater1 != null && Repeater1.Items.Count < 1)
