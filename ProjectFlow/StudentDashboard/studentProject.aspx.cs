@@ -15,6 +15,7 @@ namespace ProjectFlow.DashBoard
     public partial class studentProject : System.Web.UI.Page
     {
         ProjectBLL projectBLL = new ProjectBLL();
+        MilestoneBLL milestoneBLL = new MilestoneBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             var identity = this.User.Identity as ProjectFlowIdentity;
@@ -29,7 +30,8 @@ namespace ProjectFlow.DashBoard
 
         private string getStudentID()
         {
-            return Session["Student"].ToString();
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            return identity.Student.studentID.ToString();
         }
 
         public Guid GetUserID()
@@ -48,8 +50,6 @@ namespace ProjectFlow.DashBoard
             }
         }
 
-
-
         protected void ProjectGV_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = ProjectGV.SelectedRow;
@@ -61,9 +61,17 @@ namespace ProjectFlow.DashBoard
                 ProjectTeamBLL projectTeamBLL = new ProjectTeamBLL();
                 ProjectTeam projectTeam = projectTeamBLL.GetProjectTeamByTeamID(teamID);
 
-                //(Master as ServicesWithContent).SetCurrentProject(projectTeam.Project);
-                (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(int.Parse(row.Cells[2].Text)));
-                //Session["StudentTeamID"] = row.Cells[2].Text;
+                int setTeamID = int.Parse(row.Cells[2].Text);
+                string ProjectID = row.Cells[0].Text;
+
+                if (!milestoneBLL.CheckMilestoneTableIsNotEmpty(setTeamID))
+                {
+                    milestoneBLL.CreateTemplateMilestone(ProjectID, setTeamID);
+                }
+
+                (Master as ServicesWithContent).SetCurrentProject(projectBLL.GetProjectByProjectId(ProjectID));
+                (Master as ServicesWithContent).SetCurrentProjectTeam(projectTeamBLL.GetProjectTeamByTeamID(setTeamID));
+                
 
                 Response.Redirect("/ProjectDashboard/ProjectTeamDashboard.aspx");
             }
@@ -88,7 +96,7 @@ namespace ProjectFlow.DashBoard
 
             IEnumerable<ProjectTeam> avaliableList = studentBLL.ShowAvailbleProject(getStudentID());
             availableGV.DataSource = avaliableList;
-            availableGV.DataBind();
+            availableGV.DataBind();           
         }
 
         public string GetProjectName(string ProjectID)

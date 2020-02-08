@@ -32,7 +32,13 @@
 
                                 <asp:TemplateField HeaderText="Name">
                                     <ItemTemplate>
-                                        <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
+                                        <asp:Label ID="sidLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.studentID")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Name">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") + " " + DataBinder.Eval(Container.DataItem,"Student.lastName") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -116,10 +122,10 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:BoundField HeaderText="Proposal Group (5%)" DataField="proposalG" />
+                                <asp:BoundField HeaderText="Proposal Group (5%)" DataField="proposalG" ReadOnly="true"/>
 
-                                <asp:BoundField DataField="reportG" HeaderText="Report Group (5%)" />
-                                <asp:BoundField DataField="presentationG" HeaderText="Presentation Group (5%)" />
+                                <asp:BoundField DataField="reportG" HeaderText="Report Group (5%)" ReadOnly="true"/>
+                                <asp:BoundField DataField="presentationG" HeaderText="Presentation Group (5%)" ReadOnly="true"/>
 
                                 <asp:TemplateField HeaderText="Total (100%)">
                                     <ItemTemplate>

@@ -163,6 +163,50 @@ namespace ProjectFlow.BLL
             }
         }
 
+        public void CreateDefaultTask(int TeamID, int MilestoneID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var task = new Task {
+                    taskName = "Choosing Theme for Project",
+                    taskDescription = "ask yourn team members to join this group and start to brainstorm ideas",
+                    startDate = DateTime.Now.Date,
+                    endDate = DateTime.Now.AddDays(7).Date,
+                    teamID = TeamID,
+                    milestoneID = MilestoneID,
+                    priorityID = 2,
+                    statusID = 1,
+                    dropped = false
+                };
+                dbContext.Tasks.Add(task);
+                dbContext.SaveChanges();
+            }
+        }
+
+
+        public bool CheckMilestoneTableIsNotEmpty(int TeamID)
+        {
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                return dbContext.Milestones.Any(x => x.teamID == TeamID && x.dropped == false);
+            }
+        }
+
+        public void CreateTemplateMilestone(string ProjectID, int TeamID)
+        {
+            CreateMilestone("Proposal Presentation & Report", ProjectID, TeamID, DateTime.Now.Date, DateTime.Now.Date.AddDays(14));
+            CreateMilestone("Technical Review 1", ProjectID, TeamID, DateTime.Now.Date.AddDays(14), DateTime.Now.Date.AddDays(6*7));
+            CreateMilestone("Technical Review 2", ProjectID, TeamID, DateTime.Now.Date.AddDays(6*7), DateTime.Now.Date.AddDays(8*7));
+            CreateMilestone("Project Completion", ProjectID, TeamID, DateTime.Now.Date.AddDays(8*7), DateTime.Now.Date.AddDays(70));
+            using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
+            {
+                var milestone = dbContext.Milestones.First(x => x.milestoneName.Equals("Proposal Presentation & Report") && x.teamID == TeamID && x.projectID.Equals(ProjectID) && x.dropped == false);
+                CreateDefaultTask(TeamID, milestone.milestoneID);
+            }           
+        }
+
+
+
         public void UpdateMilestone(int MilestoneID, string Name, DateTime StartDate, DateTime EndDate)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
