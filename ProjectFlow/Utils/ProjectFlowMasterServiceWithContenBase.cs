@@ -13,7 +13,7 @@ namespace ProjectFlow.Utils.Base
         /// </summary>
         /// <param name="page"></param>
         /// <param name="headerText"></param>
-        public static void SetHeaderFromServiceWtihContentBase(this Page page, string headerText)
+        public static void SetHeaderFromServiceWithContentBase(this Page page, string headerText)
         {
             (page.Master as ServicesWithContentBase).Header = headerText;
         }

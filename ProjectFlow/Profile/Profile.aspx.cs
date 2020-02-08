@@ -22,7 +22,7 @@ namespace ProjectFlow.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.SetHeaderFromServiceWtihContentBase("Profile informations");
+            this.SetHeaderFromServiceWithContentBase("Profile informations");
             RefreshProfile();
         }
 
