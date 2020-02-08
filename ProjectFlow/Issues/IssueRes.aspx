@@ -157,13 +157,14 @@
                             
                             <%--Public--%>
                             <div>
-                                <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
+                                <asp:Panel ID="Panel1" runat="server">
+                                                                    <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
                                 <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
 
                                 <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                
+                                </asp:Panel>
                             </div>
-                            s
+                            
                         </div>
 
                         <%--Error Summary--%>

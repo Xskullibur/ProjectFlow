@@ -294,7 +294,6 @@ namespace ProjectFlow.Issues
             solution.Update(current_solution);
         }
 
-
         protected void disable_vote()
         {
             btnYes.Enabled = false;
@@ -305,6 +304,11 @@ namespace ProjectFlow.Issues
             btnNo.Visible = false;
             btnNoCount.Visible = false;
             btnRandom.Visible = false;
+        }
+
+        protected void GoBackEvent(object sender, EventArgs e)
+        {
+            Response.Redirect("IssueRes.aspx");
         }
 
     }

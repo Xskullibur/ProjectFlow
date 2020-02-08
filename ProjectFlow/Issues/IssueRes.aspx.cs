@@ -59,6 +59,7 @@ namespace ProjectFlow.Issues
             {
                 //disable comments
                 disablecomments();
+                Panel1.Visible = false;
             }
         }
 
@@ -186,7 +187,8 @@ namespace ProjectFlow.Issues
             else
             {
                 disablecomments();
-
+                btnAddSolution.Visible = false;
+                btnAddSolution.Enabled = false;
                 this.Master.ShowAlert("Issue has been dropped", BootstrapAlertTypes.DANGER);
             }
         }

@@ -9,6 +9,7 @@
                 <div class="card h-100">
                     
                     <div class="card-body">
+                        <asp:Button ID="BackBtn" CssClass="float-right btn-sm btn-primary" runat="server" Text="Back" OnClick="GoBackEvent" />
                         <asp:Label ID="lbSolutionInfo" runat="server" CssClass="card-title"></asp:Label> 
                         <hr/>
                         <asp:Label ID="lbSolutionTitle" runat="server" CssClass="card-title"></asp:Label>  
