@@ -547,6 +547,13 @@
     <Compile Include="Score.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ServicesWithContentBase.Master.cs">
+      <DependentUpon>ServicesWithContentBase.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServicesWithContentBase.Master.designer.cs">
+      <DependentUpon>ServicesWithContentBase.Master</DependentUpon>
+    </Compile>
     <Compile Include="Services\Christina\CreateRoom.aspx.cs">
       <DependentUpon>CreateRoom.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -618,6 +625,7 @@
       <DependentUpon>Grading.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\MaterialIO\MaterialSidebar.cs" />
+    <Compile Include="Utils\ProjectFlowMasterServiceWithContenBase.cs" />
     <Compile Include="Utils\ProjectFlowMasterServiceWithContent.cs" />
     <Compile Include="VoiceRecording.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
@@ -879,6 +887,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="ServicesWithContentBase.Master" />
     <None Include="Services\Christina\_Keys\salt.bin" />
     <Content Include="Services\Web.config" />
     <Content Include="TutorDashboard\Web.config" />

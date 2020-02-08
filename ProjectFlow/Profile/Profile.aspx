@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="ProjectFlow.Profile.Profile" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContentBase.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="ProjectFlow.Profile.Profile" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="headBase" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBase" runat="server">
 
     <div class="container">
         <div class="row">

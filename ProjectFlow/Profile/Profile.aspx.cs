@@ -1,6 +1,6 @@
 ﻿using ProjectFlow.BLL;
 using ProjectFlow.Login;
-using ProjectFlow.Utils;
+using ProjectFlow.Utils.Base;
 using ProjectFlow.Utils.Alerts;
 using ProjectFlow.Utils.Bootstrap;
 using System;
@@ -22,7 +22,7 @@ namespace ProjectFlow.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.SetHeader("Profile informations");
+            this.SetHeaderFromServiceWtihContentBase("Profile informations");
             RefreshProfile();
         }
 
