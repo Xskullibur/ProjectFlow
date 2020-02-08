@@ -37,9 +37,14 @@
                                     </mio:SidebarItem>
                                     <mio:SidebarItem ItemText="Tasks" RedirectionPage="/Tasks/OngoingTaskView.aspx" AlsoSelectedForPages="/Tasks/DroppedTaskView.aspx,/Tasks/CalendarView.aspx" FASLogo="tasks">
                                     </mio:SidebarItem>
-                                    <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
-                                    </mio:SidebarItem>
+                                    
                                 </SidebarItems>
+                            </mio:SidebarGroup>
+                            <mio:SidebarGroup SubHeaderText="Team">
+                                    <SidebarItems>
+                                        <mio:SidebarItem ItemText="Members" RedirectionPage="/StudentDashboard/ManageMembers.aspx" FASLogo="address-book">
+                                        </mio:SidebarItem>
+                                    </SidebarItems>
                             </mio:SidebarGroup>
                             <mio:SidebarGroup SubHeaderText="Storage">
                                 <SidebarItems>
