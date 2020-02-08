@@ -24,8 +24,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <TypeScriptToolsVersion>3.6</TypeScriptToolsVersion>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,6 +95,9 @@
     <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
       <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.0.22\lib\net472\Pipelines.Sockets.Unofficial.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz, Version=3.0.7.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.3.0.7\lib\net452\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.0.601\lib\net472\StackExchange.Redis.dll</HintPath>
     </Reference>
@@ -119,11 +122,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="Quartz, Version=3.0.7.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Quartz.3.0.7\lib\net452\Quartz.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
@@ -158,17 +158,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-toast\toast.min.css" />
-    <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.css" />
-    <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Content\bootstrap-toast\toast.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.css" />
+    <Content Include="Content\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\ProjectFlow\CSS\christina.css" />
     <Content Include="Content\ProjectFlow\CSS\effect\live-ring.css" />
     <Content Include="Content\ProjectFlow\CSS\main.css" />
@@ -210,6 +210,17 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Bootstrap_DateTimePicker\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\calendar\calendarscript.js" />
+    <Content Include="Bundle.config" />
+    <Content Include="Main.Master" />
+    <Content Include="obj\Release\ProjectFlow.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\ProjectFlow.csprojAssemblyReference.cache" />
+    <Content Include="Issues\IssueNested.master" />
+    <Content Include="Logon.Master" />
+    <Content Include="FileManagement\_KEYS\IV.bin" />
+    <Content Include="FileManagement\_KEYS\KEY.bin" />
+    <Content Include="Profile\Web.config" />
+    <Content Include="Issues\Web.config" />
+    <Content Include="Issues\IssueNested.master" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -228,8 +239,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Bundle.config" />
-    <Content Include="Main.Master" />
     <Content Include="Scripts\i18n\defaults-am_ET.js" />
     <Content Include="Scripts\i18n\defaults-am_ET.min.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
@@ -346,18 +355,25 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="obj\Release\ProjectFlow.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Release\ProjectFlow.csprojAssemblyReference.cache" />
-    <Content Include="Issues\IssueNested.master" />
-    <Content Include="Logon.Master" />
-    <Content Include="FileManagement\_KEYS\IV.bin" />
-    <Content Include="FileManagement\_KEYS\KEY.bin" />
-    <Content Include="Profile\Web.config" />
-    <Content Include="Issues\Web.config" />
-    <Content Include="Issues\IssueNested.master" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_nav_postback.js" />
     <Content Include="Scripts\ProjectFlow\TeamDashboard.js" />
     <Content Include="Scripts\ProjectFlow\whiteboard.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Christina\CreateRoom.aspx" />
     <Content Include="Services\Whiteboard\Whiteboard.aspx" />
     <Content Include="Services\Whiteboard\WhiteboardList.aspx" />
@@ -371,29 +387,14 @@
     <Content Include="ProjectFlowDB.edmx.diagram">
       <DependentUpon>ProjectFlowDB.edmx</DependentUpon>
     </Content>
+    <None Include="packages.config" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Issues\Web.config" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
-    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\ProjectFlow\christina-worker.js" />
     <Content Include="Scripts\ProjectFlow\christina.js" />
     <Content Include="Scripts\ProjectFlow\materialio_selection_postback.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Services\Christina\RoomDetail.aspx" />
     <Content Include="Services\Christina\Christina.aspx" />
     <Content Include="Services\Christina\ListOfRooms.aspx" />
@@ -403,6 +404,7 @@
     <Content Include="Tasks\EmailTest.aspx" />
     <Content Include="TutorDashboard\AddMilestone.aspx" />
     <Content Include="StudentDashboard\FileUpload.aspx" />
+    <Content Include="TutorDashboard\AllGrades.aspx" />
     <Content Include="TutorDashboard\Grading.aspx" />
     <Content Include="TutorDashboard\ProjectMainPage.aspx" />
     <Content Include="TutorDashboard\ProjectMenu.aspx" />
@@ -600,6 +602,13 @@
     </Compile>
     <Compile Include="Tutor.cs">
       <DependentUpon>ProjectFlowDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TutorDashboard\AllGrades.aspx.cs">
+      <DependentUpon>AllGrades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TutorDashboard\AllGrades.aspx.designer.cs">
+      <DependentUpon>AllGrades.aspx</DependentUpon>
     </Compile>
     <Compile Include="TutorDashboard\Grading.aspx.cs">
       <DependentUpon>Grading.aspx</DependentUpon>
@@ -853,8 +862,12 @@
     <Compile Include="Utils\SemanticsParsing.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <Content Include="ServicesWithContent.Master" />
+    <Content Include="Tasks\TaskNested.master" />
+    <Content Include="Tasks\Web.config" />
+    <Content Include="Services\Christina\_Keys\rsa.private" />
+    <Content Include="Services\Christina\_Keys\rsa.public" />
+    <Content Include="Services\Christina\_Keys\key.bin" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -866,11 +879,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Tasks\TaskNested.master" />
-    <Content Include="Tasks\Web.config" />
-    <Content Include="Services\Christina\_Keys\rsa.private" />
-    <Content Include="Services\Christina\_Keys\rsa.public" />
-    <Content Include="Services\Christina\_Keys\key.bin" />
     <None Include="Services\Christina\_Keys\salt.bin" />
     <Content Include="Services\Web.config" />
     <Content Include="TutorDashboard\Web.config" />
@@ -889,11 +897,11 @@
     <Folder Include="Services\Whiteboard\StrokesPath\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

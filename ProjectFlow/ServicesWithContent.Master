@@ -195,7 +195,9 @@
                                                 </mio:SidebarItem>
                                                 <mio:SidebarItem ItemText="Milestone" RedirectionPage="/TutorDashBoard/AddMilestone.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>
-                                                <mio:SidebarItem ItemText="Grade" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
+                                                <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
+                                                </mio:SidebarItem>
+                                                <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="tasks">
                                                 </mio:SidebarItem>
                                             </SidebarItems>
                                         </mio:SidebarGroup>

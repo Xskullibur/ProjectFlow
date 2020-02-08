@@ -12,27 +12,27 @@ using System.Web.UI.WebControls;
 
 namespace ProjectFlow.TutorDashboard
 {
-    public partial class Grading : System.Web.UI.Page
+    public partial class AllGrades : System.Web.UI.Page
     {
         TeamMemberBLL teamMemberBLL = new TeamMemberBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if(GetProjectD() != null && GetTeamID().ToString() != null)
+                if (GetProjectD() != null && GetTeamID().ToString() != null)
                 {
                     ShowGrade();
-                    this.SetHeader("Student's Grades");
+                    this.SetHeader("ALL Student's Grades For This Module");
                 }
                 else
                 {
                     Response.Redirect("ProjectTeamMenu.aspx");
-                }              
+                }
             }
         }
 
         private int GetTeamID()
-        {           
+        {
             return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
@@ -43,45 +43,20 @@ namespace ProjectFlow.TutorDashboard
 
         private void ShowGrade()
         {
-            List<Score> studentList = teamMemberBLL.GetGradeByTeamID(GetTeamID());
+            List<Score> studentList = teamMemberBLL.GetGradeByProjectID(GetProjectD());
             gradeGV.DataSource = studentList;
-            gradeGV.DataBind();
-            HideGroupScore();
-
-            GroupScoreGV.DataSource = studentList;
-            GroupScoreGV.DataBind();
-            for(int i = 1; i < studentList.Count; i++)
-            {
-                GridViewRow row = GroupScoreGV.Rows[i];
-                row.Visible = false;
-            }
+            gradeGV.DataBind();                    
         }
 
-        public string CheckFailure(double score)
+        protected void gradeGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            if(score >= 80)
-            {
-                return "<i style=\"color: green;\" class=\"fas fa-lg fa-trophy\"></i>";
-            }
-            else if (score >= 50 && score < 80)
-            {
-                return "<i style=\"color: green;\" class=\"fas fa-lg fa-check-circle\"></i>";
-            }
-            else
-            {
-                return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
-            }
-        }
-
-        protected void MemberGV_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-
-        }
-
-        protected void gradeGV_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            gradeGV.EditIndex = e.NewEditIndex;
+            gradeGV.EditIndex = -1;
             ShowGrade();
+        }
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+
         }
 
         protected void gradeGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -162,8 +137,9 @@ namespace ProjectFlow.TutorDashboard
                 }
                 gradeGV.EditIndex = -1;
                 ShowGrade();
-               
-            }catch(System.FormatException exception)
+
+            }
+            catch (System.FormatException exception)
             {
                 gradeGV.EditIndex = -1;
                 ShowGrade();
@@ -176,115 +152,46 @@ namespace ProjectFlow.TutorDashboard
 
         }
 
-        protected void refreshBtn_Click(object sender, EventArgs e)
+        protected void gradeGV_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            gradeGV.EditIndex = e.NewEditIndex;
             ShowGrade();
-        }
-
-        protected void gradeGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            gradeGV.EditIndex = -1;
-            ShowGrade();
-        }
-
-        protected void GroupScoreGV_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GroupScoreGV.EditIndex = e.NewEditIndex;
-            ShowGrade();
-        }
-
-        protected void GroupScoreGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GroupScoreGV.EditIndex = -1;
-            ShowGrade();
-        }
-
-        protected void GroupScoreGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            GridViewRow row = GroupScoreGV.Rows[e.RowIndex];
-            bool status = true;
-
-            TextBox editProposalGlTB = (TextBox)row.FindControl("editProposalGTB");
-            TextBox editReportGTB = (TextBox)row.FindControl("editReportGTB");
-            TextBox editPreGTB = (TextBox)row.FindControl("editPreGTB");
-
-            try
-            {
-                float proposal = float.Parse(editProposalGlTB.Text);
-                float report = float.Parse(editReportGTB.Text);
-                float pre = float.Parse(editPreGTB.Text);
-
-                if (proposal < 0 || proposal > 5)
-                {
-                    status = false;
-                }
-
-                if (report < 0 || report > 5)
-                {
-                    status = false;
-                }
-
-                if (pre < 0 || pre > 5)
-                {
-                    status = false;
-                }
-
-                if (status == true)
-                {
-                    teamMemberBLL.UpdateGroupScore(GetTeamID(), proposal, report, pre);
-                    Master.ShowAlert("Group Score Updated Successfully", BootstrapAlertTypes.SUCCESS);
-                }
-                else
-                {
-                    Master.ShowAlert("value must be in range", BootstrapAlertTypes.DANGER);
-                }
-
-                GroupScoreGV.EditIndex = -1;
-                ShowGrade();
-                
-            }catch(System.FormatException exception)
-            {
-                GroupScoreGV.EditIndex = -1;
-                ShowGrade();
-                Master.ShowAlert("value must be a number", BootstrapAlertTypes.DANGER);
-            }
         }
 
         protected void exportBtn_Click(object sender, EventArgs e)
-        {           
+        {
             Response.ClearContent();
             Response.AppendHeader("content-disposition", "attachment; filename=marks.xls");
             Response.ContentType = "application/excel";
 
             StringWriter stringWriter = new StringWriter();
             HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
-
-            ShowGroupScore();
-           
+            
             gradeGV.RenderControl(htmlTextWriter);
             Response.Write(stringWriter.ToString());
             Response.End();
-
-            HideGroupScore();
-        }
-
-        public void HideGroupScore()
-        {
-            gradeGV.Columns[10].Visible = false;
-            gradeGV.Columns[11].Visible = false;
-            gradeGV.Columns[12].Visible = false;
-        }
-
-        public void ShowGroupScore()
-        {
-            gradeGV.Columns[10].Visible = true;
-            gradeGV.Columns[11].Visible = true;
-            gradeGV.Columns[12].Visible = true;
-        }
-
-        public override void VerifyRenderingInServerForm(Control control)
-        {
             
+        }
+
+        protected void refreshBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public string CheckFailure(double score)
+        {
+            if (score >= 80)
+            {
+                return "<i style=\"color: green;\" class=\"fas fa-lg fa-trophy\"></i>";
+            }
+            else if (score >= 50 && score < 80)
+            {
+                return "<i style=\"color: green;\" class=\"fas fa-lg fa-check-circle\"></i>";
+            }
+            else
+            {
+                return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
+            }
         }
     }
 }
