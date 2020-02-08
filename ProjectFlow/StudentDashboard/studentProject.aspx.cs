@@ -30,7 +30,8 @@ namespace ProjectFlow.DashBoard
 
         private string getStudentID()
         {
-            return Session["Student"].ToString();
+            var identity = this.User.Identity as ProjectFlowIdentity;
+            return identity.Student.studentID.ToString();
         }
 
         public Guid GetUserID()

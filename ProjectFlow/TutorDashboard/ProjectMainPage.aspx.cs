@@ -54,8 +54,7 @@ namespace ProjectFlow
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
-            List<string> errorList = new List<string> { };           
-            int teamID = int.Parse(Session["PassTeamID"].ToString());
+            List<string> errorList = new List<string> { };                       
             int roleID = 0;
                     
             if(studentList.SelectedIndex == -1)
@@ -81,7 +80,7 @@ namespace ProjectFlow
                             roleID = 1;
                         }
                     }
-                    errorList = bll.ValidateInsertMember(item.Value.ToString(), teamID, roleID);
+                    errorList = bll.ValidateInsertMember(item.Value.ToString(), GetTeamID(), roleID);
                 }
                 
             }
