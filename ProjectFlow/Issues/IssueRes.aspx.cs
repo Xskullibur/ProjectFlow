@@ -362,6 +362,7 @@ namespace ProjectFlow.Issues
             //Make gridview row clickable
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                e.Row.CssClass += "pointer";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(solutionView, "Select$" + e.Row.RowIndex);
                 e.Row.ToolTip = "Go to this room";
 
@@ -392,6 +393,39 @@ namespace ProjectFlow.Issues
         public int GetTeamID()
         {
             return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
+        }
+
+        private bool verifyAddSolution()
+        {
+            bool result = true;
+
+            // Task Name
+            if (string.IsNullOrEmpty(tNameTxt.Text))
+            {
+                tNameRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            if (tNameTxt.Text.Length > 50)
+            {
+                tNameRegexValidator.IsValid = false;
+                result = false;
+            }
+
+            // Description
+            if (string.IsNullOrEmpty(tDescTxt.Text))
+            {
+                tDescRequiredValidator.IsValid = false;
+                result = false;
+            }
+
+            if (tDescTxt.Text.Length > 500)
+            {
+                tDescRegexValidator.IsValid = false;
+                result = false;
+            }
+
+            return result;
         }
 
     }
