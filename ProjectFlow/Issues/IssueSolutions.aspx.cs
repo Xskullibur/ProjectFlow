@@ -79,6 +79,8 @@ namespace ProjectFlow.Issues
                     //creating button for file download
                     if(current_solution.associatedFile != null)
                     {
+                        Button1.Enabled = true;
+                        Button1.Visible = true;
                         Button1.Text = current_solution.associatedFile;
                     }
 

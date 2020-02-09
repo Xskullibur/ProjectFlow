@@ -45,7 +45,6 @@ namespace ProjectFlow.Issues
                 // Status
                 Info infomation = new Info();
                 List<string> fileList = infomation.getfilenames(GetTeamID());
-                fileList.Add("-");
 
                 IssueStatusDLL.DataSource = fileList;
 

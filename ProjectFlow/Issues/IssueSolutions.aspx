@@ -18,7 +18,7 @@
                         <%--Repuposed Filter Panel--%>
 
                         <asp:Panel ID="currentFiltersPanel" CssClass="d-flex flex-wrap" runat="server">
-                            <asp:Button ID="Button1" runat="server" Text="Button" CssClass="btn btn-danger my-4 mr-1" OnClick="download_Click" />
+                            <asp:Button ID="Button1" runat="server" CssClass="btn btn-danger my-4 mr-1" OnClick="download_Click" Enabled="False" Visible="False" />
                         </asp:Panel>
                             
                     </div>
