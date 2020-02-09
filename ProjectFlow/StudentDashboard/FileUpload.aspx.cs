@@ -214,11 +214,11 @@ namespace ProjectFlow.DashBoard
                 File.Copy(theFile, destinationFolder + newFileName);
 
                 decryption.DecryptFile(destinationFolder + newFileName);
-                DownloadFile(newFileName, destinationFolder);
+                DownloadFile(newFileName, destinationFolder, true);
             }
             else
             {           
-                DownloadFile("(PLAIN)" + fileName, storagePath);
+                DownloadFile("(PLAIN)" + fileName, storagePath, false);
             }            
         }
 
@@ -251,14 +251,17 @@ namespace ProjectFlow.DashBoard
             ShowModel();
         }      
         
-        private void DownloadFile(string FileName, string Path)
+        private void DownloadFile(string FileName, string Path, bool isEncrypted)
         {              
             Response.Clear();
             Response.ContentType = "application/octect-stream";
             Response.AddHeader("Content-Disposition", "filename=" + FileName);
             Response.TransmitFile(Path + FileName);
             Response.Flush();
-            File.Delete(Path + FileName);
+            if (isEncrypted)
+            {
+                File.Delete(Path + FileName);
+            }            
             Response.End();
         }
 
@@ -352,7 +355,7 @@ namespace ProjectFlow.DashBoard
                 {
                     File.Copy(ViewState["theFile"].ToString(), ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString());
                     decryption.DecryptFileWithKey(ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString(), deKeyTB.Text);
-                    DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString());
+                    DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString(), true);
                 }
                 catch (System.Security.Cryptography.CryptographicException exception)
                 {
