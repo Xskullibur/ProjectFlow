@@ -167,9 +167,16 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="studentScoreValidation">
-                                    <ControlStyle CssClass="btn btn-primary" />
-                                </asp:CommandField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button Text="Edit" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="studentScoreValidation" />
+                                        </br>
+                                        <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>                                
                                
                             </Columns>
                             <EmptyDataTemplate>
@@ -213,7 +220,7 @@
 
                                 <asp:TemplateField HeaderText="Report Group (5%)">
                                     <ItemTemplate>
-                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("reportG") %>'></asp:Label>
+                                        <asp:Label ID="rgLabel" runat="server" Text='<%# Bind("reportG") %>'></asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editReportGTB" CssClass="form-control" runat="server" Text='<%# Bind("reportG") %>'></asp:TextBox>
@@ -223,17 +230,24 @@
 
                                 <asp:TemplateField HeaderText="Presentation Group (5%)">
                                     <ItemTemplate>
-                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("presentationG") %>'></asp:Label>
+                                        <asp:Label ID="pgLabel" runat="server" Text='<%# Bind("presentationG") %>'></asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="editPreGTB" CssClass="form-control" runat="server" Text='<%# Bind("presentationG") %>'></asp:TextBox>
                                         <asp:RegularExpressionValidator ID="editPreGTBRegexValidator" runat="server" ValidationGroup="groupScoreValidation" validationexpression="\b(0?[0-5])\b" ControlToValidate="editPreGTB" ErrorMessage="0-5 only!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="groupScoreValidation">
-                                    <ControlStyle CssClass="btn btn-primary" />
-                                </asp:CommandField>
+                                                              
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button Text="Edit" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="groupScoreValidation" />
+                                        </br>
+                                        <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
                                
                             </Columns>
                             <EmptyDataTemplate>

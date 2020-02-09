@@ -183,10 +183,17 @@
                             <asp:CommandField SelectText="View Team" ShowSelectButton="True" ButtonType="Button">
                                 <ControlStyle CssClass="btn btn-primary" />
                             </asp:CommandField>
-
-                            <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                <ControlStyle CssClass="btn btn-primary" />
-                            </asp:CommandField>
+                           
+                            <asp:TemplateField>
+                                <ItemTemplate>                     
+                                   <asp:Button Text="Edit Module" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                </ItemTemplate>
+                                <edititemtemplate>
+					                <asp:Button id="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" commandname="Update" text="Update" ValidationGroup="tableValidation"/>
+                                    </br>
+					                <asp:Button id="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" commandname="Cancel" text="Cancel" />
+				               </edititemtemplate>             
+                            </asp:TemplateField>
 
                             <asp:TemplateField>
                                 <ItemTemplate>                     

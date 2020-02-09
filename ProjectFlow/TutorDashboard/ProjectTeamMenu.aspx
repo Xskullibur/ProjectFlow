@@ -419,9 +419,17 @@
                                 <asp:CommandField ButtonType="Button" SelectText="Dashboard" ShowSelectButton="True">
                                     <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                    <ControlStyle CssClass="btn btn-primary" />
-                                </asp:CommandField> 
+                                
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button Text="Edit Team" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="tableValidation" />
+                                        </br>
+                                        <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
                             
                                 <asp:TemplateField>
                                     <ItemTemplate>                     
