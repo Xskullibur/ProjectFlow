@@ -57,12 +57,12 @@
         <div class="sticky-top">
             <nav class="navbar content-nav navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
-                    <img class="pb-2" src="/Content/ProjectFlow/Images/ProjectFlow.png" width="125" height="125" alt=""
+                    <img class="pb-2" src="/Content/ProjectFlow/Images/ProjectFlow.png" width="125" height="125" alt="" />
                   </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">                        
                         <li class="nav-item">
-                            <asp:LinkButton ID="ProjectBtn" CssClass="nav-link" runat="server" OnClick="ProjectBtnEvent" CausesValidation="False">Projects</asp:LinkButton>
+                            <asp:LinkButton ID="ProjectBtn" CssClass="nav-link" runat="server" OnClick="ProjectBtnEvent">Projects</asp:LinkButton>
                         </li>    
                     </ul>
                 </div>
