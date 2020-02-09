@@ -63,6 +63,11 @@ namespace ProjectFlow.BLL
                 errorList.Add("End Date not valid<br>");
             }
 
+            if(DateTime.Parse(StartDate) > DateTime.Parse(EndDate))
+            {
+                errorList.Add("start date cannot be later than end date<br>");
+            }
+
             if(errorList.Count == 0)
             {
                 CreateMilestone(Name, ProjectID, TeamID, Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
@@ -169,7 +174,7 @@ namespace ProjectFlow.BLL
             {
                 var task = new Task {
                     taskName = "Choosing Theme for Project",
-                    taskDescription = "ask yourn team members to join this group and start to brainstorm ideas",
+                    taskDescription = "ask your team members to join this group and start to brainstorm ideas",
                     startDate = DateTime.Now.Date,
                     endDate = DateTime.Now.AddDays(7).Date,
                     teamID = TeamID,

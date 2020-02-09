@@ -52,7 +52,8 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
 
         protected void DeletedTeamGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            DeletedTeamGV.PageIndex = e.NewPageIndex;
+            DisplayTeam();
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)

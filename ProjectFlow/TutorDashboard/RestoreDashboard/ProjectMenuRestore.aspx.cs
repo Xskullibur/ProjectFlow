@@ -55,7 +55,8 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
 
         protected void projectRestoreGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            projectRestoreGV.PageIndex = e.NewPageIndex;
+            DisplayProject();
         }
 
         protected void projectRestoreGV_SelectedIndexChanged(object sender, EventArgs e)

@@ -133,12 +133,27 @@
                                         <asp:Label ID="roleLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Role.role1") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
-                                </asp:CommandField>
+
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
+                                        <asp:Button Text="Edit Role" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="tableValidation" />
+                                        </br>
+                                        <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="DeleteButton" Text="Delete" runat="server"
+                                            CssClass="btn btn-danger"
+                                            data-toggle="confirmation"
+                                            data-btn-ok-icon-class="fa fa-check"
+                                            data-btn-cancel-icon-class="fa fa-close"
+                                            data-popout="true"
+                                            CommandName="Delete" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
