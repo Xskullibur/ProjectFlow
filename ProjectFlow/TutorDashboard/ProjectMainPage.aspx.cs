@@ -19,7 +19,7 @@ namespace ProjectFlow
             if (Page.IsPostBack == false)
             {
                 ShowMember();
-                this.SetHeader("Team Members that are in this team");
+                this.SetHeader("Members that are in this team: (" + (Master as ServicesWithContent).CurrentProjectTeam.teamName + ")");
             }
         }
         public int GetTeamID()

@@ -149,7 +149,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField>
+                                <asp:TemplateField HeaderText="Grade">
                                     <ItemTemplate>
                                         <%# CheckFailure(
                                          (double)Eval("participation") +
@@ -163,7 +163,7 @@
                                          (double)Eval("reportG") +
                                          (double)Eval("presentationG") +
                                          (double)Eval("proposalG")
-                                        ) %>
+                                        )%>                                
                                     </ItemTemplate>
                                 </asp:TemplateField>
 

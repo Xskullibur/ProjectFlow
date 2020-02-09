@@ -164,7 +164,7 @@ namespace ProjectFlow.StudentDashboard
             ProjectTeam team = teamMemberBLL.FindTeam(GetTeamID());
             if (team.open == false)
             {
-                lockStatus.Text = "Status : Lock";
+                lockStatus.Text = "Joinable : Lock";
                 if(IsLeader == true)
                 {
                     unlockBtn.Visible = true;
@@ -173,7 +173,7 @@ namespace ProjectFlow.StudentDashboard
             }           
             else
             {
-                lockStatus.Text = "Status : Unlock";
+                lockStatus.Text = "Joinable : Unlock";
                 if (IsLeader == true)
                 {
                     unlockBtn.Visible = false;
