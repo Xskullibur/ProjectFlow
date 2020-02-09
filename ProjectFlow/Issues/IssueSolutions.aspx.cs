@@ -79,7 +79,7 @@ namespace ProjectFlow.Issues
                     //creating button for file download
                     if(current_solution.associatedFile != null)
                     {
-                        file_link(current_solution.associatedFile);
+                        Button1.Text = current_solution.associatedFile;
                     }
 
                     // other checks

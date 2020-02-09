@@ -157,7 +157,7 @@
 
                             <%--File selector--%>
                             <div class="form-group">
-                                <asp:Label CssClass="control-label" Text="Files:" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:Label CssClass="control-label" Text="Attach File (only plain):" AssociatedControlID="IssueStatusDLL" runat="server" />
                                 <asp:DropDownList ID="IssueStatusDLL" CssClass="form-control" runat="server"></asp:DropDownList>
 
                                 <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>

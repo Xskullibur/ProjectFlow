@@ -92,7 +92,18 @@ namespace ProjectFlow.FileManagement
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\";
             foreach (string file in Directory.GetFiles(path))
             {
-                filenamelist.Add(Path.GetFileName(file));
+                string pathname = Path.GetFileName(file);
+
+                if (pathname.StartsWith("(PLAIN)"))
+                {
+                    pathname = pathname.Substring(7);
+                    filenamelist.Add(pathname);
+                }
+                else
+                {
+
+                }
+            
             }
             return filenamelist;
         }
