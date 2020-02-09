@@ -22,7 +22,7 @@ namespace ProjectFlow.TutorDashboard
                 if(GetProjectD() != null && GetTeamID().ToString() != null)
                 {
                     ShowGrade();
-                    this.SetHeader("Student's Grades");
+                    this.SetHeader("Student's Grades for team: (" + (Master as ServicesWithContent).CurrentProjectTeam.teamName + ")");
                 }
                 else
                 {

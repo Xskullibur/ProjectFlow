@@ -19,7 +19,7 @@ namespace ProjectFlow.DashBoard
             if (Page.IsPostBack == false)
             {
                 ShowMilestone();
-                this.SetHeader("Milestone belonging to this team");
+                this.SetHeader("Milestone for team: (" + (Master as ServicesWithContent).CurrentProjectTeam.teamName + ")");
             }
         }
 
