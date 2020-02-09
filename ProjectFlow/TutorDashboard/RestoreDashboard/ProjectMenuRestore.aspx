@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="ProjectMenuRestore.aspx.cs" Inherits="ProjectFlow.TutorDashboard.RestoreDashboard.ProjectMenuRestore" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContentBase.Master" AutoEventWireup="true" CodeBehind="ProjectMenuRestore.aspx.cs" Inherits="ProjectFlow.TutorDashboard.RestoreDashboard.ProjectMenuRestore" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="headBase" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBase" runat="server">
     <div class="card card-body projectflow-card-shadow container">       
             <div class="row mb-3 mt-3">
                 <div class="col-3">
@@ -74,12 +74,5 @@
                     <asp:Button ID="refreshBtn" CssClass="btn btn-primary" runat="server" Text="Refresh" OnClick="refreshBtn_Click" />
                 </div>
             </div>
-    </div>
-    </div>   
-    <script>
-        $(document).ready(function () {
-            hideSidebar();
-            $('#CreateProject').modal('hide');
-        });
-    </script>
+    </div>    
 </asp:Content>

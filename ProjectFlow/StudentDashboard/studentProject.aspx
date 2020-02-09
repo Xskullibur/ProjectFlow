@@ -21,11 +21,7 @@
                             <asp:GridView ID="ProjectGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" OnRowDataBound="OnRowDataBound" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="ProjectGV_SelectedIndexChanged">
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Module ID">
-                                        <ItemTemplate>
-                                            <asp:Label ID="midLabel" runat="server" Text='<%# Bind("projectID") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="projectID" HeaderText="Module ID" />
                                     <asp:TemplateField HeaderText="Module Name">
                                         <ItemTemplate>
                                             <asp:Label ID="nameLabel" runat="server" Text='<%# GetProjectName(Eval("projectID").ToString()) %>'></asp:Label>

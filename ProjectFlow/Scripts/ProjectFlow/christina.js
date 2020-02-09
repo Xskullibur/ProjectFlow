@@ -5,10 +5,7 @@ let websocket_worker = new Worker('/Scripts/ProjectFlow/christina-worker.js');
 let recorder = null;
 
 $(document).ready(function () {
-    var christinaHub = $.connection.christina;
-
-    //Clear textbox
-    //$('#ContentPlaceHolder_TranscriptTxtBox').val('');
+    var christinaHub = $.connection.christina;;
 
     let createdRoom = localStorage.getItem('create_room') === 'true' || false;
     christinaHub.client.sendPassword = function (password) {
@@ -50,8 +47,8 @@ $(document).ready(function () {
 
     christinaHub.client.sendRoomID = function (roomID) {
         localStorage.setItem('room_id', roomID);
-        $('#ContentPlaceHolder_RoomID').val(roomID);
-        document.getElementById('ContentPlaceHolder_RoomUpdateEventLinkBtn').click();
+        $('#ContentPlaceHolderBase_ContentPlaceHolder_RoomID').val(roomID);
+        document.getElementById('ContentPlaceHolderBase_ContentPlaceHolder_RoomUpdateEventLinkBtn').click();
     }
 
 

@@ -30,9 +30,15 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
+                                <asp:TemplateField HeaderText="Student ID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="sidLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.studentID")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
                                 <asp:TemplateField HeaderText="Name">
                                     <ItemTemplate>
-                                        <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") %>'></asp:Label>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# DataBinder.Eval(Container.DataItem,"Student.firstName") + " " + DataBinder.Eval(Container.DataItem,"Student.lastName") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 

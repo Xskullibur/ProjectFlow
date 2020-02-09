@@ -62,7 +62,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(PageSelectDP.SelectedIndex == 0)
+            if(PageSelectDP.SelectedIndex == 1)
             {
                 Response.Redirect("../ProjectTeamMenu.aspx");
             }

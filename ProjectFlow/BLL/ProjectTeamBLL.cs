@@ -34,7 +34,7 @@ namespace ProjectFlow.BLL
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
                 return dbContext.Projects.Find(project.projectID).ProjectTeams.
-                    SingleOrDefault(team => team.TeamMembers.Any(tm => tm.Student.studentID.Equals(student.studentID)));
+                    SingleOrDefault(team => team.TeamMembers.Any(tm => tm.Student.studentID.Equals(student.studentID) && tm.dropped == false));
             }
         }
 

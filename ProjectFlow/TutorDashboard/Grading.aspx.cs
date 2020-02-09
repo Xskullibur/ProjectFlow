@@ -270,14 +270,14 @@ namespace ProjectFlow.TutorDashboard
 
         public void HideGroupScore()
         {
-            gradeGV.Columns[10].Visible = false;
+            gradeGV.Columns[13].Visible = false;
             gradeGV.Columns[11].Visible = false;
             gradeGV.Columns[12].Visible = false;
         }
 
         public void ShowGroupScore()
         {
-            gradeGV.Columns[10].Visible = true;
+            gradeGV.Columns[13].Visible = true;
             gradeGV.Columns[11].Visible = true;
             gradeGV.Columns[12].Visible = true;
         }

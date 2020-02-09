@@ -102,7 +102,7 @@ namespace ProjectFlow.StudentDashboard
             TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             if(int.Parse(row.Cells[0].Text) == member.memberID)
             {
-                Master.ShowAlert("You cannot kick yourselft", BootstrapAlertTypes.DANGER);               
+                Master.ShowAlert("You cannot kick yourself", BootstrapAlertTypes.DANGER);               
             }
             else
             {
