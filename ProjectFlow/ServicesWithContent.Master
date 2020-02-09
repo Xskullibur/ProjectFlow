@@ -103,9 +103,9 @@
                                 </mio:SidebarGroup>
                                 <mio:SidebarGroup SubHeaderText="Grading">
                                     <SidebarItems>
-                                        <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="tasks">
+                                        <mio:SidebarItem ItemText="Team Grades" RedirectionPage="/TutorDashBoard/Grading.aspx" FASLogo="graduation-cap">
                                         </mio:SidebarItem>
-                                        <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="tasks">
+                                        <mio:SidebarItem ItemText="All Grades" RedirectionPage="/TutorDashBoard/AllGrades.aspx" FASLogo="graduation-cap">
                                         </mio:SidebarItem>
                                     </SidebarItems>
                                 </mio:SidebarGroup>
