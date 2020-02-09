@@ -20,7 +20,9 @@ namespace ProjectFlow.DashBoard
             if (!IsPostBack)
             {               
                 ShowTeam();
-                this.SetHeader("Teams that are in this Module: (" + (Master as ServicesWithContent).CurrentProject.projectName + ")");
+                string projectID = (Master as ServicesWithContent).CurrentProject.projectID;
+                string projectName = (Master as ServicesWithContent).CurrentProject.projectName;
+                this.SetHeader($"Teams that are in {projectName} ({projectID})");
             }              
         }
         public string GetProjectID()

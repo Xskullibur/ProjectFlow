@@ -197,13 +197,21 @@
                                     </div>
                                 </div>
 
+                                <%--Milestone Filter--%>                                
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <asp:Label CssClass="control-label" Text="Milestone:" AssociatedControlID="fMilestoneListbox" runat="server" />
+                                        <asp:ListBox ID="fMilestoneListbox" CssClass="selectpicker form-control" data-actions-box="true" runat="server"></asp:ListBox>
+                                    </div>
+                                </div>                        
+
                                 <%--Priority Filter--%>
                                 <div class="row mb-3">
                                     <div class="col">
                                         <asp:Label CssClass="control-label" Text="Priority:" AssociatedControlID="fPriorityListBox" runat="server" />
                                         <asp:ListBox ID="fPriorityListBox" CssClass="selectpicker form-control" data-actions-box="true" runat="server"></asp:ListBox>
                                     </div>
-                                </div>                        
+                                </div>
                         
                                 <%--Status Filter--%>
                                 <div class="row mb-3">

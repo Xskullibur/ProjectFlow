@@ -1,7 +1,7 @@
 ﻿let id;
 
 $(document).ready(function () {
-    id = '#ContentPlaceHolder_materialTable';
+    id = '#ContentPlaceHolderBase_ContentPlaceHolder_materialTable';
 
     let unique_id = $(id).attr('name');
 
