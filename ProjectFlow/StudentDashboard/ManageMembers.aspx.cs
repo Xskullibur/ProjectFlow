@@ -197,5 +197,11 @@ namespace ProjectFlow.StudentDashboard
                 Master.ShowAlert("Name changed successfully", BootstrapAlertTypes.SUCCESS);
             }
         }
+
+        protected void MemberGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            MemberGV.PageIndex = e.NewPageIndex;
+            showTeam();
+        }
     }
 }

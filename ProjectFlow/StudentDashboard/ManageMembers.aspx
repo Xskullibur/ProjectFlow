@@ -44,7 +44,7 @@
             <div class="row mb-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="MemberGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="MemberGV_SelectedIndexChanged">
+                        <asp:GridView ID="MemberGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="MemberGV_SelectedIndexChanged" OnPageIndexChanging="MemberGV_PageIndexChanging">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
                                 <asp:BoundField DataField="memberID" HeaderText="Member ID" ReadOnly="True" />

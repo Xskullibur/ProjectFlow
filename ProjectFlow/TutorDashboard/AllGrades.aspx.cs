@@ -193,5 +193,11 @@ namespace ProjectFlow.TutorDashboard
                 return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
             }
         }
+
+        protected void gradeGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gradeGV.PageIndex = e.NewPageIndex;
+            ShowGrade();
+        }
     }
 }

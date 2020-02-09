@@ -286,5 +286,11 @@ namespace ProjectFlow.TutorDashboard
         {
             
         }
+
+        protected void gradeGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gradeGV.PageIndex = e.NewPageIndex;
+            ShowGrade();
+        }
     }
 }

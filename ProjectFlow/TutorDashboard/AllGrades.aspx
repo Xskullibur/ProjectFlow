@@ -21,7 +21,7 @@
             <div class="row mb-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="gradeGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowEditing="gradeGV_RowEditing" OnRowUpdating="gradeGV_RowUpdating" AllowPaging="True" PageSize="4" OnSelectedIndexChanging="gradeGV_SelectedIndexChanging" OnRowCancelingEdit="gradeGV_RowCancelingEdit">
+                        <asp:GridView ID="gradeGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" OnRowEditing="gradeGV_RowEditing" OnRowUpdating="gradeGV_RowUpdating" AllowPaging="True" PageSize="4" OnSelectedIndexChanging="gradeGV_SelectedIndexChanging" OnRowCancelingEdit="gradeGV_RowCancelingEdit" OnPageIndexChanging="gradeGV_PageIndexChanging">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
@@ -169,10 +169,11 @@
 
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button Text="Edit Role" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                        <asp:Button Text="Edit" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="tableValidation" />
+                                        <br>
                                         </br>
                                         <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
                                     </EditItemTemplate>

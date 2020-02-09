@@ -196,7 +196,7 @@
                                 
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button Text="Edit Role" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                        <asp:Button Text="Edit" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="tableValidation" />
