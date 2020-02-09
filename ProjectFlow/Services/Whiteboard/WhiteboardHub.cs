@@ -127,6 +127,9 @@ namespace ProjectFlow.Services.Whiteboard
                     //Add the current connection to the group
                     this.Groups.Add(Context.ConnectionId, sessionId.ToString());
 
+                    //Alert user when create whiteboard session
+                    this.Clients.Group(sessionId.ToString()).AlertUserJoin($"{student.firstName} {student.lastName}");
+
                     //Response to the client when it has successfully created the session
                     this.Clients.Caller.CreatedWhiteboardSessionComplete(sessionId.ToString());
                 }
