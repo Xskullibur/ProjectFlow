@@ -47,7 +47,8 @@ namespace ProjectFlow.DashBoard
         {
             List<Milestone> milestoneList = milestoneBLL.GetMilestonesByTeamID(GetTeamID());
             MilestoneGV.DataSource = milestoneList;
-            MilestoneGV.DataBind();       
+            MilestoneGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         public void SearchMilestone(string search)
@@ -55,6 +56,7 @@ namespace ProjectFlow.DashBoard
             List<Milestone> milestoneList = milestoneBLL.SearchMilestone(GetTeamID(), search);
             MilestoneGV.DataSource = milestoneList;
             MilestoneGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)

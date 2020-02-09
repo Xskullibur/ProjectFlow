@@ -134,5 +134,17 @@ namespace ProjectFlow.DashBoard
             Master.ShowAlert("Joined Team", BootstrapAlertTypes.SUCCESS);
             ShowProject();
         }
+
+        protected void ProjectGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ProjectGV.PageIndex = e.NewPageIndex;
+            ShowProject();
+        }
+
+        protected void availableGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            availableGV.PageIndex = e.NewPageIndex;
+            ShowProject();
+        }
     }
 }

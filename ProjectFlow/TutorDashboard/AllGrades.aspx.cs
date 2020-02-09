@@ -166,11 +166,16 @@ namespace ProjectFlow.TutorDashboard
 
             StringWriter stringWriter = new StringWriter();
             HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
-            
+
+            gradeGV.Columns[15].Visible = false;
+            gradeGV.Columns[16].Visible = false;
+
             gradeGV.RenderControl(htmlTextWriter);
             Response.Write(stringWriter.ToString());
             Response.End();
-            
+
+            gradeGV.Columns[15].Visible = true;
+            gradeGV.Columns[16].Visible = true;
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)
@@ -192,6 +197,12 @@ namespace ProjectFlow.TutorDashboard
             {
                 return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
             }
+        }
+
+        protected void gradeGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gradeGV.PageIndex = e.NewPageIndex;
+            ShowGrade();
         }
     }
 }

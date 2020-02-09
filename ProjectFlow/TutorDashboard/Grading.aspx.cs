@@ -260,12 +260,16 @@ namespace ProjectFlow.TutorDashboard
             HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
 
             ShowGroupScore();
-           
+            gradeGV.Columns[15].Visible = false;
+            gradeGV.Columns[16].Visible = false;
+
             gradeGV.RenderControl(htmlTextWriter);
             Response.Write(stringWriter.ToString());
             Response.End();
 
             HideGroupScore();
+            gradeGV.Columns[15].Visible = true;
+            gradeGV.Columns[16].Visible = true;
         }
 
         public void HideGroupScore()
@@ -285,6 +289,12 @@ namespace ProjectFlow.TutorDashboard
         public override void VerifyRenderingInServerForm(Control control)
         {
             
+        }
+
+        protected void gradeGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gradeGV.PageIndex = e.NewPageIndex;
+            ShowGrade();
         }
     }
 }
