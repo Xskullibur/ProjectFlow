@@ -184,7 +184,7 @@
                     <%--Footer--%>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" ValidationGroup="AddTask" OnClientClick="$('#taskModal1').modal('hide'); return true;"  OnClick="addTask_Click" AutoPostBack="true"/>
+                        <asp:Button id="tSaveBtn" CssClass="btn btn-primary" Text="Save" runat="server" ValidationGroup="AddTask" OnClientClick="$('#taskModal1').modal('hide');"  OnClick="addTask_Click" AutoPostBack="true"/>
                     </div>
                 </div>
 
