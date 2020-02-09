@@ -16,9 +16,13 @@ namespace ProjectFlow.DashBoard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckFolderExist();
-            DisplayFile();
-            this.SetHeader("Encrypted File Sharing");
+            if (!Page.IsPostBack)
+            {
+                CheckFolderExist();
+                DisplayFile();
+                this.SetHeader("Encrypted File Sharing");
+            }
+            AddPrompt();
         }
 
         public int GetTeamID()
@@ -33,6 +37,11 @@ namespace ProjectFlow.DashBoard
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + path);
             }
+        }
+
+        public void AddPrompt()
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         private void HideModel()
@@ -310,6 +319,7 @@ namespace ProjectFlow.DashBoard
                 fileName = "(PLAIN)" + fileName;
                 File.Delete(storagePath + fileName);
             }
+            Master.ShowAlert("File deleted", BootstrapAlertTypes.DANGER);
             DisplayFile();
         }
 
