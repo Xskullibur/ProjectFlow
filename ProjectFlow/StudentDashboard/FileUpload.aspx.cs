@@ -137,6 +137,7 @@ namespace ProjectFlow.DashBoard
             IEnumerable<FileDetails> fileList = infomation.GetFiles(GetTeamID());
             FileGV.DataSource = fileList;
             FileGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         public void SearchFile(string search)
@@ -145,6 +146,7 @@ namespace ProjectFlow.DashBoard
             IEnumerable<FileDetails> fileList = infomation.SearchFiles(GetTeamID(), search);
             FileGV.DataSource = fileList;
             FileGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         private bool IsKeyValid(string key)

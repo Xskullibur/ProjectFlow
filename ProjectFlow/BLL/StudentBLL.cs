@@ -235,7 +235,7 @@ namespace ProjectFlow.BLL
                 List<ProjectTeam> emptyList = new List<ProjectTeam> { };
                 if (student != null)
                 {
-                    return student.TeamMembers.Select(x => x.ProjectTeam).Where(x => x.dropped == false && x.teamName.ToLower().Contains(search.ToLower())).ToList();
+                    return student.TeamMembers.Where(x => x.dropped == false).Select(x => x.ProjectTeam).Where(x => x.dropped == false && x.teamName.ToLower().Contains(search.ToLower())).ToList();
                 }
                 else
                 {

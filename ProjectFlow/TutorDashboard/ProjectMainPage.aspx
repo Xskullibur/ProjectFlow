@@ -147,7 +147,13 @@
 
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete member?');"></asp:Button>
+                                        <asp:Button ID="DeleteButton" Text="Delete" runat="server"
+                                            CssClass="btn btn-danger"
+                                            data-toggle="confirmation"
+                                            data-btn-ok-icon-class="fa fa-check"
+                                            data-btn-cancel-icon-class="fa fa-close"
+                                            data-popout="true"
+                                            CommandName="Delete" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
