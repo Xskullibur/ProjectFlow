@@ -36,6 +36,13 @@
         .auto-style18 {
             width: 53px;
         }
+        .auto-style19 {
+            width: 153px;
+        }
+        .auto-style20 {
+            width: 153px;
+            height: 42px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -52,6 +59,7 @@
                     <table class="auto-style1">
                         <tr>
                             <td class="auto-style9">
+                                <br />
                                 <asp:Label ID="Label1" runat="server" Text="Team Name"></asp:Label>
                                 &nbsp;<br />
                                 <br />
@@ -60,7 +68,7 @@
                                 <asp:TextBox ID="NameTB" CssClass="form-control" placeholder="Required, max 255" runat="server" Width="223px"></asp:TextBox>
                                 <br />
                             </td>
-                            <td class="auto-style8">
+                            <td class="auto-style19">
                                 &nbsp;
                                 <asp:RequiredFieldValidator ID="nameRequiredValidator" runat="server" ValidationGroup="modelValidation" ControlToValidate="NameTB" ErrorMessage="*" ForeColor="Red" Font-Size="Large"></asp:RequiredFieldValidator>
                                 &nbsp;<asp:RegularExpressionValidator ID="nameRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ControlToValidate="NameTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
@@ -78,7 +86,7 @@
                                 <asp:TextBox ID="DescTB" CssClass="form-control" placeholder="Optional, max 255" runat="server" Width="222px"></asp:TextBox>
                                 <br />
                             </td>
-                            <td class="auto-style12">
+                            <td class="auto-style20">
                                 &nbsp;
 
                                 &nbsp;<asp:RegularExpressionValidator ID="descRegexValidator" runat="server" ValidationGroup="modelValidation" validationexpression="^.{1,255}$" ControlToValidate="DescTB" ErrorMessage="max 255 characters!" Font-Size="Small" ForeColor="Red"></asp:RegularExpressionValidator>
@@ -108,7 +116,7 @@
                                     </asp:DropDownList> 
                                 <br />
                             </td>
-                            <td class="auto-style12">
+                            <td class="auto-style20">
                               
                             </td>
                         </tr>
@@ -124,7 +132,7 @@
                                 <asp:Button ID="createAnotherBtn" runat="server" CssClass="btn btn-success" OnClick="createAnotherBtn_Click" Text="Create Another" ValidationGroup="modelValidation" Width="160px" />
                                 <br />
                             </td>
-                            <td class="auto-style8">
+                            <td class="auto-style19">
                                 &nbsp;
 
                                 &nbsp;&nbsp;<br />
@@ -416,16 +424,31 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             
-                                <asp:CommandField ButtonType="Button" SelectText="Dash Board" ShowSelectButton="True">
-                                    <ControlStyle CssClass="btn btn-success" />
+                                <asp:CommandField ButtonType="Button" SelectText="Dashboard" ShowSelectButton="True">
+                                    <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
-                                <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
-                                </asp:CommandField> 
+                                
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button Text="Edit Team" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="tableValidation" />
+                                        <br>
+                                        </br>
+                                        <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
                             
                                 <asp:TemplateField>
-                                    <ItemTemplate>                     
-                                        <asp:Button ID="deleteBtn" CssClass="btn btn-danger" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure to delete team?');"></asp:Button>
+                                    <ItemTemplate>
+                                        <asp:Button ID="DeleteButton" Text="Delete" runat="server"
+                                            CssClass="btn btn-danger"
+                                            data-toggle="confirmation"
+                                            data-btn-ok-icon-class="fa fa-check"
+                                            data-btn-cancel-icon-class="fa fa-close"
+                                            data-popout="true"
+                                            CommandName="Delete" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

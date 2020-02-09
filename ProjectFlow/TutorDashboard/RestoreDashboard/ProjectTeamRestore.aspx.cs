@@ -52,7 +52,8 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
 
         protected void DeletedTeamGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            DeletedTeamGV.PageIndex = e.NewPageIndex;
+            DisplayTeam();
         }
 
         protected void refreshBtn_Click(object sender, EventArgs e)
@@ -62,7 +63,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
 
         protected void PageSelectDP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(PageSelectDP.SelectedIndex == 0)
+            if(PageSelectDP.SelectedIndex == 1)
             {
                 Response.Redirect("../ProjectTeamMenu.aspx");
             }

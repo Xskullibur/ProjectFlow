@@ -18,14 +18,10 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div style="overflow-x: auto;">
-                            <asp:GridView ID="ProjectGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" OnRowDataBound="OnRowDataBound" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="ProjectGV_SelectedIndexChanged">
+                            <asp:GridView ID="ProjectGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" OnRowDataBound="OnRowDataBound" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="ProjectGV_SelectedIndexChanged" OnPageIndexChanging="ProjectGV_PageIndexChanging">
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Module ID">
-                                        <ItemTemplate>
-                                            <asp:Label ID="midLabel" runat="server" Text='<%# Bind("projectID") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="projectID" HeaderText="Module ID" />
                                     <asp:TemplateField HeaderText="Module Name">
                                         <ItemTemplate>
                                             <asp:Label ID="nameLabel" runat="server" Text='<%# GetProjectName(Eval("projectID").ToString()) %>'></asp:Label>
@@ -67,7 +63,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div style="overflow-x: auto;">
-                            <asp:GridView ID="availableGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged">
+                            <asp:GridView ID="availableGV" CssClass="table table-bordered table-hover pointer projectflow-table" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="availableGV_SelectedIndexChanged" OnPageIndexChanging="availableGV_PageIndexChanging">
                                 <HeaderStyle CssClass="thead-light" />
                                 <Columns>
                                     <asp:TemplateField HeaderText="Module ID">

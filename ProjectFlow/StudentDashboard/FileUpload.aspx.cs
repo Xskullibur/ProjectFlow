@@ -15,13 +15,10 @@ namespace ProjectFlow.DashBoard
     public partial class FileUpload : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {           
-            if (!IsPostBack)
-            {
-                CheckFolderExist();
-                DisplayFile();
-                this.SetHeader("Encrypted File Sharing");
-            }               
+        {
+            CheckFolderExist();
+            DisplayFile();
+            this.SetHeader("Encrypted File Sharing");
         }
 
         public int GetTeamID()
@@ -137,6 +134,7 @@ namespace ProjectFlow.DashBoard
             IEnumerable<FileDetails> fileList = infomation.GetFiles(GetTeamID());
             FileGV.DataSource = fileList;
             FileGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         public void SearchFile(string search)
@@ -145,6 +143,7 @@ namespace ProjectFlow.DashBoard
             IEnumerable<FileDetails> fileList = infomation.SearchFiles(GetTeamID(), search);
             FileGV.DataSource = fileList;
             FileGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         private bool IsKeyValid(string key)
@@ -214,11 +213,11 @@ namespace ProjectFlow.DashBoard
                 File.Copy(theFile, destinationFolder + newFileName);
 
                 decryption.DecryptFile(destinationFolder + newFileName);
-                DownloadFile(newFileName, destinationFolder);
+                DownloadFile(newFileName, destinationFolder, true);
             }
             else
             {           
-                DownloadFile("(PLAIN)" + fileName, storagePath);
+                DownloadFile("(PLAIN)" + fileName, storagePath, false);
             }            
         }
 
@@ -251,14 +250,17 @@ namespace ProjectFlow.DashBoard
             ShowModel();
         }      
         
-        private void DownloadFile(string FileName, string Path)
+        private void DownloadFile(string FileName, string Path, bool isEncrypted)
         {              
             Response.Clear();
             Response.ContentType = "application/octect-stream";
             Response.AddHeader("Content-Disposition", "filename=" + FileName);
             Response.TransmitFile(Path + FileName);
             Response.Flush();
-            File.Delete(Path + FileName);
+            if (isEncrypted)
+            {
+                File.Delete(Path + FileName);
+            }            
             Response.End();
         }
 
@@ -352,7 +354,7 @@ namespace ProjectFlow.DashBoard
                 {
                     File.Copy(ViewState["theFile"].ToString(), ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString());
                     decryption.DecryptFileWithKey(ViewState["destinationFolder"].ToString() + ViewState["newFileName"].ToString(), deKeyTB.Text);
-                    DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString());
+                    DownloadFile(ViewState["newFileName"].ToString(), ViewState["destinationFolder"].ToString(), true);
                 }
                 catch (System.Security.Cryptography.CryptographicException exception)
                 {

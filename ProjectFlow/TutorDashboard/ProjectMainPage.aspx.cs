@@ -41,6 +41,8 @@ namespace ProjectFlow
             studentList.DataTextField = "Value";
             studentList.DataValueField = "Key";
             studentList.DataBind();
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         public void SearchMember(string search)
@@ -48,14 +50,14 @@ namespace ProjectFlow
             List<TeamMember> memberList = new List<TeamMember> { };
             memberList = teamMemberBLL.SearchMember(GetTeamID(), search);
             MemberGV.DataSource = memberList;
-            MemberGV.DataBind();           
+            MemberGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
         {
             ProjectBLL bll = new ProjectBLL();
-            List<string> errorList = new List<string> { };           
-            int teamID = int.Parse(Session["PassTeamID"].ToString());
+            List<string> errorList = new List<string> { };                       
             int roleID = 0;
                     
             if(studentList.SelectedIndex == -1)
@@ -81,7 +83,7 @@ namespace ProjectFlow
                             roleID = 1;
                         }
                     }
-                    errorList = bll.ValidateInsertMember(item.Value.ToString(), teamID, roleID);
+                    errorList = bll.ValidateInsertMember(item.Value.ToString(), GetTeamID(), roleID);
                 }
                 
             }

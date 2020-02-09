@@ -38,10 +38,10 @@
                                 </asp:TemplateField>
                             </Columns>
                             <EmptyDataTemplate>
-                                    <div class="container text-center">
-                                      <h2>No Whiteboard Session Found.</h2><br>
-                                      <i class="fas fa-chalkboard-teacher fa-10x"></i>
-                                    </div>
+                                <div class="container text-center">
+                                    <h2>No Whiteboard Session Found.</h2><br>
+                                    <i class="fas fa-chalkboard-teacher fa-10x"></i>
+                                </div>
                             </EmptyDataTemplate>
                         </asp:GridView>
                     </ContentTemplate>

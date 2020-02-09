@@ -2,6 +2,7 @@
 using ProjectFlow.Login;
 using ProjectFlow.Utils;
 using ProjectFlow.Utils.Alerts;
+using ProjectFlow.Utils.Base;
 using ProjectFlow.Utils.Bootstrap;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
                 {
                     //Session["TutorID"] = identity.Tutor.UserId.ToString();
                     DisplayProject();
-                    this.SetHeader("Module that I can Restore");
+                    this.SetHeaderFromServiceWithContentBase("Module that I can Restore");
                 }
             }
         }
@@ -54,7 +55,8 @@ namespace ProjectFlow.TutorDashboard.RestoreDashboard
 
         protected void projectRestoreGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            projectRestoreGV.PageIndex = e.NewPageIndex;
+            DisplayProject();
         }
 
         protected void projectRestoreGV_SelectedIndexChanged(object sender, EventArgs e)

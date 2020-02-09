@@ -50,7 +50,8 @@ namespace ProjectFlow.StudentDashboard
 
             TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             int totalRow = MemberGV.Rows.Count;
-            
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
 
             if (member.roleID == 1)
             {
@@ -102,14 +103,14 @@ namespace ProjectFlow.StudentDashboard
             TeamMember member = studentBLL.getMemberByAdmin(Guid.Parse(getStudentID()), GetTeamID());
             if(int.Parse(row.Cells[0].Text) == member.memberID)
             {
-                Master.ShowAlert("You cannot kick yourselft", BootstrapAlertTypes.DANGER);               
+                Master.ShowAlert("You cannot kick yourself", BootstrapAlertTypes.DANGER);               
             }
             else
             {
                 teamMemberBLL.RemoveMember(int.Parse(row.Cells[0].Text));
-                Master.ShowAlert("Successfully kicked member", BootstrapAlertTypes.SUCCESS);
-                showTeam();
+                Master.ShowAlert("Successfully kicked member", BootstrapAlertTypes.SUCCESS);              
             }
+            showTeam();
         }
 
         protected void leaderBtn_Click(object sender, EventArgs e)
@@ -195,6 +196,12 @@ namespace ProjectFlow.StudentDashboard
                 teamMemberBLL.UpdateTeamName(GetTeamID(), NameTB.Text);
                 Master.ShowAlert("Name changed successfully", BootstrapAlertTypes.SUCCESS);
             }
+        }
+
+        protected void MemberGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            MemberGV.PageIndex = e.NewPageIndex;
+            showTeam();
         }
     }
 }

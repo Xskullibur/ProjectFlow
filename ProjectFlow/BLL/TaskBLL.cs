@@ -25,7 +25,9 @@ namespace ProjectFlow.BLL
                         .Include("Priority")
                         .Include("Milestone")
                         .Include("Status")
-                        .OrderByDescending(x => x.taskID)
+                        .OrderBy(x => x.statusID)
+                        .ThenBy(x => x.endDate)
+                        .ThenByDescending(x => x.Milestone.endDate)
                         .Where(x => x.teamID == teamID)
                         .ToList();
 
@@ -360,6 +362,7 @@ namespace ProjectFlow.BLL
                 try
                 {
                     task.Milestone = null;
+                    task.Priority = null;
                     dbContext.Tasks.Attach(task);
 
                     // Update Task
