@@ -155,6 +155,7 @@
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
 
+                            <asp:Panel ID="Panel1" runat="server">
                             <%--File selector--%>
                             <div class="form-group">
                                 <asp:Label CssClass="control-label" Text="Attach File (only plain):" AssociatedControlID="IssueStatusDLL" runat="server" />
@@ -166,14 +167,13 @@
                             
                             <%--Public--%>
                             <div>
-                                <asp:Panel ID="Panel1" runat="server">
-                                                                    <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
+                                
+                                <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
                                 <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
-
                                 <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
-                                </asp:Panel>
+                                
                             </div>
-                            
+                            </asp:Panel>
                         </div>
 
                         <%--Error Summary--%>
