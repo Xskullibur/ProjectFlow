@@ -15,13 +15,10 @@ namespace ProjectFlow.DashBoard
     public partial class FileUpload : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {           
-            if (!IsPostBack)
-            {
-                CheckFolderExist();
-                DisplayFile();
-                this.SetHeader("Encrypted File Sharing");
-            }               
+        {
+            CheckFolderExist();
+            DisplayFile();
+            this.SetHeader("Encrypted File Sharing");
         }
 
         public int GetTeamID()
