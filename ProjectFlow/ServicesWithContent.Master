@@ -54,7 +54,7 @@
                             </mio:SidebarGroup>
                             <mio:SidebarGroup SubHeaderText="Issues">
                                 <SidebarItems>
-                                    <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
+                                    <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx,/Issues/iDetailedView.aspx,/Issues/iDroppedView.aspx" FASLogo="align-justify">
                                     </mio:SidebarItem>
                                 </SidebarItems>
                             </mio:SidebarGroup>
@@ -97,7 +97,7 @@
                                 </mio:SidebarGroup>
                                 <mio:SidebarGroup SubHeaderText="Issues">
                                     <SidebarItems>
-                                        <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx" FASLogo="align-justify">
+                                        <mio:SidebarItem ItemText="Issue Tracker" RedirectionPage="/Issues/iAllView.aspx" AlsoSelectedForPages="/Issues/IssueRes.aspx,/Issues/iDetailedView.aspx,/Issues/iDroppedView.aspx" FASLogo="align-justify">
                                         </mio:SidebarItem>
                                     </SidebarItems>
                                 </mio:SidebarGroup>
