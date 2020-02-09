@@ -95,7 +95,7 @@ namespace ProjectFlow.Issues
                 IssueStatusDLL.DataValueField = "Key";
 
                 IssueStatusDLL.DataBind();
-
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
             }
 
             if (GetCurrentIdentiy().IsTutor)
