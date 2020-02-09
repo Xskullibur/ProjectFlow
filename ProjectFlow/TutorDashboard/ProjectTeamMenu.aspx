@@ -417,10 +417,10 @@
                                 </asp:TemplateField>
                             
                                 <asp:CommandField ButtonType="Button" SelectText="Dashboard" ShowSelectButton="True">
-                                    <ControlStyle CssClass="btn btn-success" />
+                                    <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
+                                    <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField> 
                             
                                 <asp:TemplateField>

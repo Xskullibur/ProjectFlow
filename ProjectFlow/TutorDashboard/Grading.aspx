@@ -168,7 +168,7 @@
                                 </asp:TemplateField>
 
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="studentScoreValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
+                                    <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
                                
                             </Columns>
@@ -232,7 +232,7 @@
                                 </asp:TemplateField>
                                 
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="groupScoreValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
+                                    <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
                                
                             </Columns>

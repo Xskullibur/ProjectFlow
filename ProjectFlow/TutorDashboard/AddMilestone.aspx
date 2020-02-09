@@ -194,7 +194,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:CommandField ButtonType="Button" ShowEditButton="True" ValidationGroup="tableValidation">
-                                    <ControlStyle CssClass="btn btn-warning" />
+                                    <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
