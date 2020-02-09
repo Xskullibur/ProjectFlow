@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Issues/IssueNested.master" AutoEventWireup="true" CodeBehind="iAllView.aspx.cs" Inherits="ProjectFlow.Issues.iAllView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Issues/IssueNested.master" AutoEventWireup="true" CodeBehind="iAllView.aspx.cs" Inherits="ProjectFlow.Issues.iAllView" EnableEventValidation="false"%>
 <%@ MasterType VirtualPath="~/Issues/IssueNested.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -16,9 +16,7 @@
                             <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
                             <asp:BoundField DataField="Status" HeaderText="Status" />
                             <asp:BoundField DataField="Active" HeaderText="Active" />
-                            <asp:CommandField ShowSelectButton="True" ButtonType="Button">
-                                <ControlStyle CssClass="btn btn-success mb-2" />
-                            </asp:CommandField>
+                            
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="jumbotron jumbotron-fluid">

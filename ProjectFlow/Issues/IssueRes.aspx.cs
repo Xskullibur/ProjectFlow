@@ -1,4 +1,6 @@
-﻿using ProjectFlow.BLL;
+﻿using ProjectFlow.FileManagement;
+using System.IO;
+using ProjectFlow.BLL;
 using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ namespace ProjectFlow.Issues
                 Issue updated_issue = issueBLL.GetIssueByID(idIssue);
 
                 //Set header
-                this.SetHeader("Issue: " + updated_issue.issueID);
+                this.SetHeader("Issue: " + updated_issue.issueID + " overview");
 
                 lbMember.Text = "<h3>"+ updated_issue.title + "</h3>";
                 lbIssue.Text = updated_issue.description;
@@ -40,7 +42,15 @@ namespace ProjectFlow.Issues
                 Status currentstat = status.GetStatusByID(updated_issue.statusID.GetValueOrDefault());
                 IssueStatus.Text = currentstat.status1;
 
-                
+                // Status
+                Info infomation = new Info();
+                List<string> fileList = infomation.getfilenames(GetTeamID());
+
+                IssueStatusDLL.DataSource = fileList;
+
+                IssueStatusDLL.DataBind();
+
+                //
 
                 ispublic = updated_issue.votePublic.ToString();
 
@@ -59,6 +69,7 @@ namespace ProjectFlow.Issues
             {
                 //disable comments
                 disablecomments();
+                Panel1.Visible = false;
             }
         }
 
@@ -78,7 +89,23 @@ namespace ProjectFlow.Issues
             return servicesWithContent.CurrentProjectTeam;
         }
 
-        
+        //get current uder UID
+        protected Guid get_GUID()
+        {
+            Guid Uid;
+            var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
+            if (GetCurrentIdentiy().IsStudent)
+            {
+                Uid = identity.Student.aspnet_Users.UserId;
+            }
+            else
+            {
+                Uid = identity.Tutor.aspnet_Users.UserId;
+            }
+            return Uid;
+        }
+
+
         protected void update(bool choice)
         {
             if (Page.IsValid)
@@ -88,15 +115,9 @@ namespace ProjectFlow.Issues
                 Guid Uid = identity.Student.aspnet_Users.UserId;
                 int voterId = teammemberBLL.GetMemIdbyUID(Uid);
 
-                // Create Task Object
-                /*Polling newPoll = new Polling();
-                newPoll.issueID = (int)Session["SSIId"];
-                newPoll.voterID = voterId;
-                newPoll.vote = choice;*/
-
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
-                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], voterId);
+                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSIId"], Uid);
                 newPoll.vote = choice;
                 bool result = pollingBLL.Update(newPoll);
             }
@@ -125,7 +146,7 @@ namespace ProjectFlow.Issues
                 CommentForIssue newComment = new CommentForIssue();
                 newComment.comment = tbComments.Text;
                 newComment.issueID = idIssue;
-                newComment.createdBy = voterId;    //this is a placeholder  
+                newComment.createdBy = voterId;   
 
                 // Submit Query
                 CommentForIssueBLL commentBLL = new CommentForIssueBLL();
@@ -176,7 +197,8 @@ namespace ProjectFlow.Issues
             else
             {
                 disablecomments();
-
+                btnAddSolution.Visible = false;
+                btnAddSolution.Enabled = false;
                 this.Master.ShowAlert("Issue has been dropped", BootstrapAlertTypes.DANGER);
             }
         }
@@ -187,8 +209,8 @@ namespace ProjectFlow.Issues
             tbComments.Enabled = false;
             btnComment.Visible = false;
             btnComment.Enabled = false;
-            btnAddSolution.Visible = false;
-            btnAddSolution.Enabled = false;
+            //btnAddSolution.Visible = false;
+            //btnAddSolution.Enabled = false;
         }
 
         // Add Task OnClick Event
@@ -232,7 +254,7 @@ namespace ProjectFlow.Issues
                 string description = tDescTxt.Text;
                 int id = (int)Session["SSIId"];
                 DateTime currentTime = DateTime.Now;
-                Guid Uid = identity.Student.aspnet_Users.UserId;
+                Guid Uid = get_GUID();
 
                 // bind date to new solution
                 Solution new_solution = new Solution();
@@ -242,6 +264,15 @@ namespace ProjectFlow.Issues
                 new_solution.startdate = currentTime;
                 new_solution.createdBy = Uid;
                 new_solution.votePublic = checkCB();
+                if (GetCurrentIdentiy().IsTutor)
+                {
+                    new_solution.success = true;
+                }
+                if (IssueStatusDLL.Text != "-")
+                {
+                    new_solution.associatedFile = IssueStatusDLL.Text;
+                }
+
 
                 // clear error messages
                 // TODO
@@ -310,7 +341,6 @@ namespace ProjectFlow.Issues
 
         protected void Repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            //Repeater rptDemo = sender as Repeater; // Get the Repeater control object.
 
             // If the Repeater contains no data.
             if (Repeater1 != null && Repeater1.Items.Count < 1)
@@ -357,6 +387,11 @@ namespace ProjectFlow.Issues
                     SucessCell.Text = "<i class='fa fa-question fa-lg text-info'></i>";
                 }
             }
+        }
+
+        public int GetTeamID()
+        {
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
         }
 
     }

@@ -1,7 +1,9 @@
-﻿using ProjectFlow.BLL;
+﻿using ProjectFlow.FileManagement;
+using ProjectFlow.BLL;
 using ProjectFlow.Login;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -51,6 +53,9 @@ namespace ProjectFlow.Issues
             int idSolution = (int)Session["SSSId"];
             if (!IsPostBack)
             {
+                // calling tutorbll
+                TutorBLL tutorBLL = new TutorBLL();
+
                 // getting identity
                 Guid Uid = get_GUID();
 
@@ -71,6 +76,14 @@ namespace ProjectFlow.Issues
                     lbSolutionTitle.Text = "<h3>" + current_solution.title + "</h3>";
                     lbSolutionDesc.Text = current_solution.description;
 
+                    //creating button for file download
+                    if(current_solution.associatedFile != null)
+                    {
+                        Button1.Enabled = true;
+                        Button1.Visible = true;
+                        Button1.Text = current_solution.associatedFile;
+                    }
+
                     // other checks
 
                     check();
@@ -78,13 +91,20 @@ namespace ProjectFlow.Issues
 
                     if (Uid == current_solution.createdBy || GetCurrentIdentiy().IsTutor)
                     {
+                        deleteSolutionBtn.Visible = true;
                         deleteSolutionBtn.Enabled = true;
+                    }
+
+                    if (tutorBLL.CheckTutorByUID(current_solution.createdBy) == true)
+                    {
+                        //disable vote if solution is creaeted by teacher
+                        disable_vote();
                     }
                 }
             }
-            
+
             // just checking again
-            updateIfPass();
+            //updateIfPass();
         }
 
         protected void btnYes_Click(object sender, EventArgs e)
@@ -138,12 +158,11 @@ namespace ProjectFlow.Issues
             {
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
                 TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-                Guid Uid = identity.Student.aspnet_Users.UserId;
-                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
+                Guid Uid = get_GUID();
 
                 // Submit Query
                 PollingBLL pollingBLL = new PollingBLL();
-                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSSId"], voterId);
+                Polling newPoll = pollingBLL.GetVoteByID((int)Session["SSSId"], Uid);
                 newPoll.vote = choice;
                 bool result = pollingBLL.Update(newPoll);
             }
@@ -155,13 +174,12 @@ namespace ProjectFlow.Issues
             {
                 var identity = HttpContext.Current.User.Identity as ProjectFlowIdentity;
                 TeamMemberBLL teammemberBLL = new TeamMemberBLL();
-                Guid Uid = identity.Student.aspnet_Users.UserId;
-                int voterId = teammemberBLL.GetMemIdbyUID(Uid);
+                Guid Uid = get_GUID();
 
                 // Create Task Object
                 Polling newPoll = new Polling();
                 newPoll.solutionID = (int)Session["SSSId"];
-                newPoll.voterID = voterId;
+                newPoll.voterID = Uid;
                 newPoll.vote = choice;
 
                 // Submit Query
@@ -196,7 +214,7 @@ namespace ProjectFlow.Issues
                 btnNo.ToolTip = getUserbySelection(idIssue, false);
                 btnYes.ToolTip = getUserbySelection(idIssue, true);
             }
-            
+
         }
 
         protected void check()
@@ -210,14 +228,7 @@ namespace ProjectFlow.Issues
             if (GetCurrentIdentiy().IsTutor)
             {
                 // disables voting buttons if isTutor
-                btnYes.Enabled = false;
-                btnNo.Enabled = false;
-                btnRandom.Enabled = false;
-                btnYes.Visible = false;
-                btnYesCount.Visible = false;
-                btnNo.Visible = false;
-                btnNoCount.Visible = false;
-                btnRandom.Visible = false;
+                //disable_vote();
             }
             else
             {
@@ -226,13 +237,10 @@ namespace ProjectFlow.Issues
                 Guid Uid = identity.Student.aspnet_Users.UserId;
                 //the above only checks for the user id if it is a student, tutors must also be accounted for
                 int voterId = teammemberBLL.GetMemIdbyUID(Uid);
-                bool checking = pollingBLL.Check(iID, voterId);
+                bool checking = pollingBLL.Check(iID, Uid);
 
                 if (checking == true)
                 {
-                    //btnYes.Enabled = false;
-                    //btnNo.Enabled = false;
-                    //btnRandom.Enabled = false;
                     this.Master.ShowAlert("You have already voted!", BootstrapAlertTypes.DANGER);
                 }
                 else
@@ -261,7 +269,7 @@ namespace ProjectFlow.Issues
                 solutionBLL.delete(current_solution);
 
                 // redirect
-            
+
                 Response.Redirect("../Issues/IssueRes.aspx");
             }
             else
@@ -279,7 +287,7 @@ namespace ProjectFlow.Issues
             int currentTeamId = currentTeam.teamID;
 
             SolutionBLL solution = new SolutionBLL();
-            bool votePass = solution.getPass(currentTeamId,idSolution);
+            bool votePass = solution.getPass(currentTeamId, idSolution);
 
             Solution current_solution = solution.GetSolutionByID(idSolution);
 
@@ -287,7 +295,7 @@ namespace ProjectFlow.Issues
             if (votePass)
             {
                 current_solution.success = true;
-                
+
             }
             else
             {
@@ -296,5 +304,70 @@ namespace ProjectFlow.Issues
             solution.Update(current_solution);
         }
 
+        protected void disable_vote()
+        {
+            btnYes.Enabled = false;
+            btnNo.Enabled = false;
+            btnRandom.Enabled = false;
+            btnYes.Visible = false;
+            btnYesCount.Visible = false;
+            btnNo.Visible = false;
+            btnNoCount.Visible = false;
+            btnRandom.Visible = false;
+        }
+
+        protected void GoBackEvent(object sender, EventArgs e)
+        {
+            Response.Redirect("IssueRes.aspx");
+        }
+
+        //file download stuff
+
+        private void DownloadFile(string FileName, string Path)
+        {
+            Response.Clear();
+            Response.ContentType = "application/octect-stream";
+            Response.AddHeader("Content-Disposition", "filename=" + FileName);
+            Response.TransmitFile(Path + FileName);
+            Response.Flush();
+            File.Delete(Path + FileName);
+            Response.End();
+        }
+
+        protected void file_download(string fileName)
+        {
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
+            DownloadFile("(PLAIN)" + fileName, storagePath);
+        }
+
+        public int GetTeamID()
+        {
+            return (Master as ServicesWithContent).CurrentProjectTeam.teamID;
+        }
+
+        private Button CreateFilterButton(string filterName, EventHandler eventHandler)
+        {
+            Button linkButton = new Button();
+
+            linkButton.ID = $"filter_{filterName}";
+            linkButton.Text = $"{filterName} <i class='fa fa-close ml-2'></i>";
+            linkButton.CssClass = "btn btn-danger my-4 mr-1";
+            linkButton.Click += eventHandler;
+
+            return linkButton;
+        }
+
+        // this needs to be edited, the download functio does not work
+        private void file_link(string taskName)
+        {
+            Button linkButton = CreateFilterButton(taskName, download_Click);
+            currentFiltersPanel.Controls.Add(linkButton);
+        }
+
+        protected void download_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            file_download(button.Text);
+        }
     }
 }

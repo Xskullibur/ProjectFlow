@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="IssueRes.aspx.cs" Inherits="ProjectFlow.Issues.IssueRes" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServicesWithContent.Master" AutoEventWireup="true" CodeBehind="IssueRes.aspx.cs" Inherits="ProjectFlow.Issues.IssueRes" EnableEventValidation="false"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -94,10 +94,8 @@
                                     <asp:BoundField DataField="Title" HeaderText="Solution Name" />
                                     <asp:BoundField DataField="CreatedBy" HeaderText="Created by" />
                                     <asp:BoundField DataField="privacy" HeaderText="Privacy" />
-                                    <asp:BoundField DataField="votePass" HeaderText="Passed" />
-                                    <asp:CommandField ShowSelectButton="True" ButtonType="Button">
-                                        <ControlStyle CssClass="btn btn-success mb-2" />
-                                    </asp:CommandField>
+                                    <asp:BoundField DataField="votePass" HeaderText="Recommended" />
+
                                 </Columns>
                                 <EmptyDataTemplate>
                                     <div class="jumbotron jumbotron-fluid">
@@ -156,16 +154,26 @@
                                 <asp:RegularExpressionValidator ID="tDescRegexValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Maximum Length of 500 Characters!" ValidationExpression="^[\s\S]{1,500}$" Display="Dynamic" ControlToValidate="tDescTxt" ValidationGroup="AddTask"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="tDescRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="Description Field is Required!" ControlToValidate="tDescTxt" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
                             </div>
+
+                            <asp:Panel ID="Panel1" runat="server">
+                            <%--File selector--%>
+                            <div class="form-group">
+                                <asp:Label CssClass="control-label" Text="Attach File (only plain):" AssociatedControlID="IssueStatusDLL" runat="server" />
+                                <asp:DropDownList ID="IssueStatusDLL" CssClass="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:Label ID="statusErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
+                                <asp:RequiredFieldValidator ID="statusRequiredValidator" CssClass="form-text text-danger" Font-Size="Small" runat="server" ErrorMessage="This Field is Required!" ControlToValidate="IssueStatusDLL" Display="Dynamic" ValidationGroup="AddTask" EnableClientScript="True"></asp:RequiredFieldValidator>
+                            </div>
                             
                             <%--Public--%>
                             <div>
+                                
                                 <asp:Label CssClass="control-label" Text="Public:" AssociatedControlID="cbPublic" runat="server" />
                                 <asp:CheckBox ID="cbPublic" CssClass="form-control" runat="server" />
-
                                 <asp:Label ID="checkBoxErrorLbl" CssClass="form-text text-danger" Font-Size="Small" runat="server" Text="" Visible="False"></asp:Label>
                                 
                             </div>
-
+                            </asp:Panel>
                         </div>
 
                         <%--Error Summary--%>

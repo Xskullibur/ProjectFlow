@@ -44,7 +44,7 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public bool Check(int iID, int vID)
+        public bool Check(int iID, Guid vID)
         {
             var list = GetPollByID(vID).ToList();
             var exist = list.Contains(iID);
@@ -64,7 +64,7 @@ namespace ProjectFlow.BLL
         /// <returns>Anonymous Object</returns>
         /// 
         /// (ID, Task, Description, IdTask)
-        public Polling GetVoteByID(int iID, int vID)
+        public Polling GetVoteByID(int iID, Guid vID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -87,7 +87,7 @@ namespace ProjectFlow.BLL
             }
         }
 
-        public IEnumerable<int> GetPollByID(int vID)
+        public IEnumerable<int> GetPollByID(Guid vID)
         {
             using (ProjectFlowEntities dbContext = new ProjectFlowEntities())
             {
@@ -151,10 +151,10 @@ namespace ProjectFlow.BLL
             {
                 try
                 {
-                    var count = dbContext.Pollings.Include("TeamMembers.Student")
+                    var count = dbContext.Pollings.Include("aspnet_Users")
                         .Where(x => x.solutionID == iID)
                         .Where(x => x.vote == selection)
-                        .Select(y => y.TeamMember.Student.aspnet_Users.UserName
+                        .Select(y => y.aspnet_Users.UserName
                         ).ToList();
 
                     System.Diagnostics.Debug.WriteLine(count);

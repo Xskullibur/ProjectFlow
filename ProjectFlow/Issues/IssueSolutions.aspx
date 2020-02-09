@@ -9,10 +9,18 @@
                 <div class="card h-100">
                     
                     <div class="card-body">
+                        <asp:Button ID="BackBtn" CssClass="float-right btn-sm btn-primary" runat="server" Text="Back" OnClick="GoBackEvent" />
                         <asp:Label ID="lbSolutionInfo" runat="server" CssClass="card-title"></asp:Label> 
                         <hr/>
                         <asp:Label ID="lbSolutionTitle" runat="server" CssClass="card-title"></asp:Label>  
                         <asp:Label ID="lbSolutionDesc" runat="server" CssClass="card-text"></asp:Label>
+
+                        <%--Repuposed Filter Panel--%>
+
+                        <asp:Panel ID="currentFiltersPanel" CssClass="d-flex flex-wrap" runat="server">
+                            <asp:Button ID="Button1" runat="server" CssClass="btn btn-danger my-4 mr-1" OnClick="download_Click" Enabled="False" Visible="False" />
+                        </asp:Panel>
+                            
                     </div>
 
                 </div>
@@ -35,11 +43,7 @@
             </div>
             <div class="col-xl-3 col-12 text-right">
                 <div class="dropdown">
-                        <asp:Button Text="Delete" CssClass="btn btn-outline-danger" runat="server" 
-                            ID="deleteSolutionBtn" 
-                            OnClick="solutionDelete" 
-                            Enabled="False" 
-                            OnClientClick="return confirm('Are you sure to delete?');"/>
+                        <asp:Button Text="Delete" CssClass="btn btn-outline-danger" runat="server" ID="deleteSolutionBtn" OnClick="solutionDelete" Enabled="False" OnClientClick="return confirm('Are you sure to delete?');" Visible="False"/>
                 </div>
             </div>
         </div>

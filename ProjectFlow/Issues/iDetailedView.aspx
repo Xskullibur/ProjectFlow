@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Issues/IssueNested.master" AutoEventWireup="true" CodeBehind="iDetailedView.aspx.cs" Inherits="ProjectFlow.Issues.iDetailedView" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Issues/IssueNested.master" AutoEventWireup="true" CodeBehind="iDetailedView.aspx.cs" Inherits="ProjectFlow.Issues.iDetailedView"%>
 <%@ MasterType VirtualPath="~/Issues/IssueNested.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -67,7 +67,7 @@
                                         data-btn-ok-icon-class="fa fa-check"
                                         data-btn-cancel-icon-class="fa fa-close"
                                         data-popout="true"
-                                        CommandName="Delete" /> 
+                                        CommandName="Delete" OnClientClick="return confirm('Are you sure to delete?');" /> 
                                 </ItemTemplate>
 
                                 <edititemtemplate>
