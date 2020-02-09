@@ -167,14 +167,12 @@ namespace ProjectFlow.TutorDashboard
             StringWriter stringWriter = new StringWriter();
             HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
 
-            gradeGV.Columns[15].Visible = false;
             gradeGV.Columns[16].Visible = false;
 
             gradeGV.RenderControl(htmlTextWriter);
             Response.Write(stringWriter.ToString());
             Response.End();
 
-            gradeGV.Columns[15].Visible = true;
             gradeGV.Columns[16].Visible = true;
         }
 
@@ -187,15 +185,35 @@ namespace ProjectFlow.TutorDashboard
         {
             if (score >= 80)
             {
-                return "<i style=\"color: green;\" class=\"fas fa-lg fa-trophy\"></i>";
+                return "A";
             }
-            else if (score >= 50 && score < 80)
+            else if (score >= 75 && score < 80)
             {
-                return "<i style=\"color: green;\" class=\"fas fa-lg fa-check-circle\"></i>";
+                return "B+";
+            }
+            else if (score >= 70 && score < 75)
+            {
+                return "B";
+            }
+            else if (score >= 65 && score < 70)
+            {
+                return "C+";
+            }
+            else if (score >= 60 && score < 65)
+            {
+                return "C";
+            }
+            else if (score >= 55 && score < 60)
+            {
+                return "D+";
+            }
+            else if (score >= 50 && score < 55)
+            {
+                return "D";
             }
             else
             {
-                return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
+                return "F";
             }
         }
 
