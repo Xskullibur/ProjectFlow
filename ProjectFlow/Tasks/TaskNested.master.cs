@@ -29,6 +29,7 @@ namespace ProjectFlow.Tasks
             public static string PRIORITY = "filterPriority";
             public static string STATUS = "filterStatus";
             public static string ALLOCATION = "filterAllocation";
+            public static string MILESTONE = "filterMilestone";
         }
 
         // Types of Views
@@ -81,6 +82,17 @@ namespace ProjectFlow.Tasks
                 string filterKeyword = Session[FilterType.KEYWORD].ToString();
                 data = data.Where(x => x.taskName.ToLower().Contains(filterKeyword.ToLower()))
                     .ToList();
+            }
+
+            if (Session[FilterType.MILESTONE] != null)
+            {
+                Dictionary<int, string> milestoneDict = (Session[FilterType.MILESTONE] as Dictionary<int, string>);
+
+                foreach (var item in milestoneDict)
+                {
+                    data = data.Where(x => x.milestoneID == item.Key)
+                        .ToList();
+                }
             }
 
             if (Session[FilterType.PRIORITY] != null)
@@ -199,6 +211,12 @@ namespace ProjectFlow.Tasks
 
                 milestoneDDL.DataBind();
 
+                fMilestoneListbox.DataSource = teamMilestones;
+                fMilestoneListbox.DataTextField = "milestoneName";
+                fMilestoneListbox.DataValueField = "milestoneID";
+
+                fMilestoneListbox.DataBind();
+
                 // Update Filter Toolbox
                 UpdateFiltersToolBox();
             }
@@ -253,6 +271,9 @@ namespace ProjectFlow.Tasks
                 Session[FilterType.KEYWORD] = fTaskNameTxt.Text;
             }
 
+            // Check Milestone Filter
+            CheckFiltersInListBox(fMilestoneListbox, FilterType.MILESTONE);
+
             // Check Priority Filter
             CheckFiltersInListBox(fPriorityListBox, FilterType.PRIORITY);
 
@@ -275,6 +296,11 @@ namespace ProjectFlow.Tasks
 
                 LinkButton linkButton = CreateFilterButton(taskName, FilterType.KEYWORD, removeTaskNameFilter_Click);
                 currentFiltersPanel.Controls.Add(linkButton);
+            }
+
+            if (Session[FilterType.MILESTONE] != null)
+            {
+                AddFilterButtonsToPanel(FilterType.MILESTONE);
             }
 
             if (Session[FilterType.PRIORITY] != null)
@@ -306,6 +332,10 @@ namespace ProjectFlow.Tasks
                 if (sessionName == FilterType.KEYWORD)
                 {
                     linkButton = CreateFilterButton(filter, sessionName, removeTaskNameFilter_Click);
+                }
+                else if (sessionName == FilterType.MILESTONE)
+                {
+                    linkButton = CreateFilterButton(filter, sessionName, removeMilestoneFilter_Click);
                 }
                 else if (sessionName == FilterType.PRIORITY)
                 {
@@ -348,6 +378,17 @@ namespace ProjectFlow.Tasks
             if (Session[FilterType.KEYWORD] !=  null)
             {
                 fTaskNameTxt.Text = Session[FilterType.KEYWORD].ToString();
+            }
+
+            fMilestoneListbox.ClearSelection();
+            if (Session[FilterType.MILESTONE] != null)
+            {
+                Dictionary<int, string> milestoneDict = (Session[FilterType.MILESTONE] as Dictionary<int, string>);
+
+                foreach (var milestone in milestoneDict)
+                {
+                    fMilestoneListbox.SelectedValue = milestone.Key.ToString();
+                }
             }
 
             fPriorityListBox.ClearSelection();
@@ -454,8 +495,14 @@ namespace ProjectFlow.Tasks
         {
             FilterHandler(sender, FilterType.PRIORITY);
         }
+        
+        // Milestone
+        protected void removeMilestoneFilter_Click(object sender, EventArgs e)
+        {
+            FilterHandler(sender, FilterType.MILESTONE);
+        }
 
-
+        
         /**
          * MODAL MANIPULATION
          **/
