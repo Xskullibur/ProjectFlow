@@ -330,7 +330,6 @@ namespace ProjectFlow.Issues
             Response.AddHeader("Content-Disposition", "filename=" + FileName);
             Response.TransmitFile(Path + FileName);
             Response.Flush();
-            File.Delete(Path + FileName);
             Response.End();
         }
 
