@@ -23,7 +23,7 @@ namespace ProjectFlow.DashBoard
                 if (!IsPostBack)
                 {
                     Session["TutorID"] = identity.Tutor.UserId.ToString();                   
-                    this.SetHeader("Modules that I teach");
+                    this.SetHeader("Modules that I teach");                   
                     ShowProject();
                 }
             }                                
@@ -74,6 +74,7 @@ namespace ProjectFlow.DashBoard
             projectGV.DataSource = projectList;
             projectGV.DataBind();
             PageSelectDP.SelectedIndex = 0;
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         public void SearchProject(string search)
@@ -85,6 +86,7 @@ namespace ProjectFlow.DashBoard
             projectGV.DataSource = projectList;
             projectGV.DataBind();
             PageSelectDP.SelectedIndex = 0;
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
 
         }
 

@@ -18,9 +18,11 @@ namespace ProjectFlow.DashBoard
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            {               
                 ShowTeam();
-                this.SetHeader("Teams that are in this Module");
+                string projectID = (Master as ServicesWithContent).CurrentProject.projectID;
+                string projectName = (Master as ServicesWithContent).CurrentProject.projectName;
+                this.SetHeader($"Teams that are in {projectName} ({projectID})");
             }              
         }
         public string GetProjectID()
@@ -79,6 +81,7 @@ namespace ProjectFlow.DashBoard
             teamList = projectBLL.GetProjectTeam(GetProjectID());
             TeamGV.DataSource = teamList;
             TeamGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         private void SearchGroup(int Group)
@@ -87,6 +90,7 @@ namespace ProjectFlow.DashBoard
             teamList = projectTeamBLL.SearchGroup(GetProjectID(), Group);
             TeamGV.DataSource = teamList;
             TeamGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         protected void TeamGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

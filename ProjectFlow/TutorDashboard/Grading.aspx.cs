@@ -22,7 +22,7 @@ namespace ProjectFlow.TutorDashboard
                 if(GetProjectD() != null && GetTeamID().ToString() != null)
                 {
                     ShowGrade();
-                    this.SetHeader("Student's Grades");
+                    this.SetHeader("Student's Grades for team: (" + (Master as ServicesWithContent).CurrentProjectTeam.teamName + ")");
                 }
                 else
                 {
@@ -61,15 +61,35 @@ namespace ProjectFlow.TutorDashboard
         {
             if(score >= 80)
             {
-                return "<i style=\"color: green;\" class=\"fas fa-lg fa-trophy\"></i>";
+                return "A";
             }
-            else if (score >= 50 && score < 80)
+            else if (score >= 75 && score < 80)
             {
-                return "<i style=\"color: green;\" class=\"fas fa-lg fa-check-circle\"></i>";
+                return "B+";
+            }
+            else if(score >= 70 && score < 75)
+            {
+                return "B";
+            }
+            else if(score >= 65 && score < 70)
+            {
+                return "C+";
+            }
+            else if(score >= 60 && score < 65)
+            {
+                return "C";
+            }
+            else if(score >= 55 && score < 60)
+            {
+                return "D+";
+            }
+            else if(score >= 50 && score < 55)
+            {
+                return "D";
             }
             else
             {
-                return "<i style=\"color: red;\" class=\"fas fa-lg fa-exclamation-triangle\"></i>";
+                return "F";
             }
         }
 
@@ -260,12 +280,14 @@ namespace ProjectFlow.TutorDashboard
             HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
 
             ShowGroupScore();
-           
+            gradeGV.Columns[16].Visible = false;
+
             gradeGV.RenderControl(htmlTextWriter);
             Response.Write(stringWriter.ToString());
             Response.End();
 
             HideGroupScore();
+            gradeGV.Columns[16].Visible = true;
         }
 
         public void HideGroupScore()
@@ -285,6 +307,12 @@ namespace ProjectFlow.TutorDashboard
         public override void VerifyRenderingInServerForm(Control control)
         {
             
+        }
+
+        protected void gradeGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gradeGV.PageIndex = e.NewPageIndex;
+            ShowGrade();
         }
     }
 }

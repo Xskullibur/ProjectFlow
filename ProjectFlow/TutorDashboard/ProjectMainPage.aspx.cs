@@ -19,7 +19,7 @@ namespace ProjectFlow
             if (Page.IsPostBack == false)
             {
                 ShowMember();
-                this.SetHeader("Team Members that are in this team");
+                this.SetHeader("Members that are in this team: (" + (Master as ServicesWithContent).CurrentProjectTeam.teamName + ")");
             }
         }
         public int GetTeamID()
@@ -41,6 +41,8 @@ namespace ProjectFlow
             studentList.DataTextField = "Value";
             studentList.DataValueField = "Key";
             studentList.DataBind();
+
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         public void SearchMember(string search)
@@ -48,7 +50,8 @@ namespace ProjectFlow
             List<TeamMember> memberList = new List<TeamMember> { };
             memberList = teamMemberBLL.SearchMember(GetTeamID(), search);
             MemberGV.DataSource = memberList;
-            MemberGV.DataBind();           
+            MemberGV.DataBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
         }
 
         protected void CreateBtn_Click(object sender, EventArgs e)
