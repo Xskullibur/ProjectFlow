@@ -43,7 +43,11 @@
             </div>
             <div class="col-xl-3 col-12 text-right">
                 <div class="dropdown">
-                        <asp:Button Text="Delete" CssClass="btn btn-outline-danger" runat="server" ID="deleteSolutionBtn" OnClick="solutionDelete" Enabled="False" OnClientClick="return confirm('Are you sure to delete?');" Visible="False"/>
+                        <asp:Button Text="Delete" CssClass="btn btn-outline-danger" runat="server" ID="deleteSolutionBtn" OnClick="solutionDelete" Enabled="False" Visible="False" 
+                            data-toggle="confirmation"
+                            data-btn-ok-icon-class="fa fa-check"
+                            data-btn-cancel-icon-class="fa fa-close"
+                            data-popout="true"/>
                 </div>
             </div>
         </div>
