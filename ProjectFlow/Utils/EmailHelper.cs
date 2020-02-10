@@ -157,7 +157,7 @@ namespace ProjectFlow.Utils
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                System.Diagnostics.Debug.WriteLine("\n Send Email Error! \n" + e.Message + "\n");
                 return false;
             }
         }

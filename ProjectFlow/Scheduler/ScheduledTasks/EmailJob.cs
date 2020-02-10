@@ -27,19 +27,21 @@ namespace ProjectFlow.ScheduledTasks
                 EmailHelper emailHelper = new EmailHelper();
                 bool result = emailHelper.SendEmail(recivers, subject, textBody, cc);
 
+                Console.Out.WriteLine("Sending Email!");
+
                 // Print Email Result
                 if (result)
                 {
-                    await Console.Out.WriteLineAsync("Email Sent Successfully");
+                    Console.Out.WriteLine("Email Sent Successfully");
                 }
                 else
                 {
-                    await Console.Out.WriteLineAsync("Email Failed to Send");
+                    Console.Out.WriteLine("Email Failed to Send");
                 }
             }
             catch (JobExecutionException e)
             {
-                await Console.Out.WriteLineAsync($"Email Job Failed: {e.Message}");
+                Console.Out.WriteLine($"Email Job Failed: {e.Message}");
             }
 
         }
