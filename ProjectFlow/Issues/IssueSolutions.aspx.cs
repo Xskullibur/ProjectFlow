@@ -53,6 +53,9 @@ namespace ProjectFlow.Issues
             int idSolution = (int)Session["SSSId"];
             if (!IsPostBack)
             {
+                // confirmation toggle
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
+
                 // calling tutorbll
                 TutorBLL tutorBLL = new TutorBLL();
 
