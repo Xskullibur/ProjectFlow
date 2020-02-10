@@ -26,7 +26,7 @@ $(document).ready(function () {
                 // Rerecord microphone once receive the predicted speaker from server
                 focus_speaker(e.data.predicted_speaker);
                 if (e.data.predicted_speaker != '') {
-                    let txtBox = $('#ContentPlaceHolder_TranscriptTxtBox');
+                    let txtBox = $('#ContentPlaceHolderBase_ContentPlaceHolder_TranscriptTxtBox');
                     txtBox.val(e.data.predicted_speaker + ':' + e.data.transcript + '\n' + txtBox.val());
                 }
 
