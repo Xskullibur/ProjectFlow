@@ -119,9 +119,13 @@ namespace ProjectFlow.BLL
                 {
                     try
                     {
+                        Solution _solution = dbContext.Solutions.Find(solution.solutionID);
+                        _solution.Pollings.ToList().ForEach(x => dbContext.Pollings.Remove(x));
 
-                        dbContext.Solutions.Attach(solution);
-                        dbContext.Solutions.Remove(solution);
+                        dbContext.SaveChanges();
+
+                        dbContext.Solutions.Attach(_solution);
+                        dbContext.Solutions.Remove(_solution);
                         dbContext.SaveChanges();
                         return true;
                     }
