@@ -429,8 +429,16 @@ namespace ProjectFlow.DashBoard
                     }
                     else
                     {
-                        File.Move(fileName, newFileName);
-                        Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                        if (Path.HasExtension(newFileName))
+                        {
+                            File.Move(fileName, newFileName);
+                            Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                        }
+                        else
+                        {
+                            Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
+                        }
+                       
                     }
                 }
                 else if (row.Cells[2].Text.StartsWith("Encrypted"))
@@ -443,8 +451,15 @@ namespace ProjectFlow.DashBoard
                     }
                     else
                     {
-                        File.Move(fileName, newFileName);
-                        Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                        if (Path.HasExtension(newFileName))
+                        {
+                            File.Move(fileName, newFileName);
+                            Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                        }
+                        else
+                        {
+                            Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
+                        }                      
                     }
                 }
                 else
@@ -457,8 +472,15 @@ namespace ProjectFlow.DashBoard
                     }
                     else
                     {
-                        File.Move(fileName, newFileName);
-                        Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                        if (Path.HasExtension(newFileName))
+                        {
+                            File.Move(fileName, newFileName);
+                            Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                        }
+                        else
+                        {
+                            Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
+                        }                       
                     }
                 }
             }
