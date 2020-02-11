@@ -334,8 +334,8 @@ namespace ProjectFlow.DashBoard
             catch (System.ArgumentOutOfRangeException exception)
             {
 
-            }           
-            DisplayFile();
+            }
+            Response.Redirect("FileUpload.aspx");
         }
 
       
