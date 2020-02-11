@@ -41,7 +41,7 @@ namespace ProjectFlow.DashBoard
 
         public void AddPrompt()
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);           
         }
 
         private void HideModel()
@@ -140,7 +140,7 @@ namespace ProjectFlow.DashBoard
         public void DisplayFile()
         {
             Info infomation = new Info();
-            IEnumerable<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+            List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
             FileGV.DataSource = fileList;
             FileGV.DataBind();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
@@ -149,7 +149,7 @@ namespace ProjectFlow.DashBoard
         public void SearchFile(string search)
         {
             Info infomation = new Info();
-            IEnumerable<FileDetails> fileList = infomation.SearchFiles(GetTeamID(), search);
+            List<FileDetails> fileList = infomation.SearchFiles(GetTeamID(), search);
             FileGV.DataSource = fileList;
             FileGV.DataBind();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "bootstrap-confirm", "$('[data-toggle=confirmation]').confirmation({rootSelector: '[data-toggle=confirmation]'});", true);
@@ -180,9 +180,14 @@ namespace ProjectFlow.DashBoard
          
         protected void FileGV_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GridViewRow row = FileGV.SelectedRow;
-            string fileName = row.Cells[0].Text;
+            Info infomation = new Info();
+            List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+
+            GridViewRow row = FileGV.SelectedRow;            
             TextBox key = (TextBox)row.FindControl("tableKeyTB");
+
+            string fileName = fileList[row.RowIndex].Name;
+            
             Encryption encryption = new Encryption();
             Decryption decryption = new Decryption();
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
@@ -300,8 +305,11 @@ namespace ProjectFlow.DashBoard
 
         protected void FileGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            Info infomation = new Info();
+            List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+
             GridViewRow row = (GridViewRow)FileGV.Rows[e.RowIndex];
-            string fileName = row.Cells[0].Text;
+            string fileName = fileList[row.RowIndex].Name;
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
 
             if (row.Cells[2].Text.Equals("Encrypted With Key"))
@@ -323,6 +331,7 @@ namespace ProjectFlow.DashBoard
             DisplayFile();
         }
 
+      
         protected void refreshBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("FileUpload.aspx");
@@ -382,6 +391,85 @@ namespace ProjectFlow.DashBoard
         protected void FileGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             FileGV.PageIndex = e.NewPageIndex;
+            DisplayFile();
+        }
+
+        protected void FileGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            FileGV.EditIndex = -1;
+            DisplayFile();
+        }
+
+        protected void FileGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = FileGV.Rows[e.RowIndex];           
+            TextBox newName = (TextBox)row.FindControl("editNameTB");
+
+            Info infomation = new Info();
+            List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+
+            string fileName = fileList[e.RowIndex].Name;
+            string newFileName = newName.Text;
+            
+            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
+
+            if(newFileName.Equals("") || newFileName == null)
+            {
+                Master.ShowAlert("File Name cannot be empty", BootstrapAlertTypes.DANGER);
+            }
+            else
+            {
+                if (row.Cells[2].Text.Equals("Encrypted With Key"))
+                {
+                    fileName = storagePath + "(ENCRYPTED_WITH_KEY)" + fileName;
+                    newFileName = storagePath + "(ENCRYPTED_WITH_KEY)" + newFileName;
+                    if (File.Exists(newFileName))
+                    {
+                        Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
+                    }
+                    else
+                    {
+                        File.Move(fileName, newFileName);
+                        Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                    }
+                }
+                else if (row.Cells[2].Text.StartsWith("Encrypted"))
+                {
+                    fileName = storagePath + "(ENCRYPTED)" + fileName;
+                    newFileName = storagePath + "(ENCRYPTED)" + newFileName;
+                    if (File.Exists(newFileName))
+                    {
+                        Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
+                    }
+                    else
+                    {
+                        File.Move(fileName, newFileName);
+                        Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                    }
+                }
+                else
+                {
+                    fileName = storagePath + "(PLAIN)" + fileName;
+                    newFileName = storagePath + "(PLAIN)" + newFileName;
+                    if (File.Exists(newFileName))
+                    {
+                        Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
+                    }
+                    else
+                    {
+                        File.Move(fileName, newFileName);
+                        Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                    }
+                }
+            }
+            
+            FileGV.EditIndex = -1;
+            DisplayFile();
+        }
+
+        protected void FileGV_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            FileGV.EditIndex = e.NewEditIndex;
             DisplayFile();
         }
     }

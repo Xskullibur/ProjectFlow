@@ -8,7 +8,7 @@ namespace ProjectFlow.FileManagement
 {
     public class Info
     {
-       public IEnumerable<FileDetails> GetFiles(int TeamID)
+       public List<FileDetails> GetFiles(int TeamID)
        {
             List<FileDetails> fileList = new List<FileDetails> { };
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\";
@@ -44,7 +44,7 @@ namespace ProjectFlow.FileManagement
             return fileList;
        }
 
-        public IEnumerable<FileDetails> SearchFiles(int TeamID, string search)
+        public List<FileDetails> SearchFiles(int TeamID, string search)
         {
             List<FileDetails> fileList = new List<FileDetails> { };
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + TeamID.ToString() + "\\";

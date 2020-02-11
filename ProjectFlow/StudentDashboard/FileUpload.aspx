@@ -103,21 +103,42 @@
             <div class="row mb-3">
                 <div class="col">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="FileGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged" OnRowDeleting="FileGV_RowDeleting" OnPageIndexChanging="FileGV_PageIndexChanging">
+                        <asp:GridView ID="FileGV" CssClass="table table-bordered projectflow-table table-striped" runat="server" AutoGenerateColumns="False" Width="1056px" AllowPaging="True" PageSize="4" OnSelectedIndexChanged="FileGV_SelectedIndexChanged" OnRowDeleting="FileGV_RowDeleting" OnPageIndexChanging="FileGV_PageIndexChanging" OnRowCancelingEdit="FileGV_RowCancelingEdit" OnRowEditing="FileGV_RowEditing" OnRowUpdating="FileGV_RowUpdating">
                             <HeaderStyle CssClass="thead-light" />
                             <Columns>
-                                <asp:BoundField DataField="Name" HeaderText="File" />
-                                <asp:BoundField DataField="Size" HeaderText="Size" />
-                                <asp:BoundField DataField="Status" HeaderText="Status" />
+                                
+                                <asp:TemplateField HeaderText="File">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="editNameTB" CssClass="form-control" runat="server" Text='<%# Bind("Name") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="nameLabel" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:BoundField DataField="Size" HeaderText="Size" ReadOnly="true"/>
+                                <asp:BoundField DataField="Status" HeaderText="Status" ReadOnly="true"/>
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>                                      
                                         <%# ShowIcon((string)Eval("Status")) %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Date" HeaderText="Date" />                              
+                                <asp:BoundField DataField="Date" HeaderText="Date" ReadOnly="true"/>                                                              
                                 <asp:CommandField ButtonType="Button" SelectText="Download" ShowSelectButton="True">
                                     <ControlStyle CssClass="btn btn-primary" />
                                 </asp:CommandField>
+
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button Text="Edit" CssClass="btn btn-primary" CommandName="Edit" runat="server" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnUpdate" CssClass="btn btn-sm btn-primary mb-2" runat="server" CommandName="Update" Text="Update" ValidationGroup="tableValidation" />
+                                        <br>
+                                        </br>
+					                <asp:Button ID="btnCancel" CssClass="btn btn-sm btn-outline-danger" runat="server" CommandName="Cancel" Text="Cancel" />
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
                                 
                                 <asp:TemplateField>
                                     <ItemTemplate>
