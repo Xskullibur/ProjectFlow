@@ -40,7 +40,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <asp:Label ID="Label4" runat="server" Text="Create Project"></asp:Label>
+                    <asp:Label ID="Label4" runat="server" Text="Create Module"></asp:Label>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -129,7 +129,7 @@
         <br>
         <div class="row">
             <div class="col-2">
-                <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Project" OnClick="newProjectBtn_Click" />
+                <asp:Button ID="newProjectBtn" CssClass="btn btn-primary" runat="server" OnClientClick="myfunction(); return false;" UseSubmitBehavior="false" data-toggle="modal" data-target="#CreateProject" Text="New Module" OnClick="newProjectBtn_Click" />
             </div>
             <div class="col-1">
             </div>
