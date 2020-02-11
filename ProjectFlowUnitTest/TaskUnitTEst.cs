@@ -13,9 +13,9 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, null,
-                "Verify that task name is null is checked",
-                "-1",
+            bool result = taskHelper.VerifyAddTask(2, null,
+                "Test when task name is null",
+                "4",
                 "21/12/2019",
                 "2/1/2020",
                 "1",
@@ -30,9 +30,9 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 Test is task name checks if the number of character limit is 255 ",
-                "Test is task name checks if the number of character limit is 255",
-                "-1",
+            bool result = taskHelper.VerifyAddTask(2, "Character Test for Name….................................................................................................….................................................................................................….................................................................................................….................................................................................................….................................................................................................….................................................................................................….................................................................................................….................................................................................................",
+                "Test when task name > 255 Characters",
+                "4",
                 "21/11/2019",
                 "12/12/2019",
                 "1",
@@ -47,9 +47,9 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Verify Task Desc",
+            bool result = taskHelper.VerifyAddTask(2, "Null Test for Description",
                 null,
-                "-1",
+                "4",
                 "21/11/2019",
                 "12/12/2019",
                 "1",
@@ -64,9 +64,9 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Verify Task Desc",
-                "Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 Test is task desc checks if the number of character limit is 255 ",
-                "-1",
+            bool result = taskHelper.VerifyAddTask(2, "Character Test for Description",
+                "Test when task description has > 255 Characters….....................................................................................................................................................................................................................",
+                "4",
                 "21/11/2019",
                 "12/12/2019",
                 "1",
@@ -81,8 +81,8 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Verify Milestone null",
-                "Check that verification catches milesone errors",
+            bool result = taskHelper.VerifyAddTask(2, "Invalid Milestone Test",
+                "Test when user gets past client-side validation for milestone",
                 "-2",
                 "21/11/2019",
                 "12/12/2019",
@@ -98,9 +98,9 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Verify StartDate null",
-                "Check that verification catches milesone errors",
-                "1",
+            bool result = taskHelper.VerifyAddTask(2, "Empty Start Date Test",
+                "Test when start date is not filled",
+                "4",
                 "12/12/2019",
                 null,
                 "1",
@@ -115,11 +115,11 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Check invalid startDate format",
-                "check that verification catches invalid start date",
-                "1",
-                "13/1231/5216",
-                "12/12/2019",
+            bool result = taskHelper.VerifyAddTask(2, "Invalid Start Date Test",
+                "Test when an invalid start date is filled",
+                "4",
+                "21/31/2019",
+                "2/1/2019",
                 "1",
                 "1");
 
@@ -132,9 +132,9 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Check null endDate",
-                "check that verification catches null end date",
-                "1",
+            bool result = taskHelper.VerifyAddTask(2, "Empty End Date Test",
+                "Test when end date is not filled",
+                "4",
                 "12/12/2019",
                 null,
                 "1",
@@ -149,11 +149,11 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Check invalid endDate format",
-                "check that verification catches invalid end date",
-                "1",
-                "12/12/2019",
-                "13/1231/5216",
+            bool result = taskHelper.VerifyAddTask(2, "Invalid End Date Test",
+                "Test when an invalid end date is filled",
+                "4",
+                "21/12/2019",
+                "12/31/2020",
                 "1",
                 "1");
 
@@ -166,11 +166,11 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Check if endDate can be eariler that start date",
-                "Check that verification catches error when end date is eariler that start date",
-                "1",
-                "20/1/2020",
-                "19/12/2019",
+            bool result = taskHelper.VerifyAddTask(2, "Start Date later than End Date Test",
+                "Test when start date is later than end date",
+                "4",
+                "2/1/2020",
+                "121/12/2019",
                 "1",
                 "1");
 
@@ -183,12 +183,29 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Verify StatusId is Invalid",
-                "Check that verification catches invalid status index",
-                "1",
-                "20/1/2020",
-                "19/12/2019",
+            bool result = taskHelper.VerifyAddTask(2, "Invalid Status Test",
+                "Test when an invalid status is filled",
+                "4",
+                "2/1/2019",
+                "21/12/2020",
                 "-2",
+                "1");
+
+            Assert.IsFalse(result);
+
+        }
+
+        [TestMethod]
+        public void WhenStatusIdIsEmpty_ReturnFALSE()
+        {
+
+            TaskHelper taskHelper = new TaskHelper();
+            bool result = taskHelper.VerifyAddTask(2, "Invalid Status Test",
+                "Test when an invalid status is filled",
+                "4",
+                "20/1/2019",
+                "19/12/2020",
+                null,
                 "1");
 
             Assert.IsFalse(result);
@@ -200,15 +217,49 @@ namespace ProjectFlowUnitTest
         {
 
             TaskHelper taskHelper = new TaskHelper();
-            bool result = taskHelper.VerifyAddTask(5, "Verify StatusId is Invalid",
-                "Check that verification catches invalid status index",
-                "1",
-                "20/1/2020",
-                "19/12/2019",
+            bool result = taskHelper.VerifyAddTask(2, "Invalid Priority Test",
+                "Test when priority is invalid",
+                "4",
+                "20/1/2019",
+                "19/12/2020",
                 "-2",
                 "-1");
 
             Assert.IsFalse(result);
+
+        }
+
+        [TestMethod]
+        public void WhenPriorityIdIsEmpty_ReturnFALSE()
+        {
+
+            TaskHelper taskHelper = new TaskHelper();
+            bool result = taskHelper.VerifyAddTask(2, "Empty Priority Test",
+                "Test when priority is empty",
+                "4",
+                "20/1/2019",
+                "19/12/2020",
+                "-2",
+                "-1");
+
+            Assert.IsFalse(result);
+
+        }
+
+        [TestMethod]
+        public void WhenAllFieldsCorrect_ReturnTRUE()
+        {
+
+            TaskHelper taskHelper = new TaskHelper();
+            bool result = taskHelper.VerifyAddTask(2, "Create UI Wireframe Test",
+                "Create UI wireframe for Task Management",
+                "4",
+                "20/1/2019",
+                "19/12/2020",
+                "1",
+                "1");
+
+            Assert.IsTrue(result);
 
         }
     }
