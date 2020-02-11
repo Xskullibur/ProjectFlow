@@ -412,79 +412,85 @@ namespace ProjectFlow.DashBoard
             string newFileName = newName.Text;
             
             string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
-
-            if(newFileName.Equals("") || newFileName == null)
+            try
             {
-                Master.ShowAlert("File Name cannot be empty", BootstrapAlertTypes.DANGER);
-            }
-            else
-            {
-                if (row.Cells[2].Text.Equals("Encrypted With Key"))
+                if (newFileName.Equals("") || newFileName == null)
                 {
-                    fileName = storagePath + "(ENCRYPTED_WITH_KEY)" + fileName;
-                    newFileName = storagePath + "(ENCRYPTED_WITH_KEY)" + newFileName;
-                    if (File.Exists(newFileName))
-                    {
-                        Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
-                    }
-                    else
-                    {
-                        if (Path.HasExtension(newFileName))
-                        {
-                            File.Move(fileName, newFileName);
-                            Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
-                        }
-                        else
-                        {
-                            Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
-                        }
-                       
-                    }
-                }
-                else if (row.Cells[2].Text.StartsWith("Encrypted"))
-                {
-                    fileName = storagePath + "(ENCRYPTED)" + fileName;
-                    newFileName = storagePath + "(ENCRYPTED)" + newFileName;
-                    if (File.Exists(newFileName))
-                    {
-                        Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
-                    }
-                    else
-                    {
-                        if (Path.HasExtension(newFileName))
-                        {
-                            File.Move(fileName, newFileName);
-                            Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
-                        }
-                        else
-                        {
-                            Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
-                        }                      
-                    }
+                    Master.ShowAlert("File Name cannot be empty", BootstrapAlertTypes.DANGER);
                 }
                 else
                 {
-                    fileName = storagePath + "(PLAIN)" + fileName;
-                    newFileName = storagePath + "(PLAIN)" + newFileName;
-                    if (File.Exists(newFileName))
+                    if (row.Cells[2].Text.Equals("Encrypted With Key"))
                     {
-                        Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
-                    }
-                    else
-                    {
-                        if (Path.HasExtension(newFileName))
+                        fileName = storagePath + "(ENCRYPTED_WITH_KEY)" + fileName;
+                        newFileName = storagePath + "(ENCRYPTED_WITH_KEY)" + newFileName;
+                        if (File.Exists(newFileName))
                         {
-                            File.Move(fileName, newFileName);
-                            Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                            Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
                         }
                         else
                         {
-                            Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
-                        }                       
+                            if (Path.HasExtension(newFileName))
+                            {
+                                File.Move(fileName, newFileName);
+                                Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                            }
+                            else
+                            {
+                                Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
+                            }
+
+                        }
+                    }
+                    else if (row.Cells[2].Text.StartsWith("Encrypted"))
+                    {
+                        fileName = storagePath + "(ENCRYPTED)" + fileName;
+                        newFileName = storagePath + "(ENCRYPTED)" + newFileName;
+                        if (File.Exists(newFileName))
+                        {
+                            Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
+                        }
+                        else
+                        {
+                            if (Path.HasExtension(newFileName))
+                            {
+                                File.Move(fileName, newFileName);
+                                Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                            }
+                            else
+                            {
+                                Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        fileName = storagePath + "(PLAIN)" + fileName;
+                        newFileName = storagePath + "(PLAIN)" + newFileName;
+                        if (File.Exists(newFileName))
+                        {
+                            Master.ShowAlert("File Name already exist!", BootstrapAlertTypes.DANGER);
+                        }
+                        else
+                        {
+                            if (Path.HasExtension(newFileName))
+                            {
+                                File.Move(fileName, newFileName);
+                                Master.ShowAlert("File Name Renamed!", BootstrapAlertTypes.SUCCESS);
+                            }
+                            else
+                            {
+                                Master.ShowAlert("File Name no extension", BootstrapAlertTypes.DANGER);
+                            }
+                        }
                     }
                 }
             }
-            
+            catch (System.ArgumentException)
+            {
+                Master.ShowAlert("File Name contain illegal characters", BootstrapAlertTypes.DANGER);
+            }
+                       
             FileGV.EditIndex = -1;
             DisplayFile();
         }
