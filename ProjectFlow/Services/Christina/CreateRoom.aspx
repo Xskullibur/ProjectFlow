@@ -22,7 +22,7 @@
                                  <label for="RoomDescriptionTextBox">Room Description</label>
                                  <asp:TextBox ID="RoomDescriptionTextBox" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                               </div>
-                              <asp:Button ID="CreateRoomBtn" CssClass="btn btn-primary" runat="server" Text="New Room" OnClick="CreateRoomEvent" OnClientClick="localStorage.setItem('create_room', false); return true;"/>
+                              <asp:Button ID="CreateRoomBtn" CssClass="btn btn-primary" runat="server" Text="New Room" OnClick="CreateRoomEvent" OnClientClick="localStorage.setItem('create_room', false);"/>
                         </div>
                     </div>
                 </div>
