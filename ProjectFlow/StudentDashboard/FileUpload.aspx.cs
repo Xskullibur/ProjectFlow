@@ -307,27 +307,34 @@ namespace ProjectFlow.DashBoard
         {
             Info infomation = new Info();
             List<FileDetails> fileList = infomation.GetFiles(GetTeamID());
+         
+            try
+            {
+                GridViewRow row = (GridViewRow)FileGV.Rows[e.RowIndex];
+                string fileName = fileList[row.RowIndex].Name;
+                string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
 
-            GridViewRow row = (GridViewRow)FileGV.Rows[e.RowIndex];
-            string fileName = fileList[row.RowIndex].Name;
-            string storagePath = AppDomain.CurrentDomain.BaseDirectory + "\\FileManagement\\FileStorage\\" + GetTeamID().ToString() + "\\";
+                if (row.Cells[2].Text.Equals("Encrypted With Key"))
+                {
+                    fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
+                    File.Delete(storagePath + fileName);
+                }
+                else if (row.Cells[2].Text.StartsWith("Encrypted"))
+                {
+                    fileName = "(ENCRYPTED)" + fileName;
+                    File.Delete(storagePath + fileName);
+                }
+                else
+                {
+                    fileName = "(PLAIN)" + fileName;
+                    File.Delete(storagePath + fileName);
+                }
+                Master.ShowAlert("File deleted", BootstrapAlertTypes.DANGER);
+            }
+            catch (System.ArgumentOutOfRangeException exception)
+            {
 
-            if (row.Cells[2].Text.Equals("Encrypted With Key"))
-            {
-                fileName = "(ENCRYPTED_WITH_KEY)" + fileName;
-                File.Delete(storagePath + fileName);
-            }
-            else if (row.Cells[2].Text.StartsWith("Encrypted"))
-            {
-                fileName = "(ENCRYPTED)" + fileName;
-                File.Delete(storagePath + fileName);
-            }
-            else
-            {
-                fileName = "(PLAIN)" + fileName;
-                File.Delete(storagePath + fileName);
-            }
-            Master.ShowAlert("File deleted", BootstrapAlertTypes.DANGER);
+            }           
             DisplayFile();
         }
 
