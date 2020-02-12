@@ -96,6 +96,15 @@ namespace ProjectFlow.BLL
                     }
                     dbContext.SaveChanges();
                 }
+                var member = dbContext.TeamMembers.Where(x => x.teamID == TeamID);
+                if (member != null)
+                {
+                    foreach (TeamMember mem in member)
+                    {
+                        mem.dropped = true;
+                    }
+                    dbContext.SaveChanges();
+                }
             }
         }
 
